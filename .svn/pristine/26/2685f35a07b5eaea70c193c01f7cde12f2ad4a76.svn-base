@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Mainlevee" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66aaf26c-0841-4eb3-889c-9d2fc2851f63">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="87"/>
+	<parameter name="nomEtprenom" class="java.lang.String"/>
+	<parameter name="dateMainlevee" class="java.lang.String"/>
+	<parameter name="groupe" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="183" splitType="Stretch">
+			<staticText>
+				<reportElement x="219" y="144" width="96" height="39" uuid="611b572d-5485-4923-91fb-2c7884f97844"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="24" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[كتب رفع يد]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="344" y="101" width="100" height="20" uuid="f7d07afc-e216-436c-9557-5ad0c90ed3b5"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateMainlevee}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="300" splitType="Stretch">
+			<textField>
+				<reportElement x="12" y="0" width="530" height="201" uuid="22bc84e8-2005-4a08-ae7a-9bcaa46c9fc9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["إن الشركة الوطنية العقارية للبلاد التونسية(سنيت) الممثلة في شخص رئيسها ومديرها العام السيد فتحي بن عصمان حسب التفويض الصادر له بتاريخ 16-01-2014 تقر بمقتضى هذا الكتب برفع يدها عن كل ألرهون والقيود الموظفة لفائدتها  على العقار المتمثلة في المحل المعد لسكنى رقم 67 نوع 6 نوع أع والذي انحصر في كامل القطعة عدد 15 من المثال التقسيمي للرسم العقاري عدد 44258 تونس واللذي إنفرد برسم خاص تحت عدد 187147 تونس ويدعي البحري والكائن بالدندان لصاحبه السيد الطاهر بن عياد البحري موضوع عقدة البيع  المؤرخة في 17-11-1987 والمسجلة بتونس (م ع ت) في 04-09-1975 عدد 198د1 والعقد التوضيحي المؤرخ في 17-11-1987 تحت عدد مجلد 27 منقولات1 إطار 71 ضماناً لخلاص باقي ثمن المبيع وقدره ثلاثة الاف وستمائة وعشرة دينار (3610.000 د)الذي وقع خلاصه كاملا للشركة حسب وصولات مختلفة اخرها تحت عدد 9503 بتاريخ 05-10-2015"+
+"كما ينطبق رفع اليد على شرط سقوط الحق الموظف على العقار المنصوص عليه بعقدة البيع إن السيد حافض الملكية العقارية يصبح في حل من كل تبعة عند قيامه بعملية الشطب المطلوبة"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="201" width="207" height="99" uuid="ccb1e96a-dc6a-4f2f-af34-63345e3b1df2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[
+
+                                                                                                                                                                                                                                       "  وحرر بتونس في"+$P{dateMainlevee}+
+
+
+
+                                                                                                                                                                                                                               "    الشركة الوطنية العقارية للبلاد                                                                                                                                                                                                                                                     التونسية "                                                                                                                                                                                                                                                                                     ]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,244 @@
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Logement.findAll", query = "SELECT l FROM Logement l"),
+    @NamedQuery(name = "Logement.findByCodelogement", query = "SELECT l FROM Logement l WHERE l.codelogement = :codelogement"),
+    @NamedQuery(name = "Logement.findByNumOrdre", query = "SELECT l FROM Logement l WHERE l.numOrdre = :numOrdre"),
+    @NamedQuery(name = "Logement.findByAdresseLoge", query = "SELECT l FROM Logement l WHERE l.adresseLoge = :adresseLoge"),
+    @NamedQuery(name = "Logement.findByLotissement", query = "SELECT l FROM Logement l WHERE l.lotissement = :lotissement"),
+    @NamedQuery(name = "Logement.findByPrixLog", query = "SELECT l FROM Logement l WHERE l.prixLog = :prixLog"),
+    @NamedQuery(name = "Logement.findByEtatlog", query = "SELECT l FROM Logement l WHERE l.etatlog = :etatlog")})
+public class Logement implements Serializable {
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false, precision = 22, scale = 0)
+    private BigDecimal codelogement;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NUM_ORDRE", nullable = false)
+    private int numOrdre;
+    @Size(max = 254)
+    @Column(name = "ADRESSE_LOGE", length = 254)
+    private String adresseLoge;
+    @Size(max = 254)
+    @Column(length = 254)
+    private String lotissement;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRIX_LOG", nullable = false)
+    private BigInteger prixLog;
+    private Short etatlog;
+    @JoinColumn(name = "CODE_ACQUEREUR", referencedColumnName = "CODE_ACQUEREUR", nullable = false)
+    @ManyToOne(optional = false)
+    private ClientAcquereur clientAcquereur;
+    @JoinColumn(name = "CODE_POSTAL", referencedColumnName = "CODE")
+    @ManyToOne
+    private CodePostal codePostal;
+    @JoinColumn(name = "GOUVERNORAT", referencedColumnName = "CODE", nullable = false)
+    @ManyToOne(optional = false)
+    private Gouvernorat gouvernorat;
+    @JoinColumn(name = "CODE", referencedColumnName = "CODE", nullable = false)
+    @ManyToOne(optional = false)
+    private Localite localite;
+    @JoinColumn(name = "CODETYPE", referencedColumnName = "CODETYPE", nullable = false)
+    @ManyToOne(optional = false)
+    private TypeLogement typeLogement;
+    @OneToMany(mappedBy = "logement")
+    private List<ClientAcquereur> clientAcquereurList;
+    @OneToMany(mappedBy = "logement1")
+    private List<ClientAcquereur> clientAcquereurList1;
+    @OneToMany(mappedBy = "logement2")
+    private List<ClientAcquereur> clientAcquereurList2;
+    @OneToMany(mappedBy = "logement")
+    private List<ClientLocataire> clientLocataireList;
+
+    public Logement() {
+    }
+
+    public Logement(BigDecimal codelogement) {
+        this.codelogement = codelogement;
+    }
+
+    public Logement(BigDecimal codelogement, int numOrdre, BigInteger prixLog) {
+        this.codelogement = codelogement;
+        this.numOrdre = numOrdre;
+        this.prixLog = prixLog;
+    }
+
+    public BigDecimal getCodelogement() {
+        return codelogement;
+    }
+
+    public void setCodelogement(BigDecimal codelogement) {
+        this.codelogement = codelogement;
+    }
+
+    public int getNumOrdre() {
+        return numOrdre;
+    }
+
+    public void setNumOrdre(int numOrdre) {
+        this.numOrdre = numOrdre;
+    }
+
+    public String getAdresseLoge() {
+        return adresseLoge;
+    }
+
+    public void setAdresseLoge(String adresseLoge) {
+        this.adresseLoge = adresseLoge;
+    }
+
+    public String getLotissement() {
+        return lotissement;
+    }
+
+    public void setLotissement(String lotissement) {
+        this.lotissement = lotissement;
+    }
+
+    public BigInteger getPrixLog() {
+        return prixLog;
+    }
+
+    public void setPrixLog(BigInteger prixLog) {
+        this.prixLog = prixLog;
+    }
+
+    public Short getEtatlog() {
+        return etatlog;
+    }
+
+    public void setEtatlog(Short etatlog) {
+        this.etatlog = etatlog;
+    }
+
+    public ClientAcquereur getClientAcquereur() {
+        return clientAcquereur;
+    }
+
+    public void setClientAcquereur(ClientAcquereur clientAcquereur) {
+        this.clientAcquereur = clientAcquereur;
+    }
+
+    public CodePostal getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(CodePostal codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public Gouvernorat getGouvernorat() {
+        return gouvernorat;
+    }
+
+    public void setGouvernorat(Gouvernorat gouvernorat) {
+        this.gouvernorat = gouvernorat;
+    }
+
+    public Localite getLocalite() {
+        return localite;
+    }
+
+    public void setLocalite(Localite localite) {
+        this.localite = localite;
+    }
+
+    public TypeLogement getTypeLogement() {
+        return typeLogement;
+    }
+
+    public void setTypeLogement(TypeLogement typeLogement) {
+        this.typeLogement = typeLogement;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList() {
+        return clientAcquereurList;
+    }
+
+    public void setClientAcquereurList(List<ClientAcquereur> clientAcquereurList) {
+        this.clientAcquereurList = clientAcquereurList;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList1() {
+        return clientAcquereurList1;
+    }
+
+    public void setClientAcquereurList1(List<ClientAcquereur> clientAcquereurList1) {
+        this.clientAcquereurList1 = clientAcquereurList1;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList2() {
+        return clientAcquereurList2;
+    }
+
+    public void setClientAcquereurList2(List<ClientAcquereur> clientAcquereurList2) {
+        this.clientAcquereurList2 = clientAcquereurList2;
+    }
+
+    @XmlTransient
+    public List<ClientLocataire> getClientLocataireList() {
+        return clientLocataireList;
+    }
+
+    public void setClientLocataireList(List<ClientLocataire> clientLocataireList) {
+        this.clientLocataireList = clientLocataireList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codelogement != null ? codelogement.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Logement)) {
+            return false;
+        }
+        Logement other = (Logement) object;
+        if ((this.codelogement == null && other.codelogement != null) || (this.codelogement != null && !this.codelogement.equals(other.codelogement))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entity.Logement[ codelogement=" + codelogement + " ]";
+    }
+    
+}

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GCArrangement" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f11d8cf-dd27-45e9-8610-c331204fbbad">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="288"/>
+	<parameter name="impNom" class="java.lang.String"/>
+	<parameter name="numLoc" class="java.lang.String"/>
+	<parameter name="localAdre" class="java.lang.String"/>
+	<parameter name="dateImp" class="java.lang.String"/>
+	<parameter name="impMontant" class="java.lang.String"/>
+	<parameter name="montantAv" class="java.lang.String"/>
+	<parameter name="numArr" class="java.lang.String"/>
+	<parameter name="dateArr" class="java.lang.String"/>
+	<parameter name="montantRest" class="java.lang.String"/>
+	<parameter name="montantTranche" class="java.lang.String"/>
+	<parameter name="moisDateDebut" class="java.lang.String"/>
+	<parameter name="moisDateFin" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="10" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="641" splitType="Stretch">
+			<staticText>
+				<reportElement x="163" y="531" width="41" height="20" uuid="99959814-40d5-4054-b6bb-a9a9ea521666"/>
+				<textElement>
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[تونس في]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Transparent" x="21" y="531" width="142" height="20" uuid="d67f0515-2c10-435f-8607-8efe8a917921"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="359" y="566" width="100" height="20" uuid="4c73551d-f830-42db-a048-ef7b3e2ed283"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{impNom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="459" y="566" width="75" height="20" uuid="15097fbf-ba78-424a-a667-ba4a73adde7e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[الاسم و اللقب : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="434" y="608" width="100" height="20" uuid="d84b24b5-621f-4d61-8f4e-86d2bb1406a5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[المؤرخة في : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="586" width="160" height="22" uuid="f46b570e-d831-45c9-8e87-b23de8f66b96"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16"/>
+				</textElement>
+				<text><![CDATA[ب ت و عدد : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="260" width="514" height="77" uuid="b062ffa5-f68b-48fc-b529-7d37831fe109"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="16"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="20.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["إني الممضي أسفله "+ $P{impNom}+" المتحصل على المسكن رقم "+$P{numLoc}+" الكائنة "+$P{localAdre}+" ألتزم بمقتضى هذا دفع الدين المتخلد بذمتي و البالغ إلى موفى شهر "+$P{dateImp}+" ما قدره "+$P{impMontant}+" ( عدى الغلط او النسيان و دون اعتبار لفوائض التأخير ) و ذلك على النحو التالي :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="342" width="514" height="38" uuid="0265bb4e-0787-45d3-96b6-888de35ccd72"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="16"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="20.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- دفع تسبقة قدرها "+$P{montantAv}+" د حسب وصل عدد "+$P{numArr}+" بتاريخ "+$P{dateArr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="382" width="514" height="39" uuid="f55ff4f1-4811-426e-ad8d-f6e3ee92961e"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="16"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="20.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["- دفع الباقي و قدره "+$P{montantRest}+" د بحساب "+$P{montantTranche}+" في الشهر الواحد. وذلك من الشهر "+$P{moisDateDebut}+" إلى موفى شهر "+$P{moisDateFin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="453" width="513" height="66" uuid="4442c26c-2311-4c50-9191-8fea218d55b6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="20.0"/>
+				</textElement>
+				<text><![CDATA[و في صوة عدم دفع قسط واحد في أجله، فإنه يصبح من حق الشركة المطالبة بدفع بقية الدين مع فوائض التأخير و المصاريف حالا و دفعة واحدة، مع العلم أن مفعول تغطية التأمين على الحياة ينتهي بأنتهاء مدة الخلاص المذكورة بعقد البيع لفائدة الشركة الوطنية العقارية للبلاد التونسية.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="425" width="315" height="20" uuid="0c6e74af-7915-4734-808b-b1006d089ede"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="20.0"/>
+				</textElement>
+				<text><![CDATA[كما ألتزم بدفع فوائض التأخير و مصاريف التتبعات.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="171" width="127" height="44" uuid="d51a9834-691c-44dc-8a88-77b8d5ceabbd"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="36" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[التزام]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="344" y="101" width="100" height="20" uuid="5a58669c-8bd7-48b8-9917-16915a3eacf4"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="78" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

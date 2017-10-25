@@ -1,0 +1,413 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ArrangementDAO;
+import com.cynapsys.dao.CessionDAO;
+import com.cynapsys.dao.ClientAcquereurDAO;
+import com.cynapsys.dao.ContentieuxDAO;
+import com.cynapsys.dao.TableauAmortissementDAO;
+import com.cynapsys.entities.Cession;
+import com.cynapsys.entities.CessionClient;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Employeur;
+import com.cynapsys.entities.TableauAmortissement;
+
+@SuppressWarnings("serial")
+@Repository("clientAcquereurDAO")
+public class ClientAcquereurDAOImpl extends AbstractDAOImpl<ClientAcquereur>
+		implements ClientAcquereurDAO, Serializable {
+
+	public ClientAcquereurDAOImpl() {
+		super(ClientAcquereur.class);
+	}
+	@Autowired
+	private ContentieuxDAO contentieuxDAO;
+	
+	@Autowired
+	private ArrangementDAO arrangementDAO;
+	
+	@Autowired
+	private CessionDAO cessionDAO;
+	
+	@Autowired
+	private TableauAmortissementDAO tableauAmortissementDAO;
+
+	@Override
+	public ClientAcquereur findById(String id) {
+
+		List<ClientAcquereur> list = new ArrayList<ClientAcquereur>();
+		try {
+			Criteria criteria = getSession().createCriteria(ClientAcquereur.class);
+			criteria.add(Restrictions.eq("codeAcquereur", new BigDecimal(id)));
+			list = criteria.list();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		if (list != null && !list.isEmpty())
+			return list.get(0);
+		else
+			return null;
+		
+
+//		List<ClientAcquereur> list = new ArrayList<ClientAcquereur>();
+//		StringBuilder req = new StringBuilder();
+//		req.append(
+//				"from ClientAcquereur I left join fetch I.groupe where I.id = '").append(id)
+//		.append("'");
+//		list = (List<ClientAcquereur>) this.getHibernateTemplate().find(req.toString());
+//
+//		return list.get(0);
+//		
+	}
+
+
+	@Override
+	public List<ClientAcquereur> rechercheClientAcquereur(ClientAcquereur clientAcquereur) {
+		
+		try {
+		
+			Criteria criteria = getSession().createCriteria(ClientAcquereur.class);
+
+			
+			// clause select
+//			if(clientAcquereur.getAssureur()!=null && clientAcquereur.getAssureur().getCodeassureur()!=null){
+//				criteria.add(Restrictions.eq("assureur.codeassureur", clientAcquereur.getAssureur().getCodeassureur()));
+//			}
+			if(clientAcquereur.getGroupe()!=null && clientAcquereur.getGroupe().getCode()!=null){
+				criteria.add(Restrictions.eq("groupe.code", clientAcquereur.getGroupe().getCode()));
+			}
+			if(clientAcquereur.getNomPrenomFr()!=null && !"".equals(clientAcquereur.getNomPrenomFr())){
+				criteria.add(Restrictions.like("nomPrenomFr", "%"+clientAcquereur.getNomPrenomFr()+"%"));
+			}
+			if(clientAcquereur.getAdresseCorrespondance()!=null && !"".equals(clientAcquereur.getAdresseCorrespondance())){
+				criteria.add(Restrictions.like("adresseCorrespondance", "%"+clientAcquereur.getAdresseCorrespondance()+"%"));
+			}
+//			if(clientAcquereur.getAnneebudgetaire()!=null){
+//				criteria.add(Restrictions.eq("anneebudgetaire", clientAcquereur.getAnneebudgetaire()));
+//			}
+			
+			return criteria.list();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return new ArrayList<ClientAcquereur>();
+		}
+	}
+
+	@Override
+	public List<ClientAcquereur> findAllDta() {
+		try {
+			Criteria criteria = getSession().createCriteria(ClientAcquereur.class);
+			// clause select
+			criteria.setProjection(
+					Projections.projectionList()
+							.add(Projections.alias(Projections.property("codeAcquereur"), "codeAcquereur"))
+							.add(Projections.alias(Projections.property("nomPrenomFr"), "nomPrenomFr"))
+							.add(Projections.alias(Projections.property("nomPrenomAr"), "nomPrenomAr"))
+							.add(Projections.alias(Projections.property("compteConjoint"), "compteConjoint"))
+							.add(Projections.alias(Projections.property("nomprenomconjointar"), "nomprenomconjointar"))
+							.add(Projections.alias(Projections.property("dateNaissance"), "dateNaissance"))
+							.add(Projections.alias(Projections.property("adresseCorrespondance"),
+									"adresseCorrespondance"))
+							.add(Projections.alias(Projections.property("anneebudgetaire"), "anneebudgetaire"))
+							.add(Projections.alias(Projections.property("groupe"), "groupe"))
+							.add(Projections.alias(Projections.property("employeur"), "employeur"))
+							.add(Projections.alias(Projections.property("assureur"), "assureur"))
+							.add(Projections.alias(Projections.property("assurance1"), "assurance1")).add(Projections
+									.alias(Projections.property("nomPrenomConjointFr"), "nomPrenomConjointFr")));
+
+			// Set to result transformer
+			criteria.setResultTransformer(Transformers.aliasToBean(ClientAcquereur.class));
+
+			List<ClientAcquereur> list = criteria.list();
+			// ArrayList<ClientAcquereur> locatairesActifs=new
+			// ArrayList<ClientAcquereur>();
+			// for(Locataire l:list){
+			// if(l.isEtat()){
+			// locatairesActifs.add(l);
+			// }
+			// }
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<ClientAcquereur>();
+		}
+	}
+
+	@Override
+	public List<ClientAcquereur> findDTA() {
+			List<ClientAcquereur> list = new ArrayList<ClientAcquereur>();
+			StringBuilder req = new StringBuilder();
+			req.append("from ClientAcquereur I  "
+				
+					+ " left join fetch I.groupe");
+			list = (List<ClientAcquereur>) this.getHibernateTemplate().find(req.toString());
+
+			if (list != null && !list.isEmpty())
+				return  list;
+			else
+				return null;
+		}
+
+		@Override
+		public List<ClientAcquereur> findByCriteres(ClientAcquereur clientAcquereur, String enContentieux, String enArrangement, Boolean cSalaire, Boolean cActive, Boolean cEchue, Employeur employeur,String amortissementEtatActif, String amortissementEtatInactif) {
+			System.out.println("injection " +contentieuxDAO.findAll().size());
+			List<ClientAcquereur> list = new ArrayList<ClientAcquereur>();
+			// System.out.println(arrangement.getPrecontentieu().getImpayee().getClientAcquereur().getCodeAcquereur());
+	
+			try {
+				Criteria criteria = getSession().createCriteria(ClientAcquereur.class);
+				// clause select
+	
+				// criteria.createAlias("clientAcquereur", "ca");
+				// criteria.createAlias("ca.groupe", "caf");
+	
+				//criteria.createAlias("employeur", "em");
+				
+				
+	//			criteria.createAlias("p.impayee", "pi");
+	//			criteria.createAlias("pi.clientAcquereur", "pic");
+	//			criteria.createAlias("pic.groupe", "picg");
+	
+				 if(clientAcquereur.getCodeAcquereur()!=null){
+				 criteria.add(Restrictions.eq("codeAcquereur",clientAcquereur.getCodeAcquereur())).addOrder(Order.asc("groupe"));
+				 }
+				 
+				 if(clientAcquereur.getNomPrenomFr()!=null){
+					 criteria.add(Restrictions.like("nomPrenomFr",clientAcquereur.getNomPrenomFr().toUpperCase(),MatchMode.START));
+				}
+				 if(clientAcquereur.getGroupe()!=null){
+					 criteria.createAlias("groupe", "g");
+					 criteria.add(Restrictions.like("g.libelle",
+					 clientAcquereur.getGroupe().getLibelle(),MatchMode.ANYWHERE)).addOrder(Order.asc("groupe"));
+				 }
+				 
+	//			 if(clientAcquereur.getEmployeur()!=null){
+	//				 criteria.add(Restrictions.eq("em.codeEmployeur",clientAcquereur.getEmployeur().getCodeEmployeur()));
+	//				 }
+	//			 
+				 
+		//commenter par ben rhouma ( a voir)		 
+				 
+	//			 if(clientAcquereur.getAssurance()!=null && clientAcquereur.getAssurance().getAssureur()!=null){
+	//				 criteria.createAlias("assurance", "assur");
+	//				 criteria.createAlias("assur.assureur", "assureur");
+	//				 criteria.add(Restrictions.like("assureur.abreviation",
+	//				 clientAcquereur.getAssurance().getAssureur().getAbreviation(),MatchMode.ANYWHERE)).addOrder(Order.asc("groupe"));
+	//				 }
+				 
+				 if(clientAcquereur.getContentieux()!=null){
+		 				criteria.add(Restrictions.eq("contentieux", clientAcquereur.getContentieux().booleanValue())).addOrder(Order.asc("groupe"));
+		 			}
+				 
+				 if(clientAcquereur.getEnArrangement()!=null){
+		 				criteria.add(Restrictions.eq("enArrangement", clientAcquereur.getEnArrangement().booleanValue())).addOrder(Order.asc("groupe"));
+		 			}
+				
+	
+				list = criteria.list();
+	
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			System.out.println("recherche clientsAcq, taille de la liste : " + list.size());
+		
+			if (!list.isEmpty()) {
+			    Collections.sort(list, new Comparator<ClientAcquereur>() {
+			        @Override
+			        public int compare(ClientAcquereur c1, ClientAcquereur c2) {
+			            //You should ensure that list doesn't contain null values!
+			            return c1.getGroupe().getLibelle().compareTo(c2.getGroupe().getLibelle());
+			        }
+			       });
+			   }
+			//cession sur salaire cochee
+			if(cSalaire==true){
+			List<ClientAcquereur> clones=new ArrayList<ClientAcquereur>();
+			for(ClientAcquereur cla : list){
+				System.out.println(" find cession "+cessionDAO.findCessionByClientAcquereur(cla).size());
+				if(cessionDAO.findCessionByClientAcquereur(cla).size()==0){
+					clones.add(cla);
+						}
+			}
+			list.removeAll(clones);
+			}
+			
+			
+			// cession active cochee
+			Boolean active=false;
+			Date dateSys=new Date();
+			List<ClientAcquereur> clones2=new ArrayList<ClientAcquereur>();
+			
+			if(cActive==true && cSalaire==true){
+				for(ClientAcquereur clientAcquereur2:list){
+					if(cessionDAO.findCessionByClientAcquereur(clientAcquereur2).size()>0){
+						for(Cession c :cessionDAO.findCessionByClientAcquereur(clientAcquereur2)){
+							//cherche employeur
+							System.out.println("employeur est "+c.getEmployeur().getAbreviation());
+							if(dateSys.compareTo(c.getDateFin())==-1){
+								active=true;
+							}
+						}
+					}
+					if(active==false){
+						clones2.add(clientAcquereur2);
+					}
+					active=false;
+				}
+				list.removeAll(clones2);
+			}
+			
+			
+			
+			
+			// Cession echue coche
+			
+			Boolean activeEchue=false;
+			
+			List<ClientAcquereur> clones3=new ArrayList<ClientAcquereur>();
+			
+			if(cEchue==true && cSalaire==true){
+				for(ClientAcquereur clientAcquereur3:list){
+					if(cessionDAO.findCessionByClientAcquereur(clientAcquereur3).size()>0){
+						for(Cession c :cessionDAO.findCessionByClientAcquereur(clientAcquereur3)){
+							if(dateSys.compareTo(c.getDateFin())!=-1){
+								activeEchue=true;
+							}
+						}
+					}
+					if(activeEchue==false){
+						clones3.add(clientAcquereur3);
+					}
+					activeEchue=false;
+				}
+				list.removeAll(clones3);
+			}
+			
+			
+			
+			
+			
+			//recherche par employeur
+			Boolean existeEmployeur=false;
+			List<ClientAcquereur> clones4=new ArrayList<ClientAcquereur>();
+			if(employeur!=null){
+				for(ClientAcquereur acquereur:list){
+					if(cessionDAO.findCessionByClientAcquereur(acquereur).size()!=0){
+						for(Cession c: cessionDAO.findCessionByClientAcquereur(acquereur)){
+							if(employeur.getNomEmployeurFr().equalsIgnoreCase(c.getEmployeur().getNomEmployeurFr())){
+								existeEmployeur=true;
+							}
+						}
+					}
+					if(existeEmployeur==false){
+						clones4.add(acquereur);
+					}
+					existeEmployeur=false;
+				}
+				list.removeAll(clones4);
+			}
+			
+			
+			//tableau amor actif coché
+			if(amortissementEtatActif!=null && !amortissementEtatActif.isEmpty() && amortissementEtatActif.equals("o")){
+			Boolean amortissementActif=false;
+			List<ClientAcquereur> clones5=new ArrayList<ClientAcquereur>();
+			for(ClientAcquereur acquereur:list){
+				if(tableauAmortissementDAO.findAmortissementClientAcquereur(acquereur).size()!=0){
+					for(TableauAmortissement tableauAmortissement : tableauAmortissementDAO.findAmortissementClientAcquereur(acquereur)){
+						if(tableauAmortissement.getEtat().intValue()==1){
+							amortissementActif=true;
+							
+						}
+					}
+				}
+				if(amortissementActif==false){
+					clones5.add(acquereur);
+				}
+				amortissementActif=false;
+			}
+			list.removeAll(clones5);
+			}
+			
+			
+			//tableau amortissement inactif coche
+			if(amortissementEtatActif!=null && !amortissementEtatActif.isEmpty() && amortissementEtatActif.equals("n")){
+				Boolean amortissementActif=false;
+				List<ClientAcquereur> clones5=new ArrayList<ClientAcquereur>();
+				for(ClientAcquereur acquereur:list){
+					if(tableauAmortissementDAO.findAmortissementClientAcquereur(acquereur).size()!=0){
+						for(TableauAmortissement tableauAmortissement : tableauAmortissementDAO.findAmortissementClientAcquereur(acquereur)){
+							if(tableauAmortissement.getEtat().intValue()!=1){
+								amortissementActif=true;
+								
+							}
+						}
+					}
+					if(amortissementActif==false){
+						clones5.add(acquereur);
+					}
+					amortissementActif=false;
+				}
+				list.removeAll(clones5);
+				}
+			
+			return list;
+		}
+
+	@Override
+	public List<ClientAcquereur> findClients() {
+		 StringBuilder req = new StringBuilder();
+         req.append("from ClientAcquereur c left join fetch c.cessionList " );                                
+		 List<ClientAcquereur> list = (List<ClientAcquereur>) this.getHibernateTemplate().find(req.toString());
+         return list;
+}
+	public ContentieuxDAO getContentieuxDAO() {
+		return contentieuxDAO;
+	}
+
+
+	public void setContentieuxDAO(ContentieuxDAO contentieuxDAO) {
+		this.contentieuxDAO = contentieuxDAO;
+	}
+
+
+	public ArrangementDAO getArrangementDAO() {
+		return arrangementDAO;
+	}
+
+
+	public void setArrangementDAO(ArrangementDAO arrangementDAO) {
+		this.arrangementDAO = arrangementDAO;
+	}
+
+
+	public CessionDAO getCessionDAO() {
+		return cessionDAO;
+	}
+
+
+	public void setCessionDAO(CessionDAO cessionDAO) {
+		this.cessionDAO = cessionDAO;
+	}
+}

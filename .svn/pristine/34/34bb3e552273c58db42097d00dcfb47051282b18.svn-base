@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Impayee;
+
+public interface ImpayeeService extends AbstractService<Impayee>{
+	Impayee	findById(String id);
+}

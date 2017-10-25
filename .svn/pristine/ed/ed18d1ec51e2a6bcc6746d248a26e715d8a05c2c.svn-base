@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Mensualite;
+
+public interface MensualiteService extends AbstractService<Mensualite>{
+	Mensualite	findById(String id);
+}

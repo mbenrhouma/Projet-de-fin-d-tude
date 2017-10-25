@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contentieux_subreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="75ebcbec-61f2-4fbb-8acb-8ff8c7eeabe4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="codeAcquereur" class="java.math.BigDecimal"/>
+	<field name="nomPrenomFr" class="java.lang.String"/>
+	<field name="adresseLogement" class="java.lang.String"/>
+	<field name="dateTransmission" class="java.util.Date"/>
+	<field name="numDossier" class="java.lang.String"/>
+	<field name="dateFin" class="java.util.Date"/>
+	<variable name="nomPrenomFr_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{nomPrenomFr}]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="25" splitType="Immediate">
+			<staticText>
+				<reportElement x="0" y="0" width="109" height="20" uuid="3f7f8df0-afaf-4a27-a5e1-1a5c03442452"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[code Client]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="0" width="111" height="20" uuid="28a2910d-505e-45d6-b041-4dbdd1f2363a"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nom Prénom]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="802" height="1" uuid="c91476f9-b5e3-4212-be00-80e13114ffe6"/>
+			</line>
+			<staticText>
+				<reportElement x="578" y="0" width="110" height="20" uuid="2721cb41-a309-4d94-a4c0-137f5b5ba76b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Date transmission]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="-1" width="145" height="20" uuid="210bc79b-e039-4c2c-a2c7-28e5d4658433"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Numéro dossier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="688" y="-1" width="114" height="20" uuid="0ca169ce-5ca0-4bb6-9350-46b8e7e4082d"/>
+				<text><![CDATA[dateFin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="-1" width="213" height="20" uuid="29ff9fbf-c35d-4223-95d3-225c04d0e151"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Adresse logement]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="109" height="20" uuid="ebfff412-bb18-4e12-8343-0bdae9882945"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{codeAcquereur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="0" width="111" height="20" uuid="d2a089e9-fbac-46d2-a4e6-8bf0229033e8"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{nomPrenomFr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="578" y="0" width="110" height="20" uuid="92a09455-f3dc-4555-87f6-48484810e722"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat ("dd/MM/yyyy").format($F{dateTransmission})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="0" width="145" height="20" uuid="f7cc97f0-10ac-47c8-8a8e-71211d15e031"/>
+				<textFieldExpression><![CDATA[$F{numDossier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="688" y="0" width="114" height="20" uuid="c43ad1c5-87ab-4d36-ac89-05bbce3c8fef"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat ("dd/MM/yyyy").format($F{dateFin})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="213" height="20" uuid="edd83944-f977-4298-bc68-988d074960d3"/>
+				<textFieldExpression><![CDATA[$F{adresseLogement}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

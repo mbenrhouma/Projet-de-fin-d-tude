@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="arrangement" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db93afa8-a381-437b-8996-0349071a08d3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["H:\\PFE\\Workspace-GC\\GC\\WebContent\\Jasper\\source\\"]]></defaultValueExpression>
+	</parameter>
+	<title>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="270" y="0" width="263" height="38" uuid="bf7bc219-5cb6-4790-9931-92b7fcd1c172"/>
+				<textElement textAlignment="Justified">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Liste des clients ayant arrangement]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="194" splitType="Stretch">
+			<staticText>
+				<reportElement x="653" y="0" width="35" height="20" uuid="4c4b9c3b-619d-4a30-b695-8f48c0b96813"/>
+				<text><![CDATA[Date : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="688" y="20" width="114" height="20" uuid="472504d9-c97f-4696-9609-09525cb63b7d"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="653" y="20" width="35" height="20" uuid="a405e355-97b7-4f70-aa1c-53f891856127"/>
+				<text><![CDATA[Page :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="688" y="0" width="114" height="20" uuid="611e6c6d-6747-4140-b09d-eb281af140f8"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat ("dd/MM/yyyy").format($F{date})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="302" y="40" width="100" height="20" uuid="0067df62-a762-41e6-a186-943a3d8c9c55"/>
+				<text><![CDATA[Groupe]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="402" y="40" width="100" height="20" uuid="6fa9bf67-f6be-44ec-977d-7b86cb29bc4b"/>
+				<textFieldExpression><![CDATA[$F{group}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="94" width="802" height="100" uuid="2a76a266-5ecd-4e5b-9a1d-b8e90abefb66"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "arrangement_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

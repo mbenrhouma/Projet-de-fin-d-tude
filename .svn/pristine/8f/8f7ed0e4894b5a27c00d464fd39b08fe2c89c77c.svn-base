@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Deces;
+
+public interface DecesService extends AbstractService<Deces>{
+	Deces	findById(String id);
+}

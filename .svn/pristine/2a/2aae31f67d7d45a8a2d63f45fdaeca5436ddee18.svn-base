@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="utilisateurForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['Precontentieux']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				
+					
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+				    
+					<!-- 					Champs Huissier Notaire -->
+					
+					  <p:row>
+						<p:column>
+							<h:outputText
+								value="#{precfrmsgs['huissierNotaire']}:"
+								styleClass="weightBold"/>
+						</p:column>
+						
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right"/>
+						</p:column>
+						
+						<p:column id="HuissierN">
+							<p:selectOneMenu styleClass="selectOneMenu" filter="true" required="true" 
+								converter="huissiersNotairesConverter"
+								value="#{precontentieuxBean.newPrecontentieu.huissiersNotaires}"
+								disabled="#{precontentieuxBean.selectPrec==null}">
+								<p:ajax process="@this"/>
+								<f:selectItem noSelectionOption="true" />
+								<f:selectItems value="#{precontentieuxBean.huissiersNotaires}" var="hn"
+									itemLabel="#{hn.nomfr}"
+									itemValue="#{hn}" />
+							</p:selectOneMenu>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right"/>
+						</p:column>
+						<p:column style="text-align: left;">
+							<h:outputText value="#{precarmsgs['huissierNotaire']}:"
+								dir="rtl" styleClass="weightBoldAr"/>
+						</p:column>
+						</p:column>
+					</p:row>
+									
+					
+					
+				</p:panelGrid>
+					
+				
+					
+
+
+					
+				<br />
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="initRechF" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this"
+						actionListener="#{precontentieuxBean.createPrecontentieux}"
+						update="dta detail"
+						rendered="true" >
+						<p:resetInput target="utilisateurForm" />
+						</p:commandButton>
+					
+					<p:commandButton id="lettreCommandeBtn" styleClass="ui-priority-primary"
+					 	disabled="#{precontentieuxBean.selectPrec==null}"
+					 	onstart="PF('lettreCom').show()"
+                     	value="Edition des lettres de commandes" ajax="true"  
+                     	update=":utilisateurForm" process="@this"/>
+                    <p:spacer width="5px" />
+
+					 <p:spacer width="5px" />
+					
+                    
+                                  
+				</div>
+
+				<br></br>
+				<p:dataTable id="dta" value="#{precontentieuxBean.precontentieus}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}"
+					selection="#{precontentieuxBean.selectPrec}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect"
+						listener="#{precontentieuxBean.onSelectPrec}"
+						update=":utilisateurForm:" />
+						
+						<f:facet name="header">
+                                        <h:commandLink immediate="true">
+                                               <p:graphicImage value="/resources/images/excel.png" width="25px;" />
+                                               <p:dataExporter type="xls" target="dta" fileName="ListeDesPrecontentieux" />
+                                        </h:commandLink>
+				 						<h:commandLink immediate="true">
+                                     		<p:graphicImage value="/resources/images/pdf.png" width="24px"/>
+                            			<p:dataExporter type="pdf" target="dta" fileName="ListeDesPrecontentieux"/>
+                        				</h:commandLink>
+                                  </f:facet>
+                                  
+                                  
+                                  
+                                  
+<!--                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/> -->
+
+					
+					
+					<p:column width="60" filterBy="#{current.impayee.clientAcquereur.codeAcquereur}" filterMatchMode="contains"
+						sortBy="#{current.impayee.clientAcquereur.codeAcquereur}">
+						<f:facet name="header">
+							<h:outputText value="Code" />
+						</f:facet>
+						<h:outputText value="#{current.impayee.clientAcquereur.codeAcquereur}" />
+					</p:column>
+					
+					<p:column width="60" filterBy="#{current.impayee.clientAcquereur.nomPrenomFr}" filterMatchMode="contains"
+						sortBy="#{current.impayee.clientAcquereur.nomPrenomFr}">
+						<f:facet name="header">
+							<h:outputText value="Nom" />
+						</f:facet>
+						<h:outputText value="#{current.impayee.clientAcquereur.nomPrenomFr}" />
+					</p:column>
+					
+					<p:column width="60" filterBy="#{current.impayee.clientAcquereur.adresseCorrespondance}" filterMatchMode="contains"
+						sortBy="#{current.impayee.clientAcquereur.adresseCorrespondance}">
+						<f:facet name="header">
+							<h:outputText value="Adresse" />
+						</f:facet>
+						<h:outputText value="#{current.impayee.clientAcquereur.adresseCorrespondance}" />
+					</p:column>
+					
+					<p:column width="60" filterBy="#{current.impayee.soldeDebiteur}" filterMatchMode="contains"
+						sortBy="#{current.impayee.soldeDebiteur}">
+						<f:facet name="header">
+							<h:outputText value="Solde débiteur" />
+						</f:facet>
+						<h:outputText value="#{current.impayee.soldeDebiteur}" />
+					</p:column>
+					
+					
+					<p:column width="60" filterStyle="width: 70px;" filterBy="#{utilities.customFormatDate(current.impayee.dateRelance)}" sortBy="#{utilities.customFormatDate(current.impayee.dateRelance)}"
+				        filterMatchMode="contains" style="height: 25px;">
+								<f:facet name="header">
+									<h:outputText value="Date de relance" />
+								</f:facet>
+								<h:outputText value="#{current.impayee.dateRelance}">
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
+					</p:column>
+					
+					<p:column width="60" filterStyle="width: 70px;" filterBy="#{utilities.customFormatDate(current.dateHuissierNotaire)}" sortBy="#{utilities.customFormatDate(current.dateHuissierNotaire)}"
+				        filterMatchMode="contains" style="height: 25px;">
+								<f:facet name="header">
+									<h:outputText value="Date Affectation HN" />
+								</f:facet>
+								<h:outputText value="#{current.dateHuissierNotaire}">
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
+					</p:column>
+					
+					<p:column width="60" filterBy="#{current.huissiersNotaires.nom}" filterMatchMode="contains"
+						sortBy="#{current.huissiersNotaires.nom}">
+						<f:facet name="header">
+							<h:outputText value="Huissier notaire" />
+						</f:facet>
+						<h:outputText value="#{current.huissiersNotaires.nomfr}" />
+					</p:column>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<p:column width="60" filterStyle="width: 60px !important;" filterBy="#{current.impayee.clientAcquereur.groupe.libelle}" style="height: 25px;width: 60px!important;" filterOptions="#{suiviDesRecouvrementsBean.etatFilter}" filterMatchMode="exact" 
+						headerText="Groupe">
+                              <f:facet name="header">
+								<h:outputText value="Groupe" />
+							  </f:facet>
+										
+							<h:outputText value="#{current.impayee.clientAcquereur.groupe.libelle}" />
+					</p:column>
+					
+					
+
+					
+<!-- 					<p:column width="60" filterBy="#{current.clientAcquereur.nomPrenomFr}" filterMatchMode="contains" -->
+<!-- 						sortBy="#{current.clientAcquereur.nomPrenomFr}"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Nom" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText value="#{current.clientAcquereur.nomPrenomFr}" /> -->
+<!-- 					</p:column> -->
+
+<!-- 					<p:column width="60" filterBy="#{current.soldeDebiteur}" filterMatchMode="contains" -->
+<!-- 						sortBy="#{current.soldeDebiteur}"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Solde debiteur" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText value="#{current.soldeDebiteur}" /> -->
+<!-- 					</p:column> -->
+					
+					
+					
+<!-- 					<p:column width="60" filterStyle="width: 30px;" filterBy="#{utilities.customFormatDate(current.dateRelance)}" sortBy="#{utilities.customFormatDate(current.dateRelance)}" -->
+<!-- 								  filterMatchMode="contains" style="height: 25px;"> -->
+<!-- 										<f:facet name="header"> -->
+<!-- 											<h:outputText value="Date de relance" /> -->
+<!-- 										</f:facet> -->
+<!-- 										<h:outputText value="#{current.dateRelance}"> -->
+<!-- 											<f:convertDateTime pattern="dd/MM/yyyy"/> -->
+<!-- 										</h:outputText> -->
+<!-- 					</p:column> -->
+					
+					
+					
+					
+					
+					
+					
+					
+<!-- 					<p:column width="60" filterStyle="width: 60px !important;" filterBy="#{current.clientAcquereur.groupe.libelle}" style="height: 25px;width: 60px!important;" filterOptions="#{suiviDesRecouvrementsBean.etatFilter}" filterMatchMode="exact"  -->
+<!-- 								  headerText="Groupe"> -->
+<!--                                   		<f:facet name="header"> -->
+<!-- 											<h:outputText value="Groupe" /> -->
+<!-- 										</f:facet> -->
+										
+<!-- 										<h:outputText value="#{current.clientAcquereur.groupe.libelle}" /> -->
+																				
+
+										
+
+<!-- 								  </p:column> -->
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+
+					
+
+					
+				</p:dataTable>
+			
+			</p:panel>
+		</h:form>
+		
+		<p:confirmDialog id="diagRelancer"
+                    message="Confirmez vous l'edition des lettres de relances"
+                    header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+                    widgetVar="lettreCom" appendTo="@(body)">
+                    <div align="right">
+                           <h:form id="diagForm">
+                                   <h:commandLink action="#{precontentieuxBean.editionLettreDeCommande}"
+                                        immediate="true">
+                                       	 	<p:commandButton value="#{generalmsgs['popup.confirmer']}" update=":utilisateurForm:dta"
+                                         	oncomplete="PF('lettreCom').hide();"
+                                         	styleClass="ui-priority-primary" immediate="true" />
+                                  </h:commandLink>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                  <p:commandButton id="decline"
+                                        value="#{generalmsgs['popup.quitter']}" update=":utilisateurForm:dta"
+                                        onclick="PF('lettreCom').hide()" styleClass="ui-priority-primary" />
+                           </h:form>
+                    </div>
+             </p:confirmDialog>
+
+		
+		
+		
+
+	</ui:define>
+</ui:composition>
+</html>

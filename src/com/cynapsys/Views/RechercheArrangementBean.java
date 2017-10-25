@@ -1,0 +1,486 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
+
+import com.cynapsys.entities.Arrangement;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Groupe;
+import com.cynapsys.entities.HuissiersNotaires;
+import com.cynapsys.entities.Impayee;
+import com.cynapsys.entities.Precontentieu;
+import com.cynapsys.service.ArrangementService;
+import com.cynapsys.service.ClientAcquereurService;
+import com.cynapsys.service.GroupeService;
+import com.cynapsys.service.HuissiersNotairesService;
+import com.cynapsys.service.ImpayeeService;
+import com.cynapsys.service.PrecontentieuService;
+import com.cynapsys.utils.GenerateRapport;
+
+@ManagedBean(name = "rechercheArrangementBean")
+@ViewScoped
+public class RechercheArrangementBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@ManagedProperty(value = "#{precontentieuService}")
+	private PrecontentieuService precontentieuService;
+
+	@ManagedProperty(value = "#{huissiersNotairesService}")
+	private HuissiersNotairesService huissiersNotairesService;
+	
+	@ManagedProperty(value = "#{clientAcquereurService}")
+	private ClientAcquereurService clientAcquereurService;
+	
+	@ManagedProperty(value = "#{groupeService}")
+	private GroupeService groupeService;
+	
+	@ManagedProperty(value = "#{impayeeService}")
+	private ImpayeeService impayeeService;
+	
+	@ManagedProperty(value = "#{arrangementService}")
+	private ArrangementService arrangementService;
+
+	private List<Precontentieu> precontentieus;
+	private Precontentieu selectPrec;
+	private Arrangement selectArr;
+	private Precontentieu newPrecontentieu;
+	private List<HuissiersNotaires> huissiersNotaires;
+	private HuissiersNotaires selectHuissNotaire;
+	private List<Groupe> groupes;
+	private static  SelectItem[] etatFilter;
+	private ClientAcquereur clientRech;
+	String codeCltRech=null;
+	private Arrangement newArrangement;
+	private List<Arrangement> arrangements;
+	private Arrangement arrangementRecherche;
+	String codeC=null;
+	private Groupe selectGroupe;
+	private Date rechDateDeb;
+	private Date rechDateFin;
+	
+	@PostConstruct
+	public void initialisation() {
+		arrangements=arrangementService.findAllDta();
+		newArrangement=new Arrangement();
+		codeCltRech=null;
+		clientRech=new ClientAcquereur();
+		groupes=groupeService.findAll();
+		newPrecontentieu = new Precontentieu();
+		precontentieus = new ArrayList<Precontentieu>();
+		selectPrec = null;
+		selectArr=null;
+		huissiersNotaires = huissiersNotairesService.findAll();
+		arrangementRecherche=new Arrangement();
+		codeC=null;
+		selectGroupe = null;
+		// selectHuissNotaire=new HuissiersNotaires();
+		rechDateDeb=null;
+		rechDateFin=null;
+		FacesContext context = FacesContext.getCurrentInstance();
+	    String objectId = context.getExternalContext()
+	                .getRequestParameterMap().get("objectId");
+	    
+	    if(objectId!=null && !objectId.isEmpty()){
+	    	System.out.println(" from other bean : "+objectId);
+	    }
+	    
+	    else{
+	    	System.out.println("erruer passage param");
+	    }
+	}
+
+	public void createArrangement() {
+		arrangements=arrangementService.findAllDta();
+		newArrangement=new Arrangement();
+		codeCltRech=null;
+		groupes=groupeService.findAll();
+		clientRech=new ClientAcquereur();
+		selectPrec = null;
+		selectArr=null;
+		precontentieus = new ArrayList<Precontentieu>();
+		newPrecontentieu = new Precontentieu();
+		selectHuissNotaire = new HuissiersNotaires();
+		arrangementRecherche=new Arrangement();
+		codeC=null;
+		selectGroupe = null;
+		rechDateDeb=null;
+		rechDateFin=null;
+	}
+
+	public void editionLettreDeCommande() {
+
+	}
+
+	public void mettreAjourPrec() {
+		precontentieuService.update(newPrecontentieu);
+	}
+
+	public void onSelectPrec() {
+		newPrecontentieu = selectPrec;
+		
+	}
+	public void onSelectArr() {
+		newArrangement = selectArr;
+		codeCltRech=newArrangement.getPrecontentieu().getImpayee().getClientAcquereur().getCodeAcquereur().toString();
+		clientRech.setNomPrenomFr(newArrangement.getPrecontentieu().getImpayee().getClientAcquereur().getNomPrenomFr());
+		clientRech.setAdresseCorrespondance(newArrangement.getPrecontentieu().getImpayee().getClientAcquereur().getAdresseCorrespondance());
+		clientRech.setGroupe(newArrangement.getPrecontentieu().getImpayee().getClientAcquereur().getGroupe());
+	}
+
+	public void onChangeHuissierNotaire() {
+		System.out.println("nombre de prec affectes est : "
+				+ precontentieuService
+						.findByHuissierNotaire(selectHuissNotaire).size());
+		precontentieus = precontentieuService
+				.findByHuissierNotaire(selectHuissNotaire);
+	}
+	
+	public void onChangeCodeClt(){
+		newArrangement.setMontantArrieres(null);
+		clientRech=clientAcquereurService.findById(codeCltRech);
+		if(clientRech!=null){
+			newArrangement.setMontantArrieres(impayeeService.findImpayeByClientAcquereur(clientRech).get(0).getSoldeDebiteur());
+		}
+		
+	//	System.out.println("nom du client a rechercher : "+clientRech.getNomPrenomFr());
+		//System.out.println("groupe du client a rechercher : "+clientRech.getGroupe().getLibelle());
+		
+	}
+	public void saveArrangement(){
+		//System.out.println(newArrangement.getMontantArrieres());
+		System.out.println(impayeeService.findImpayeByClientAcquereur(clientRech).get(0).getSoldeDebiteur());
+		System.out.println(impayeeService.findImpayeByClientAcquereur(clientRech).get(0).getPrecontentieu().getId());
+		newArrangement.setPrecontentieu(impayeeService.findImpayeByClientAcquereur(clientRech).get(0).getPrecontentieu());
+		arrangementService.save(newArrangement);
+		imprimerArrangement(newArrangement);
+	}
+	
+	
+	
+	
+	
+	
+	public void rechercher(){
+		Precontentieu precontentieu=new Precontentieu();
+		Impayee impayee=new Impayee();
+		ClientAcquereur clientAcquereur=new ClientAcquereur();
+		
+		if(codeC !=null && !codeC.isEmpty()){
+		clientAcquereur.setCodeAcquereur(String.valueOf(codeC));
+		}
+		
+		clientAcquereur.setGroupe(selectGroupe);
+		impayee.setClientAcquereur(clientAcquereur);
+		precontentieu.setImpayee(impayee);
+		arrangementRecherche.setPrecontentieu(precontentieu);
+		
+		
+		System.out.println("de bean : "+arrangementRecherche.getPrecontentieu().getImpayee().getClientAcquereur().getCodeAcquereur());
+		
+		arrangements=arrangementService.findByCriteres(arrangementRecherche, rechDateDeb, rechDateFin);
+		
+		
+		System.out.println(rechDateDeb);
+		System.out.println(rechDateFin);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	public void imprimerArrangement(Arrangement arrangement)
+	{
+		   arrangement=arrangementService.findById(arrangement.getId().toString());
+	       SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	       FacesContext cx = FacesContext.getCurrentInstance();
+	       ExternalContext extContext = cx.getExternalContext();
+	       HttpSession session = (HttpSession) extContext.getSession(true);
+	       HashMap<String, Object> data = new HashMap<String, Object>();
+	       //String codeTitre = newDossierContentieux.getTitreFoncier().getCodetitre();
+           
+	       data.put("impNom", arrangement.getPrecontentieu().getImpayee().getClientAcquereur().getNomPrenomFr());
+	       data.put("numLoc","1");
+	       data.put("localAdre","local adresse");
+	       data.put("dateImp",arrangement.getPrecontentieu().getImpayee().getDateRelance()+" "+(arrangement.getPrecontentieu().getDateRelance().getYear()+1900));
+	       data.put("impMontant",arrangement.getMontantArrieres().toString());
+	       data.put("montantAv",arrangement.getNombreMensualite()+"");
+	       data.put("numArr",arrangement.getId().toString());
+	       data.put("dateArr",arrangement.getDateDebut().toString());
+	       data.put("montantRest",String.valueOf(arrangement.getMontantArrieres().intValue()-arrangement.getNombreMensualite()));
+	       data.put("montantTranche",String.valueOf(arrangement.getMontantArrieres().intValue()/3));
+	       data.put("moisDateDebut",arrangement.getDateDebut().toString());
+	       data.put("moisDateFin",arrangement.getDateFin().toString());
+	       
+
+	       GenerateRapport.exportPDFWithDataSource("GCArrangement.jasper", data, "Arrangement_"+arrangement.getPrecontentieu().getImpayee().getClientAcquereur().getNomPrenomFr()+".pdf");
+
+	}
+	
+	
+	public String getMonthNameArabic(Date date) {
+		if (date.getMonth() == 1) {
+			return "جانفي";
+		}
+		if (date.getMonth() == 2) {
+			return "فيفري";
+		}
+		if (date.getMonth() == 1) {
+			return "مارس";
+		}
+		if (date.getMonth() == 3) {
+			return "أفريل";
+		}
+		if (date.getMonth() == 4) {
+			return "ماي";
+		}
+		if (date.getMonth() == 5) {
+			return "جانفي";
+		}
+		if (date.getMonth() == 6) {
+			return "جوان";
+		}
+		if (date.getMonth() == 7) {
+			return "جويلية";
+		}
+		if (date.getMonth() == 8) {
+			return "اوت";
+		}
+		if (date.getMonth() == 9) {
+			return "سبتمبر";
+		}
+		if (date.getMonth() == 10) {
+			return "اكتوبر";
+		}
+		if (date.getMonth() == 11) {
+			return "نوفمبر";
+		}
+		if (date.getMonth() == 12) {
+			return "ديسمبر";
+		}
+		return "faux";
+
+	}
+	
+	
+public  SelectItem[] getEtatFilter() {
+		
+		etatFilter = new SelectItem[groupes.size()+1];
+		etatFilter[0] = new SelectItem("", "");
+		for(int i=1;i<=groupes.size();i++){
+			etatFilter[i] = new SelectItem(groupes.get(i-1).getLibelle(),groupes.get(i-1).getLibelle());
+		}
+//		etatFilter[1] = new SelectItem(groupes.get(0).getLibelle(),groupes.get(0).getLibelle());
+//		etatFilter[2] = new SelectItem(groupes.get(1).getLibelle(),groupes.get(1).getLibelle());
+//		etatFilter[3] = new SelectItem(groupes.get(2).getLibelle(),groupes.get(2).getLibelle());
+		
+		return etatFilter;
+	}
+	public  void setEtatFilter(SelectItem[] etatFilter) {
+		RechercheArrangementBean.etatFilter = etatFilter;
+	}
+
+	public PrecontentieuService getPrecontentieuService() {
+		return precontentieuService;
+	}
+
+	public void setPrecontentieuService(
+			PrecontentieuService precontentieuService) {
+		this.precontentieuService = precontentieuService;
+	}
+
+	public List<Precontentieu> getPrecontentieus() {
+		return precontentieus;
+	}
+
+	public void setPrecontentieus(List<Precontentieu> precontentieus) {
+		this.precontentieus = precontentieus;
+	}
+
+	public Precontentieu getSelectPrec() {
+		return selectPrec;
+	}
+
+	public void setSelectPrec(Precontentieu selectPrec) {
+		this.selectPrec = selectPrec;
+	}
+
+	public HuissiersNotairesService getHuissiersNotairesService() {
+		return huissiersNotairesService;
+	}
+
+	public void setHuissiersNotairesService(
+			HuissiersNotairesService huissiersNotairesService) {
+		this.huissiersNotairesService = huissiersNotairesService;
+	}
+
+	public List<HuissiersNotaires> getHuissiersNotaires() {
+		return huissiersNotaires;
+	}
+
+	public void setHuissiersNotaires(List<HuissiersNotaires> huissiersNotaires) {
+		this.huissiersNotaires = huissiersNotaires;
+	}
+
+	public HuissiersNotaires getSelectHuissNotaire() {
+		return selectHuissNotaire;
+	}
+
+	public void setSelectHuissNotaire(HuissiersNotaires selectHuissNotaire) {
+		this.selectHuissNotaire = selectHuissNotaire;
+	}
+
+	public Precontentieu getNewPrecontentieu() {
+		return newPrecontentieu;
+	}
+
+	public void setNewPrecontentieu(Precontentieu newPrecontentieu) {
+		this.newPrecontentieu = newPrecontentieu;
+	}
+
+	public List<Groupe> getGroupes() {
+		return groupes;
+	}
+
+	public void setGroupes(List<Groupe> groupes) {
+		this.groupes = groupes;
+	}
+
+	public ClientAcquereur getClientRech() {
+		return clientRech;
+	}
+
+	public void setClientRech(ClientAcquereur clientRech) {
+		this.clientRech = clientRech;
+	}
+
+	public ClientAcquereurService getClientAcquereurService() {
+		return clientAcquereurService;
+	}
+
+	public void setClientAcquereurService(
+			ClientAcquereurService clientAcquereurService) {
+		this.clientAcquereurService = clientAcquereurService;
+	}
+
+	public String getCodeCltRech() {
+		return codeCltRech;
+	}
+
+	public void setCodeCltRech(String codeCltRech) {
+		this.codeCltRech = codeCltRech;
+	}
+
+	public GroupeService getGroupeService() {
+		return groupeService;
+	}
+
+	public void setGroupeService(GroupeService groupeService) {
+		this.groupeService = groupeService;
+	}
+
+	public Arrangement getNewArrangement() {
+		return newArrangement;
+	}
+
+	public void setNewArrangement(Arrangement newArrangement) {
+		this.newArrangement = newArrangement;
+	}
+
+	public ImpayeeService getImpayeeService() {
+		return impayeeService;
+	}
+
+	public void setImpayeeService(ImpayeeService impayeeService) {
+		this.impayeeService = impayeeService;
+	}
+
+	public ArrangementService getArrangementService() {
+		return arrangementService;
+	}
+
+	public void setArrangementService(ArrangementService arrangementService) {
+		this.arrangementService = arrangementService;
+	}
+
+	public List<Arrangement> getArrangements() {
+		return arrangements;
+	}
+
+	public void setArrangements(List<Arrangement> arrangements) {
+		this.arrangements = arrangements;
+	}
+
+	public Arrangement getSelectArr() {
+		return selectArr;
+	}
+
+	public void setSelectArr(Arrangement selectArr) {
+		this.selectArr = selectArr;
+	}
+
+	public Arrangement getArrangementRecherche() {
+		return arrangementRecherche;
+	}
+
+	public void setArrangementRecherche(Arrangement arrangementRecherche) {
+		this.arrangementRecherche = arrangementRecherche;
+	}
+
+	public String getCodeC() {
+		return codeC;
+	}
+
+	public void setCodeC(String codeC) {
+		this.codeC = codeC;
+	}
+
+	public Groupe getSelectGroupe() {
+		return selectGroupe;
+	}
+
+	public void setSelectGroupe(Groupe selectGroupe) {
+		this.selectGroupe = selectGroupe;
+	}
+
+	public Date getRechDateDeb() {
+		return rechDateDeb;
+	}
+
+	public void setRechDateDeb(Date rechDateDeb) {
+		this.rechDateDeb = rechDateDeb;
+	}
+
+	public Date getRechDateFin() {
+		return rechDateFin;
+	}
+
+	public void setRechDateFin(Date rechDateFin) {
+		this.rechDateFin = rechDateFin;
+	}
+	
+	
+	
+	
+	
+
+}

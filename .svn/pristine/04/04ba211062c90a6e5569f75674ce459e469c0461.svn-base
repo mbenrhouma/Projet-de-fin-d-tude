@@ -1,0 +1,21 @@
+
+ancienneQuittance.cree.succes=Ancienne quittance créé avec succès
+ancienneQuittance.modifie.succes=Ancienne quittance modiféé avec sucès
+ancienneQuittance.supprime.succes=Ancienne quittance supprimé avec sucès
+ancienneQuittance.error.supprimer=Vous ne pouvez pas supprimer cette Ancienne quittance
+ancienneQuittance.error.existe=Ancienne quittance existe 
+
+
+
+ancienneQuittance.numQuittance=N° quittance 
+ancienneQuittance.Client=Code client
+ancienneQuittance.groupe=Groupe
+ancienneQuittance.nomPrenom=Nom et Prénom
+ancienneQuittance.adresseClient=Adresse logement 
+ancienneQuittance.objet=Objet
+ancienneQuittance.modeDeReglement=Mode de règlement
+ancienneQuittance.montant=Montant
+ancienneQuittance.CompteADebiter=Compte à débiter 
+ancienneQuittance.dateDenregistrement=Date d\u2019enregistrement
+ancienneQuittance.dateValeur=Date Valeur
+ancienneQuittance.arreterau=Arrêter au

@@ -1,0 +1,14 @@
+package com.cynapsys.service;
+
+import java.util.Date;
+import java.util.List;
+
+import com.cynapsys.entities.Arrangement;
+
+public interface ArrangementService extends AbstractService<Arrangement> {
+	Arrangement findById(String id);
+
+	List<Arrangement> findByCriteres(Arrangement arrangement,Date dateD, Date dateF);
+
+	List<Arrangement> findAllDta();
+}

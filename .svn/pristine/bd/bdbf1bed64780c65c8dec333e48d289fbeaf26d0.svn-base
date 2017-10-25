@@ -1,0 +1,7 @@
+package com.cynapsys.service;
+
+import com.cynapsys.entities.Contrat;
+
+public interface ContratService extends AbstractService<Contrat>{
+	Contrat	findById(String id);
+}

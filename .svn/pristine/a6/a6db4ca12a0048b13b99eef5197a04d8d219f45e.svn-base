@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.MensualiteDAO;
+import com.cynapsys.entities.Mensualite;
+
+@SuppressWarnings("serial")
+@Repository("mensualiteDAO")
+public class MensualiteDAOImpl extends AbstractDAOImpl<Mensualite>
+		implements MensualiteDAO, Serializable {
+
+	public MensualiteDAOImpl() {
+		super(Mensualite.class);
+	}
+
+	@Override
+	public Mensualite findById(String id) {
+		
+		List<Mensualite> list=new ArrayList<Mensualite>();
+		try {
+			Criteria criteria= getSession().createCriteria(Mensualite.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

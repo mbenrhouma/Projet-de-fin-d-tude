@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="typeFraisForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.parametrage']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.param.typeFrais']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					
+				</p:breadCrumb>
+				<p:fieldset>
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{parammsgs['parametrage.id']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column >
+							<p:inputText id="typeFrais_code" style="width:210px;"
+							disabled="#{typeFraisBean.modif==1}"	
+								value="#{typeFraisBean.newTypeFrais.id}" required="true" label="code"
+								 maxlength="8">
+							</p:inputText>
+						</p:column>
+						
+					</p:row>
+						
+					<p:row>
+								<p:column style="width: 150px;">
+								<h:outputText value="#{parammsgs['parametrage.libellefr']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column >
+								<p:inputText id="codePostal_libelle" style="width:210px;"
+									required="true" label="#{parammsgs['parametrage.libellefr']}"
+									onkeyup="this.value=this.value.toUpperCase();"
+									value="#{typeFraisBean.newTypeFrais.libelleFr}">
+								</p:inputText>
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<h:outputText value="#{parammsgs['parametrage.libelleAr']}:"
+									 styleClass="weightBold"
+									 />
+							</p:column>
+							<p:column>
+								<p:inputText id="codePostalar_libelle" style="width:210px;" label="#{parammsgs['parametrage.libelleAr']}:"
+									onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;" 
+									value="#{typeFraisBean.newTypeFrais.libelleAr}">
+								</p:inputText>
+
+
+
+							</p:column>
+						</p:row>
+				</p:panelGrid>
+				</p:fieldset>
+				<br />
+
+				<br></br>
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}"
+						ajax="true"
+						process="@this" actionListener="#{typeFraisBean.createTypeFrais}"
+						update="@form">
+						<p:resetInput target="typeFraisForm" />
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						 oncomplete="if(!args.validationFailed){PF('updConfirmation').show()};" process="@form" >
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="delteBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.delete']}"
+						ajax="true" onstart="PF('suppConfirmation').show()" 
+						update=":typeFraisForm" process="@this"  disabled="#{typeFraisBean.selectTypeFrais==null}">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					
+						<br></br>
+						<p:dataTable id="dta" value="#{typeFraisBean.listTypeFrais}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}"
+					selection="#{typeFraisBean.selectTypeFrais}"
+					selectionMode="single"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					rowsPerPageTemplate="10,20,50,100,200,500"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					
+					>
+					<p:ajax event="rowSelect"
+						listener="#{typeFraisBean.onselectTypeFrais}"
+						update=":typeFraisForm:detail :typeFraisForm:delteBtn" />
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="type Frais" />
+						</h:commandLink>
+						<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/pdf.png" width="25px;" />
+							<p:dataExporter type="pdf" encoding="ISO-8859-1" target="dta"
+								fileName="type Frais" />
+						</h:commandLink>
+					</f:facet>
+					</f:facet>
+					<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.id}" sortBy="#{current.id}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{parammsgs['parametrage.id']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.id}" />
+					</p:column>
+						<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.libelleFr}" sortBy="#{current.libelleFr}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{parammsgs['parametrage.libelle']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.libelleFr}" />
+					</p:column>
+
+					</p:dataTable>
+
+				</div>
+			</p:panel>
+
+
+		</h:form>
+		<p:confirmDialog id="diagUpd" appendTo="@(body)"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="updConfirmation">
+			<div align="right">
+				<h:form id="diagForm1" dir="#{languageBean.languageAffich}">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update=":typeFraisForm:dta :typeFraisForm:detail"
+						oncomplete="PF('updConfirmation').hide();"
+						actionListener="#{typeFraisBean.saveTypeFrais}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="updConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+		
+		
+		<p:confirmDialog id="diagSupp"
+			message="#{generalmsgs['popup.confirm.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="suppConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm" dir="#{languageBean.languageAffich}">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update=":typeFraisForm:dta :typeFraisForm:detail"
+						oncomplete="PF('suppConfirmation').hide();document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{typeFraisBean.deleteTypeFrais}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update=":typeFraisForm:dta :typeFraisForm:detail"
+						onclick="PF('suppConfirmation').hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+	</ui:define>
+</ui:composition>
+</html>

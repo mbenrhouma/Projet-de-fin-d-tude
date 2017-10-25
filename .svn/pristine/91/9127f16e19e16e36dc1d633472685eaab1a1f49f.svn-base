@@ -1,0 +1,257 @@
+# ==============================================================================
+# Component Errors
+# ==============================================================================
+javax.faces.component.UIInput.CONVERSION={0} : une erreur de conversion est survenue.
+javax.faces.component.UIInput.REQUIRED={0} : erreur de validation. Vous devez indiquer une valeur.
+javax.faces.component.UIInput.UPDATE={0} \: une erreur est survenue lors du traitement des informations que vous avez soumises. 
+javax.faces.component.UISelectOne.INVALID={0} : erreur de validation. La valeur est incorrecte.
+javax.faces.component.UISelectMany.INVALID={0} : erreur de validation. La valeur est incorrecte.
+
+# ==============================================================================
+# Converter Errors
+# ==============================================================================
+javax.faces.converter.BigDecimalConverter.DECIMAL={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre d\u00E9cimal sign\u00E9.
+javax.faces.converter.BigDecimalConverter.DECIMAL_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre d\u00E9cimal sign\u00E9 compos\u00E9 de z\u00E9ro ou de plusieurs chiffres, pouvant \u00EAtre suivis d\u2019une virgule et d\u2019une fraction.  Exemple \: {1} 
+javax.faces.converter.BigIntegerConverter.BIGINTEGER={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres.
+javax.faces.converter.BigIntegerConverter.BIGINTEGER_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres. Exemple \: {1} 
+javax.faces.converter.BooleanConverter.BOOLEAN={1} \: \u00AB{0}\u00BB doit pr\u00E9senter la valeur \u2019true\u2019 ou \u2019false\u2019.
+javax.faces.converter.BooleanConverter.BOOLEAN_detail={1} \: \u00AB{0}\u00BB doit pr\u00E9senter la valeur \u2019true\u2019 ou \u2019false\u2019.  Toute valeur diff\u00E9rente de \u2019true\u2019 sera \u00E9valu\u00E9e comme \u00E9tant \u2019false\u2019.
+javax.faces.converter.ByteConverter.BYTE={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compris entre 0 et 255.
+javax.faces.converter.ByteConverter.BYTE_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compris entre 0 et 255.  Exemple \: {1} 
+javax.faces.converter.CharacterConverter.CHARACTER={1} \: \u00AB{0}\u00BB doit \u00EAtre un caract\u00E8re valide.
+javax.faces.converter.CharacterConverter.CHARACTER_detail={1} \: \u00AB{0}\u00BB doit \u00EAtre un caract\u00E8re ASCII valide.
+javax.faces.converter.DateTimeConverter.DATE={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que date.
+javax.faces.converter.DateTimeConverter.DATE_detail={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que date. Exemple \: {1} 
+javax.faces.converter.DateTimeConverter.TIME={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant qu\u2019heure.
+javax.faces.converter.DateTimeConverter.TIME_detail={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant qu\u2019heure. Exemple \: {1} 
+javax.faces.converter.DateTimeConverter.DATETIME={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que date et heure.
+javax.faces.converter.DateTimeConverter.DATETIME_detail={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que date et heure. Exemple \: {1} 
+javax.faces.converter.DateTimeConverter.PATTERN_TYPE={1} \: un attribut \u2019pattern\u2019 ou \u2019type\u2019 doit \u00EAtre sp\u00E9cifi\u00E9 pour convertir la valeur \u00AB{0}\u00BB.
+javax.faces.converter.DoubleConverter.DOUBLE={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres.
+javax.faces.converter.DoubleConverter.DOUBLE_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compris entre 4.9E-324 et 1.7976931348623157E308. Exemple \: {1} 
+javax.faces.converter.EnumConverter.ENUM={2} \: \u00AB{0}\u00BB doit pouvoir \u00EAtre converti en une valeur Enum.
+javax.faces.converter.EnumConverter.ENUM_detail={2} \: \u00AB{0}\u00BB doit pouvoir \u00EAtre converti en une valeur Enum \u00E0 partir de la valeur Enum contenant la constante \u00AB{1}\u00BB.
+javax.faces.converter.EnumConverter.ENUM_NO_CLASS={1} \: \u00AB{0}\u00BB doit pouvoir \u00EAtre converti en une valeur Enum \u00E0 partir de la valeur Enum, mais aucune classe Enum n\u2019est fournie.
+javax.faces.converter.EnumConverter.ENUM_NO_CLASS_detail={1} \: \u00AB{0}\u00BB doit pouvoir \u00EAtre converti en une valeur Enum \u00E0 partir de la valeur Enum, mais aucune classe Enum n\u2019est fournie.
+javax.faces.converter.FloatConverter.FLOAT={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres.
+javax.faces.converter.FloatConverter.FLOAT_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compris entre 1.4E-45 et 3.4028235E38. Exemple \: {1}
+javax.faces.converter.IntegerConverter.INTEGER={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres.
+javax.faces.converter.IntegerConverter.INTEGER_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compris entre -2147483648 et 2147483647. Exemple \: {1}
+javax.faces.converter.LongConverter.LONG={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres.
+javax.faces.converter.LongConverter.LONG_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compris entre -9223372036854775808 et 9223372036854775807. Exemple \: {1}
+javax.faces.converter.NumberConverter.CURRENCY={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que valeur mon\u00E9taire.
+javax.faces.converter.NumberConverter.CURRENCY_detail={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que valeur mon\u00E9taire. Exemple \: {1}
+javax.faces.converter.NumberConverter.PERCENT={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que pourcentage.
+javax.faces.converter.NumberConverter.PERCENT_detail={2} \: \u00AB{0}\u00BB n\u2019a pas pu \u00EAtre interpr\u00E9t\u00E9 en tant que pourcentage. Exemple \: {1}
+javax.faces.converter.NumberConverter.NUMBER={2} \: \u00AB{0}\u00BB n\u2019est pas un nombre.
+javax.faces.converter.NumberConverter.NUMBER_detail={2} \: \u00AB{0}\u00BB n\u2019est pas un nombre. Exemple \: {1}
+javax.faces.converter.NumberConverter.PATTERN={2} \: \u00AB{0}\u00BB n\u2019est pas un format num\u00E9rique.
+javax.faces.converter.NumberConverter.PATTERN_detail={2} \: \u00AB{0}\u00BB n\u2019est pas un format num\u00E9rique. Exemple \: {1}
+javax.faces.converter.ShortConverter.SHORT={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres.
+javax.faces.converter.ShortConverter.SHORT_detail={2} \: \u00AB{0}\u00BB doit \u00EAtre un nombre compris entre -32768 et 32767. Exemple \: {1}
+javax.faces.converter.STRING={1} \: impossible de convertir \u00AB{0}\u00BB en cha\u00EEne.
+
+
+# ==============================================================================
+# Validator Errors
+# ==============================================================================
+javax.faces.validator.DoubleRangeValidator.MAXIMUM={1} \: erreur de validation. La valeur est sup\u00E9rieure \u00E0 la valeur maximale autoris\u00E9e, "{0}".
+javax.faces.validator.DoubleRangeValidator.MINIMUM={1} \: erreur de validation. La valeur est inf\u00E9rieure \u00E0 la valeur minimale autoris\u00E9e, "{0}".
+javax.faces.validator.DoubleRangeValidator.NOT_IN_RANGE={2} \: erreur de validation. L\u2019attribut sp\u00E9cifi\u00E9 n\u2019est pas compris entre les valeurs attendues {0} et {1}.
+javax.faces.validator.DoubleRangeValidator.TYPE={0} \: erreur de validation. La valeur n\u2019est pas du type correct.
+javax.faces.validator.LengthValidator.MAXIMUM={1} \: erreur de validation. La longueur est sup\u00E9rieure \u00E0 la valeur maximale autoris\u00E9e, "{0}".
+javax.faces.validator.LengthValidator.MINIMUM={1} \: erreur de validation. La longueur est inf\u00E9rieure \u00E0 la valeur minimale autoris\u00E9e, "{0}".
+javax.faces.validator.LongRangeValidator.MAXIMUM={1} \: erreur de validation. La valeur est sup\u00E9rieure \u00E0 la valeur maximale autoris\u00E9e, "{0}".
+javax.faces.validator.LongRangeValidator.MINIMUM={1} \: erreur de validation. La valeur est inf\u00E9rieure \u00E0 la valeur minimale autoris\u00E9e, "{0}".
+javax.faces.validator.LongRangeValidator.NOT_IN_RANGE={2} \: erreur de validation. L\u2019attribut sp\u00E9cifi\u00E9 n\u2019est pas compris entre les valeurs attendues {0} et {1}.
+javax.faces.validator.LongRangeValidator.TYPE={0} \: doit \u00EAtre un nombre compos\u00E9 d\u2019un ou de plusieurs chiffres.
+javax.faces.validator.NOT_IN_RANGE=Erreur de validation \: l\u2019attribut sp\u00E9cifi\u00E9 n\u2019est pas compris entre les valeurs attendues {0} et {1}.
+javax.faces.validator.RegexValidator.PATTERN_NOT_SET=Le mod\u00E8le d\u2019expression r\u00E9guli\u00E8re doit \u00EAtre d\u00E9fini.
+javax.faces.validator.RegexValidator.PATTERN_NOT_SET_detail=La valeur d\u00E9finie du mod\u00E8le d\u2019expression r\u00E9guli\u00E8re ne peut pas \u00EAtre vide.
+javax.faces.validator.RegexValidator.NOT_MATCHED=Discordance du mod\u00E8le d\u2019expression r\u00E9guli\u00E8re.
+javax.faces.validator.RegexValidator.NOT_MATCHED_detail=Discordance du mod\u00E8le d\u2019expression r\u00E9guli\u00E8re \u00AB{0}\u00BB.
+javax.faces.validator.RegexValidator.MATCH_EXCEPTION=Erreur dans l\u2019expression r\u00E9guli\u00E8re.
+javax.faces.validator.RegexValidator.MATCH_EXCEPTION_detail=Erreur dans l\u2019expression r\u00E9guli\u00E8re,  \u00AB{0}\u00BB
+javax.faces.validator.BeanValidator.MESSAGE={0}
+
+
+primefaces.captcha.INVALID = {0}: Erreur de validation: Valeur invalide.
+primefaces.captcha.INVALID_detail = {0}: ''{1}'' does not match the displayed text.
+primefaces.password.INVALID_MATCH = Erreur de validation : {0} et {1} ne sont pas identiques.
+primefaces.password.INVALID_MATCH_detail = {0} et {1} ne sont pas identiques.
+utilisateur.modif.password=Changer mot de passe
+
+
+
+
+# GENERAL
+notification.augmentation.charge=Notification augmentation montant contrat
+notification.avisquittance=Notification avis quittance \u00E0 imprimer
+notification.relance=Relances \u00E0 imprimer
+
+popup.confirm.message.ajout.modification=Confirmez vous votre enregistrement?
+popup.confirm.message.imprimer=Voulez-vous imprimer le contrat?
+popup.confirm.message.annuler.resiliation=L'annulation de fin de bail engendre l'annulation des quittances relative \u00E0 l'annulation
+popup.confirm.message.mise.en.suspect=Confirmez vous la mise en suspension de la consommation?
+popup.confirm.message.valider.consommation=Confirmez vous la validation de la consommation ?
+popup.confirm.message.valider.facture=Confirmez vous la validation de la facture? 
+popup.confirm.message.supprission=Confirmez vous la suppression
+popup.corriger.header=Corriger la facture
+popup.valider_facture.header=Valider la facture
+popup.detail_consommation.header=D\u00E9tails consommation
+navigation.recherche=Rechercher
+popup.confirmer=Confirmer
+popup.quitter=Annuler
+popup.ok=OK
+popup.return=Retour
+popup.imprimer=Imprimer
+popup.creation=Ajoutez une nouvelle fiche ligne?
+navigation.newFiche=Ajouter
+navigation.consulter=D\u00E9tails
+navigation.option=Option
+navigation.new = Initialiser
+navigation.save = Enregistrer
+navigation.imprimer=Imprimer
+navigation.imprimer.tout=Tout imprimer 
+navigation.ajout=Ajouter
+navigation.modif=Modifier
+navigation.paiement=Paiement
+navigation.annuler=Annuler
+popup.consult=Consultez le d\u00E9tail?
+navigation.delete= Supprimer
+navigation.affecter.titre=Affecter Titre Foncier
+table.aucun.resultat= Aucun enregistrement trouv\u00E9
+popup.confirm.header = Confirmation
+popup.confirm.message = Confirmez vous la suppression?
+navigation.valider=Valider
+navigation.corriger=Corriger
+navigation.desactiver=D\u00E9sactiver
+navigation.activer=Activer
+navigation.return=Retour
+navigation.imprimer=Imprimer
+popup.confirm.desactive.message = Voulez-vous d\u00E9sactiver le compte utilisateur?
+popup.confirm.active.message = Voulez-vous activer le compte utilisateur?
+popup.confirm.message.cloture.adj=Voulez-vous cl\u00F4turer l'adjudication?
+facture.ajouter = Ajouter
+facture.cancel = Annuler
+local.gestion.facture = Gestion des factures
+local.historique = Historique location
+local.facture.liste=Liste des factures
+local.liste=Liste des locaux
+local.ajouter.facture = Ajouter Facture
+message.validation=Champ obligatoire
+message.email.validation=Email invalide !
+#Caisse
+caisse.affectation.agent=Affectation Agent
+caisse.affecter.agent=Affecter Agent
+#Locataire
+locataire.representant=Repr\u00E9sentant juridique
+locataire.societe = Informations de la societ\u00E9
+locataire.personne.physique = Informations locataire
+locataire.saisonniere.liste.societe = Liste des locataires saisonni\u00E8re de type soci\u00E9t\u00E9
+locataire.saisonniere.liste.personne.physique = Liste des locataires saisonni\u00E8re de type personne physique
+locataire.liste.societe = Liste des locataires de type soci\u00E9t\u00E9
+locataire.liste.personne.physique = Liste des locataires de type personne physique
+
+
+
+#Titre Foncier
+titre.foncier.imprimerpdf=Imprimer en PDF
+titre.foncier.imprimerexcel=Imprimer en Excel
+
+
+#Tiers
+tiers.representant=Repr\u00E9sentant juridique
+tiers.societe = Informations de la societ\u00E9
+tiers.personne.physique = Informations tiers
+tiers.liste.societe = Liste des tiers de type soci\u00E9t\u00E9
+tiers.liste.personne.physique = Liste des tiers de type personne physique
+
+#Intervention
+intervention.liste=Liste des interventions
+
+#Ordre paiement
+ordrepaiement.liste=Liste des ordres paiements
+navigation.ajout=Ajouter
+contrat.type.location.adjudication = Location par adjudication 
+contrat.type.location.fond.commerce = Location par achat de fonds de commerce
+contrat.type.location.directe = Location directe 
+contrat.information.general = Informations g\u00E9n\u00E9rales
+contrat.information.complementaire = Informations compl\u00E9mentaires
+navigation.contrat.resilier = Fin de bail
+navigation.contrat.resilier.annuler =Annuler fin de bail
+navigation.contrat.avenant = Avenant contrat
+contrat.periodicite = ann\u00E9e
+contrat.etat = Etat
+contrat.avenant = Avenant contrat
+contrat.information.avenant = Informations de l'avenant
+contrat.resilier.contrat = R\u00E9silier contrat
+contrat.augmentation.liste = Historique des loyers et des charges
+contrat.quittance.periodicite.loyer = Information quittance \u00E0 payer pour une p\u00E9riodicit\u00E9 de loyer
+contrat.quittance.loyer = Information quittance p\u00E9riodique \u00E0 payer
+adjudication.select.locaux =S\u00E9l\u00E9ctionner les locaux particpants dans l'adjudication
+navigation.cloture.adj=Cloturer
+
+navigation.mise.suspect=Mettre en suspension
+navigation.mise.service=Mettre en Service
+navigation.resilier=R\u00E9silier
+navigation.changer.adresse=Changer adresse
+
+popup.signal.message=Voulez-vous signaler non rapproch\u00E9e la facture ?
+popup.corrige.message=Voulez-vous corriger la facture?
+popup.rapprocher.message=Voulez-vous rapprocher la facture?
+popup.etat.rejet.non.correspondance.message=Voulez-vous g\u00E9n\u00E9rer un \u00E9tat de rejet pour les factures sans correspondance?
+popup.etat.rejet.non.rapproche.message=Voulez-vous g\u00E9n\u00E9rer un \u00E9tat de rejet pour les factures non rapproch\u00E9es?
+
+accueil.fiches_lignes=Fiches lignes
+accueil.mes_fiches_lignes=Mes fiches lignes
+accueil.facture_a_valider=Factures \u00E0 valider
+accueil.mes_facture_a_valider=Mes factures \u00E0 valider
+accueil.facture_a_payer=Factures \u00E0 payer
+accueil.mes_facture_a_payer=Mes factures \u00E0 payer
+accueil.detail_consommation=D\u00E9tails consommations
+accueil.mes_detail_consommation=Mes d\u00E9tails consommations
+
+
+error_sessionTimeOut_text=Votre session a expir\u00E9
+error_sessionTimeOut_header=Fin de session
+error_sessionTimeOut_button=S'identifier
+
+
+
+#DateRangeValidaor
+msg.dateRange.error=Erreur de validation des dates
+msg.dateRange.after=doit \u00EAtre apr\u00E9s
+msg.dateRange.before=doit \u00EAtre avant
+
+    #      debut Soufien                             
+commission.ajouter=Ajouter
+commission.retirer=Retirer
+	#     fin soufien 
+	
+	
+	 #      debut Souhail                               
+
+	 #     fin souhail 
+	
+	
+	 #      debut amal                               
+
+	 #     fin amal 
+	
+	
+	 #      debut majdi                               
+
+	 #     fin majdi                                  -
+
+
+    #      debut Mohamed                           
+#cession
+cession.lister= Liste des cessions sur salaire
+cession.actif = actif 
+cession.inactif = inactif
+	#     fin Mohamed   
+	
+	
+ajouter=Ajouter 
+

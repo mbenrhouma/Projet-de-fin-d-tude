@@ -1,0 +1,1080 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="DecompteForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.recette']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel
+							value="#{toppanmsgs['header.param.gestionDecompte']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+
+				</p:breadCrumb>
+
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder" rendered="#{decompteBean.rendered==1}">
+
+					<!--*****************************************************Client_Acquereur******************************************************************* -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{decomptemsgs['decompte.codeClient']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						
+						
+							<p:column style="width: 150px;">
+								<p:inputText id="client_acquereur" style="width:210px"
+									maxlength="17"
+									onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+									value="#{decompteBean.codeclient}" rendred="true"
+									required="true"
+									label="#{decomptemsgs['decompte.codeClient']}">
+								</p:inputText>
+
+							</p:column>
+						
+					<!--*****************************************************fraisContrat******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.fraisContrat']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="fraisContrat" style="width:210px"
+								value="#{decompteBean.fraisContrat}" required="true"
+								label="#{decomptemsgs['decompte.fraisContrat']}"
+								onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+
+							</p:inputText>
+
+
+						</p:column>
+					</p:row>
+					<!--*****************************************************fraisLotissement******************************************************************* -->
+
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.fraisLotissement']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="fraisLotissement" style="width:210px"
+								value="#{decompteBean.fraisLotissement}" required="true"
+								label="#{decomptemsgs['decompte.fraisLotissement']}"
+								onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************autreFrais******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.AutreFrais']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="AutreFrais" style="width:210px"
+								value="#{decompteBean.autreFrais}" required="true"
+								label="#{decomptemsgs['decompte.AutreFrais']}"
+								onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+							<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.interetretard']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="interetRet" style="width:210px"
+								value="#{decompteBean.interetRetard}" required="true" >
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************assure******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.apresEch']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210
+						px;">
+
+							<p:inputText id="interetAprEch" style="width:210px"
+								value="#{decompteBean.interetAprEch}" >
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:fieldset legend="#{decomptemsgs['decompte.identification']}" 
+				rendered="#{decompteBean.rendered!=1}">
+				<p:panelGrid id="detailIdent" style="width: 100%" styleClass="noBorder">
+									<!--*****************************************************numOrdre******************************************************************* -->
+
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.numOrdre']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="numOrdre" style="width:210px"
+								value="#{decompteBean.decompte.identification.numOrdre}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************groupe******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.groupe']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="groupe" style="width:210px"
+								value="#{decompteBean.decompte.identification.groupe}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+				
+				
+				
+					<!--*****************************************************numOrdre******************************************************************* -->
+
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.codeClient']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="codeClient" style="width:210px"
+								value="#{decompteBean.decompte.identification.codeClient}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************rang******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.rang']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="rang" style="width:210px"
+								value="#{decompteBean.decompte.identification.rang}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+				
+					</p:row>
+						<!--*****************************************************nomClient******************************************************************* -->
+					
+						<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.nomPrenomClient']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="3" style="width:310px;">
+
+							<p:inputText id="nomClient" style="width:310px"
+								value="#{decompteBean.decompte.identification.nomClient}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+
+					</p:row>
+										<!--*****************************************************adress******************************************************************* -->
+
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.adresse']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="adress" style="width:210px"
+								value="#{decompteBean.decompte.identification.adresse}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************codePostal******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.codePostal']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="codePostal" style="width:210px"
+								value="#{decompteBean.decompte.identification.codePostal}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+				
+					</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+				<br />
+				<p:fieldset legend="#{decomptemsgs['decompte.partieFinanciere']}" 
+				rendered="#{decompteBean.rendered!=1}">
+			<p:panelGrid id="detailFinan" style="width: 100%" styleClass="noBorder">
+			
+						<p:row rendered="#{decompteBean.decompte.financiere.prix==NULL}">
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.prixProv']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="prixProv" style="width:210px"
+								value="#{decompteBean.decompte.financiere.prixProv}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************AVANCE******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.avance']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="avanceProv" style="width:210px"
+								value="#{decompteBean.decompte.financiere.avancePrix}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+				
+								
+						<p:row rendered="#{decompteBean.decompte.financiere.prix!=NULL}">
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.prixDef']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="prixDef" style="width:210px"
+								value="#{decompteBean.decompte.financiere.prix}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************AVANCE******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.avance']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="avanceDef" style="width:210px"
+								value="#{decompteBean.decompte.financiere.avancePrix}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+				
+				<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.solde']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="solde" style="width:210px"
+								value="#{decompteBean.decompte.financiere.solde}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************assure******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.assure']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="assure" style="width:210px"
+								value="#{decompteBean.decompte.financiere.assure}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+				
+				
+								<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.dateDeb']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="dateDeb" style="width:210px"
+								value="#{decompteBean.decompte.financiere.dateDeb}" readonly="true">
+							<f:convertDateTime pattern="MM/yyyy"/>
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************dateFin******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.dateFin']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="dateFin" style="width:210px"
+								value="#{decompteBean.decompte.financiere.dateFin}" readonly="true">
+							<f:convertDateTime pattern="MM/yyyy"/>
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+				
+				
+								<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.interetretard']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="interetretard" style="width:210px"
+								value="#{decompteBean.decompte.financiere.interetRetard}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+
+					<!--*****************************************************assure******************************************************************* -->
+
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.apresEch']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="apresEch" style="width:210px"
+								value="#{decompteBean.decompte.financiere.interetAprEch}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+			
+			
+			
+			</p:panelGrid>
+				</p:fieldset>
+					<br />
+				<p:fieldset legend="#{decomptemsgs['decompte.ta']}"
+				 rendered="#{decompteBean.rendered!=1}">
+				 
+					<p:dataTable id="dtaTA" value="#{decompteBean.decompte.mensualiteList}" var="current"
+					paginator="true" rowKey="#{current.id}"
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.dateDeb']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateDebut}" >
+						<f:convertDateTime pattern="MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.dateFin']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateFin}" >
+						<f:convertDateTime pattern="MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.mensualite']}"/>
+						</f:facet>
+						<h:outputText value="#{current.mensualite}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.cumul']}"/>
+						</f:facet>
+						<h:outputText value="#{current.duree*12}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.interet']}"/>
+						</f:facet>
+						<h:outputText value="#{current.taux}" >
+						</h:outputText>
+					</p:column>
+					
+					</p:dataTable>
+				
+				</p:fieldset>
+					<br />
+				<p:fieldset legend="#{decomptemsgs['decompte.cd']}"
+				 rendered="#{decompteBean.rendered!=1}">
+				
+				
+					<p:dataTable id="dtaCD" value="#{decompteBean.decompte.cessionList}" var="current"
+					paginator="true" rowKey="#{current.id}"
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.dateDeb']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateDebut}" >
+						<f:convertDateTime pattern="MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.dateFin']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateFin}" >
+						<f:convertDateTime pattern="MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.mensualite']}"/>
+						</f:facet>
+						<h:outputText value="#{current.mensualite}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.cumul']}"/>
+						</f:facet>
+						<h:outputText value="#{current.duree}" >
+						</h:outputText>
+					</p:column>
+					</p:dataTable>
+				
+				</p:fieldset>
+					<br />
+			<p:fieldset legend="#{decomptemsgs['decompte.interetretard']}" rendered="#{decompteBean.rendered!=1}">
+				
+				<p:dataTable id="dtaInteretRetard" value="#{decompteBean.decompte.interetRetardList}" var="current"
+					paginator="true" rowKey="#{current.id}"
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.dateDeb']}"/>
+						</f:facet>
+						<h:outputText value="#{current.date}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.rms']}"/>
+						</f:facet>
+						<h:outputText value="#{current.countMois}" >
+						</h:outputText>
+					</p:column>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.debit']}"/>
+						</f:facet>
+						<h:outputText value="#{current.debit}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.credit']}"/>
+						</f:facet>
+						<h:outputText value="#{current.credit}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.echeance']}"/>
+						</f:facet>
+						<h:outputText value="#{current.echCD}" >
+						</h:outputText>
+					</p:column>
+					
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.solde']}"/>
+						</f:facet>
+						<h:outputText value="#{current.solde}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.cumulArriere']}"/>
+						</f:facet>
+						<h:outputText value="#{current.cumulArriere}" >
+						</h:outputText>
+					</p:column>
+					
+						<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.interet']}"/>
+						</f:facet>
+						<h:outputText value="#{current.interet}" >
+						</h:outputText>
+					</p:column>
+					</p:dataTable>
+				
+				
+	</p:fieldset>
+					<br />
+				<p:fieldset legend="#{decomptemsgs['decompte.apresEch']}" rendered="#{decompteBean.rendered!=1}">
+				
+				
+					<p:dataTable id="dtaInteretAprEch" value="#{decompteBean.decompte.interetApresEcheanceList}" var="current"
+					paginator="true" rowKey="#{current.id}"
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.date']}"/>
+						</f:facet>
+						<h:outputText value="#{current.date}" >
+						<f:convertDateTime pattern="MM/yyyy"/>
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.montant']}"/>
+						</f:facet>
+						<h:outputText value="#{current.montant}" >
+						</h:outputText>
+					</p:column>
+
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.solde']}"/>
+						</f:facet>
+						<h:outputText value="#{current.solde}" >
+						</h:outputText>
+					</p:column>
+					
+					<p:column  width="20" tyle="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{decomptemsgs['decompte.interet']}"/>
+						</f:facet>
+						<h:outputText value="#{current.interet}" >
+						</h:outputText>
+					</p:column>
+					
+			
+					</p:dataTable>
+				
+				
+				</p:fieldset>
+				
+					<br />
+		<p:fieldset legend="#{decomptemsgs['decompte.frais']}" rendered="#{decompteBean.rendered!=1}">
+				
+				
+								<p:panelGrid id="detailFrais" style="width: 100%" styleClass="noBorder">
+				
+						<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.fraisAssurance']}"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="fraisAssurance" style="width:210px"
+								value="#{decompteBean.decompte.frais.fraisAssurance}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+						</p:row>
+					<!--*****************************************************fraisContentieux******************************************************************* -->
+						<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.fraisContentieux']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="fraisContentieux" style="width:210px"
+								value="#{decompteBean.decompte.frais.fraisContentieux}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.fraisContrat']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="fraisContratFrais" style="width:210px"
+								value="#{decompteBean.decompte.frais.fraisContrat}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+						<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.fraisLotissement']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="fraisLotissementFrais" style="width:210px"
+								value="#{decompteBean.decompte.frais.fraisLotissement}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+										<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.AutreFrais']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="autreFrais" style="width:210px"
+								value="#{decompteBean.decompte.frais.autresFrais}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.totalFrais']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="totalFrais" style="width:210px"
+								value="#{decompteBean.decompte.frais.totalFrais}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+				</p:panelGrid>
+				
+				
+				</p:fieldset>
+					<br />
+			<p:fieldset legend="#{decomptemsgs['decompte.recap']}" rendered="#{decompteBean.rendered!=1}">
+
+				
+				
+				
+					<p:panelGrid id="detailRecap" style="width: 100%" styleClass="noBorder">
+				
+						<p:row>
+						<p:column style="width:210px;">
+							<h:outputText
+								value="#{decomptemsgs['decompte.solde']}"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+							<p:inputText id="soldeRecap" style="width:210px"
+								value="#{decompteBean.decompte.recap.solde}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+						</p:row>
+					<!--*****************************************************fraisContentieux******************************************************************* -->
+						<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.interet1']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="interet1" style="width:210px"
+								value="#{decompteBean.decompte.recap.interet1}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.interet2']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="interet2" style="width:210px"
+								value="#{decompteBean.decompte.recap.interet2}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+						<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.restantDu']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="frrestantDuRecap" style="width:210px"
+								value="#{decompteBean.decompte.recap.capitalRestantDu}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+										<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.reliquatPrix']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="reliquatPrix" style="width:210px"
+								value="#{decompteBean.decompte.recap.reliquatPrix}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.echeanceDC']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="echeanceCD" style="width:210px"
+								value="#{decompteBean.decompte.recap.echeanceCD}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.recetteDC']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="recetteCD" style="width:210px"
+								value="#{decompteBean.decompte.recap.recetteCD}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.cdnp']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="cdnpRecap" style="width:210px"
+								value="#{decompteBean.decompte.recap.cDNP}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.totalFrais']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="totalFraisRecap" style="width:210px"
+								value="#{decompteBean.decompte.recap.totalFrais}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.capitalDeces']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="capitalDeces" style="width:210px"
+								value="#{decompteBean.decompte.recap.capitalDeces}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.versAprEch']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="versApresEch" style="width:210px"
+								value="#{decompteBean.decompte.recap.versApEch}" readonly="true">
+
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+										
+					<p:row>
+						<p:column style="width:210px;">
+							<h:outputText value="#{decomptemsgs['decompte.soldeDef']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:210px;">
+
+
+							<p:inputText id="soldeDef" style="width:210px"
+								value="#{decompteBean.decompte.recap.soldeDefinitif}" readonly="true">
+							</p:inputText>
+
+						</p:column>
+					</p:row>
+					
+				</p:panelGrid>
+				
+				
+				
+				
+				</p:fieldset>
+							<br />
+
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this" actionListener="#{decompteBean.initialisation()}"
+						update="@form">
+						<p:resetInput target="DecompteForm" />
+					</p:commandButton>
+					
+					<p:spacer width="5px" />
+					<p:commandButton id="calculBtn" styleClass="ui-priority-primary"
+						value="#{decomptemsgs['decompte.decompte']}" ajax="true"
+						actionListener="#{decompteBean.calculDecompte()}"
+						rendered="#{decompteBean.rendered==1}"
+						process="@form" update="@form">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					
+					<p:commandButton id="saveBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						actionListener="#{decompteBean.saveDecompte()}"
+						rendered="#{decompteBean.rendered!=1}"
+						process="@form" update="@form">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="genererBtn" styleClass="ui-priority-primary"
+						value="#{decomptemsgs['decompte.genererDecompte']}"
+						ajax="false" rendered="#{decompteBean.rendered!=1}"
+						process="@this" actionListener="#{decompteBean.imprimeDecompte()}"
+						update="@form">
+						</p:commandButton>
+						<p:spacer width="5px" />
+				</div>
+
+
+			</p:panel>
+
+
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

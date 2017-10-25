@@ -1,0 +1,224 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ContentieuxDAO;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Contentieux;
+
+@SuppressWarnings("serial")
+@Repository("contentieuxDAO")
+public class ContentieuxDAOImpl extends AbstractDAOImpl<Contentieux>
+		implements ContentieuxDAO, Serializable {
+
+	public ContentieuxDAOImpl() {
+		super(Contentieux.class);
+	}
+
+	@Override
+	public Contentieux findById(String id) {
+		
+		List<Contentieux> list=new ArrayList<Contentieux>();
+		try {
+			Criteria criteria= getSession().createCriteria(Contentieux.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+	@Override
+	public List<Contentieux> findAllDta() {
+		try {
+			Criteria criteria = getSession().createCriteria(Contentieux.class);
+			// clause select
+			criteria.setProjection(Projections
+					.projectionList()
+					.add(Projections.alias(Projections.property("id"),
+							"id"))
+					.add(Projections.alias(Projections.property("numDossier"),
+							"numDossier"))
+					.add(Projections.alias(Projections.property("dateTransmission"),
+							"dateTransmission"))
+					.add(Projections.alias(Projections.property("precontentieu"),
+							"precontentieu"))
+					.add(Projections.alias(Projections.property("dateRelanceContentieux"),
+							"dateRelanceContentieux"))
+					.add(Projections.alias(Projections.property("arrangement"),
+							"arrangement")));
+
+			// Set to result transformer
+			criteria.setResultTransformer(Transformers
+					.aliasToBean(Contentieux.class));
+			
+			List<Contentieux> list = criteria.list();
+			
+//			for(Locataire l:list){
+//				if(l.isEtat()){		
+//					locatairesActifs.add(l);
+//				}
+//			}
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<Contentieux>();
+		}
+	}
+
+	@Override
+	public List<Contentieux> findByCriteres(Contentieux contentieux, Date dated,
+			Date datef, String etatRelance) {
+		List<Contentieux> list=new ArrayList<Contentieux>();
+		
+		
+		try {
+			Criteria criteria = getSession().createCriteria(Contentieux.class);
+		// clause select
+			
+//			criteria.createAlias("clientAcquereur", "ca");
+//			criteria.createAlias("ca.groupe", "caf");
+			
+			criteria.createAlias("precontentieu", "p");
+			criteria.createAlias("p.impayee", "pi");
+			criteria.createAlias("pi.clientAcquereur", "pic");
+			criteria.createAlias("pic.groupe", "picg");
+			
+			if(contentieux.getPrecontentieu().getImpayee().getClientAcquereur().getCodeAcquereur()!=null){
+				
+					criteria.add(Restrictions.eq("pic.codeAcquereur", contentieux.getPrecontentieu().getImpayee().getClientAcquereur().getCodeAcquereur()));
+				
+			}
+			
+			if(contentieux.getPrecontentieu().getImpayee().getClientAcquereur().getNomPrenomFr()!=null){
+				
+				criteria.add(Restrictions.like("pic.nomPrenomFr", contentieux.getPrecontentieu().getImpayee().getClientAcquereur().getNomPrenomFr(),MatchMode.START));
+			
+			}
+			if(contentieux.getPrecontentieu().getImpayee().getClientAcquereur().getGroupe()!=null){
+				criteria.add(Restrictions.like("picg.libelle", contentieux.getPrecontentieu().getImpayee().getClientAcquereur().getGroupe().getLibelle(),MatchMode.ANYWHERE));
+			}
+			
+			if(contentieux.getNumDossier()!=null){
+				criteria.add(Restrictions.like("numDossier", contentieux.getNumDossier(),MatchMode.START));
+			}
+			
+			
+			if(dated!=null && datef!=null){
+				System.out.println("resultat date"+datef.compareTo(dated));
+				criteria.add(Restrictions.between("dateTransmission", dated, datef));
+			}
+			
+			if(dated!=null && datef==null){
+				criteria.add(Expression.ge("dateTransmission",dated));
+			}
+			
+			if(dated==null && datef!=null){
+				criteria.add(Expression.le("dateTransmission",datef));
+			}
+			
+			
+			
+		
+		
+		
+		
+		
+		
+			 list = criteria.list();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		if(etatRelance.equals("o")){
+			for(int i=0;i<list.size();i++){
+				if(list.get(i).getDateRelanceContentieux()==null){
+					list.remove(i);
+				}
+			}
+		}
+		
+		if(etatRelance.equals("n")){
+			for(int j=0;j<list.size();j++){
+				if(list.get(j).getDateRelanceContentieux()!=null){
+					list.remove(j);
+				}
+			}
+		}
+		System.out.println("recherche contn, taille de la liste : "+list.size());
+		return list;
+}
+
+	@Override
+	public List<Contentieux> findContentieuxByClientAcquereur(ClientAcquereur clientAcquereur) {
+		
+		StringBuilder req = new StringBuilder();
+		req.append("from Contentieux c ");
+		req.append("left join fetch c.precontentieu as pr"
+				+ " left join fetch pr.impayee as im"
+				+ " left join fetch im.clientAcquereur as ca ");
+		req.append("where ca.codeAcquereur= ")
+				.append(clientAcquereur.getCodeAcquereur());
+		List<Contentieux> contentieus=this.getHibernateTemplate().find(req.toString());
+			return contentieus;
+	}
+
+	@Override
+	public Contentieux findContentieuxByCodeClientAcquereur(String codeAcquereur) {
+		Contentieux contentieux = new Contentieux();
+		try {
+		StringBuilder req = new StringBuilder();
+		req.append("from Contentieux c ");
+		req.append("left join fetch c.precontentieu as pr"
+				+ " left join fetch pr.impayee as im"
+				+ " left join fetch im.clientAcquereur as ca ");
+		req.append("where ca.codeAcquereur= ")
+				.append(codeAcquereur);
+		List<Contentieux> contentieus=this.getHibernateTemplate().find(req.toString());
+			return contentieus.get(0);
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		return contentieux;
+	}
+}
+
+	@Override
+	public List<Contentieux> findContentieuxByClientAcquereurZ(ClientAcquereur clientAcquereur) {
+		List<Contentieux> list = new ArrayList<Contentieux>();
+		
+		StringBuilder req = new StringBuilder();
+		req.append("from Contentieux I ");
+		req.append(" left join I.precontentieuList as f join f.impayeeList as fl join fl.clientAcquereur as w ");
+		req.append(" where w.codeAcquereur= '")
+				.append(clientAcquereur.getCodeAcquereur()).append("'");
+		list = (List<Contentieux>) this.getHibernateTemplate().find(req.toString());
+		if (list != null && !list.isEmpty()){
+			return list;}
+		else{
+			return null;
+			}
+			
+	}
+
+
+
+}

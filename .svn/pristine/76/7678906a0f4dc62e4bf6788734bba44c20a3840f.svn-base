@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="Form">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.parametrage']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.param.typeMainlevee']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					
+				</p:breadCrumb>
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{paramfrmsgs['parametrage.id']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="_code" style="width:560px;"
+							disabled="#{mainleveeBean.modif==1}"	
+								value="#{mainleveeBean.newMainlevee.id}" required="true" label="code">
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;" width="200">
+							<h:outputText value="#{paramarmsgs['parametrage.id']}:"
+								dir="rtl" styleClass="weightBoldAr" style="  margin-left: 10px;" />
+						</p:column>
+					</p:row>
+						
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{paramfrmsgs['parametrage.libelle']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:inputText id="_libelle" style="width:235px;" required="true" label="libelle"  onkeyup="this.value=this.value.toUpperCase();" value="#{mainleveeBean.newMainlevee.libellefr}"
+							>
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:inputText id="ar_libelle" style="width:235px;"
+							onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;"
+								value="#{mainleveeBean.newMainlevee.libellear}">
+							</p:inputText>
+
+
+					
+						</p:column>
+						<p:column>
+						</p:column>
+						<p:column style="text-align: right;" width="100">
+							<h:outputText value="#{paramarmsgs['parametrage.libelle']}:"  dir="rtl" styleClass="weightBoldAr"
+								style="  margin-left: 10px;" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+
+				<br></br>
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}"
+						ajax="true"
+						process="@this" actionListener="#{mainleveeBean.createMainlevee}"
+						update="@form">
+						<p:resetInput target="Form" />
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						 oncomplete="if(!args.validationFailed){PF('updConfirmation').show()};" process="@form" >
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="delteBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.delete']}"
+						ajax="true" onstart="PF('suppConfirmation').show()" 
+						update=":Form" process="@this"  disabled="#{mainleveeBean.selectMainlevee==null}">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					
+						<br></br>
+						<p:dataTable id="dta" value="#{mainleveeBean.listMainlevee}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}"
+					selection="#{mainleveeBean.selectMainlevee}"
+					selectionMode="single"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					rowsPerPageTemplate="10,20,50,100,200,500"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					
+					>
+					<p:ajax event="rowSelect"
+						listener="#{mainleveeBean.onselectMainlevee}"
+						update=":Form:detail :Form:delteBtn" />
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="Sexe Locataire" />
+						</h:commandLink>
+						<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/pdf.png" width="25px;" />
+							<p:dataExporter type="pdf" encoding="ISO-8859-1" target="dta"
+								fileName="" />
+						</h:commandLink>
+					</f:facet>
+					</f:facet>
+					<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.id}" sortBy="#{current.id}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{paramfrmsgs['parametrage.id']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.id}" />
+					</p:column>
+						<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.libellefr}" sortBy="#{current.libellefr}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{paramfrmsgs['parametrage.libelle']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.libellefr}" />
+					</p:column>
+
+					</p:dataTable>
+
+				</div>
+			</p:panel>
+
+
+		</h:form>
+		<p:confirmDialog id="diagUpd" appendTo="@(body)"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="updConfirmation">
+			<div align="right">
+				<h:form id="diagForm1">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update=":Form:dta :Form:detail"
+						oncomplete="PF('updConfirmation').hide();"
+						actionListener="#{mainleveeBean.saveMainlevee}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="updConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+		
+		
+		<p:confirmDialog id="diagSupp"
+			message="#{generalmsgs['popup.confirm.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="suppConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update=":Form:dta :Form:detail"
+						oncomplete="PF('suppConfirmation').hide();document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{mainleveeBean.deleteMainlevee}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update=":Form:dta :Form:detail"
+						onclick="PF('suppConfirmation').hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+	</ui:define>
+</ui:composition>
+</html>

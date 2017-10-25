@@ -1,0 +1,91 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ClientAcquereurDAO;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.NoteDebit;
+
+@SuppressWarnings("serial")
+@Repository("clientAcquereurDAO")
+public class ClientAcquereurDAOImpl extends AbstractDAOImpl<ClientAcquereur>
+		implements ClientAcquereurDAO, Serializable {
+
+	public ClientAcquereurDAOImpl() {
+		super(ClientAcquereur.class);
+	}
+
+	@Override
+	public ClientAcquereur findById(String id) {
+		
+		List<ClientAcquereur> list = new ArrayList<ClientAcquereur>();
+		StringBuilder req = new StringBuilder();
+		req.append(
+				"from ClientAcquereur I left join fetch I.groupe where I.id = '").append(id)
+		.append("'");
+		list = (List<ClientAcquereur>) this.getHibernateTemplate().find(req.toString());
+
+		return list.get(0);
+		
+	}
+
+	
+	@Override
+	public List<ClientAcquereur> rechercheClientAcquereur(ClientAcquereur clientAcquereur) {
+	
+		try {
+		
+			Criteria criteria = getSession().createCriteria(ClientAcquereur.class);
+
+			
+			// clause select
+//			if(clientAcquereur.getAssureur()!=null && clientAcquereur.getAssureur().getCodeassureur()!=null){
+//				criteria.add(Restrictions.eq("assureur.codeassureur", clientAcquereur.getAssureur().getCodeassureur()));
+//			}
+			if(clientAcquereur.getGroupe()!=null && clientAcquereur.getGroupe().getCode()!=null){
+				criteria.add(Restrictions.eq("groupe.code", clientAcquereur.getGroupe().getCode()));
+			}
+			if(clientAcquereur.getNomPrenomFr()!=null && !"".equals(clientAcquereur.getNomPrenomFr())){
+				criteria.add(Restrictions.like("nomPrenomFr", "%"+clientAcquereur.getNomPrenomFr()+"%"));
+			}
+			if(clientAcquereur.getAdresseCorrespondance()!=null && !"".equals(clientAcquereur.getAdresseCorrespondance())){
+				criteria.add(Restrictions.like("adresseCorrespondance", "%"+clientAcquereur.getAdresseCorrespondance()+"%"));
+			}
+//			if(clientAcquereur.getAnneebudgetaire()!=null){
+//				criteria.add(Restrictions.eq("anneebudgetaire", clientAcquereur.getAnneebudgetaire()));
+//			}
+			
+			return criteria.list();
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return new ArrayList<ClientAcquereur>();
+		}
+	}
+
+
+@Override
+public List<ClientAcquereur> findDTA() {
+		List<ClientAcquereur> list = new ArrayList<ClientAcquereur>();
+		StringBuilder req = new StringBuilder();
+		req.append("from ClientAcquereur I  "
+			
+				+ " left join fetch I.groupe");
+		list = (List<ClientAcquereur>) this.getHibernateTemplate().find(req.toString());
+
+		if (list != null && !list.isEmpty())
+			return  list;
+		else
+			return null;
+	}
+
+
+}

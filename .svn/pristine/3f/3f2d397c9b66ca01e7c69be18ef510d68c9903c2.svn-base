@@ -1,0 +1,67 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.ContratLocataireDAO;
+import com.cynapsys.entities.ContratLocataire;
+import com.cynapsys.service.ContratLocataireService;
+@Service("contratLocataireService")
+public class ContratLocataireServiceImpl  implements ContratLocataireService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private ContratLocataireDAO contratLocataireDAO;
+	@Override
+	public Object save(ContratLocataire entity) {
+		return contratLocataireDAO.save(entity);
+	}
+	@Override
+	public void flush(ContratLocataire entity) {
+		contratLocataireDAO.flush(entity);		
+	}
+	@Override
+	public void update(ContratLocataire entity) {
+		contratLocataireDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(ContratLocataire entity) throws Exception {
+		return contratLocataireDAO.delete(entity);
+	}
+	@Override
+	public ContratLocataire find(Object idClass) {
+		return contratLocataireDAO.find(idClass);
+	}
+	@Override
+	public List<ContratLocataire> findAll() {
+		return contratLocataireDAO.findAll();
+	}
+	@Override
+	public List<ContratLocataire> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return contratLocataireDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return contratLocataireDAO.getCount(filters);
+	}
+	@Override
+	public List<ContratLocataire> findSorted(String sortField, boolean sortOrder) {
+		return contratLocataireDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public ContratLocataire findById(String id) {
+		return contratLocataireDAO.findById(id);
+	}
+	public ContratLocataireDAO getContratLocataireDAO() {
+		return contratLocataireDAO;
+	}
+	public void setContratLocataireDAO(ContratLocataireDAO contratLocataireDAO) {
+		this.contratLocataireDAO = contratLocataireDAO;
+	}
+
+}

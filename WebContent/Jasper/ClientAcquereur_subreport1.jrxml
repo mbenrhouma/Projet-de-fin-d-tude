@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ClientAcquereur_subreport1" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5bc67efb-d32b-4234-a90a-570aed7e3f20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<field name="codeAcquereur" class="java.lang.String"/>
+	<field name="nomPrenomFr" class="java.lang.String"/>
+	<field name="adresseLoge" class="java.lang.Object"/>
+	<field name="solde" class="java.lang.String"/>
+	<field name="groupe" class="java.lang.String"/>
+	<field name="codePostal" class="java.lang.String"/>
+	<group name="Groupe" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{groupe}]]></groupExpression>
+	</group>
+	<group name="groupe">
+		<groupExpression><![CDATA[$F{groupe}]]></groupExpression>
+		<groupHeader>
+			<band height="73">
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="53" width="112" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bb2ca566-f644-4252-8438-c7d632842cbe"/>
+					<box leftPadding="0">
+						<pen lineWidth="1.0" lineStyle="Dotted"/>
+						<topPen lineWidth="2.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[CODE CLIENT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="431" y="53" width="98" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="042f0465-708e-4f40-a995-8e5dd04d95d0"/>
+					<box>
+						<topPen lineWidth="2.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[SOLDE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="264" y="53" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="091a29a4-b235-485c-b08b-242779a26158"/>
+					<box>
+						<pen lineWidth="2.0"/>
+						<topPen lineWidth="2.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="0.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[ADRESSE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="362" y="53" width="69" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="af4150dd-12f3-4d71-a61f-0e33064c8d42"/>
+					<box>
+						<pen lineStyle="Dotted"/>
+						<topPen lineWidth="2.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[C POS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="112" y="53" width="152" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0606ec38-3610-4fe2-9d81-d6845394a20d"/>
+					<box>
+						<pen lineWidth="1.0" lineStyle="Dotted"/>
+						<topPen lineWidth="2.0" lineStyle="Dotted"/>
+						<leftPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+						<rightPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[NOM     ET    PRENOM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="264" y="17" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="91b8940b-2a7b-4e3d-8567-2522bc55fdcf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[groupe]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="374" y="17" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f062cf56-1583-49b5-982c-5413bd25aa0b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{groupe}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="112" y="0" width="152" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="594c0be2-686a-44a6-86ca-d0a174901f42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomPrenomFr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="0" y="0" width="112" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="6470c84d-debe-4eea-8e03-a18c1c46c232"/>
+				<box>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codeAcquereur}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="431" y="0" width="98" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="77f0c94d-1cc1-4f93-a27d-da86b025741d"/>
+				<box>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{solde}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="348" y="0" width="147" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="208bf235-b9b2-4232-9a90-e6f8fdcd6a9a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+			</textField>
+			<textField>
+				<reportElement x="264" y="0" width="100" height="20" uuid="a85a9ddb-73c0-4355-ac83-1b8fe237c0cf"/>
+				<textFieldExpression><![CDATA[""+$F{adresseLoge}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="362" y="0" width="69" height="20" uuid="94eb5547-6e17-4970-9ecc-0687e29a9172"/>
+				<textFieldExpression><![CDATA[$F{codePostal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

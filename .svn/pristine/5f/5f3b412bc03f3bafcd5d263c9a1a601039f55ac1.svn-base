@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Assurance;
+
+public interface AssuranceDAO  extends AbstractDAO<Assurance>{
+	Assurance findById(String id);
+}

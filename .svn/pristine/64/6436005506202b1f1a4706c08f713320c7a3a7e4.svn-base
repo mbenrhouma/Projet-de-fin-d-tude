@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.AssuranceDAO;
+import com.cynapsys.entities.Assurance;
+
+@SuppressWarnings("serial")
+@Repository("assuranceDAO")
+public class AssuranceDAOImpl extends AbstractDAOImpl<Assurance>
+		implements AssuranceDAO, Serializable {
+
+	public AssuranceDAOImpl() {
+		super(Assurance.class);
+	}
+
+	@Override
+	public Assurance findById(String id) {
+		
+		List<Assurance> list=new ArrayList<Assurance>();
+		try {
+			Criteria criteria= getSession().createCriteria(Assurance.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

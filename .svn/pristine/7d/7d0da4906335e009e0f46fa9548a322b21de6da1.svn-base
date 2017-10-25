@@ -1,0 +1,317 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.CessionDAO;
+import com.cynapsys.entities.Cession;
+import com.cynapsys.entities.CessionClient;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Employeur;
+
+@SuppressWarnings("serial")
+@Repository("cessionDAO")
+public class CessionDAOImpl extends AbstractDAOImpl<Cession> implements
+		CessionDAO, Serializable {
+
+	public CessionDAOImpl() {
+		super(Cession.class);
+	}
+
+	@Override
+	public Cession findById(String id) {
+
+		List<Cession> list = new ArrayList<Cession>();
+		try {
+			Criteria criteria = getSession().createCriteria(Cession.class);
+			criteria.add(Restrictions.eq("id", id));
+			list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);
+
+	}
+
+	 @Override
+	 public List<Cession> findAllDta() {
+	 try {
+	 Criteria criteria = getSession().createCriteria(Cession.class);
+	
+	 // clause select
+	
+	 criteria.setProjection(Projections
+	 .projectionList()
+	 .add(Projections.alias(Projections.property("id"), "id"))
+	 .add(Projections.alias(Projections.property("datedebut"),
+	 "datedebut"))
+	 .add(Projections.alias(Projections.property("dateFin"),
+	 "dateFin"))
+	 .add(Projections.alias(
+	 Projections.property("clientAcquereur"),
+	 "clientAcquereur")));
+	
+	 // Set to result transformer
+	 criteria.setResultTransformer(Transformers
+	 .aliasToBean(Cession.class));
+	
+	 List<Cession> list = criteria.list();
+	 return list;
+	 } catch (Exception e) {
+	 // TODO Auto-generated catch block
+	 e.printStackTrace();
+	 return new ArrayList<Cession>();
+	 }
+	 }
+
+	
+	@Override
+	public List<Cession> findByCriteres(Cession cession) {
+
+		List<Cession> list = new ArrayList<Cession>();
+		try {
+
+			Criteria criteria = getSession().createCriteria(Cession.class);
+			criteria.createAlias("clientAcquereur", "ca");
+
+//			if (cession.getClientAcquereur().getNomPrenomFr() != null) {
+//				criteria.add(Restrictions.like("ca.nomPrenomFr", cession
+//						.getClientAcquereur().getNomPrenomFr().toUpperCase(),
+//						MatchMode.START));
+//			}
+//
+//			if (cession.getClientAcquereur().getCodeAcquereur() != null) {
+//				criteria.add(Restrictions.eq("ca.codeAcquereur", cession
+//						.getClientAcquereur().getCodeAcquereur()));
+//			}
+
+			list = criteria.list();
+		} catch (Exception e) {
+
+			// TODO: handle exception
+
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+	
+//	@Override
+//	public List<Cession> findCessionByClientAcquereur(ClientAcquereur clientAcquereur) {
+//		
+//		StringBuilder req = new StringBuilder();
+//		req.append("from Cession C ");
+//		req.append("left join fetch C.clientAcquereur ");
+//		req.append("where C.clientAcquereur.codeAcquereur= ")
+//				.append(clientAcquereur.getCodeAcquereur());
+//		req.append("  and C.actif=1 ");
+//		List<Cession> cessions=this.getHibernateTemplate().find(req.toString());
+//			return cessions;
+//	}
+	
+	
+	@Override
+	public List<Cession> findCessionByClientAcquereur(ClientAcquereur clientAcquereur) {
+		StringBuilder req = new StringBuilder();
+		req.append("from Cession c left join fetch c.cessionClient cc left join fetch cc.clientAcquereur");
+		
+		req.append(" where cc.clientAcquereur.codeAcquereur=").append(clientAcquereur.getCodeAcquereur());
+				
+		List<Cession> list=this.getHibernateTemplate().find(req.toString());
+		if (list != null && !list.isEmpty()) {
+			return list;
+		} else {
+			return null;
+
+		}
+		
+	}
+	
+	@Override
+	public List<Cession> findCessionByCessionClient (CessionClient cessionClient) {
+		StringBuilder req = new StringBuilder();
+		req.append("from Cession C ");
+		req.append("left join fetch C.cessionClient ");
+		req.append("left join fetch C.employeur ");
+		req.append("where C.cessionClient.id= ")
+		.append(cessionClient.getId());
+		List<Cession> cessions=this.getHibernateTemplate().find(req.toString());
+		return cessions;
+		
+	}
+	
+	public List<Cession> findCessionbyDate(Date dd, Date df , Employeur emp){
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		
+		 List<Cession> list = new ArrayList<Cession>();
+		 StringBuilder req = new StringBuilder();
+		 
+		 
+		 req.append("from Cession s left join fetch s.employeur left join fetch s.cessionClient d left join fetch d.clientAcquereur  where s.employeur ="
+		 		 +emp.getCodeEmployeur() + " and ((s.dateDebut between '"
+		 		+ format.format(dd)+"' and '"
+		 		+ format.format(df)+"' ) or(s.dateFin between '"
+		 		+ format.format(dd)+"' and '"
+		 		+ format.format(df)+"' ) )");	
+		 
+
+		 list = (List<Cession>) this.getHibernateTemplate().find(req.toString());
+		 return list;
+	}
+	
+	@Override
+	public List<Cession> findCessionByClientAcquereurpasConj(ClientAcquereur clientAcquereur) {
+		StringBuilder req = new StringBuilder();
+		req.append("from Cession C ");
+		req.append("left join fetch C.cessionClient k left join fetch k.clientAcquereur  ");
+		req.append("left join fetch C.employeur ");
+		req.append("where k.clientAcquereur.codeAcquereur= ")
+		.append(clientAcquereur.getCodeAcquereur());
+		
+		List<Cession> cessions=this.getHibernateTemplate().find(req.toString());
+		return cessions;
+		
+	}
+	@Override
+	public List<Cession> findCessionByClientAcquereurConjoint(ClientAcquereur clientAcquereur) {
+		StringBuilder req = new StringBuilder();
+		req.append("from Cession C ");
+		req.append("left join fetch C.cessionClient k left join fetch k.clientAcquereur  ");
+		req.append("left join fetch C.employeur ");
+		req.append("where k.clientAcquereur.codeAcquereur= ")
+		.append(clientAcquereur.getCodeAcquereur());
+	
+		List<Cession> cessions=this.getHibernateTemplate().find(req.toString());
+		return cessions;
+		
+	}
+	@Override
+	public List<Cession>ayantCessionDelegation(){
+		List<Cession> list = new ArrayList<Cession>();
+
+		StringBuilder req = new StringBuilder();
+		req.append(
+				" select  distinct new Cession(I.id,I.dateDebut,I.dateFin,I.mensualite,f.id,fl.codeAcquereur,fl.nomPrenomFr,gr.code,gr.libelle)from  Cession I   ");
+		req.append(" left join I.cessionClient as f join f.clientAcquereur as fl join fl.groupe as gr ");
+		req.append(" where 1 = 1 ");
+
+	
+		req.append(" order by fl.nomPrenomFr ");
+		list = (List<Cession>) this.getHibernateTemplate().find(req.toString());
+
+		// *************************resultat*************************
+
+		if (list != null && !list.isEmpty())
+			return list;
+		else
+			return null;
+		
+	}	
+	
+	@Override
+	public List<Cession> findCessionByClientAcquereurEdition(String code) {
+		
+		StringBuilder req = new StringBuilder();
+		req.append("from Cession C ");
+		req.append("left join fetch C.cessionClient as B left join fetch B.clientAcquereur ");
+		req.append("where B.clientAcquereur.codeAcquereur= '")
+				.append(code).append("'");
+		req.append("");
+	
+		List<Cession> cessions=this.getHibernateTemplate().find(req.toString());
+			return cessions;
+	}
+	
+	@Override
+	public List<Cession> findCessionByClientAcquereurEditionCDActive() {
+		
+		List<Cession> list = new ArrayList<Cession>();
+
+		StringBuilder req = new StringBuilder();
+		req.append(
+				" select  distinct new Cession(I.id,I.dateDebut,I.dateFin,I.mensualite,f.id,fl.codeAcquereur,fl.nomPrenomFr,gr.code,gr.libelle)from  Cession I   ");
+		req.append(" left join I.cessionClient as f join f.clientAcquereur as fl join fl.groupe as gr ");
+		req.append(" where 1 = 1 ");
+		req.append(" and f.actif=1 ");
+
+	
+		req.append(" order by fl.nomPrenomFr ");
+		list = (List<Cession>) this.getHibernateTemplate().find(req.toString());
+
+		// *************************resultat*************************
+
+		if (list != null && !list.isEmpty())
+			return list;
+		else
+			return null;
+	}
+	@Override
+	public List<Cession> findCessionByClientAcquereurEditionCDEchuNonArchive() {
+		
+		List<Cession> list = new ArrayList<Cession>();
+
+		StringBuilder req = new StringBuilder();
+		req.append(
+				" select  distinct new Cession(I.id,I.dateDebut,I.dateFin,I.mensualite,f.id,fl.codeAcquereur,fl.nomPrenomFr,gr.code,gr.libelle)from  Cession I   ");
+		req.append(" left join I.cessionClient as f join f.clientAcquereur as fl join fl.groupe as gr ");
+		req.append(" where 1 = 1 ");
+		req.append(" and f.actif=1 ");
+		req.append(" and fl.datearchivage IS NOT NULL ");
+		
+
+	
+		req.append(" order by fl.nomPrenomFr ");
+		list = (List<Cession>) this.getHibernateTemplate().find(req.toString());
+
+		// *************************resultat*************************
+
+		if (list != null && !list.isEmpty())
+			return list;
+		else
+			return null;
+	}
+
+	@Override
+	public List<Cession> findCessionByemployeurEcheancier(Integer date) {
+		List<Cession> list = new ArrayList<Cession>();
+		date=1900+date;
+		StringBuilder req = new StringBuilder();
+		req.append(
+				" select  distinct new Cession(I.id,I.dateDebut,I.dateFin,I.mensualite,k.codeEmployeur,k.nomEmployeurFr)from  Cession as I   ");
+		req.append("  inner join I.employeur as k  ");
+		req.append(" where ");
+		
+
+		req.append (" (  to_number(to_char(I.dateDebut,'yyyy') ,'99999') < ").append(date+1);
+		req.append(") and (  to_number(to_char(I.dateFin,'yyyy') ,'99999') > ").append(date-1);
+		req.append(")");
+
+	
+		
+		
+		
+		req.append(" order by k.codeEmployeur , I.dateDebut ASC ");
+		
+		list = (List<Cession>) this.getHibernateTemplate().find(req.toString());
+		
+		
+		
+		
+		
+		
+		if (list != null && !list.isEmpty())
+			return list;
+		else
+			return null;
+	}
+}

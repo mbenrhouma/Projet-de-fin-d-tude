@@ -1,0 +1,124 @@
+parametrage.id=Code 
+parametrage.libelle =Libelle
+parametrage.libellefr=LibelleFr
+parametrage.libelleAr=LibellerAR
+
+parametrage.nom=Nom
+parametrage.nomfr=NomFR
+parametrage.nomar=NomAR
+parametrage.prenom=Prenom
+parametrage.phone=Telephone
+parametrage.adresse=Adresse
+
+
+
+#typeFrais**********************************************************************
+
+parametrage.typeFrais.cree.succes=Type Frais  créé avec succès
+parametrage.typeFrais.modifie.succes=Type Frais modiféé avec sucès
+parametrage.typeFrais.supprime.succes=Type Frais supprimé avec sucès
+parametrage.typeFrais.error.supprimer=Vous ne pouvez pas supprimer ce Type Frais 
+parametrage.typeFrais.error.existe=Type Frais existe 
+
+#typeLogement*********************************************************************
+parametrage.typeLogement.cree.succes=Type Logement  créé avec succès
+parametrage.typeLogement.modifie.succes=Type Logement modiféé avec sucès
+parametrage.typeLogement.supprime.succes=Type Logement supprimé avec sucès
+parametrage.typeLogement.error.supprimer=Vous ne pouvez pas supprimer ce Type Logement 
+parametrage.typeLogement.error.existe=Type Logement existe 
+#typeMainlevée********************************************************************
+parametrage.typeMainlevée.cree.succes=Type Mainlevée  créé avec succès
+parametrage.typeMainlevée.modifie.succes=Type Mainlevée modiféé avec sucès
+parametrage.typeMainlevée.supprime.succes=Type Mainlevée supprimé avec sucès
+parametrage.typeMainlevée.error.supprimer=Vous ne pouvez pas supprimer ce Type Mainlevée 
+parametrage.typeMainlevée.error.existe=Type Mainlevée existe 
+#HuissiersNotaires********************************************************************
+parametrage.huissiersNotaires.cree.succes=Huissiers Notaires  créé avec succès
+parametrage.huissiersNotaires.modifie.succes=Huissiers Notaires modiféé avec sucès
+parametrage.huissiersNotaires.supprime.succes=Huissiers Notaires supprimé avec sucès
+parametrage.huissiersNotaires.error.supprimer=Vous ne pouvez pas supprimer ce Huissiers Notaires
+parametrage.huissiersNotaires.error.existe=Huissiers Notaires existe
+#Gouvernorats**************************************************************************
+parametrage.gouvernorats.cree.succes=Gouvernorats créé avec succès
+parametrage.gouvernorats.modifie.succes=Gouvernorats modiféé avec sucès
+parametrage.gouvernorats.supprime.succes=Gouvernorats supprimé avec sucès
+parametrage.gouvernorats.error.supprimer=Vous ne pouvez pas supprimer ce Gouvernorats
+parametrage.gouvernorats.error.existe=Gouvernorats existe
+#Villes**********************************************************************************
+
+
+parametrage.gouvernerat=Gouvernerat
+parametrage.villes.cree.succes=Villes créé avec succès
+parametrage.villes.modifie.succes=Villes modiféé avec sucès
+parametrage.villes.supprime.succes=Villes supprimé avec sucès
+parametrage.villes.error.supprimer=Vous ne pouvez pas supprimer ce Villes
+parametrage.villes.error.existe=Villes existe
+
+#codePostal*******************************************************************************
+parametrage.codePostal.cree.succes=Code Postal créé avec succès
+parametrage.codePostal.modifie.succes=Code Postal modiféé avec sucès
+parametrage.codePostal.supprime.succes=Code Postal supprimé avec sucès
+parametrage.codePostal.error.supprimer=Vous ne pouvez pas supprimer ce Code Postal
+parametrage.codePostal.error.existe=Code Postal existe
+ 
+
+#contentieux******************************************************************************
+
+
+
+
+
+parametrage.contentieux.numDossier=Numero Dossier
+parametrage.contentieux.dateTransmission=Date Transmission
+parametrage.contentieux.dateRelanceContentieux=Date Relance
+  
+
+parametrage.contentieux.cree.succes=Dossier Contentieux créé avec succès
+parametrage.contentieux.modifie.succes=Dossier Contentieux modiféé avec sucès
+parametrage.contentieux.supprime.succes=Dossier Contentieux supprimé avec sucès
+parametrage.contentieux.error.supprimer=Vous ne pouvez pas supprimer ce Dossier Contentieux
+parametrage.contentieux.error.existe=Dossier Contentieux existe
+#typeType Mainlevee**********************************************************************************
+
+parametrage.typeMainlevee.cree.succes=Type Mainlevee créé avec succès
+parametrage.typeMainlevee.modifie.succes=Type Mainlevee  modiféé avec sucès
+parametrage.typeMainlevee.supprime.succes=Type Mainlevee supprimé avec sucès
+parametrage.typeMainlevee.error.supprimer=Vous ne pouvez pas supprimer ce Type Mainlevee
+parametrage.typeMainlevee.error.existe=Type Type Mainlevee existe
+
+
+
+#localite***********************************************************************************
+
+parametrage.localite.cree.succes=Ville créé avec succès
+parametrage.localite.modifie.succes=Ville  modiféé avec sucès
+parametrage.localite.supprime.succes=Ville  supprimé avec sucès
+parametrage.localite.error.supprimer=Vous ne pouvez pas supprimer cette Ville
+parametrage.localite.error.existe=Ville existe
+#Parametrage *******************************************************************************
+parametrage.parametrage.delaiPrecontentieux=Délai Précontentieux    
+parametrage.parametrage.delaiPasseAuxContentieux=Délai passe aux contentieux
+
+parametrage.parametrage.cree.succes= Parametrage créé avec succès
+parametrage.parametrage.modifie.succes= Parametrage modiféé avec sucès
+parametrage.parametrage.supprime.succes= Parametrage supprimé avec sucès
+parametrage.parametrage.error.supprimer=Vous ne pouvez pas supprimer ce Parametrage
+parametrage.parametrage.error.existe=Parametrage existe
+#Lotissement********************************************************************************
+parametrage.lotissement.loclite=Localite
+parametrage.lotissement.cree.succes=Lotissement créé avec succès
+parametrage.lotissement.modifie.succes=Lotissement  modiféé avec sucès
+parametrage.lotissement.supprime.succes=Lotissement  supprimé avec sucès
+parametrage.lotissement.error.supprimer=Vous ne pouvez pas supprimer ce Lotissement
+parametrage.lotissement.error.existe=Lotissement existe
+#Annee budgetaire************************************************************************************
+parametrage.anneeBudgetaire.annee=Année
+parametrage.anneeBudgetaire.cree.succes=Année Budgetaire créé avec succès
+parametrage.anneeBudgetaire.modifie.succes=Année Budgetaire  modiféé avec sucès
+parametrage.anneeBudgetaire.supprime.succes=Année Budgetaire  supprimé avec sucès
+parametrage.anneeBudgetaire.error.supprimer=Vous ne pouvez pas supprimer cette Année Budgetaire
+parametrage.anneeBudgetaire.error.existe=Année Budgetaire existe
+
+
+
+

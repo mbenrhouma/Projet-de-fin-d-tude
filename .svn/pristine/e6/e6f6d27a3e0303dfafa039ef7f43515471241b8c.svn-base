@@ -1,0 +1,15 @@
+package com.cynapsys.service;
+
+
+
+import java.util.List;
+
+import com.cynapsys.entities.Cession;
+import com.cynapsys.entities.ClientAcquereur;
+
+public interface CessionService extends AbstractService<Cession>{
+	Cession	findById(String id);
+	public List<Cession> findAllDta();
+	public List<Cession> findByCriteres(Cession cession);
+	List<Cession> findCessionByClientAcquereur(ClientAcquereur clientAcquereur);
+}

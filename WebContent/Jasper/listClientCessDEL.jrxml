@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listClientCessDEL" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ece6d91c-66e4-4353-abc3-9f680ccd5cf3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DateEdition" class="java.lang.String"/>
+	<parameter name="AnneeEnCour" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\GC+doc+Bureau\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="titreEdition" class="java.lang.String"/>
+	<field name="listSubreportCessDelegPojo" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="258" y="10" width="100" height="20" uuid="2000a4e3-62fe-42e0-9571-11a77a485cc0"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Date Edition:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="368" y="10" width="100" height="20" uuid="a87c2ff1-7947-4be2-9606-4658d5a9d8e9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DateEdition}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="530" y="10" width="59" height="20" uuid="917e9578-f955-4bc9-8604-b40e81d9606d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="296" y="30" width="100" height="20" uuid="8b2e5eb6-1eb3-4962-9ae8-260819db5347"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[S.N.I.T ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="20" uuid="2eb12d1b-83fe-4ff3-9586-758a074147c2"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[D.GESTION]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="573" y="40" width="100" height="20" uuid="8ad59898-3ad8-4ee2-b1c4-e5d98fed0563"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AnneeEnCour}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="219" y="40" width="231" height="20" uuid="24fcba07-6751-4ca0-a9de-438138d5fde0"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titreEdition}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="473" y="40" width="100" height="20" uuid="4eb18365-6df4-4ca1-9e71-3ed064e83cc7"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Année]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<subreport>
+				<reportElement x="33" y="0" width="555" height="100" uuid="f7877e4c-3088-461d-bf83-713357c879a9"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listSubreportCessDelegPojo})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "listClientCessDEL_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="editionForm"
+			dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.edition']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					
+				</p:breadCrumb>
+				<p:panelGrid id="detail1" style="width: 100%" styleClass="noBorder">
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{editionmsgs['edition.edition']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu id="car" value="#{editionBean.selectEdition}" converter="bundlePojoConverter" filter="true" >
+									<f:selectItem noSelectionOption="true" itemLabel="Select One" itemValue="" 
+									/>
+									<f:selectItems  
+									   value="#{editionBean.listBundlePojo}" var="edition" 
+									   itemLabel="#{edition.value}" itemValue="#{edition}"
+										
+									 />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<div>
+					<h:commandLink actionListener="#{editionBean.impressionSuitchVal}">
+							<p:commandButton id="imprimer"
+							
+								styleClass="ui-priority-primary"
+								value="#{clientmsgs['clientAcqueruer.imprimer']}"
+								ajax="true"
+								
+								>
+							</p:commandButton>
+							</h:commandLink>
+					</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="cessionForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.cession_sur_salaire']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:fieldset legend="#{generalmsgs['navigation.recherche']}"
+					id="cont_rech" toggleable="true" toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+						<p:row>
+
+							<p:column>
+
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.codeclient']}:"
+									styleClass="weightBold" />
+
+
+
+							</p:column>
+
+							<p:column>
+
+								<h:outputText value="" styleClass="required-star-right" />
+
+							</p:column>
+
+							<p:column>
+
+								<p:inputText id="rech_code_clt" style="width:210px"
+									required="false" value="#{cessionBean.codeClient}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+
+							<p:column>
+
+								<h:outputText value="" styleClass="required-star-right" />
+
+							</p:column>
+
+
+
+						</p:row>
+
+						<p:row>
+
+							<p:column>
+
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.nomPrenomFr']}:"
+									styleClass="weightBold" />
+
+
+
+							</p:column>
+
+							<p:column>
+
+								<h:outputText value="" styleClass="required-star-right" />
+
+							</p:column>
+
+							<p:column>
+
+								<p:inputText id="rech_nom_clt" styleClass="inputText"
+									required="false" value="#{cessionBean.nomclientfr}"
+									style="width:210px" rendered="true">
+
+								</p:inputText>
+
+							</p:column>
+
+
+
+
+
+
+						</p:row>
+
+						<p:row>
+
+							<p:column>
+
+								<h:outputText value="#{cessionmsgs['cession.etat']}:"
+									styleClass="weightBold" />
+
+
+
+							</p:column>
+
+							<p:column>
+
+								<h:outputText value="" styleClass="required-star-right" />
+
+							</p:column>
+
+							<p:column>
+
+
+								<p:selectOneRadio id="console"
+									value="#{cessionBean.etatCession}">
+									<f:selectItem itemLabel="#{generalmsgs['cession.actif']}"
+										itemValue="1" />
+									<f:selectItem itemLabel="#{generalmsgs['cession.inactif']}"
+										itemValue="0" />
+
+								</p:selectOneRadio>
+							</p:column>
+
+
+
+
+
+
+						</p:row>
+
+
+
+					</p:panelGrid>
+				</p:fieldset>
+
+				<br></br>
+
+				<br></br>
+
+				<br></br>
+
+				<br></br>
+
+
+				<div style="width: 100%; text-align: right">
+
+
+					<p:commandButton id="initRefrech" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this" actionListener="#{cessionBean.createCession}"
+						update="@all" rendered="true">
+						<p:resetInput target="cessionForm" />
+					</p:commandButton>
+
+
+					<p:commandButton id="initRechF" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.recherche']}" ajax="true"
+						actionListener="#{cessionBean.Rechercher}"
+						update=":cessionForm:dta" rendered="true">
+						<p:resetInput target="cessionForm" />
+					</p:commandButton>
+
+					<p:commandButton id="ajoutBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['commission.ajouter']}" ajax="true"
+						update="@form" action="#{menuController.goToPageCession}" />
+					<p:spacer width="5px" />
+
+				</div>
+
+				<br></br>
+
+
+
+				<p:dataTable id="dta" value="#{cessionBean.cessions}" var="cess"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{cess.id}" selection="#{cessionBean.selectCessionClient}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+					<p:ajax event="rowSelect"
+						update="cessionForm cessForm:dta cessForm"
+						oncomplete="PF('cession').show()"
+						listener="#{cessionBean.onSelectCession}" />
+
+					<p:column filterBy="#{cess.clientAcquereur.codeAcquereur}"
+						sortBy="#{cess.clientAcquereur.codeAcquereur}"
+						filterMatchMode="contains">
+
+						<f:facet name="header">
+
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.codeclient']}" />
+
+						</f:facet>
+
+						<h:outputText value="#{cess.clientAcquereur.codeAcquereur}"></h:outputText>
+
+					</p:column>
+
+
+					<p:column filterBy="#{cess.clientAcquereur.nomPrenomFr}"
+						sortBy="#{cess.clientAcquereur.nomPrenomFr}"
+						filterMatchMode="contains">
+
+						<f:facet name="header">
+
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.nomPrenomFr']}" />
+
+						</f:facet>
+
+						<h:outputText value="#{cess.clientAcquereur.nomPrenomFr}"></h:outputText>
+
+					</p:column>
+
+
+					<p:column filterBy="#{cess.actif}" sortBy="#{cess.actif}"
+						filterMatchMode="contains">
+
+						<f:facet name="header">
+
+							<h:outputText value="#{cessionmsgs['cession.etat']}" />
+
+						</f:facet>
+
+						<h:outputText value="#{cess.actif}"></h:outputText>
+
+					</p:column>
+
+
+				</p:dataTable>
+			</p:panel>
+
+		</h:form>
+
+		<p:dialog header="cessions" widgetVar="cession" height="300">
+			<h:form id="cessForm"  dir="#{languageBean.languageAffich}" >
+				<p:growl id="growlcession" sticky="true" autoUpdate="true"
+					closable="true" />
+				<p:panel
+					style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+					<p:dataTable id="dta" value="#{cessionBean.cession}" var="cession"
+						rows="10" paginator="true" paginatorPosition="bottom"
+						rowKey="#{cession.id}" selection="#{cessionBean.selectCession}"
+						selectionMode="single"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+						<p:ajax event="rowSelect" update="cessForm" />
+
+						<p:column filterBy="#{cession.dateDebut}"
+							sortBy="#{cession.dateDebut}" filterMatchMode="contains">
+
+							<f:facet name="header">
+
+								<h:outputText value="#{cessionmsgs['cession.date_debut']}" />
+
+							</f:facet>
+
+							<h:outputText value="#{cession.dateDebut}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column filterBy="#{cession.dateFin}"
+							sortBy="#{cession.dateFin}" filterMatchMode="contains">
+
+							<f:facet name="header">
+
+								<h:outputText value="#{cessionmsgs['cession.date_fin']}" />
+
+							</f:facet>
+
+							<h:outputText value="#{cession.dateFin}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column filterBy="#{cession.mensualite}"
+							sortBy="#{cession.mensualite}" filterMatchMode="contains">
+
+							<f:facet name="header">
+
+								<h:outputText value="#{cessionmsgs['cession.mensualité']}" />
+							</f:facet>
+
+							<h:outputText value="#{cession.mensualite}"></h:outputText>
+
+						</p:column>
+
+						<p:column filterBy="#{cession.employeur.abreviation}"
+							sortBy="#{cession.employeur.abreviation}"
+							filterMatchMode="contains">
+
+							<f:facet name="header">
+
+								<h:outputText value="#{cessionmsgs['employeur']}" />
+
+							</f:facet>
+
+							<h:outputText value="#{cession.employeur.abreviation}"></h:outputText>
+
+						</p:column>
+
+						<p:column >
+
+							<f:facet name="header">
+								<h:outputText value="#{cessionmsgs['cession.conjoint']}" />
+							</f:facet>
+
+							<h:outputText value="Oui"  rendered="#{cession.conjoint==1}"></h:outputText>
+							<h:outputText value="Non"  rendered="#{cession.conjoint==0}" ></h:outputText>
+
+
+						</p:column>
+
+						
+
+
+
+
+					</p:dataTable>
+
+
+				</p:panel>
+				<br></br>
+
+				<div style="width: 100%; text-align: right">
+
+					<p:row>
+						<p:column>
+							<h:outputText value="#{cessionmsgs['cession.date.cloture']}" styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:calendar id="dateCloture" styleClass="datef"
+								yearRange="c-100:c+100" showOn="button" label=""
+								navigator="true" width="250" value="#{cessionBean.dateCloture}"
+								disabled="#{cessionBean.selectCessionClient.actif == 0}">
+								<p:ajax event="dateSelect" update="cloturer" />
+							</p:calendar>
+						</p:column>
+					</p:row>
+
+					<p:commandButton id="cloturer" styleClass="ui-priority-primary"
+						value="#{cessionmsgs['cession.cloturer']}" ajax="true"
+						actionListener="#{cessionBean.cloturerCession}" update="@all"
+						disabled="#{cessionBean.selectCessionClient.actif == 0 or cessionBean.dateCloture == null}">
+						<p:resetInput target="cessionForm" />
+					</p:commandButton>
+
+
+					<p:commandButton id="imprimer" styleClass="ui-priority-primary"
+						value="#{generalmsgs['popup.imprimer']}" ajax="false"
+						disabled="#{cessionBean.selectCession == null}"
+						actionListener="#{cessionBean.imprimerCession}" rendered="true"
+						process="@this">
+					</p:commandButton>
+
+				</div>
+			</h:form>
+		</p:dialog>
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

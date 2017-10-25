@@ -1,0 +1,606 @@
+@CHARSET "UTF-8";
+
+.dateGerance{
+	width: 520px !important;
+}
+body {
+	font-family: Times New Roman, Georgia, Serif !important;
+	font-size: 13px !important;
+	overflow: visible !important;
+	color: rgba(21, 7, 113, 1);
+}
+
+div .ui-datatable .ui-selection-column .ui-chkbox-all {
+	display: none !important;
+	margin: 0px auto;
+	width: 16px;
+	height: 16px;
+}
+
+.column1FicheLigne {
+	width: 200px;
+}
+
+.column2FicheLigne {
+	width: 300px;
+}
+
+.column3FicheLigne {
+	width: 150px;
+}
+
+.column1facttemp {
+	width: 140px;
+}
+
+.column2facttemp {
+	width: 380px;
+}
+
+.column3facttemp {
+	width: 130px;
+}
+
+.column1Facture {
+	width: 190px;
+}
+
+.column2Facture {
+	width: 230px;
+}
+
+.column3Facture {
+	width: 190px;
+}
+
+.selectOneMenu {
+	width: 460px !important;
+}
+
+.columntabFicheLigne {
+	width: 120px !important;
+}
+
+.inputText {
+	width: 190px;
+}
+
+.calendar input {
+	width: 163px !important;
+}
+.dateTimeField input {
+	width: 285px !important;
+}
+
+.ui-inputfield,.ui-widget-content .ui-inputfield,.ui-widget-header .ui-inputfield
+	{
+	width: 190px;
+}
+
+.ui-radiobutton {
+	margin-left: -10px;
+	width: 16px;
+	line-height: 16px;
+	display: inline-block;
+}
+
+.selectOneRadioBtn label {
+	width: 100px !important;
+}
+
+.selectOneRadioBtn2 label {
+	width: 26px !important;
+}
+
+.selectOneRadioBtn3 label {
+	width: 100px !important;
+}
+
+.ui-selectonemenu-label .ui-inputfield .ui-corner-all {
+	width: 100px;
+}
+
+#header {
+	width: 950px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.RepTunis {
+	font: normal 1em verdana;
+	float: right;
+	display: inline-block;
+	margin-top: -8px;
+	margin-bottom: -5px;
+	margin-right: 0%;
+}
+
+#imgTun {
+	postion: relative;
+}
+
+.bodytext {
+	margin-top: 0px;
+}
+
+#panel {
+	/*width: 1046px;
+	margin-left: 150px;
+	margin-top: 2px;
+	margin-right: 150px;*/
+	
+}
+
+.ui-chkbox {
+	vertical-align: text-bottom;
+}
+
+.labelColumn {
+	width: 200px !important;
+	overflow: visible;
+}
+
+.labelColumn2 {
+	width: 152px !important;
+	overflow: visible;
+}
+
+.labelColumn3 {
+	width: 170px !important;
+	overflow: visible;
+}
+
+.labelColumn4 {
+	width: 100px !important;
+	overflow: visible;
+}
+
+.textColumn {
+	width: 200px !important;
+	overflow: visible;
+}
+
+.textColumn1 {
+	text-align: right;
+}
+
+.textColumn1 {
+	width: 460px !important;
+	overflow: visible;
+}
+
+.otherColumn {
+	width: 200px !important;
+	overflow: visible;
+}
+
+.required-star-right {
+	color: red;
+}
+
+.ui-menu .ui-menu-parent  .ui-menu-child {
+	white-space: nowrap !important;
+	width: 180px !important;
+}
+
+.active.ui-priority-primary {
+	background-color: rgb(0, 109, 204) !important;
+}
+
+.disabled.ui-priority-primary {
+	background-color: rgb(0, 109, 204)) !important;
+}
+
+[disabled].ui-priority-primary {
+	background-color: rgb(0, 109, 204) !important;
+}
+
+.ui-widget {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-size: 12px !important;
+}
+
+.ui-widget .ui-widget {
+	font-size: 12px !important;
+}
+/*Color des champs erroné*/
+.ui-inputfield.ui-state-error,.ui-widget-header .ui-inputfield.ui-state-error,.ui-widget-content .ui-inputfield.ui-state-error
+	{
+	border: 1px solid #B94A48 !important;
+}
+
+/* Titre des panels */
+.ui-panel .ui-panel-title {
+	margin: 0.1em 16px 0.2em 0px !important;
+	font-size: 15px !important;
+}
+
+/* Spinner */
+.ui-spinner {
+	width: 20px !important;
+}
+
+.ui-spinner-input {
+	width: 33px !important;
+	text-align: right !important;
+}
+
+/* pagination de dataTable  */
+.ui-paginator-top {
+	border-bottom-color: currentColor !important;
+	border-bottom-width: 0px !important;
+	border-bottom-style: none !important;
+	display: none !important;
+}
+
+/* DataTable*/
+.ui-datatable .ui-sortable-column,.ui-datatable .ui-state-default {
+	color: #0081C2 !important;
+}
+
+.ui-datatable thead th,.ui-datatable tbody td,.ui-datatable tfoot td {
+	border-style: solid;
+	border-width: 1px;
+	overflow: hidden;
+	padding: 4px 10px;
+	white-space: normal !important;
+}
+
+/* Calendar*/  
+.ui-datepicker {
+	font-size: 12px !important;
+}
+
+/* Menu gauche*/
+.ui-accordion .ui-accordion-header.ui-state-default a {
+	color: #0092DC !important;
+}
+
+/*Sous menue du Menu gauche*/
+.ui-accordion .ui-accordion-content {
+	padding: 2px !important;
+}
+
+/* fieldset */
+.ui-fieldset {
+	border-color: #006DCC !important;
+	font-family: "Times New Roman", Georgia, Serif !important;
+	font-size: 13px !important;
+	text-align: justify !important;
+}
+
+.ui-fieldset .ui-fieldset-legend {
+	background-color: transparent !important;
+	background-image: none !important;
+	color: #006DCC !important;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-weight: bold !important;
+	font-size: 12px !important;
+}
+
+.footer {
+	color: #8C8C8C !important;
+	margin-left: 25% !important;
+	font-family: "Times New Roman", Georgia, Serif !important;
+	font-weight: normal !important;
+	font-size: 12px !important;
+}
+
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+.noBorder tr,.noBorder td {
+	border: none !important;
+	padding: 2px 10px;
+	background: transparent;
+}
+
+.noBorder1 tr,.noBorder1 td {
+	border: none !important;
+	padding: 2px 10px;
+	width: 155px !important;
+	text-align: left;
+}
+
+.noBorder1 tr  td paddingRadio tr,.noBorder1 tr td paddingRadio td {
+	border: none !important;
+	padding: 0px 0px !important;
+	padding-right: 4px !important;
+}
+
+/* .ui-treetable-scrollable-header-box { */
+/* 	height: 0px; */
+/* } */
+.ui-datatable .ui-column-filter {
+	max-width: 80px !important;
+}
+
+.active.myCustomStyleDataTable,.ui-widget-content .myCustomStyleDataTable
+	{
+	background-color: rgb(0, 109, 204) !important;
+	background-image: none !important;
+	color: white !important;
+	font-weight: bold;
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.disabled.myCustomStyleDataTable,.ui-widget-content .myCustomStyleDataTable
+	{
+	background-color: rgb(0, 109, 204)) !important;
+	background-image: none !important;
+	color: white !important;
+	font-weight: bold;
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+}
+
+[disabled].myCustomStyleDataTable,.ui-widget-content .myCustomStyleDataTable
+	{
+	background-color: rgb(0, 109, 204) !important;
+	background-image: none !important;
+	color: white !important;
+	font-weight: bold;
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.columnhisto {
+	width: 200px !important;
+}
+
+.columnhisto2 {
+	width: 400px !important;
+}
+
+.column3 {
+	width: 250px !important;
+}
+
+.fileinput-button {
+	overflow: visible !important;
+}
+
+.ui-fileupload-content {
+	border-top-width: none;
+	padding: 0px;
+	visibility: collapse;
+	height: 0px
+}
+
+.ui-fileupload-buttonbar {
+	padding: 0px;
+	border: none;
+	width: 0px;
+}
+
+.ui-selectcheckboxmenu .ui-selectcheckboxmenu-label {
+	width: 168px !important;
+}
+
+.ui-datalist-content {
+	border: none !important;
+	background: transparent !important;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.ui-datalist-data {
+	padding-left: 20px !important;
+	margin: 1px !important;
+}
+
+.ui-widget-content .ui-menu-list .ui-corner-all .ui-helper-clearfix .ui-menu-child .ui-shadow
+	{
+	padding: 2px;
+}
+
+ul.ui-menu-child {
+	width: 165px !important;
+}
+
+li.ui-menu-child {
+	width: 160px !important;
+}
+
+.new-selectMany {
+	width: 200px !important;
+}
+
+.ui-selectcheckboxmenu .new-selectMany {
+	width: 200px !important;
+}
+
+.ui-helper-clearfix:after {
+	width: 190px;
+}
+
+.weightBold {
+	font-weight: bold;
+}
+
+.weightBoldAr {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.inputTextWidth {
+	width: 641px;
+}
+
+.note {
+	color: #808080;
+	font-style: italic;
+}
+
+.blue_button {
+	background-color: rgb(0, 109, 204) !important;
+}
+
+.ui-state-highlight .ui-icon {
+	background-image:
+		url("/GC/resources/images/ui-icons_2e83ff_256x240.png?ln=primefaces-bootstrap")
+		!important;
+}
+
+.ui-widget-overlay {
+	opacity: .75 !important;
+	/* Make sure to change both of these, as IE only sees the second one */
+	filter: Alpha(Opacity = 75) !important;
+	background-color: #EFEFEF !important;
+}
+/* This will make it darker */
+#center2 {
+	background: none;
+	top: 62px !important;
+	height: 33px !important;
+}
+
+.ui-menu.ui-menubar {
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+}
+
+.ui-menu .ui-menuitem-text {
+	font-weight: bolder;
+}
+
+.ui-panel .ui-panel-titlebar {
+	background-color: #fafafa !important;
+	background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2) !important;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff),
+		to(#f2f2f2)) !important;
+	background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2)
+		!important;
+	background-image: -o-linear-gradient(top, #ffffff, #f2f2f2) !important;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2)
+		!important;
+	background-repeat: repeat-x !important;
+}
+
+.authenPanel .ui-panel-titlebar {
+	font-size: 24px;
+}
+
+.authenPanel .ui-panel-titlebar .ui-panel-title {
+	font-size: 24px !important;
+}
+
+.ui-growl {
+/* 	position: absolute;
+	top: 230px;
+	z-index: 9999; */
+}
+
+.ui-growl-title {
+	font-weight: bold;
+}
+
+.ui-growl-item-container {
+	opacity: 1;
+}
+
+/****************/
+/*  BreadCrump  */
+/****************/
+.ui-breadcrumb {
+	/*background: none repeat scroll 0% 0% #F5F5F5 !important;*/
+	padding-top: 6px;
+	height: 15px;
+	margin-top: 0px !important;
+	margin-left: 0px;
+	margin-bottom: 20px;
+	overflow: hidden;
+	background-color: #fafafa !important;
+	background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2) !important;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff),
+		to(#f2f2f2)) !important;
+	background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2)
+		!important;
+	background-image: -o-linear-gradient(top, #ffffff, #f2f2f2) !important;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2)
+		!important;
+	background-repeat: repeat-x !important;
+	background-color: #fafafa !important;
+	background-color: #fafafa !important;
+	overflow: hidden;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.ui-breadcrumb .ui-breadcrumb-chevron {
+	background: url("img/chevron-big.png") no-repeat scroll 0 0 transparent;
+	height: 35px;
+	margin: 0 6px;
+	position: relative;
+	top: -6px;
+}
+
+.ui-breadcrumb .ui-icon-home {
+	width: 12px;
+	height: 16px;
+}
+
+.ui-breadcrumb ul li:nth-child(2) {
+	background: url("img/chevron-big.png") no-repeat scroll 0 0 transparent;
+	height: 35px;
+	margin: 0 6px;
+	position: relative;
+	top: -6px;
+}
+
+.ui-breadcrumb ul li a {
+	margin-top: 1px;
+}
+
+.ui-breadcrumb ul li a:hover {
+	text-decoration: none;
+}
+
+.ui-icon-closethick {
+	background-color: white;
+}
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+	width: 590px;
+position: center;	
+}
+
+#locataire_societe_date_cin.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+width: 485px; 
+}
+
+.datef input {
+       width: 484px !important;
+}
+.ui-selectcheckboxmenu-panel .ui-widget .ui-widget-content .ui-corner-all .ui-helper-hidden{
+width: 482px;
+display: block;
+}
+
+
+
+.dialogLoading.ui-dialog .ui-dialog-titlebar {
+	background-color: window;
+}
+
+.dialogLoading.ui-dialog .ui-dialog-title {
+	font-size: 17px; . ui-tree { width : 300px !important;
+	height: 130px !important;
+}
+
+.ui-menu-list, ui-menu, ui-menu-parent, ui-menu-child {
+    width: 250px !important;
+}
+
+.red-font {
+    color: red!important;
+    font-weight: bold!important;
+}
+.ui-selectonemenu-panel .ui-selectonemenu-item .red-font{
+ color: red!important;
+    font-weight: bold!important;
+}
+

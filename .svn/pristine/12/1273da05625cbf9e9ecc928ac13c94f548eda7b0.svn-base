@@ -1,0 +1,201 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@SequenceGenerator(name="SEQ_MOUVEMENT",sequenceName="S_MOUVEMENT")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Mouvement.findAll", query = "SELECT m FROM Mouvement m")})
+public class Mouvement implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_MOUVEMENT")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CODE_MV", nullable = false)
+    private Integer codeMv;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATE_MV", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateMv;
+    @Column(name = "MONTANT_CREDIT")
+    private Integer montantCredit;
+    @Column(name = "MONTANT_DEBIT")
+    private Integer montantDebit;
+    @Column(name = "SOLDE_DEBITEUR")
+    private Integer soldeDebiteur;
+    @Column(name = "SOLDE_CREDITEUR")
+    private Integer soldeCrediteur;
+    @Column(name = "C_COMPT")
+    private Integer cCompt;
+    @Column(name = "NBR_MOIS_RETARD")
+    private Integer nbrMoisRetard;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mouvement", fetch = FetchType.LAZY)
+    private List<Quitance> quitanceList;
+    @JoinColumn(name = "CLIENT_ACQUEREUR", referencedColumnName = "CODE_ACQUEREUR", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private ClientAcquereur clientAcquereur;
+    @JoinColumn(name = "QUITANCE", referencedColumnName = "NUM_QUITTANCE")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Quitance quitance;
+
+    public Mouvement() {
+    }
+
+    public Mouvement(Integer codeMv) {
+        this.codeMv = codeMv;
+    }
+
+    public Mouvement(Integer codeMv, Date dateMv) {
+        this.codeMv = codeMv;
+        this.dateMv = dateMv;
+    }
+
+    public Integer getCodeMv() {
+        return codeMv;
+    }
+
+    public void setCodeMv(Integer codeMv) {
+        this.codeMv = codeMv;
+    }
+
+    public Date getDateMv() {
+        return dateMv;
+    }
+
+    public void setDateMv(Date dateMv) {
+        this.dateMv = dateMv;
+    }
+
+    public Integer getMontantCredit() {
+        return montantCredit;
+    }
+
+    public void setMontantCredit(Integer montantCredit) {
+        this.montantCredit = montantCredit;
+    }
+
+    public Integer getMontantDebit() {
+        return montantDebit;
+    }
+
+    public void setMontantDebit(Integer montantDebit) {
+        this.montantDebit = montantDebit;
+    }
+
+    public Integer getSoldeDebiteur() {
+        return soldeDebiteur;
+    }
+
+    public void setSoldeDebiteur(Integer soldeDebiteur) {
+        this.soldeDebiteur = soldeDebiteur;
+    }
+
+    public Integer getSoldeCrediteur() {
+        return soldeCrediteur;
+    }
+
+    public void setSoldeCrediteur(Integer soldeCrediteur) {
+        this.soldeCrediteur = soldeCrediteur;
+    }
+
+    public Integer getCCompt() {
+        return cCompt;
+    }
+
+    public void setCCompt(Integer cCompt) {
+        this.cCompt = cCompt;
+    }
+
+    public Integer getNbrMoisRetard() {
+        return nbrMoisRetard;
+    }
+
+    public void setNbrMoisRetard(Integer nbrMoisRetard) {
+        this.nbrMoisRetard = nbrMoisRetard;
+    }
+
+    @XmlTransient
+    public List<Quitance> getQuitanceList() {
+        return quitanceList;
+    }
+
+    public void setQuitanceList(List<Quitance> quitanceList) {
+        this.quitanceList = quitanceList;
+    }
+
+    public ClientAcquereur getClientAcquereur() {
+        return clientAcquereur;
+    }
+
+    public void setClientAcquereur(ClientAcquereur clientAcquereur) {
+        this.clientAcquereur = clientAcquereur;
+    }
+
+    public Quitance getQuitance() {
+        return quitance;
+    }
+
+    public void setQuitance(Quitance quitance) {
+        this.quitance = quitance;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codeMv != null ? codeMv.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Mouvement)) {
+            return false;
+        }
+        Mouvement other = (Mouvement) object;
+        if ((this.codeMv == null && other.codeMv != null) || (this.codeMv != null && !this.codeMv.equals(other.codeMv))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.Mouvement[ codeMv=" + codeMv + " ]";
+    }
+    
+}

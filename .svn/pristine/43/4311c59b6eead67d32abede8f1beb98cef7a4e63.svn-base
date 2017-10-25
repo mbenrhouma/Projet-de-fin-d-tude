@@ -1,0 +1,114 @@
+package com.cynapsys.utils;
+
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+
+@ManagedBean(name = "Constants")
+@ApplicationScoped
+public class Constants implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public final static String bundle_clientLocataire_ar="com.cynapsys.bundles.clientLocataire-resources_ar";
+	public final static String bundle_clientLocataire_fr="com.cynapsys.bundles.clientLocataire-resources_fr";
+	public final static String bundle_logement_fr="com.cynapsys.bundles.logement-resources_fr";
+	public final static String bundle_logement_ar="com.cynapsys.bundles.logement-resources_ar";
+	public final static String bundle_noteDebit_ar="com.cynapsys.bundles.noteDebit-resources_ar";
+	public final static String bundle_noteDebit_fr="com.cynapsys.bundles.noteDebit-resources_fr";
+	public final static String bundle_parametrage_ar = "com.cynapsys.bundles.parametrage-resources_ar";
+	public final static String bundle_parametrage_fr = "com.cynapsys.bundles.parametrage-resources_fr";
+	public final static String bundle_general_fr = "com.cynapsys.bundles.general-resources_fr";
+	public final static String bundle_general_ar = "com.cynapsys.bundles.general-resources_ar";
+	public final static String bundle_smtp = "com.cynapsys.bundles.smtp-resources";
+	public final static String bundle_groupe_fr = "com.cynapsys.bundles.groupe-resources_fr";
+	public final static String bundle_groupe_ar = "com.cynapsys.bundles.groupe-resources_ar";
+	public final static String bundle_utilisateur_fr = "com.cynapsys.bundles.utilisateur-resources_fr";
+	public final static String bundle_utilisateur_ar = "com.cynapsys.bundles.utilisateur-resources_ar";
+
+	public static String premierLoginMessage;
+	public static String urlPath;
+	public static String title;
+	private static Constants instance;
+	public static Integer clientLocataire=2;
+	public static Integer clientAcquereur=1;
+	public static Integer centpourCent=100;
+	public static Integer nbreMoins=12;
+//etatClientLocataire::	
+	public static short clintLocatiareSupprime=1; /*client supprimé */
+	public static short clintLocatiareactive=2; /*client active */
+	public static String clientSupprimeString="Client Supprimer";
+	public static String clientActiveString="Client Active";
+	
+//Etat Logement::	
+public static short logementLibre=0;
+public static short	logementEnLocation=1;
+public static short logementEncourDeVente=2;
+public static short	logementVendu=3;
+
+	
+	
+	public static Constants getInstance() {
+		if (instance != null)
+			return instance;
+		else
+			return new Constants();
+	}
+
+	public String getPremierLoginMessage() {
+		if (premierLoginMessage == null)
+			premierLoginMessage = ConfigUtils
+					.loadPropretiesConfigValue("premier_login.message");
+		return premierLoginMessage;
+	}
+
+	public static void setPremierLoginMessage(String premierLoginMessage) {
+		Constants.premierLoginMessage = premierLoginMessage;
+	}
+
+	public static String getUrlPath() {
+		if (urlPath == null)
+			urlPath = ConfigUtils.loadPropretiesConfigValue("url_base");
+		return urlPath;
+	}
+
+	public static void setUrlPath(String urlPath) {
+		Constants.urlPath = urlPath;
+	}
+
+	public static String getFilesExcels() {
+		String report = "";
+		report = getUrlPath()
+				+ ConfigUtils.loadPropretiesConfigValue("dossier_excel");
+		return report;
+	}
+
+	public static String getFilesEtats() {
+		String report = "";
+		report = getUrlPath()
+				+ ConfigUtils.loadPropretiesConfigValue("dossier_etat");
+		return report;
+	}
+
+	public static void createDirectory(String outputDirectory) {
+		File rep = new File(outputDirectory);
+		if (!rep.exists()) {
+			rep.mkdirs();
+		}
+	}
+
+	public String getTitle() {
+		if (title == null) {
+			title = ConfigUtils.loadPropretiesConfigValue("be.version");
+		}
+		return title;
+	}
+
+}

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+         >
+         
+<import resource="quartz-Context.xml" />
+	
+
+	<context:annotation-config />
+<context:component-scan base-package="com.cynapsys" />
+	
+
+	
+
+	
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/hibernate.properties" />
+	</bean>
+	<!-- Activates annotation-based bean configuration> <context:annotation-config/ -->
+
+	<!-- DATA SOURCE CONFIGURATION -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+	</bean>
+
+	<!-- SESSIONFACTORY CONFIGURATION -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+
+				<!-- Print SQL to stdout. -->
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<!-- Bind the getCurrentSession() method to the thread. -->
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<!-- Use the C3P0 connection pool. -->
+				<prop key="hibernate.c3p0.minPoolSize">5</prop>
+				<prop key="hibernate.c3p0.maxPoolSize">200</prop>
+				<prop key="hibernate.c3p0.max_statement">50</prop>
+				<prop key="hibernate.c3p0.min_size">3</prop>
+				<prop key="hibernate.c3p0.max_size">5</prop>
+				<prop key="hibernate.c3p0.timeout">1800</prop>
+				<prop key="hibernate.generate_statistics">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+				<prop key="hibernate.cache.use_minimal_puts">false</prop>
+				<prop key="hibernate.max_fetch_depth">4</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.SingletonEhCacheRegionFactory
+				</prop>
+			</props>
+		</property>
+		<property name="packagesToScan" value="com.cynapsys.entities" />
+	</bean>
+
+	<!-- Hibernate Template DefIntegerion -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="jdbcExceptionTranslator">
+			<ref bean="jdbcExceptionTranslator" />
+		</property>
+	</bean>
+
+	<!--Spring Data Access Exception Translator DefIntegerion -->
+	<bean id="jdbcExceptionTranslator"
+		class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+
+</beans>

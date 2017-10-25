@@ -1,0 +1,68 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.CodePostalDAO;
+import com.cynapsys.entities.CodePostal;
+import com.cynapsys.service.CodePostalService;
+@Service("codePostalService")
+public class CodePostalServiceImpl  implements CodePostalService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private CodePostalDAO codePostalDAO;
+	@Override
+	public Object save(CodePostal entity) {
+		return codePostalDAO.save(entity);
+	}
+	@Override
+	public void flush(CodePostal entity) {
+		codePostalDAO.flush(entity);		
+	}
+	@Override
+	public void update(CodePostal entity) {
+		codePostalDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(CodePostal entity) throws Exception {
+		return codePostalDAO.delete(entity);
+	}
+	@Override
+	public CodePostal find(Object idClass) {
+		return codePostalDAO.find(idClass);
+	}
+	@Override
+	public List<CodePostal> findAll() {
+		return codePostalDAO.findAll();
+	}
+	@Override
+	public List<CodePostal> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return codePostalDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return codePostalDAO.getCount(filters);
+	}
+	@Override
+	public List<CodePostal> findSorted(String sortField, boolean sortOrder) {
+		return codePostalDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public CodePostal findById(String id) {
+		return codePostalDAO.findById(id);
+	}
+	public CodePostalDAO getCodePostalDAO() {
+		return codePostalDAO;
+	}
+	public void setCodePostalDAO(CodePostalDAO codePostalDAO) {
+		this.codePostalDAO = codePostalDAO;
+	}
+
+
+}

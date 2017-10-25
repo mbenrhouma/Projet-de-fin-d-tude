@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.TableauAmortissement;
+
+public interface TableauAmortissementDAO  extends AbstractDAO<TableauAmortissement>{
+	TableauAmortissement findById(String id);
+}

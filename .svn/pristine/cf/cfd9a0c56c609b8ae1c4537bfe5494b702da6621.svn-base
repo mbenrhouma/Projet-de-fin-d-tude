@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Impayee;
+
+public interface ImpayeeDAO  extends AbstractDAO<Impayee>{
+	Impayee findById(String id);
+}

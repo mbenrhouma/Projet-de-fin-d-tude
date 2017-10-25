@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.TypeReclamation;
+
+public interface TypeReclamationDAO  extends AbstractDAO<TypeReclamation>{
+	TypeReclamation findById(String id);
+}

@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="reclamationForm" dir="#{languageBean.languageAffich}">
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="Accueil"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.assurance']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.reclamation']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+				</p:breadCrumb>
+				<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+					<!-- ********************************************************* Début Formulaire Réclamation ************************************************************ -->
+					<p:fieldset id="Freclamation">
+						<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+<!--**************************************************Code Client**************************** -->
+							<p:row>
+								<p:column >
+									<h:outputText
+										value="#{clientmsgs['clientAcquereur.codeclient']} :"
+										styleClass="weightBold" />
+									<h:outputText value="*" styleClass="required-star-right" />
+								</p:column>
+								
+								<p:column >
+									<p:inputText  id="id_client"
+									    style="width:210px;"
+										value="#{reclamationBean.codeClientAcquereur}" required="true"
+										label="#{clientmsgs['clientAcquereur.codeclient']}">
+										<p:ajax event="change" update=":reclamationForm"
+											listener="#{reclamationBean.onChange()}"/>
+									</p:inputText>
+								</p:column>
+<!--**************************************************Fin Code Client**************************** -->	
+
+<!--**************************************************Debut date reclamation**************************** -->						
+								<p:column>
+									<h:outputText
+										value="#{reclamationmsgs['reclamation.date.reclamation']} :"
+										styleClass="weightBold" />
+									<h:outputText value="*" styleClass="required-star-right" />
+								</p:column>
+								<p:column >
+									<p:calendar id="date_reclamation" 
+										value="#{reclamationBean.newreclamation.dateReclamation}"
+										label="#{reclamationmsgs['reclamation.date.reclamation']}"
+										required="true"
+										maxdate="#{reclamationBean.newreclamation.dateEnvoie}"
+										yearRange="c-100:c+100" showOn="button" navigator="true">
+										<p:ajax update="date_envoi" event="dateSelect" />
+									</p:calendar>
+								</p:column>
+							</p:row>
+<!--**************************************************Fin date reclamation**************************** -->
+
+<!--**************************************************Debut groupe CLient**************************** -->									
+
+							<p:row>
+								<p:column>
+									<h:outputText
+										value="#{clientmsgs['clientAcquereur.groupe']} :"
+										styleClass="weightBold" />
+								</p:column>
+							
+								<p:column >
+									<p:inputText id="group"
+									    style="width:210px;"
+										value="#{reclamationBean.newClientAcquereur.groupe.libelle}"
+										label="#{clientmsgs['clientAcquereur.groupe']}"
+										disabled="true">
+									</p:inputText>
+								</p:column>
+<!--**************************************************Fin groupe CLient**************************** -->	
+
+<!--**************************************************Debut type reclamation**************************** -->		
+						
+								<p:column>
+									<h:outputText value="#{reclamationmsgs['reclamation.type.reclamation']}:"
+										styleClass="weightBold" />
+									<h:outputText value="*" styleClass="required-star-right" />
+								</p:column>
+
+								<p:column >
+									<p:selectOneMenu id="type" style="width: 203px;"
+										label="#{reclamationmsgs['reclamation.type.reclamation']}"
+										value="#{reclamationBean.newreclamation.typeReclamation}"
+										required="true" converter="typeReclamationConverter">
+										<p:ajax process="@this" update="type" />
+										<f:selectItem noSelectionOption="true"
+											itemLabel="----------------------------------------"
+											itemValue="" />
+										<f:selectItems value="#{reclamationBean.typeReclamations}"
+											var="type" itemLabel="#{type.objetReclamation}"
+											itemValue="#{type}" />
+									</p:selectOneMenu>
+
+								</p:column>
+							</p:row>
+<!--**************************************************Fin type reclamation**************************** -->		
+
+<!--**************************************************Debut nom CLient**************************** -->	
+							<p:row>
+								<p:column>
+									<h:outputText
+										value="#{clientmsgs['clientAcquereur.nomPrenomFr']} :"
+										styleClass="weightBold" />
+								</p:column>
+
+								<p:column>
+									<p:inputText id="nomfr" 
+                     					style="width:210px;"
+										value="#{reclamationBean.newClientAcquereur.nomPrenomFr}"
+										disabled="true"
+										label="#{clientmsgs['clientAcquereur.nomPrenomFr']} :"
+										placeholder="#{clientmsgs['clientAcquereur.nomPrenomFr']}">
+									</p:inputText>
+								</p:column>
+<!--**************************************************Fin nom CLient**************************** -->
+
+<!--**************************************************Debut date envoi**************************** -->	
+								
+								<p:column >
+									<h:outputText
+										value="#{reclamationmsgs['reclamation.date.envoie']} :"
+										styleClass="weightBold" />
+									<h:outputText value="*" styleClass="required-star-right" />
+								</p:column>
+								<p:column>
+									<p:calendar id="date_envoi"
+										value="#{reclamationBean.newreclamation.dateEnvoie}"
+										label="#{reclamationmsgs['reclamation.date.envoie']}"
+										required="true"
+										mindate="#{reclamationBean.newreclamation.dateReclamation}"
+										yearRange="c-100:c+100" showOn="button" navigator="true">
+										<p:ajax update="date_reclamation date_rep" event="dateSelect" />
+									</p:calendar>
+								</p:column>
+							</p:row>
+<!--**************************************************Fin date envoi**************************** -->
+
+<!--**************************************************Debut Assurance**************************** -->		
+						
+							<p:row>
+								<p:column>
+									<h:outputText value="#{reclamationmsgs['reclamation.type.client']}:"
+										styleClass="weightBold" />
+									<h:outputText value="*" styleClass="required-star-right" />
+								</p:column>
+
+								<p:column style="width: 210px;">
+									<p:selectOneMenu id="assurer" disabled="#{reclamationBean.modifReclamation == 1}"
+										label="#{reclamationmsgs['reclamation.type.client']}"
+										value="#{reclamationBean.newreclamation.assurance}"
+										required="true" converter="assuranceConverter">
+										<p:ajax process="@this" update="@form" />
+										<f:selectItem noSelectionOption="true"
+											itemLabel="----------------------------------------"
+											itemValue="" />
+										<f:selectItems value="#{reclamationBean.clientAssurers}"
+											var="assurer" 
+											itemLabel="#{assurer.conjoint ==0 ? assurer.clientAcquereur.nomPrenomFr : assurer.clientAcquereur.nomPrenomConjointFr}"
+											itemValue="#{assurer}" />
+										
+										
+									</p:selectOneMenu>
+
+								</p:column>
+<!--**************************************************Fin assurance **************************** -->
+
+
+<!--**************************************************Debut date reponse**************************** -->
+
+								<p:column>
+									<h:outputText
+										value="#{reclamationmsgs['reclamation.date.reponse']} :"
+										styleClass="weightBold" />
+								</p:column>
+								<p:column>
+									<p:calendar id="date_rep"
+										value="#{reclamationBean.newreclamation.dateReponse}"
+										label="#{reclamationmsgs['reclamation.date.reponse']}"
+										mindate="#{reclamationBean.newreclamation.dateEnvoie}"
+										yearRange="c-100:c+100" showOn="button" navigator="true">
+										<p:ajax update="@form" event="dateSelect" />
+									</p:calendar>
+								</p:column>
+							</p:row>
+<!--**************************************************Fin date reponse**************************** -->
+
+<!--**************************************************Debut assureur**************************** -->		
+
+							<p:row>
+								<p:column>
+									<h:outputText
+										value="#{assureurmsgs['assureur.abreviation']}:"
+										styleClass="weightBold" />
+								</p:column>
+
+								
+								
+								<p:column >
+									<p:inputText 
+									    style="width:215px;"
+										value="#{reclamationBean.newreclamation.assurance.assureur.abreviation}"
+										label="##{assureurmsgs['assureur.abreviation']}"
+										disabled="true">
+									</p:inputText>
+								</p:column>
+<!--**************************************************Fin assureur**************************** -->
+<!--**************************************************debut reponse**************************** -->		
+							
+								<p:column>
+									<h:outputText
+										value="#{reclamationmsgs['reclamation.reponse']} :"
+										styleClass="weightBold" />
+									<h:outputText id="s1" value="*"
+										styleClass="required-star-right"
+										rendered="#{reclamationBean.newreclamation.dateReponse !=null}" />
+								</p:column>
+								
+								<p:column>
+									<p:inputText id="rep"
+									style="width: 220px;"
+										value="#{reclamationBean.newreclamation.reponseAssur}"
+										label="#{reclamationmsgs['reclamation.reponse']}"
+										required="#{reclamationBean.newreclamation.dateReponse !=null}" />
+								</p:column>
+							</p:row>
+<!--**************************************************Fin reponse**************************** -->		
+						</p:panelGrid>
+					</p:fieldset>
+					<p:spacer/>
+					<div style="width: 100%; text-align: right">
+
+						<p:commandButton id="initial"
+							value="#{generalmsgs['navigation.new']}"
+							styleClass="ui-priority-primary"
+							actionListener="#{reclamationBean.initialisation()}"
+							update="@form" process="@this">
+							<p:resetInput target=":reclamationForm" />
+						</p:commandButton>
+
+						<p:commandButton value="#{generalmsgs['navigation.ajout']}"
+							styleClass="ui-priority-primary"
+							oncomplete="if(!args.validationFailed) {PF('saveReclamation').show()};"
+							rendered="#{reclamationBean.newClientAcquereur != null and reclamationBean.modifReclamation == 0}">
+						</p:commandButton>
+
+						<p:commandButton value="#{generalmsgs['navigation.modif']}"
+							styleClass="ui-priority-primary"
+							oncomplete="if(!args.validationFailed){PF('updatReclamation').show()};"
+							process="@form"
+							rendered="#{reclamationBean.modifReclamation == 1}">
+						</p:commandButton>
+
+
+						<p:commandButton value="#{generalmsgs['navigation.delete']}"
+							styleClass="ui-priority-primary"
+							oncomplete="if(!args.validationFailed){PF('suppReclamation').show()};"
+							process="@this"
+							rendered="#{reclamationBean.modifReclamation == 1}">
+						</p:commandButton>
+
+						<p:commandButton id="RechercheReclamation"
+							styleClass="ui-priority-primary"
+							actionListener="#{menuController.goToPageRechercheReclamation()}"
+							value="#{generalmsgs['navigation.recherche']}" ajax="true"
+							process="@this" />
+
+						<p:spacer width="5px" />
+					</div>
+					<br />
+
+
+
+			</p:panel>
+		</h:form>
+
+
+
+		<p:confirmDialog widgetVar="saveReclamation"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}">
+			<div align="right">
+				<h:form>
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						styleClass="ui-priority-primary" icon="ui-icon-check"
+						actionListener="#{reclamationBean.saveReclamation()}"
+						oncomplete="PF('saveReclamation').hide() ;" immediate="true"
+						process="@this" update="@all" ajax="true" />
+
+					<p:commandButton value="#{generalmsgs['popup.quitter']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('saveReclamation').hide()" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog widgetVar="updatReclamation"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}">
+			<div align="right">
+				<h:form>
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						styleClass="ui-priority-primary" icon="ui-icon-check"
+						actionListener="#{reclamationBean.updateReclamation()}"
+						oncomplete="PF('updatReclamation').hide() ;" immediate="true"
+						process="@this" update="@all" ajax="true" />
+
+					<p:commandButton value="#{generalmsgs['popup.quitter']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('updatReclamation').hide()" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog widgetVar="suppReclamation"
+			message="#{generalmsgs['popup.confirm.message.supprission']}"
+			header="#{generalmsgs['popup.confirm.header']}">
+			<div align="right">
+				<h:form>
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						styleClass="ui-priority-primary" icon="ui-icon-check"
+						actionListener="#{reclamationBean.deleteReclamation()}"
+						oncomplete="PF('suppReclamation').hide() ;" immediate="true"
+						process="@this" update="@all" ajax="true" />
+					<p:commandButton value="#{generalmsgs['popup.quitter']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('suppReclamation').hide()" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

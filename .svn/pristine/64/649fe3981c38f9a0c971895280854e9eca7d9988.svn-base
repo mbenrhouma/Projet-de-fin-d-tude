@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="arrangement_subreport" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6b7cfc85-b1b8-4087-9018-7524632e6cd1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="codeAcquereur" class="java.math.BigDecimal"/>
+	<field name="nomPrenomFr" class="java.lang.String"/>
+	<field name="adresseLogement" class="java.lang.String"/>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="1a1d6bdc-fa55-4c16-adad-6f5022427b32"/>
+				<text><![CDATA[codeAcquereur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="112" height="20" uuid="7d7d6948-3f3c-4879-9dc0-fcb10c23d8b2"/>
+				<text><![CDATA[nomPrenomFr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="0" width="218" height="20" uuid="73346ce8-2d1c-415c-8bd3-2fe71128aac0"/>
+				<text><![CDATA[adresseLogement]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="32" width="802" height="1" uuid="25a38695-d78c-4931-be0a-17d559dd410e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="df8302d8-8d88-43f7-822d-75e4416e19de"/>
+				<textFieldExpression><![CDATA[$F{codeAcquereur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="0" width="218" height="20" uuid="9352e151-0c98-4be1-8aab-e246f3bd0e5d"/>
+				<textFieldExpression><![CDATA[$F{adresseLogement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="112" height="20" uuid="53153452-a9ee-4479-b09f-585beb2dfd83"/>
+				<textFieldExpression><![CDATA[$F{nomPrenomFr}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

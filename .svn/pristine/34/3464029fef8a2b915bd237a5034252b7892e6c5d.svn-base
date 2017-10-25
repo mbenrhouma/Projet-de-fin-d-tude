@@ -1,0 +1,11 @@
+package com.cynapsys.dao;
+
+import java.util.List;
+
+import com.cynapsys.entities.Cession;
+import com.cynapsys.entities.ClientAcquereur;
+
+public interface CessionDAO extends AbstractDAO<Cession> {
+	Cession findById(String id);
+	List<Cession> findCessionByClientAcquereur(ClientAcquereur clientAcquereur);
+}

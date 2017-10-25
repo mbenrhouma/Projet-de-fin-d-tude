@@ -1,0 +1,227 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@SequenceGenerator(name="SEQ_EMPLOYEUR",sequenceName="S_EMPLOYEUR")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Employeur.findAll", query = "SELECT e FROM Employeur e"),
+    @NamedQuery(name = "Employeur.findByCodeEmployeur", query = "SELECT e FROM Employeur e WHERE e.codeEmployeur = :codeEmployeur"),
+    @NamedQuery(name = "Employeur.findByNomEmployeur", query = "SELECT e FROM Employeur e WHERE e.nomEmployeur = :nomEmployeur"),
+    @NamedQuery(name = "Employeur.findByRaisonSocial", query = "SELECT e FROM Employeur e WHERE e.raisonSocial = :raisonSocial"),
+    @NamedQuery(name = "Employeur.findByAbreviation", query = "SELECT e FROM Employeur e WHERE e.abreviation = :abreviation"),
+    @NamedQuery(name = "Employeur.findByAdresseEmployeur", query = "SELECT e FROM Employeur e WHERE e.adresseEmployeur = :adresseEmployeur"),
+    @NamedQuery(name = "Employeur.findByNumPhone", query = "SELECT e FROM Employeur e WHERE e.numPhone = :numPhone"),
+    @NamedQuery(name = "Employeur.findByNumFax", query = "SELECT e FROM Employeur e WHERE e.numFax = :numFax"),
+    @NamedQuery(name = "Employeur.findByMatricule", query = "SELECT e FROM Employeur e WHERE e.matricule = :matricule")})
+public class Employeur implements Serializable {
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_EMPLOYEUR")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CODE_EMPLOYEUR", nullable = false, precision = 22, scale = 0)
+    private BigDecimal codeEmployeur;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(name = "NOM__EMPLOYEUR", nullable = false, length = 254)
+    private String nomEmployeur;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(name = "RAISON_SOCIAL", nullable = false, length = 254)
+    private String raisonSocial;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(nullable = false, length = 254)
+    private String abreviation;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(name = "ADRESSE_EMPLOYEUR", nullable = false, length = 254)
+    private String adresseEmployeur;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NUM_PHONE", nullable = false)
+    private int numPhone;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NUM_FAX", nullable = false)
+    private int numFax;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private int matricule;
+    @OneToMany(mappedBy = "employeur", fetch = FetchType.LAZY)
+    private List<ClientAcquereur> clientAcquereurList;
+    @OneToMany(mappedBy = "employeur1", fetch = FetchType.LAZY)
+    private List<ClientAcquereur> clientAcquereurList1;
+    @OneToMany(mappedBy = "employeur2", fetch = FetchType.LAZY)
+    private List<ClientAcquereur> clientAcquereurList2;
+
+    public Employeur() {
+    }
+
+    public Employeur(BigDecimal codeEmployeur) {
+        this.codeEmployeur = codeEmployeur;
+    }
+
+    public Employeur(BigDecimal codeEmployeur, String nomEmployeur, String raisonSocial, String abreviation, String adresseEmployeur, int numPhone, int numFax, int matricule) {
+        this.codeEmployeur = codeEmployeur;
+        this.nomEmployeur = nomEmployeur;
+        this.raisonSocial = raisonSocial;
+        this.abreviation = abreviation;
+        this.adresseEmployeur = adresseEmployeur;
+        this.numPhone = numPhone;
+        this.numFax = numFax;
+        this.matricule = matricule;
+    }
+
+    public BigDecimal getCodeEmployeur() {
+        return codeEmployeur;
+    }
+
+    public void setCodeEmployeur(BigDecimal codeEmployeur) {
+        this.codeEmployeur = codeEmployeur;
+    }
+
+    public String getNomEmployeur() {
+        return nomEmployeur;
+    }
+
+    public void setNomEmployeur(String nomEmployeur) {
+        this.nomEmployeur = nomEmployeur;
+    }
+
+    public String getRaisonSocial() {
+        return raisonSocial;
+    }
+
+    public void setRaisonSocial(String raisonSocial) {
+        this.raisonSocial = raisonSocial;
+    }
+
+    public String getAbreviation() {
+        return abreviation;
+    }
+
+    public void setAbreviation(String abreviation) {
+        this.abreviation = abreviation;
+    }
+
+    public String getAdresseEmployeur() {
+        return adresseEmployeur;
+    }
+
+    public void setAdresseEmployeur(String adresseEmployeur) {
+        this.adresseEmployeur = adresseEmployeur;
+    }
+
+    public int getNumPhone() {
+        return numPhone;
+    }
+
+    public void setNumPhone(int numPhone) {
+        this.numPhone = numPhone;
+    }
+
+    public int getNumFax() {
+        return numFax;
+    }
+
+    public void setNumFax(int numFax) {
+        this.numFax = numFax;
+    }
+
+    public int getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(int matricule) {
+        this.matricule = matricule;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList() {
+        return clientAcquereurList;
+    }
+
+    public void setClientAcquereurList(List<ClientAcquereur> clientAcquereurList) {
+        this.clientAcquereurList = clientAcquereurList;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList1() {
+        return clientAcquereurList1;
+    }
+
+    public void setClientAcquereurList1(List<ClientAcquereur> clientAcquereurList1) {
+        this.clientAcquereurList1 = clientAcquereurList1;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList2() {
+        return clientAcquereurList2;
+    }
+
+    public void setClientAcquereurList2(List<ClientAcquereur> clientAcquereurList2) {
+        this.clientAcquereurList2 = clientAcquereurList2;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codeEmployeur != null ? codeEmployeur.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Employeur)) {
+            return false;
+        }
+        Employeur other = (Employeur) object;
+        if ((this.codeEmployeur == null && other.codeEmployeur != null) || (this.codeEmployeur != null && !this.codeEmployeur.equals(other.codeEmployeur))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.Employeur[ codeEmployeur=" + codeEmployeur + " ]";
+    }
+    
+}

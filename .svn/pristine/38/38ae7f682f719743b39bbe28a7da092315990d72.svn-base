@@ -1,0 +1,582 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import com.cynapsys.entities.Assurance;
+import com.cynapsys.entities.Assureur;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Groupe;
+import com.cynapsys.entities.Reclamation;
+import com.cynapsys.entities.TypeReclamation;
+import com.cynapsys.service.AssuranceService;
+import com.cynapsys.service.AssureurService;
+import com.cynapsys.service.ClientAcquereurService;
+import com.cynapsys.service.GroupeService;
+import com.cynapsys.service.ReclamationService;
+import com.cynapsys.service.TypeReclamationService;
+import com.cynapsys.utils.Constants;
+import com.cynapsys.utils.JsfUtil;
+
+@ManagedBean(name = "reclamationBean")
+@SessionScoped
+public class ReclamationBean extends AbstractBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Reclamation newreclamation;
+	private ClientAcquereur selectClientAcquereur;
+	private ClientAcquereur newClientAcquereur;
+	public Integer modifReclamation ;
+	private String codeClientAcquereur ;
+	private TypeReclamation typeReclamation;
+	private List<TypeReclamation> typeReclamations;
+	private List<Groupe> groupes;
+	private List<Assureur> assureurs;
+	private Assureur selectAssureur;
+	public HttpSession session;
+	private List<Assurance> clientAssurers;
+
+	// ---------Attribues de Recherche-------------------
+	private String rechCodeClientAcquereur;
+	private Reclamation rechRreclamation;
+	private List<Reclamation> reclamations;
+	private List<Reclamation> rechReclamations;
+	private TypeReclamation rechTypeReclamation;
+	private Assureur rechAssureur;
+	private Groupe rechGroupe;
+	private String rechNomFRClientAcquereur;
+	private String rechNomARClientAcquereur;
+	private String rechLibelleGroupe;
+	private String rechAbreviationAssureur;
+	private String rechObjetReclamation;
+	private Reclamation rechSelectReclamation;
+	private Date rechDateDebRec;
+	private Date rechDateFinRec;
+	private Date rechDateDebRep;
+
+	public List<Assurance> getClientAssurers() {
+		return clientAssurers;
+	}
+
+	public void setClientAssurers(List<Assurance> clientAssurers) {
+		this.clientAssurers = clientAssurers;
+	}
+
+	public Groupe getRechGroupe() {
+		return rechGroupe;
+	}
+
+	public void setRechGroupe(Groupe rechGroupe) {
+		this.rechGroupe = rechGroupe;
+	}
+
+	public Reclamation getRechSelectReclamation() {
+		return rechSelectReclamation;
+	}
+
+	public void setRechSelectReclamation(Reclamation rechSelectReclamation) {
+		this.rechSelectReclamation = rechSelectReclamation;
+	}
+
+	private Date rechDateFinRep;
+	private Date rechDateDebEnv;
+	private Date rechDateFinEnv;
+
+	public String getCodeClientAcquereur() {
+		return codeClientAcquereur;
+	}
+
+	public void setCodeClientAcquereur(String codeClientAcquereur) {
+		this.codeClientAcquereur = codeClientAcquereur;
+	}
+
+	public String getRechNomFRClientAcquereur() {
+		return rechNomFRClientAcquereur;
+	}
+
+	public void setRechNomFRClientAcquereur(String rechNomFRClientAcquereur) {
+		this.rechNomFRClientAcquereur = rechNomFRClientAcquereur;
+	}
+
+	public String getRechNomARClientAcquereur() {
+		return rechNomARClientAcquereur;
+	}
+
+	public void setRechNomARClientAcquereur(String rechNomARClientAcquereur) {
+		this.rechNomARClientAcquereur = rechNomARClientAcquereur;
+	}
+
+	public String getRechLibelleGroupe() {
+		return rechLibelleGroupe;
+	}
+
+	public void setRechLibelleGroupe(String rechLibelleGroupe) {
+		this.rechLibelleGroupe = rechLibelleGroupe;
+	}
+
+	public String getRechAbreviationAssureur() {
+		return rechAbreviationAssureur;
+	}
+
+	public void setRechAbreviationAssureur(String rechAbreviationAssureur) {
+		this.rechAbreviationAssureur = rechAbreviationAssureur;
+	}
+
+	public String getRechObjetReclamation() {
+		return rechObjetReclamation;
+	}
+
+	public void setRechObjetReclamation(String rechObjetReclamation) {
+		this.rechObjetReclamation = rechObjetReclamation;
+	}
+
+	public List<Reclamation> getRechReclamations() {
+		return rechReclamations;
+	}
+
+	public void setRechReclamations(List<Reclamation> rechReclamations) {
+		this.rechReclamations = rechReclamations;
+	}
+
+	public Date getRechDateDebRec() {
+		return rechDateDebRec;
+	}
+
+	public void setRechDateDebRec(Date rechDateDebRec) {
+		this.rechDateDebRec = rechDateDebRec;
+	}
+
+	public Date getRechDateFinRec() {
+		return rechDateFinRec;
+	}
+
+	public void setRechDateFinRec(Date rechDateFinRec) {
+		this.rechDateFinRec = rechDateFinRec;
+	}
+
+	public Date getRechDateDebEnv() {
+		return rechDateDebEnv;
+	}
+
+	public void setRechDateDebEnv(Date rechDateDebEnv) {
+		this.rechDateDebEnv = rechDateDebEnv;
+	}
+
+	public Date getRechDateFinEnv() {
+		return rechDateFinEnv;
+	}
+
+	public void setRechDateFinEnv(Date rechDateFinEnv) {
+		this.rechDateFinEnv = rechDateFinEnv;
+	}
+
+	public List<Groupe> getGroupes() {
+		return groupes;
+	}
+
+	public void setGroupes(List<Groupe> groupes) {
+		this.groupes = groupes;
+	}
+
+	public GroupeService getGroupeService() {
+		return groupeService;
+	}
+
+	public void setGroupeService(GroupeService groupeService) {
+		this.groupeService = groupeService;
+	}
+
+	public Reclamation getRechRreclamation() {
+		return rechRreclamation;
+	}
+
+	public void setRechRreclamation(Reclamation rechRreclamation) {
+		this.rechRreclamation = rechRreclamation;
+	}
+
+	public String getRechCodeClientAcquereur() {
+		return rechCodeClientAcquereur;
+	}
+
+	public Assureur getRechAssureur() {
+		return rechAssureur;
+	}
+
+	public void setRechAssureur(Assureur rechAssureur) {
+		this.rechAssureur = rechAssureur;
+	}
+
+	public TypeReclamation getRechTypeReclamation() {
+		return rechTypeReclamation;
+	}
+
+	public void setRechTypeReclamation(TypeReclamation rechercheTypeReclamation) {
+		this.rechTypeReclamation = rechercheTypeReclamation;
+	}
+
+	public void setRechCodeClientAcquereur(String rechCodeClientAcquereur) {
+		this.rechCodeClientAcquereur = rechCodeClientAcquereur;
+	}
+
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
+	public Date getRechDateFinRep() {
+		return rechDateFinRep;
+	}
+
+	public void setRechDateFinRep(Date rechDateFinRep) {
+		this.rechDateFinRep = rechDateFinRep;
+	}
+
+	public Date getRechDateDebRep() {
+		return rechDateDebRep;
+	}
+
+	public void setRechDateDebRep(Date rechDateDebRep) {
+		this.rechDateDebRep = rechDateDebRep;
+	}
+
+	public Assureur getSelectAssureur() {
+		return selectAssureur;
+	}
+
+	public void setSelectAssureur(Assureur selectAssureur) {
+		this.selectAssureur = selectAssureur;
+	}
+
+	public List<Assureur> getAssureurs() {
+		return assureurs;
+	}
+
+	public void setAssureurs(List<Assureur> assureurs) {
+		this.assureurs = assureurs;
+	}
+
+	public List<TypeReclamation> getTypeReclamations() {
+		return typeReclamations;
+	}
+
+	public void setTypeReclamations(List<TypeReclamation> typeReclamations) {
+		this.typeReclamations = typeReclamations;
+	}
+
+	public Reclamation getNewreclamation() {
+
+		return newreclamation;
+	}
+
+	public void setNewreclamation(Reclamation newreclamation) {
+		this.newreclamation = newreclamation;
+	}
+
+
+	public ClientAcquereur getSelectClientAcquereur() {
+		return selectClientAcquereur;
+	}
+
+	public void setSelectClientAcquereur(ClientAcquereur selectClientAcquereur) {
+		this.selectClientAcquereur = selectClientAcquereur;
+	}
+
+	public ClientAcquereur getNewClientAcquereur() {
+		return newClientAcquereur;
+	}
+
+	public void setNewClientAcquereur(ClientAcquereur newClientAcquereur) {
+		this.newClientAcquereur = newClientAcquereur;
+	}
+
+	public Integer getModifReclamation() {
+		return modifReclamation;
+	}
+
+	public void setModifReclamation(Integer modifReclamation) {
+		this.modifReclamation = modifReclamation;
+	}
+
+	public TypeReclamation getTypeReclamation() {
+		return typeReclamation;
+	}
+
+	public void setTypeReclamation(TypeReclamation typeReclamation) {
+		this.typeReclamation = typeReclamation;
+	}
+
+	public List<Reclamation> getReclamations() {
+		return reclamations;
+	}
+
+	public void setReclamations(List<Reclamation> reclamations) {
+		this.reclamations = reclamations;
+	}
+
+	public ReclamationService getReclamationService() {
+		return reclamationService;
+	}
+
+	public void setReclamationService(ReclamationService reclamationService) {
+		this.reclamationService = reclamationService;
+	}
+
+	public ClientAcquereurService getClientAcquereurService() {
+		return clientAcquereurService;
+	}
+
+	public void setClientAcquereurService(ClientAcquereurService clientAcquereurService) {
+		this.clientAcquereurService = clientAcquereurService;
+	}
+
+	public TypeReclamationService getTypeReclamationService() {
+		return typeReclamationService;
+	}
+
+	public void setTypeReclamationService(TypeReclamationService typeReclamationService) {
+		this.typeReclamationService = typeReclamationService;
+	}
+
+	public AssuranceService getAssuranceService() {
+		return assuranceService;
+	}
+
+	public void setAssuranceService(AssuranceService assuranceService) {
+		this.assuranceService = assuranceService;
+	}
+
+	@ManagedProperty(value = "#{reclamationService}")
+	private ReclamationService reclamationService;
+
+	@ManagedProperty(value = "#{clientAcquereurService}")
+	private ClientAcquereurService clientAcquereurService;
+
+	@ManagedProperty(value = "#{groupeService}")
+	private GroupeService groupeService;
+
+	@ManagedProperty(value = "#{typeReclamationService}")
+	private TypeReclamationService typeReclamationService;
+
+	@ManagedProperty(value = "#{assureurService}")
+	private AssureurService assureurService;
+	
+	@ManagedProperty(value = "#{assuranceService}")
+	private AssuranceService assuranceService;
+	
+
+	public ReclamationBean() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		session = (HttpSession) extContext.getSession(false);
+	}
+
+	@PostConstruct
+	public void initialisation() {
+		// Reclamation
+		newreclamation = null;
+		reclamations = reclamationService.findAll();
+		typeReclamations = typeReclamationService.findAll();
+		groupes = groupeService.findAll();
+		assureurs = assureurService.findAll();
+		codeClientAcquereur = null;
+		newClientAcquereur = null;
+		clientAssurers=null;
+		// Recherche Reclamation
+
+		rechCodeClientAcquereur = null;
+		rechGroupe = new Groupe();
+		rechNomARClientAcquereur = null;
+		rechNomFRClientAcquereur = null;
+		rechTypeReclamation = new TypeReclamation();
+		rechAssureur = new Assureur();
+		rechRreclamation = new Reclamation();
+		rechSelectReclamation = new Reclamation();
+		rechReclamations = null;
+
+		rechDateDebEnv = null;
+		rechDateDebRec = null;
+		rechDateDebRep = null;
+		rechDateFinEnv = null;
+		rechDateFinRec = null;
+		rechDateFinRep = null;
+	}
+
+	public void initialReclamation() {
+		newreclamation = null;
+		assureurs= new ArrayList<Assureur>();
+		assureurs = assureurService.findAll();
+		newClientAcquereur = null;
+		codeClientAcquereur = null;
+		modifReclamation = null;
+		rechSelectReclamation = new Reclamation();
+		rechReclamations = new ArrayList<Reclamation>();
+		clientAssurers=null;
+		
+	}
+
+	public void InitialRechReclamation() {
+		rechCodeClientAcquereur = null;
+		rechGroupe = new Groupe();
+		rechNomFRClientAcquereur = null;
+		rechNomARClientAcquereur = null;
+		rechTypeReclamation = new TypeReclamation();
+		rechReclamations = null;
+		modifReclamation = null;
+		rechAssureur = new Assureur();
+		rechDateDebEnv = null;
+		rechDateDebRec = null;
+		rechDateDebRep = null;
+		rechDateFinEnv = null;
+		rechDateFinRec = null;
+		rechDateFinRep = null;
+	}
+
+	public void onChange() {
+		newClientAcquereur= new ClientAcquereur();
+		modifReclamation=0;
+		newreclamation= new Reclamation();
+		newClientAcquereur = clientAcquereurService.findById(codeClientAcquereur);
+		newreclamation.setClientAcquereur(newClientAcquereur);
+		clientAssurers = assuranceService.findAssuranceByClient(codeClientAcquereur.toString());
+		if (newClientAcquereur == null){
+			initialReclamation();
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addWarningMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_fr).getString("reclamation.client.null"));
+			else {
+				JsfUtil.addWarningMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_ar).getString("reclamation.client.null"));
+			}
+		}
+		  if (clientAssurers == null){
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addWarningMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_fr).getString("reclamation.client.null.assurance"));
+			else {
+				JsfUtil.addWarningMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_ar).getString("reclamation.client.null.assurance"));
+			}
+		}
+	}
+
+	public void onRechSelectReclamation() {
+		codeClientAcquereur= newreclamation.getAssurance().getClientAcquereur().getCodeAcquereur()+"";
+		newClientAcquereur=newreclamation.getAssurance().getClientAcquereur();
+		rechCodeClientAcquereur = newreclamation.getAssurance().getClientAcquereur().getCodeAcquereur() + "";
+		rechGroupe = newreclamation.getClientAcquereur().getGroupe();
+		rechNomFRClientAcquereur = newreclamation.getClientAcquereur().getNomPrenomFr();
+		rechNomARClientAcquereur = newreclamation.getClientAcquereur().getNomPrenomAr();
+		rechAssureur = newreclamation.getAssurance().getAssureur();
+		rechTypeReclamation = newreclamation.getTypeReclamation();
+		modifReclamation = 1;
+
+	}
+
+	public void rechercher() {
+		
+				rechReclamations = reclamationService.findByCriteres(rechRreclamation, rechCodeClientAcquereur,
+				rechNomFRClientAcquereur, rechNomARClientAcquereur, rechAssureur.getAbreviation(),
+				rechGroupe.getLibelle(), rechTypeReclamation.getObjetReclamation(), rechDateDebEnv, rechDateDebRec,
+				rechDateDebRep, rechDateFinEnv, rechDateFinRec, rechDateFinRep);
+		if (rechReclamations == null || rechReclamations.size()==0){
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addSuccessMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_fr).getString("reclamation.recherche.null"));
+			else {
+				JsfUtil.addSuccessMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_ar).getString("reclamation.recherche.null"));
+			}
+		}
+	}
+
+	public void saveReclamation() {
+
+		reclamationService.save(newreclamation);
+		initialReclamation();
+		if (session.getAttribute("locale").toString().equals("fr"))
+			JsfUtil.addSuccessMessage(
+					ResourceBundle.getBundle(Constants.bundle_reclamation_fr).getString("reclamation.creation.succe"));
+		else {
+			JsfUtil.addSuccessMessage(
+					ResourceBundle.getBundle(Constants.bundle_reclamation_ar).getString("reclamation.creation.succe"));
+		}
+		if (!isValidFailed()) {
+			initialReclamation();
+		}
+	}
+
+	public void updateReclamation() {
+		reclamationService.update(newreclamation);
+		initialReclamation();
+		if (session.getAttribute("locale").toString().equals("fr"))
+			JsfUtil.addSuccessMessage(
+					ResourceBundle.getBundle(Constants.bundle_reclamation_fr).getString("reclamation.modifier.succee"));
+		else {
+			JsfUtil.addSuccessMessage(
+					ResourceBundle.getBundle(Constants.bundle_reclamation_ar).getString("reclamation.modifier.succee"));
+		}
+
+		if (!isValidFailed()) {
+			initialReclamation();
+		}
+	}
+
+	private boolean isValidFailed() {
+		return JsfUtil.isValidationFailed();
+	}
+
+	public AssureurService getAssureurService() {
+		return assureurService;
+	}
+
+	public void setAssureurService(AssureurService assureurService) {
+		this.assureurService = assureurService;
+	}
+
+	public void deleteReclamation() {
+		try {
+			if (newreclamation.getReponseAssur() == null) {
+				reclamationService.delete(newreclamation);
+				initialReclamation();
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_reclamation_fr)
+							.getString("reclamation.supprime.succes"));
+				else {
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_reclamation_ar)
+							.getString("reclamation.supprime.succes"));
+				}
+			} else {
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_reclamation_fr)
+							.getString("reclamation.error.supprime.utilise"));
+				else {
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_reclamation_ar)
+							.getString("reclamation.error.supprime.utilise"));
+				}
+			}
+		} catch (Exception e) {
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_reclamation_fr)
+						.getString("reclamation.error.supprime.ligne"));
+			else {
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_reclamation_ar)
+						.getString("reclamation.error.supprime.ligne"));
+			}
+		}
+	}
+}

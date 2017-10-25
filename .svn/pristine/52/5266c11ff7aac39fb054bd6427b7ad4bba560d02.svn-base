@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="detail_tableau_amortissement"
+			dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true"/>
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.identification']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel
+							value="#{toppanmsgs['header.tableau_amortissement']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+
+				</p:breadCrumb>
+
+						<p:dataTable id="dta"
+						 value="#{tableauAmortissementBean.tableauAmortissement}" var="current"
+						rowKey="#{current.id}"
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.dateDeb']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateDeb}" >
+							<f:convertDateTime pattern="MM/yyyy" />
+						</h:outputText>	
+					</p:column>
+						<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.dateFin']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateFin}" >
+						<f:convertDateTime pattern="MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.rsd']}"/>
+						</f:facet>
+						<h:outputText value="#{current.capitalRestantDu}" />
+					</p:column>
+					
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.interet']}"/>
+						</f:facet>
+						<h:outputText value="#{current.interet}">
+						</h:outputText>
+					</p:column>
+						<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.amortiisement']}"/>
+						</f:facet>
+						<h:outputText value="#{current.amortissement}" />
+					</p:column>
+					
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.annuite']}"/>
+						</f:facet>
+						<h:outputText value="#{current.annuite}" />
+					</p:column>
+					
+					
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.mensualite']}"/>
+						</f:facet>
+						<h:outputText value="#{current.montantMens}" />
+					</p:column>
+					
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.assuranceAnnuelle']}"/>
+						</f:facet>
+						<h:outputText value="#{current.assuranceAnnuelle}" />
+					</p:column>
+					
+										<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.taxAssurance']}"/>
+						</f:facet>
+						<h:outputText value="#{current.taxeAssurance}" />
+					</p:column>
+					
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.mensualiteDef']}"/>
+						</f:facet>
+						<h:outputText value="#{current.mensualiteDef}" />
+					</p:column>
+					</p:dataTable>
+					
+
+					
+				<br />
+				<div style="width: 100%; text-align: right">
+						<p:commandButton id="genererBtn" styleClass="ui-priority-primary"
+						value="#{tableauAmortissementmsgs['amortissement.genererTA']}"
+						ajax="false"
+						process="@this" actionListener="#{tableauAmortissementBean.imprimeTA()}"
+						update="@form">
+						</p:commandButton>
+						<p:spacer width="5px" />
+						<p:commandButton id="saveAllBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}"
+						ajax="true" disabled="#{tableauAmortissementBean.consultTA==1}"
+						process="@this" actionListener="#{tableauAmortissementBean.saveTableauAmortissementBean()}"
+						update="@form">
+						</p:commandButton>
+						<p:spacer width="5px" />
+						<p:commandButton id="annuler" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.annuler']}"
+						ajax="true"
+						process="@this" actionListener="#{menuController.goToPageTableauxAmortissement()}"
+						update="@form">
+						</p:commandButton>
+						</div>
+				<br />
+
+			<br></br>
+				
+			</p:panel>
+
+
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

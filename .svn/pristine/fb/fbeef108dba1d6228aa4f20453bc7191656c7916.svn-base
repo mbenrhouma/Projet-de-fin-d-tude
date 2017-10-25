@@ -1,0 +1,9 @@
+smtp.mail.host=smtp.topnet.tn
+smtp.mail.port=25
+smtp.mail.login=snitdoi@snit.tn
+smtp.mail.password=snitdoi2015
+smtp.mail.from=snitdoi@snit.tn 
+
+objet.mail.motPasse.oublie=Changement mot de passe compte GC
+msg.mail.part1=Bonjour, <br/><br/>Vous avez r\u00e9cemment demand\u00e9 la r\u00e9initialisation du mot de passe . <br/>Le nouveau mot de passe temporaire de votre compte est
+msg.mail.part2=<br/>Veuillez vous connecter avec ce mot de passe pour acc\u00e9der \u00e0 votre compte et \u00e0 vos services.<br/> Une fois connect\u00e9, vous pouvez modifier imm\u00e9diatement ce mot de passe en cliquant sur le lien de menu "Changer mot de passe".<br/><br/> Merci,  

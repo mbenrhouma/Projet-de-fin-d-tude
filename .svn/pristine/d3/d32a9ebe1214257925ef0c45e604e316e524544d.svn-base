@@ -1,0 +1,204 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.dao.DuplicateKeyException;
+
+import com.cynapsys.entities.Gouvernorat;
+
+import com.cynapsys.service.GouvernoratService;
+import com.cynapsys.utils.Constants;
+import com.cynapsys.utils.JsfUtil;
+
+@ManagedBean(name = "gouvernoratBean")
+@ViewScoped
+public class GouvernoratBean implements Serializable {
+	@ManagedProperty(value = "#{gouvernoratService}")
+	private GouvernoratService gouvernoratService;
+
+	private static final long serialVersionUID = 1L;
+	private Gouvernorat newGouvernorat;
+	private Gouvernorat selectGouvernorat;
+	private int modif = 0; // Modification 0 : insertion 1;
+	
+	private List<Gouvernorat> listGouvernorat;
+	private boolean enabledBoutonDelete;
+	public HttpSession session;
+	private int ModifGouvernorat = 1;
+
+	public GouvernoratBean() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		session = (HttpSession) extContext.getSession(false);
+
+	}
+
+	@PostConstruct
+	public void initialisation() {
+
+		newGouvernorat = new Gouvernorat();
+
+		listGouvernorat = new ArrayList<Gouvernorat>();
+		listGouvernorat = gouvernoratService.findAll();
+
+	
+
+	}
+
+	public void createGouvernorat() {
+		newGouvernorat = new Gouvernorat();
+		ModifGouvernorat = 1;
+		selectGouvernorat = null;
+		listGouvernorat = gouvernoratService.findAll();
+		modif = 0;
+	}
+
+	public void onselectGouvernorat() {
+		newGouvernorat = selectGouvernorat;
+		ModifGouvernorat = 0;
+		modif = 1;
+		listGouvernorat = gouvernoratService.findAll();
+	}
+
+	public void saveGouvernorat() {
+		if (ModifGouvernorat == 1) {
+			try {
+				gouvernoratService.save(newGouvernorat);
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.gouvernorats.cree.succes"));
+				else {
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.gouvernorats.cree.succes"));
+				}
+				createGouvernorat();
+			} catch (DuplicateKeyException e) {
+
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.gouvernorats.error.existe"));
+				else
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.gouvernorats.error.existe"));
+
+				newGouvernorat.setCode(null);
+				}
+		} else if (ModifGouvernorat == 0) {
+			gouvernoratService.update(newGouvernorat);
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.gouvernorats.modifie.succes"));
+			else
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.gouvernorats.modifie.succes"));
+
+			createGouvernorat();
+		}
+
+	}
+
+	public void deleteGouvernorat() {
+		try {
+			gouvernoratService.delete(newGouvernorat);
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.gouvernorats.supprime.succes"));
+			else {
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.gouvernorats.supprime.succes"));
+			}
+
+		} catch (Exception e) {
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.gouvernorats.error.supprimer"));
+			else
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.gouvernorats.error.supprimer"));
+		}
+		createGouvernorat();
+	}
+
+	public GouvernoratService getGouvernoratService() {
+		return gouvernoratService;
+	}
+
+	public void setGouvernoratService(GouvernoratService GouvernoratService) {
+		this.gouvernoratService = GouvernoratService;
+	}
+
+	public Gouvernorat getNewGouvernorat() {
+		return newGouvernorat;
+	}
+
+	public void setNewGouvernorat(Gouvernorat newGouvernorat) {
+		this.newGouvernorat = newGouvernorat;
+	}
+
+	public Gouvernorat getSelectGouvernorat() {
+		return selectGouvernorat;
+	}
+
+	public void setSelectGouvernorat(Gouvernorat selectGouvernorat) {
+		this.selectGouvernorat = selectGouvernorat;
+	}
+
+	public int getModif() {
+		return modif;
+	}
+
+	public void setModif(int modif) {
+		this.modif = modif;
+	}
+
+	
+
+	public List<Gouvernorat> getListGouvernorat() {
+		return listGouvernorat;
+	}
+
+	public void setListGouvernorat(List<Gouvernorat> listGouvernorat) {
+		this.listGouvernorat = listGouvernorat;
+	}
+
+	public boolean isEnabledBoutonDelete() {
+		return enabledBoutonDelete;
+	}
+
+	public void setEnabledBoutonDelete(boolean enabledBoutonDelete) {
+		this.enabledBoutonDelete = enabledBoutonDelete;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
+	public int getModifGouvernorat() {
+		return ModifGouvernorat;
+	}
+
+	public void setModifGouvernorat(int modifGouvernorat) {
+		ModifGouvernorat = modifGouvernorat;
+	}
+
+}

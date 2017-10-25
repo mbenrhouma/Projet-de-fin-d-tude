@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="consultationForm">
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="Accueil"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+
+				<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+
+				
+				
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

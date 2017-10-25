@@ -1,0 +1,13 @@
+imprimerMainlevee.Client=Client
+imprimerMainlevee.codeClient=Code Client
+imprimerMainlevee.nomPrenom=Nom et prenom
+imprimerMainlevee.groupe=Groupe
+imprimerMainlevee.adresseClient=Adresse Logement
+imprimerMainlevee.dateDeReglement=Date de reglement
+imprimerMainlevee.dateDeMainlevee=date de mailevée
+imprimerMainlevee.mainlevéeouActedeprécision=Mainlevée ou Acte de précision
+imprimerMainlevee.typeDeMainlevée=Type de mainlevée
+imprimerMainlevee.imprimer=Imprimer
+imprimerMainlevee.choiximprim=Mainlevée ou Acte de précisio
+imprimerMainlevee.mainlevee=Mainlevee
+imprimerMainlevee.ActeDePrecision=Acte de precision

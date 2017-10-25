@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<f:view contentType="text/html" >
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="refresh" content="58" />
+
+	<link rel="shortcut icon"
+		href="#{facesContext.externalContext.request.contextPath}/favicon.ico"
+		type="image/x-icon" />
+	<link rel="icon"
+		href="#{facesContext.externalContext.request.contextPath}/favicon.ico"
+		type="image/x-icon" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	
+	
+		<f:facet name="middle">
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.request.contextPath}/css/style.css" />
+				</f:facet>
+
+	<style type="text/css">
+
+
+</style>
+</h:head>
+<h:body >
+	<h:form id="form" dir="#{languageBean.languageAffich}">
+		<div id="header">
+			<div class="RepTunis">
+				<table>
+					<tr>
+						<td><strong class="textRepub">République Tunisienne</strong>
+							<p class="bodytext">
+								Ministère de l'équipement, de l'aménagement <br /> du territoire
+								et du développement durable
+							</p></td>
+						<td style="vertical-align: middle; padding-bottom: 13px;"><img
+							id="imgTun"
+							src="#{facesContext.externalContext.request.contextPath}/resources/images/tun.gif" />
+						</td>
+					</tr>
+				</table>
+			</div>
+			<img height="140"
+				src="#{facesContext.externalContext.request.contextPath}/resources/images/header-fr.jpg"
+				style="width: 100%; border-radius: 5px; padding-bottom: 1px;" />
+		</div>
+		<p:growl sticky="true" id="growl" autoUpdate="true" closable="true" />
+
+
+		<center>
+			<p:panelGrid styleClass="noBorder"
+				style="border-radius: 5px; padding-bottom: 1px;">
+
+				<p:row>
+					<p:column colspan="3" style="height:100px;"></p:column>
+				</p:row>
+				<p:row>
+
+					<p:column>
+						<p:panel id="dialog" header="Authentification"
+							styleClass="authenPanel"
+							style="width: 400px; margin-left: auto; margin-right: auto; margin-top:50px; margin-bottom:auto;">
+							<p:panelGrid cellpadding="5" styleClass="noBorder"
+								style="width: 100%">
+								<p:row>
+									<p:column>
+										<h:outputLabel for="username"
+											value="#{utilisateurfrmsgs['utilisateur.login']} :"
+											styleClass="weightBold" />
+										<h:outputText value="*" styleClass="required-star-right" />
+									</p:column>
+									<p:column>
+										<p:inputText value="#{loginBean.username}" id="username"
+											required="true"
+											label="#{utilisateurfrmsgs['utilisateur.login']}"
+											style="width: 205px; height:22px;  " />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<h:outputLabel for="password"
+											value="#{utilisateurfrmsgs['utilisateur.motPasse']} :"
+											styleClass="weightBold" />
+										<h:outputText value="*" styleClass="required-star-right" />
+									</p:column>
+									<p:column>
+										<p:password value="#{loginBean.password}" id="password"
+											style="width: 205px; height:22px;  " required="true"
+											label="#{utilisateurfrmsgs['utilisateur.motPasse']}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:commandLink
+											value="#{utilisateurfrmsgs['login.lien_motPasse_oublie']}"
+											style="font-style: italic"
+											actionListener="#{loginBean.changerMotDePasseOublie}"
+											process="@this username" update="@form" />
+									</p:column>
+									<p:column style="height:40px;">
+										<div align="right">
+											<p:commandButton id="loginButton"
+												value="#{utilisateurfrmsgs['bouton.utilisateur.connecter']}"
+												update=":form" actionListener="#{loginBean.login}"
+												styleClass="ui-priority-primary" />
+										</div>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</p:column>
+
+				</p:row>
+
+
+			</p:panelGrid>
+		</center>
+
+
+	</h:form>
+
+	<p:dialog modal="true" widgetVar="modDia" appendTo="@(body)"
+		styleClass="dialogLoading" id="dialogLoadingMenu" showHeader="false"
+		draggable="false" closable="false" resizable="false"
+		style="border: none!important; background: none!important">
+		<center>
+			<p:graphicImage value="/resources/images/ajax-loader.gif"
+				style="height:50px;" />
+		</center>
+	</p:dialog>
+</h:body>
+</f:view>
+</html>
+

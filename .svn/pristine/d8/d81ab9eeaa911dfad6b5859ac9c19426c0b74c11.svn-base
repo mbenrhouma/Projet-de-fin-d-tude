@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contentieux" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a406d369-e60f-4eee-b465-84452d55bcc3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TitreF" class="java.lang.String"/>
+	<parameter name="Locataire" class="java.lang.String"/>
+	<parameter name="TypeC" class="java.lang.String"/>
+	<parameter name="DegreC" class="java.lang.String"/>
+	<title>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="147" y="3" width="236" height="43" uuid="53cd0098-5f20-476b-8a5c-a00eb331a870"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dossier contentieux]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="196" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="28" width="100" height="20" uuid="6462ff99-b4bd-4b42-b1a3-4ac2be371b7b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Titre foncier:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="13" y="63" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="2eb75841-2545-4394-a5d2-13aeed175464"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Locataire:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="13" y="98" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="68ac4891-4639-4e1d-a312-0f28d2c6a535"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Type Contentieux:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="13" y="133" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a63647c8-f1c3-42d7-98ed-701b6f0fbd1a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Degré contentieux:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="429" y="98" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="207e20f3-bb69-4d67-8707-664ed182d932"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[نوع التقاضي:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="429" y="63" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f0f2b9e1-0b91-4b74-95a9-3522ae1cffc1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[المتسوغ :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="429" y="28" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="a2935ec8-b8db-4b9d-ab17-4995d756740c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[الرسم العقاري:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="429" y="133" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9fd8fca0-0e04-48f6-9c33-6cfa9c28711a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[درجة التقاضي:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="240" y="28" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d4f4ef2f-6dbd-427c-bab7-72a449883050"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TitreF}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="240" y="63" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="fb67878e-4f7c-4bd0-acff-335ce4cef3f7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Locataire}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="240" y="98" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="96e3569b-efe0-41c4-8572-6ded5c733818"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TypeC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="240" y="133" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8e393b62-abde-4457-bf0d-30f0f9d0a443"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DegreC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.NoteDebit;
+
+public interface NoteDebitDAO  extends AbstractDAO<NoteDebit>{
+	NoteDebit findById(String id);
+}

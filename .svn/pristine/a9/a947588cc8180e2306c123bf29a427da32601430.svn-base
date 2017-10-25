@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="noteDebitForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true"
+				life="200" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem immediate="true">
+						<p:outputLabel value="#{toppanmsgs['header.recette']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel
+							value="#{toppanmsgs['header.apurement']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<br />
+				<!-- *************************************************Recherche MultiCritaires**************************************************************************************************  -->
+				<p:fieldset toggleable="true" id="recherche"
+					legend="#{apurementmsgs['apurement.recherche']}" >
+					<p:panelGrid id="panelRecherche" styleClass="noBorder"
+						style="width: 100%">
+		<!--********************************************ETAT QUITANCE**********************************  -->
+		<p:row>
+		<p:column >
+							<h:outputText value="#{apurementmsgs['apurement.EtatQuittance']}:"
+								styleClass="weightBold" />
+							
+						</p:column>
+						<p:column  >
+						<center>
+						<h:selectOneRadio id="etatContrat"
+								value="#{apurementBean.etatQuittance}" label="#{apurementmsgs['apurement.EtatQuittance']}"  
+								style="width:210px"
+								>
+					<p:ajax event="change" listener="#{apurementBean.rechercheAvance}" update="@form"></p:ajax>
+								
+								<f:selectItem itemValue="1" itemLabel="#{apurementmsgs['apurement.EtatQuittance.nouveau']}" />
+								<f:selectItem itemValue="2" itemLabel="#{apurementmsgs['apurement.EtatQuittance.déclasser']}" />
+								<f:selectItem itemValue="3" itemLabel="#{apurementmsgs['apurement.EtatQuittance.annule']}" />
+							
+						
+
+							</h:selectOneRadio>
+							</center>
+							
+						</p:column>
+				</p:row>
+		<!--******************************************** Montant Quittance ****************************  -->
+					<p:row>
+						<p:column>
+							<p:outputLabel
+								value="#{apurementmsgs['apurement.MontantQuittance']}:"
+								styleClass="weightBoldAr" />
+						</p:column>
+
+						<p:column>
+								<p:inputText id="montantQuittanceRecheche" style="width:220px"
+									value="#{apurementBean.montantQuittanceRecheche}"
+									label="#{apurementmsgs['apurement.MontantQuittance']}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+									
+
+								</p:inputText>
+
+							
+						</p:column>
+						<p:column>
+							<p:outputLabel
+								value="#{apurementmsgs['apurement.numQuittance']}:"
+								styleClass="weightBoldAr" />
+						</p:column>
+
+						<p:column>
+								<p:inputText id="numQuittance" style="width:220px"
+									value="#{apurementBean.numQuittancerecherche}"
+									label="#{apurementmsgs['apurement.MontantQuittance']}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+
+								</p:inputText>
+
+							
+						</p:column>
+					</p:row>
+
+
+
+						<!-- **************************************DATE VERSEMENT*******************************************  -->
+						<p:row>
+							<p:column>
+								<p:outputLabel 
+									value="#{apurementmsgs['apurement.DateversementEntreLe']}:"
+									styleClass="weightBoldAr" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="dateversemenDe"   lang="#{languageBean.locale}"
+										showOn="button" value="#{apurementBean.dateversemenDe}"
+										label="#{apurementmsgs['apurement.DateversementEntreLe']}" 
+										pattern="dd/MM/yyyy" 
+										navigator="true" yearRange="1900:2100"
+										
+										maxdate="#{apurementBean.dateversemenA}"
+										>
+										<p:ajax update="dateversemenA" event="dateSelect"></p:ajax>
+									</p:calendar>
+							
+							</p:column>
+							<p:column>
+								<p:outputLabel 
+									value="#{apurementmsgs['apurement.DateversementEtLe']}:"
+									styleClass="weightBoldAr" />
+							</p:column>
+							
+
+							<p:column>
+								
+									<p:calendar id="dateversemenA" style="width:210px" 
+										showOn="button" value="#{apurementBean.dateversemenA}"
+										mindate="#{apurementBean.dateversemenDe}"
+										pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+										label="#{apurementmsgs['apurement.DateversementEtLe']}"
+										
+										>
+										<p:ajax event="dateSelect" update="dateversemenDe"></p:ajax>
+									</p:calendar>
+								
+							</p:column>
+						
+						</p:row>
+
+						<!-- *************************************Montant**************************************************************  -->
+						<p:row>
+							<p:column>
+								<p:outputLabel 
+									value="#{apurementmsgs['apurement.Dateversement']}:"
+									styleClass="weightBoldAr" />
+							</p:column>
+
+							<p:column>
+								
+										<p:calendar id="datevers" style="width:210px" 
+										showOn="button" value="#{apurementBean.dateVersement}"
+										
+										pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+										label="#{apurementmsgs['apurement.Dateversement']}"
+										
+										/>
+
+
+									
+						</p:column>
+						<p:column>
+								<p:outputLabel 
+									value="#{apurementmsgs['apurement.compteattente.numCompte']}:"
+									styleClass="weightBoldAr" />
+							</p:column>
+							<p:column>
+							<p:inputText id="numCompte" style="width:220px"
+									value="#{apurementBean.numQuittancerecherche}"
+									label="#{apurementmsgs['apurement.MontantQuittance']}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+
+								</p:inputText>
+								</p:column>
+
+								
+								
+						</p:row>
+						
+
+
+					</p:panelGrid>
+					<br />
+
+				</p:fieldset>
+				<br/><br/>
+				<div style="width: 100%; text-align: right">
+				<p:commandButton id="initButton" styleClass="ui-priority-primary"
+						update="@form" ajax="true" process="@this"
+						value="#{generalmsgs['navigation.new']}"
+						actionListener="#{apurementBean.initRecheche}">
+						<p:resetInput target="noteDebitForm" />
+						</p:commandButton>
+							<p:spacer width="5px" />
+				<p:commandButton styleClass="ui-priority-primary"
+						id="rechercheButton"
+						actionListener="#{apurementBean.rechercheAvance}"
+						value="#{generalmsgs['navigation.recherche']}" update="dta"
+						ajax="true" process="@this" />
+					<p:spacer width="5px" />
+					<p:commandButton 
+						styleClass="ui-priority-primary"
+						id="declasserQuittance"
+						value="#{apurementmsgs['apurement.declasserQuittance']}" 
+						action="#{menuController.goToPageDeclasse}"
+						disabled="#{apurementBean.selectQuittance==null}"
+						rendered="#{apurementBean.etatQuittance!=2}"
+						ajax="true" process="@this" />
+						<p:commandButton 
+						styleClass="ui-priority-primary"
+						id="annuler_Quit"
+						value="#{apurementmsgs['apurement.annuleQuittance']}" 
+						rendered="#{apurementBean.etatQuittance==2}"
+						disabled="#{apurementBean.selectQuittance==null}"
+						ajax="true" process="@this" />
+					
+				
+				</div>
+				
+				<br></br>
+				<p:dataTable id="dta" value="#{apurementBean.listQuittance}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.numQuittance}" selection="#{apurementBean.selectQuittance}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect" listener="#{apurementBean.initClientAq}" update=":noteDebitForm:declasserQuittance"></p:ajax>
+					
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="ListQuittane" />
+						</h:commandLink>
+					</f:facet>
+					<f:facet name="header">
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/pdf.png" />
+							<p:dataExporter type="pdf" target="dta" fileName="ListQuittane"
+								encoding="ISO-8859-1" pageOnly="true" />
+						</h:commandLink>
+					</f:facet>
+
+					<!--************************************************CODE CLIENT ACQUEREUR*****************************************  -->
+					<p:column filterBy="#{current.compteAttente.numCompte}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.compteAttente.numCompte}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{apurementmsgs['apurement.compteattente.numCompte']}" />
+						</f:facet>
+						<h:outputText value="#{current.compteAttente.numCompte}" />
+						</p:column>
+						<p:column filterBy="#{current.numQuittance}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.numQuittance}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{apurementmsgs['apurement.numQuittance']}" />
+						</f:facet>
+						<h:outputText value="#{current.numQuittance}" />
+						</p:column>
+						
+						<p:column filterBy="#{current.montant}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.montant}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{apurementmsgs['apurement.MontantQuittance']}" />
+						</f:facet>
+						<h:outputText value="#{current.montant}" />
+						</p:column>
+						<p:column filterBy="#{current.dateVersement}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.dateVersement}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{apurementmsgs['apurement.Dateversement']}" />
+						</f:facet>
+						<h:outputText value="#{current.dateVersement}" >
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText>
+						</p:column>
+						<p:column filterBy="#{current.etatQuittance}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.etatQuittance}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{apurementmsgs['apurement.EtatQuittance']}" />
+						</f:facet>
+						<h:outputText value="#{apurementmsgs['apurement.EtatQuittance.nouveau']}"
+						 rendered="#{current.etatQuittance==1}" />
+						 <h:outputText value="#{apurementmsgs['apurement.EtatQuittance.déclasser']}"
+						 rendered="#{current.etatQuittance==2}" />
+						 <h:outputText value="#{apurementmsgs['apurement.EtatQuittance.annule']}"
+						 rendered="#{current.etatQuittance==3}" />
+						 
+						</p:column>
+					</p:dataTable>
+					
+
+				
+
+
+
+			
+				
+
+
+
+				<br></br>
+			</p:panel>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>
+</html>

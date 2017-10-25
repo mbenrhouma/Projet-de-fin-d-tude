@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="utilisateurForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['rechercheClientsacqueruers']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:fieldset legend="#{toppanmsgs['header.identification']}" id="identification"
+					toggleable="false" toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail1" style="width: 100%" styleClass="noBorder">
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientaqmsgs['clientAcquereur.codeclient']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="code_clt" style="width:210px" required="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.codeAcquereur}" label="#{clientaqmsgs['clientAcquereur.codeclient']}"
+									rendered="true" disabled="true">
+								</p:inputText>
+							</p:column>
+
+
+							<!--***************************************************************CLIENT-GROUPE***********************************************  -->
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.groupe']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu filter="true" required="true" label="#{clientaqmsgs['clientAcquereur.groupe']}"
+									converter="groupeConverter" filterMatchMode="contains"
+									style="width:194px"
+									value="#{rechercheDesClientsAcquereursBean.newClient.groupe}"
+									disabled="false">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{clientAcquereurBean.groupes}"
+										var="groupe" itemLabel="#{groupe.libelle}"
+										itemValue="#{group}" />
+								</p:selectOneMenu>
+							</p:column>
+
+
+						</p:row>
+
+						<!--***********************************************Nom&Prenom**********************************************************  -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientaqmsgs['clientAcquereur.nomPrenomFr']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nom_clt" style="width:210px" required="true"
+									onkeyup="this.value=this.value.toUpperCase();" label="#{clientaqmsgs['clientAcquereur.nomPrenomFr']}:"
+									value="#{rechercheDesClientsAcquereursBean.newClient.nomPrenomFr}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.nomPrenomFr']} (Arabe):" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nom_clt_ar" style="width:210px"
+									required="false" label="#{clientaqmsgs['clientAcquereur.nomPrenomFr']}"
+									onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;"
+									value="#{rechercheDesClientsAcquereursBean.newClient.nomPrenomAr}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+						</p:row>
+						<!--***********************************************CIN**********************************************************  -->
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.cin']} :" styleClass="weightBold" />
+								<h:outputText styleClass="required-star-right" value="*" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="cin_clt" style="width:210px" required="false"
+									rendered="true" label="#{clientaqmsgs['clientAcquereur.cin']} "
+									value="#{rechercheDesClientsAcquereursBean.newClient.cin}" onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;" maxlength="8">
+                                    
+								</p:inputText>
+							</p:column>
+
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientaqmsgs['clientAcquereur.adresseCorrespondance']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="adresse_clt" style="width:210px"
+									required="true" label="#{clientaqmsgs['clientAcquereur.adresseCorrespondance']}"
+									value="#{rechercheDesClientsAcquereursBean.newClient.adresseCorrespondance}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientaqmsgs['clientAcquereur.anneebudgetaire']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu filter="true" required="true"
+									converter="anneeBudgetaireConverter" filterMatchMode="contains"
+									style="width:194px" label="#{clientaqmsgs['clientAcquereur.anneebudgetaire']}"
+									value="#{rechercheDesClientsAcquereursBean.newClient.anneeBudgetaire}"
+									disabled="false">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{clientAcquereurBean.anneebudgetaires}"
+										var="annee" itemLabel="#{annee.annee}" itemValue="#{annee}" />
+								</p:selectOneMenu>
+							</p:column>
+
+
+						</p:row>
+						<!--***********************************************CONJOINT**********************************************************  -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.conjoint']}:" styleClass="weightBold" />
+								<h:outputText styleClass="required-star-right" value="*" />
+							</p:column>
+							<p:column style="width: 150px;">
+								   <p:selectBooleanCheckbox id="conj" 
+									value="#{rechercheDesClientsAcquereursBean.conjoint}" >
+									<p:ajax  event="change" update="nom_clt_conj nom_clt_conj_Ar cin_clt_conj"  listener="#{rechercheDesClientsAcquereursBean.updateConjoint}"/>
+								    </p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<!--***********************************************Nom&Prenom CONJOINT**********************************************************  -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAquereur.nomprenomconjoint']}:"
+									styleClass="weightBold" />
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nom_clt_conj" style="width:210px"
+									required="#{rechercheDesClientsAcquereursBean.conjoint==true}" onkeyup="this.value=this.value.toUpperCase();" disabled="#{rechercheDesClientsAcquereursBean.conjoint == false}"
+									value="#{rechercheDesClientsAcquereursBean.newClient.nomPrenomConjointFr}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAquereur.nomprenomconjoint']} (Arabe)"
+									styleClass="weightBold"    />
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+
+
+							<p:column>
+								<p:inputText id="nom_clt_conj_Ar" style="width:210px"
+									required="false" disabled="#{rechercheDesClientsAcquereursBean.conjoint == false}"
+									onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;"
+									value="#{rechercheDesClientsAcquereursBean.newClient.nomPrenomConjointAr}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.cin']} :" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="cin_clt_conj" style="width:210px" onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;" maxlength="8"
+									required="#{rechercheDesClientsAcquereursBean.conjoint == true}"
+									value="#{rechercheDesClientsAcquereursBean.newClient.cinConjoint}"
+									disabled="#{rechercheDesClientsAcquereursBean.conjoint == false}"
+									rendered="true" label="#{clientaqmsgs['clientAcquereur.cin']} " >
+
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+
+
+
+
+
+					</p:panelGrid>
+
+				</p:fieldset>
+				<br />
+				<br />
+
+				<p:fieldset legend="#{toppanmsgs['header.logement']}"  id="logement" toggleable="false"
+					toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail2" style="width: 100%" styleClass="noBorder">
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.codelogement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								
+									
+
+									<p:inputText id="logement_code" style="width:210px" disabled="true"
+										value="#{rechercheDesClientsAcquereursBean.newClient.logement.codeLogement}"
+										label="code"
+									>
+									</p:inputText>
+
+
+
+
+
+								
+							</p:column>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.typeLogement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="type_log" required="false" style="width:210px" disabled="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.typeLogement.libelle}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.gouvernorat']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+
+							<p:column>
+								<p:inputText id="gouernerat_log" style="width:210px"
+									 disabled="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.gouvernorat.libelle}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.codePostal']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="code_postal_log"
+									style="width:210px" disabled="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.codePostal.libelleFr}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+
+
+
+						</p:row>
+
+						<p:row>
+
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.localite']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<p:inputText id="localité_log" style="width:210px"
+									required="true" disabled="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.localite.libelleFr}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.numOrdre']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="num_ordre" style="width:210px" required="false"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.numOrdre}" disabled="true"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseLoge']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="adresse_logement" style="width:210px"
+									required="false" disabled="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.adresseLoge}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.lotissement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="lotissment" style="width:210px"
+									required="false" disabled="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.lotissement.libelleFr}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.prixLog']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="prix_log" style="width:210px" disabled="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.logement.prixLog}"
+									label="#{clientLocatairemsgs['codeLocataire.LoyerMensuel']}/ #{clientLocatairearmsgs['codeLocataire.LoyerMensuel']}"
+									minValue="0.000">
+									<p:ajax event="blur"></p:ajax>
+
+								</p:inputText>
+
+							</p:column>
+
+
+
+						</p:row>
+
+
+
+					</p:panelGrid>
+
+
+				</p:fieldset>
+
+				<br />
+				<br />
+				<p:fieldset legend="#{clientaqmsgs['clientacquereur.contrat']}" id="contrant" toggleable="false"
+					toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail3" style="width: 100%" styleClass="noBorder">
+
+						<p:row>
+
+
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.dureeContrat']}:" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="duréé" style="width:210px" required="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.dureeContrat}"
+									rendered="true"  label="#{clientaqmsgs['clientAcquereur.dureeContrat']}">
+									<p:ajax event="blur" listener="#{rechercheDesClientsAcquereursBean.initDate}"
+										update="datedebut datefin"></p:ajax>
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.DateDebut']}:" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="datedebut" style="width: 200px"
+									yearRange="c-100:c+100" showOn="button" label="#{clientaqmsgs['clientAcquereur.DateDebut']}"
+									navigator="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.dateDebut}">
+									<p:ajax event="dateSelect"
+										listener="#{rechercheDesClientsAcquereursBean.updateDateFin}"
+										update="datefin datedebut" />
+								</p:calendar>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.datefin']}:" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="datefin" yearRange="c-100:c+100"
+									showOn="button" label="#{clientaqmsgs['clientAcquereur.datefin']}" style="width:210px" navigator="true"
+									value="#{rechercheDesClientsAcquereursBean.newClient.dateFin}">
+
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.etatContrat']}:" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<center>
+						<h:selectOneRadio id="etatContrat"
+								value="#{rechercheDesClientsAcquereursBean.newClient.etatContrat}" label="#{clientaqmsgs['clientAcquereur.etatContrat']}:"  required="true"
+								style="width:210px" disabled="true"
+								>
+								
+								<f:selectItem itemValue="0" itemLabel="#{clientaqmsgs['clientAcquereur.contrat_enreg']}" />
+								<f:selectItem itemValue="1" itemLabel="#{clientaqmsgs['clientAcquereur.contrat_signe']}" />
+						     	<p:ajax update="dateenregistrement"></p:ajax>
+						
+
+							</h:selectOneRadio>
+							</center>
+							</p:column>
+
+
+						</p:row>
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.DateEnregistrement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column style="width: 200px;">
+								<p:calendar id="dateenregistrement" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button" label="#{clientAquereur['clientAquereur.DateEnregistrement']}:" disabled="#{rechercheDesClientsAcquereursBean.newClient.etatContrat!=0}"
+									navigator="true" width="250" required="#{rechercheDesClientsAcquereursBean.newClient.etatContrat==0}"
+									value="#{rechercheDesClientsAcquereursBean.newClient.dateEnregistrement}" />
+							</p:column>
+
+
+						</p:row>
+
+
+					</p:panelGrid>
+
+
+				</p:fieldset>
+				<br />
+				<br />
+				<br />
+				<div style="width: 100%; text-align: right">
+                        <p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" update="@form"
+						oncomplete="if(!args.validationFailed) {PF('newConfirmation').show()};">
+						<p:resetInput target="utilisateurForm" />
+					</p:commandButton>
+					
+					  <p:commandButton id="list" styleClass="ui-priority-primary"
+							value="Lister" ajax="true"
+							process="@this"
+							actionListener="#{menuController.goToPagerechercheClientAcquereur}"
+							update="@all" rendered="true">
+							<p:resetInput target="utilisateurForm" />
+					</p:commandButton>
+				
+
+
+				</div>
+
+
+
+			</p:panel>
+		</h:form>
+
+
+		
+
+
+		<p:confirmDialog id="diagSave"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="newConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form>
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update="@all"
+						oncomplete="PF('newConfirmation').hide() ; document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{rechercheDesClientsAcquereursBean.modifClientAcquereur}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update="@all"
+						onclick="PF('newConfirmation').hide() "
+						styleClass="ui-priority-primary" />
+				</h:form>
+
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="assuranceForm" dir="#{languageBean.languageAffich}">
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="Accueil"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.assurance']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.assurance']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+				</p:breadCrumb>
+
+
+				<p:growl id="growl" autoUpdate="true" closable="true" />
+
+				
+
+<!-- ***********************Formulaire d'ajout une assurance****************************************** -->
+
+
+				<p:fieldset>	
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder" >
+<!-- ***********************debbut code client****************************************** -->
+					
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.codeclient']} :"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column >
+								<p:inputText style="width: 210px;"
+									value="#{assuranceBean.codeClientAcquereur}" required="true"
+									label="#{clientmsgs['clientAcquereur.codeclient']}"
+									placeholder="#{clientmsgs['clientAcquereur.codeclient']}">
+									<p:ajax process="@this" event="change"
+										update=":assuranceForm:"
+										listener="#{assuranceBean.onChange}" />
+								</p:inputText>
+							</p:column>
+						
+<!-- ***********************Fin code client****************************************** -->
+
+<!-- ***********************debut groupe client****************************************** -->
+
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.groupe']} :"
+									styleClass="weightBold" />
+
+							</p:column>
+							<p:column >
+								<p:inputText style="width: 210px;" id="group"
+									value="#{assuranceBean.newClientAcquereur.groupe.libelle}"
+									label="#{clientmsgs['clientAcquereur.groupe']}"
+									disabled="true">
+								</p:inputText>
+							</p:column>
+							
+						</p:row>
+<!-- ***********************Fin groupe client****************************************** -->
+
+<!-- ***********************debut nom client****************************************** -->
+
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.nomPrenomFr']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column >
+								<p:inputText id="nomfr" 
+									style="width: 210px;"
+									value="#{assuranceBean.newClientAcquereur.nomPrenomFr}"
+									disabled="true"
+									label="#{clientmsgs['clientAcquereur.nomPrenomFr']} :">
+								</p:inputText>
+							</p:column>
+
+<!-- ***********************Fin nom client****************************************** -->
+
+<!-- ***********************debut adresse client****************************************** -->
+
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.adresseCorrespondance']} : "
+									styleClass="weightBold" />
+							</p:column>
+							<p:column>
+								<p:inputText id="adresse" style="width: 210px;"
+									value="#{assuranceBean.newClientAcquereur.adresseCorrespondance}"
+									label="#{clientmsgs['clientAcquereur.adresseCorrespondance']}"
+									disabled="true">
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+<!-- ***********************Fin adresse client****************************************** -->
+
+<!-- ***********************debut type assurance ****************************************** -->
+                        <p:row>
+							<p:column>
+								<h:outputText
+									value="#{assurancemsgs['assurance.type.assurance']} :"
+									styleClass="weightBold"/>
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							
+							<p:column style=" width: auto;" >
+								<p:selectOneRadio id="type"
+									value="#{assuranceBean.newAssurance.typeAssurance}"
+									label="#{assurancemsgs['assurance.type.assurance']} :"
+									required="true">
+									<f:selectItem itemLabel="Groupe" itemValue="0" />
+									<f:selectItem itemLabel="Individuelle" itemValue="1" />
+									<f:selectItem itemLabel="Mixte" itemValue="2" />
+									<p:ajax update="@form " event="change"></p:ajax>
+								</p:selectOneRadio>
+							</p:column>
+						</p:row>
+
+<!-- ***********************Fin type assurance****************************************** -->
+
+<!-- ***********************debut montant 1****************************************** -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText id="txt1"
+									value="#{assurancemsgs['assurance.montant']}:"
+									styleClass="weightBold"/>
+							</p:column>
+							<p:column  id="montant1">
+								<p:inputText  style="width: 210px;"
+									value="#{assuranceBean.newAssurance.montant}"
+									label="#{assurancemsgs['assurance.montant']}"
+									required="true"
+									disabled="#{assuranceBean.newAssurance.typeAssurance == 0 || assuranceBean.newAssurance.typeAssurance == null}">
+									<p:ajax event="blur" />
+								</p:inputText>
+								
+							</p:column>
+<!-- *********************** Fin montant 1 ****************************************** -->
+
+<!-- *********************** debut montant 2 ****************************************** -->
+
+							<p:column >
+								<h:outputText id="txt2"
+									value="#{assurancemsgs['assurance.montant2']}:"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column >
+								<p:inputText id="montant2" style="width: 210px;"
+									value="#{assuranceBean.newAssurance.montant2}"
+									label="#{assurancemsgs['assurance.montant2']}"
+									required="true"
+									disabled="#{assuranceBean.newAssurance.typeAssurance == 1 || assuranceBean.newAssurance.typeAssurance == null}">
+									<p:ajax event="blur" />
+								</p:inputText>
+							</p:column>
+						</p:row>
+<!-- *********************** Fin montant 2 ****************************************** -->
+						
+						
+<!-- *********************** Debut assureur *************************************************************** -->						
+						
+						<p:row>
+							<p:column>
+								<h:outputText value="#{assureurmsgs['assureur.abreviation']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column >
+								<p:selectOneMenu id="assureur" style="width: 195px;"
+									label="#{assureurmsgs['assureur.abreviation']}"
+									value="#{assuranceBean.newAssurance.assureur}" effect="fade"
+									disabled="#{assuranceBean.newAssurance.typeAssurance ==0}" converter="assureurConverter">
+									<p:ajax process="@this" update="assureur" />
+									<f:selectItem noSelectionOption="true"
+										itemLabel="----------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{reclamationBean.assureurs}"
+										var="assureur" required="true"
+										itemLabel="#{assureur.abreviation}" itemValue="#{assureur}" />
+								</p:selectOneMenu>
+							</p:column>
+							
+<!-- ******************************* Fin assureur *************************************************************** -->							
+
+<!-- ******************************* Debut Etat Conjoint *************************************************************** -->
+						 
+						  <p:column>
+								<h:outputText
+									value="#{assurancemsgs['assurance.conjoint']}"
+									styleClass="weightBold" 
+									rendered="#{assuranceBean.newClientAcquereur.compteConjoint == 1}"/>
+							</p:column>
+						  
+						  <p:column>
+						    <p:selectBooleanCheckbox value="#{assuranceBean.conjoint}"
+    						                         rendered="#{assuranceBean.newClientAcquereur.compteConjoint == 1}"/>
+						  </p:column>
+						  
+						</p:row> 
+						
+<!-- ******************************* Fin Etat Conjoint *************************************************************** -->
+					</p:panelGrid>
+				</p:fieldset>
+				
+				<p:spacer/>
+
+
+					<div style="width: 100%; text-align: right">
+					    
+					     <p:commandButton value="#{generalmsgs['navigation.new']}"
+							styleClass="ui-priority-primary"
+							action="#{assuranceBean.createAssurance()}" 
+							process="@this"
+							update="@all">
+							<p:resetInput target=":assuranceForm" />
+						</p:commandButton>
+						
+						<p:commandButton value="#{generalmsgs['navigation.ajout']}"
+							styleClass="ui-priority-primary"
+							oncomplete="if(!args.validationFailed){PF('saveAssurance').show()};"
+							disabled="#{assuranceBean.modifAssurance !=1}">
+						</p:commandButton>
+
+						<p:commandButton value="#{generalmsgs['navigation.modif']}"
+							styleClass="ui-priority-primary"
+							oncomplete="if(!args.validationFailed){PF('modifAssurance').show()};"
+							rendered="#{assuranceBean.modifAssurance ==0}">
+						</p:commandButton>
+
+
+						<p:commandButton value="#{generalmsgs['navigation.delete']}"
+							styleClass="ui-priority-primary"
+							onstart="PF('suppAssurance').show()" 
+							oncomplete="if(!args.validationFailed){PF('suppAssurance').show()};"
+							process="@this"
+							rendered="#{assuranceBean.modifAssurance ==0}">
+						</p:commandButton>
+
+						<p:spacer width="5px" />
+					</div>
+					<br />
+
+					<p:dataTable id="dta" value="#{assuranceBean.assurances}"
+						var="current" rows="10" paginator="true"
+						paginatorPosition="bottom" rowKey="#{current.id}"
+						selection="#{assuranceBean.selectAssurance}"
+						selectionMode="single"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+						<p:ajax event="rowSelect"
+							listener="#{assuranceBean.onSelectAssurance()}"
+							update=":assuranceForm:" />
+
+						<p:column filterBy="#{current.clientAcquereur}"
+							sortBy="#{current.clientAcquereur.codeAcquereur}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.codeclient']}" />
+							</f:facet>
+							<h:outputText value="#{current.clientAcquereur.codeAcquereur}" />
+						</p:column>
+
+						<p:column filterBy="#{current.clientAcquereur.groupe.libelle}"
+							sortBy="#{current.clientAcquereur.groupe.libelle}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.groupe']}" />
+							</f:facet>
+							<h:outputText value="#{current.clientAcquereur.groupe.libelle}" />
+						</p:column>
+
+						<p:column filterBy="#{current.clientAcquereur.nomPrenomFr}"
+							sortBy="#{current.clientAcquereur.nomPrenomFr}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.nomPrenomFr']}" />
+							</f:facet>
+							<h:outputText value="#{current.clientAcquereur.nomPrenomFr}" />
+						</p:column>
+
+						<p:column
+							filterBy="#{current.clientAcquereur.adresseCorrespondance}"
+							sortBy="#{current.clientAcquereur.adresseCorrespondance}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.adresseCorrespondance']}" />
+							</f:facet>
+							<h:outputText
+								value="#{current.clientAcquereur.adresseCorrespondance}" />
+						</p:column>
+
+						<p:column filterBy="#{current.typeAssurance}"
+							sortBy="#{current.typeAssurance}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText
+									value="#{assurancemsgs['assurance.type.assurance']}" />
+							</f:facet>
+							<h:outputText value="Groupe" 
+								rendered="#{current.typeAssurance ==0}" />
+							<h:outputText value="Individuelle"
+								rendered="#{current.typeAssurance ==1}" />
+							<h:outputText value="Mixte"
+								rendered="#{current.typeAssurance ==2}" />
+						</p:column>
+						<p:column filterBy="#{current.montant}"
+							sortBy="#{current.montant}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="#{assurancemsgs['assurance.montant']}" />
+							</f:facet>
+							<h:outputText value="#{current.montant}" />
+						</p:column>
+						<p:column filterBy="#{current.montant2}"
+							sortBy="#{current.montant2}" filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="#{assurancemsgs['assurance.montant2']}" />
+							</f:facet>
+							<h:outputText value="#{current.montant2}" />
+						</p:column>
+						<p:column filterBy="#{current.assureur.abreviation}"
+							sortBy="#{current.assureur.abreviation}"
+							filterMatchMode="contains">
+							<f:facet name="header">
+								<h:outputText value="#{assureurmsgs['assureur.abreviation']}" />
+							</f:facet>
+							<h:outputText value="#{current.assureur.abreviation}" />
+						</p:column>
+					</p:dataTable>
+
+			</p:panel>
+		</h:form>
+		<p:confirmDialog showEffect="fade" hideEffect="fade"
+			widgetVar="saveAssurance"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}">
+			 <div align="right">
+			   <h:form>
+				 <p:commandButton value="#{generalmsgs['popup.confirmer']}"
+				 	  styleClass="ui-priority-primary" icon="ui-icon-check"
+				 	    actionListener="#{assuranceBean.saveAssurance()}"
+					      oncomplete="PF('saveAssurance').hide() ;" immediate="true"
+						     update="@form" >
+						     <p:resetInput target="@form"></p:resetInput>
+						     </p:commandButton>
+				 <p:commandButton value="#{generalmsgs['popup.quitter']}"
+				       styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						 update=":assuranceForm:dta"
+						    onclick="PF('saveAssurance').hide()" />
+								</h:form>
+							</div>
+						</p:confirmDialog>
+						
+	   <p:confirmDialog showEffect="fade" hideEffect="fade"
+			widgetVar="modifAssurance"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}">
+			 <div align="right">
+			   <h:form>
+				 <p:commandButton value="#{generalmsgs['popup.confirmer']}"
+				 	  styleClass="ui-priority-primary" icon="ui-icon-check"
+				 	    actionListener="#{assuranceBean.updateAssurance()}"
+					      oncomplete="PF('modifAssurance').hide() ;" immediate="true"
+						    process="@this" update=":assuranceForm:dta">
+						    <p:resetInput target="@form"></p:resetInput>
+						    </p:commandButton>
+				 <p:commandButton value="#{generalmsgs['popup.quitter']}"
+				       styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						 update=":assuranceForm:dta"
+						    onclick="PF('modifAssurance').hide()" />
+								</h:form>
+							</div>
+						</p:confirmDialog>
+
+						<p:confirmDialog showEffect="fade" hideEffect="fade"
+							widgetVar="suppAssurance"
+							message="#{generalmsgs['popup.confirm.message.supprission']}"
+							header="#{generalmsgs['popup.confirm.header']}">
+							<div align="right">
+								<h:form>
+									<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+										styleClass="ui-priority-primary" icon="ui-icon-check"
+										actionListener="#{assuranceBean.deleteAssurance()}"
+										oncomplete="PF('suppAssurance').hide() ;" immediate="true"
+										process="@this" update="@all" />
+									<p:commandButton value="#{generalmsgs['popup.quitter']}"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+										onclick="PF('suppAssurance').hide()" />
+								</h:form>
+							</div>
+						</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

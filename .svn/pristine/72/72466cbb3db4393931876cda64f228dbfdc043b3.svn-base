@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<script type="text/javascript">
+        function ChangeDirection (selectItems) {
+            var div = document.getElementById ("header");
+
+            var dir = div.style.direction;
+
+            div.style.direction = (dir == "rtl")? "ltr" : "rtl";
+            button.innerHTML = (dir == "rtl")? "right-to-left" : "left-to-right";
+
+        }
+
+        function start() {
+        	
+        }
+         
+        function stop() {
+        	
+            location.reload();
+        }
+    </script>
+
+	<f:facet name="first">
+		<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+		<title>GC v${Constants.title}</title>
+	</f:facet>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.request.contextPath}/css/style.css" />
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.request.contextPath}/js/calandar.js"></script>
+	<link rel="shortcut icon"
+		href="#{facesContext.externalContext.request.contextPath}/favicon.ico"
+		type="image/x-icon" />
+	<link rel="icon"
+		href="#{facesContext.externalContext.request.contextPath}/favicon.ico"
+		type="image/x-icon" />
+	<p:idleMonitor onactive="sessionTimeOutDialog.show();"
+		onidle="sessionTimeOutDialog.show();"
+		timeout="#{(session.maxInactiveInterval * 1000)}" />
+	<p:dialog header="#{generalmsgs['error_sessionTimeOut_header']}"
+		showEffect="clip" styleClass="qdPan" widgetVar="sessionTimeOutDialog"
+		modal="true" fixedCenter="true" closable="false" width="400"
+		visible="false" resizable="false">
+		<h:outputText value="#{generalmsgs['error_sessionTimeOut_text']}" />
+		<br />
+		<div align="right">
+			<h:form>
+				<p:poll interval="#{(session.maxInactiveInterval * 1000)}" />
+				<p:commandButton id="confirmBackToLogin"
+					styleClass="ui-priority-primary"
+					value="#{generalmsgs['error_sessionTimeOut_button']}" ajax="true"
+					onclick="window.location='#{facesContext.externalContext.requestContextPath}/';" />
+			</h:form>
+		</div>
+	</p:dialog>
+
+	<style>
+	ul.ui-menu-child {
+		min-width: 210px;
+	}
+	</style>
+
+</h:head>
+<f:view contentType="text/html">
+	<h:body>
+
+		<ui:insert name="header">
+			<ui:include src="header.xhtml" />
+		</ui:insert>
+
+		<ui:insert name="main">
+			<ui:include src="main.xhtml" />
+		</ui:insert>
+<p:ajaxStatus id="tt" onstart="PF('bar').show();" oncomplete="PF('bar').hide();">
+             </p:ajaxStatus>
+
+		<p:notificationBar position="bottom" effect="slide" widgetVar="bar"
+			style="height:10px;">
+			<center>
+				<h:graphicImage value="/resources/images/loading-2.gif"
+					style="height:20px;" />
+			</center>
+		</p:notificationBar>
+	</h:body>
+</f:view>
+</html>
+

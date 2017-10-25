@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.ClientAcquereur;
+
+public interface ClientAcquereurService extends AbstractService<ClientAcquereur>{
+	ClientAcquereur	findById(String id);
+}

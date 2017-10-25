@@ -1,0 +1,153 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@SequenceGenerator(name="SEQ_NOTE_DEBIT",sequenceName="S_NOTE_DEBIT")
+@Table(name = "NOTE_DEBIT")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "NoteDebit.findAll", query = "SELECT n FROM NoteDebit n")})
+public class NoteDebit implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_NOTE_DEBIT")
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private BigInteger montant;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATE_DEBIT", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateDebit;
+    @JoinColumn(name = "CLIENT_ACQUEREUR", referencedColumnName = "CODE_ACQUEREUR")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ClientAcquereur clientAcquereur;
+    @JoinColumn(name = "CLIENT_LOCATAIRE", referencedColumnName = "CODE_LOCATAIRE")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ClientLocataire clientLocataire;
+    @JoinColumn(name = "TYPE_FRAIS", referencedColumnName = "ID", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private TypeFrais typeFrais;
+
+    public NoteDebit() {
+    }
+
+    public NoteDebit(Integer id) {
+        this.id = id;
+    }
+
+    public NoteDebit(Integer id, BigInteger montant, Date dateDebit) {
+        this.id = id;
+        this.montant = montant;
+        this.dateDebit = dateDebit;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public BigInteger getMontant() {
+        return montant;
+    }
+
+    public void setMontant(BigInteger montant) {
+        this.montant = montant;
+    }
+
+    public Date getDateDebit() {
+        return dateDebit;
+    }
+
+    public void setDateDebit(Date dateDebit) {
+        this.dateDebit = dateDebit;
+    }
+
+    public ClientAcquereur getClientAcquereur() {
+        return clientAcquereur;
+    }
+
+    public void setClientAcquereur(ClientAcquereur clientAcquereur) {
+        this.clientAcquereur = clientAcquereur;
+    }
+
+    public ClientLocataire getClientLocataire() {
+        return clientLocataire;
+    }
+
+    public void setClientLocataire(ClientLocataire clientLocataire) {
+        this.clientLocataire = clientLocataire;
+    }
+
+    public TypeFrais getTypeFrais() {
+        return typeFrais;
+    }
+
+    public void setTypeFrais(TypeFrais typeFrais) {
+        this.typeFrais = typeFrais;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof NoteDebit)) {
+            return false;
+        }
+        NoteDebit other = (NoteDebit) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.NoteDebit[ id=" + id + " ]";
+    }
+    
+}

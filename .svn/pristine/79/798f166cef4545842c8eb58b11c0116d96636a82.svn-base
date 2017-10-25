@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.NoteDebit;
+
+public interface NoteDebitService extends AbstractService<NoteDebit>{
+	NoteDebit	findById(String id);
+}

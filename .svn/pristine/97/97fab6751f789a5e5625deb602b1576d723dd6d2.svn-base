@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+	
+					<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+					<p:fieldset  legend="Recherche un client acquereur">
+					<p:panelGrid id="detailClientAcquereur" 
+						style="width: 100%" styleClass="noBorder">
+
+
+
+
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{rechclientfrmsgs['clientAcquereur.groupe']}:"
+								styleClass="weightBold" />
+							
+						</p:column>
+						
+						<p:column>
+							<p:selectOneMenu id="recherche_groupe" filter="true"
+								filterMatchMode="contains"  value="#{rechercheClientAcquereurBean.newClientAcquereur.groupe}"
+								converter="groupeConverter"  
+								label="#{rechclientmsgs['clientAcquereur.groupe']}/ #{rechclientmsgs['clientAcquereur.groupe']}"
+								rendered="true">
+								<f:selectItem noSelectionOption="true"
+									itemLabel="--------------------------------------------------"
+									itemValue="" />
+
+								<f:selectItems value="#{rechercheClientAcquereurBean.groupeList}"
+									var="groupe"
+									itemLabel="#{groupe.libelle}" 
+									itemValue="#{groupe}" />
+
+							</p:selectOneMenu>
+
+
+						</p:column>
+
+					
+					</p:row>
+
+
+
+
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{rechclientmsgs['clientAcquereur.nomPrenomFr']}:"
+								styleClass="weightBold" />
+							
+						</p:column>
+						<p:column>
+										<p:inputText  id="recherche_nomPrenom"
+										value="#{rechercheClientAcquereurBean.newClientAcquereur.nomPrenomFr}"
+											label="#{rechclientmsgs['clientAcquereur.nomPrenomFr']}\ #{rechclientarmsgs['clientAcquereur.nomPrenomFr']}" />
+
+
+						</p:column>
+
+					
+					</p:row>
+					
+					
+					
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{rechclientmsgs['clientAcquereur.adresseCorrespondance']}:"
+								styleClass="weightBold" />
+							
+						</p:column>
+						<p:column>
+										<p:inputText  id="recherche_adress"
+										value="#{rechercheClientAcquereurBean.newClientAcquereur.adresseCorrespondance}"
+											label="#{rechclientmsgs['clientAcquereur.adresseCorrespondance']}\ #{rechclientarmsgs['clientAcquereur.adresseCorrespondance']}" />
+
+
+						</p:column>
+
+						
+					</p:row>
+					
+					
+
+
+						</p:panelGrid>
+						</p:fieldset>
+												<br />
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this" update="@form" actionListener="#{rechercheClientAcquereurBean.createClientAcquereur}">
+					</p:commandButton>
+
+					
+					<p:spacer width="5px" />
+					
+					<p:commandButton id="rechercheBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.recherche']}" ajax="true"
+					 update="@form" actionListener="#{rechercheClientAcquereurBean.rechercheClientAcquereur}"/>
+					<p:spacer width="5px" />
+				</div>
+		
+	<br />
+		<p:dataTable id="dta" value="#{rechercheClientAcquereurBean.clientAcquereurList}" var="current" rows="5"
+		selection="#{rechercheClientAcquereurBean.selectClientAcquereur}" selectionMode="single" 
+					paginator="true" paginatorPosition="bottom" rowKey="#{current.codeAcquereur}" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect"
+						listener="#{rechercheClientAcquereurBean.onselectClientAcquereur}"
+						update="@form" />
+
+					<p:column filterBy="#{current.codeAcquereur}" filterMatchMode="contains"
+						sortBy="#{current.codeAcquereur}">
+						<f:facet name="header">
+							<h:outputText value="#{rechclientfrmsgs['clientAcquereur.codeclient']}" />
+						</f:facet>
+						<h:outputText value="#{current.codeAcquereur}">
+					</h:outputText>
+					</p:column>
+					
+					<p:column filterBy="#{current.nomPrenomFr}" filterMatchMode="contains"
+						sortBy="#{current.nomPrenomFr}">
+						<f:facet name="header">
+							<h:outputText value="#{rechclientfrmsgs['clientAcquereur.nomPrenomFr']}" />
+						</f:facet>
+						<h:outputText value="#{current.nomPrenomFr}">
+					</h:outputText>
+					</p:column>
+
+					
+						<p:column filterBy="#{current.groupe.code}" filterMatchMode="contains"
+						sortBy="#{current.groupe.code}">
+						<f:facet name="header">
+							<h:outputText value="#{rechclientfrmsgs['clientAcquereur.groupe']}" />
+						</f:facet>
+						<h:outputText value="#{current.groupe.code}">
+					</h:outputText>
+					</p:column>
+					
+					
+					<p:column filterBy="#{current.adresseCorrespondance}" filterMatchMode="contains"
+						sortBy="#{current.adresseCorrespondance}">
+						<f:facet name="header">
+							<h:outputText value="#{rechclientfrmsgs['clientAcquereur.adresseCorrespondance']}" />
+						</f:facet>
+						<h:outputText value="#{current.adresseCorrespondance}">
+					</h:outputText>
+					</p:column>
+
+
+
+				</p:dataTable>
+			</p:panel>
+
+		
+</html>

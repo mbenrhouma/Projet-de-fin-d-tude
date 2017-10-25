@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="utilisateurForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['rechercheClientsacqueruers']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+
+				<!-- 				formulaire de recherche -->
+				<p:fieldset legend="Rechercher" id="Impayee_rech" toggleable="true"
+					toggleSpeed="500" rendered="true">
+					<p:panelGrid style="width: 100%" styleClass="noBorder">
+					
+						<!-- 					champs recherche par code client acquereur -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['arrangement.impaye.code']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rechCont_code_clt" styleClass="inputText"
+									required="false" value="#{rechercheDesClientsAcquereursBean.codeC}"
+									rendered="true">
+									<p:ajax event="blur"></p:ajax>
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right;" width="150">
+								<h:outputText value="#{precarmsgs['arrangement.impaye.code']}:"
+									dir="rtl" styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+						
+						
+						
+						<!-- 					champs recherche par nom client acquereur -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['arrangement.impaye.nom']}:" styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rechCont_nom_clt" styleClass="inputText"
+									required="false" value="#{rechercheDesClientsAcquereursBean.nomC}"
+									rendered="true">
+									<p:ajax event="blur"></p:ajax>
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right;" width="150">
+								<h:outputText value="#{precarmsgs['arrangement.impaye.nom']}:" dir="rtl" styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+						
+						<!-- 							recherche groupe -->
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['impaye.groupe']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="recherche_groupe">
+								<p:selectOneMenu styleClass="selectOneMenu" filter="true"
+									required="false" style="width: 495px!important;"
+									converter="groupeConverter"
+									value="#{rechercheDesClientsAcquereursBean.selectGroupe}">
+
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems value="#{rechercheDesClientsAcquereursBean.groupes}"
+										var="groupe" itemLabel="#{groupe.libelle}"
+										itemValue="#{groupe}" />
+								</p:selectOneMenu>
+								<p:column>
+									<h:outputText value="" styleClass="required-star-right" />
+								</p:column>
+								<p:column style="text-align: right;" width="150">
+									<h:outputText value="#{precarmsgs['impaye.groupe']}:" dir="rtl"
+										styleClass="weightBoldAr" />
+								</p:column>
+							</p:column>
+						</p:row>
+						
+						<!-- 							recherche employeur -->
+
+						<p:row>
+							<p:column>
+								<h:outputText value="employeur:"
+									styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="recherche_employeur">
+								<p:selectOneMenu styleClass="selectOneMenu" filter="true"
+									required="false" style="width: 495px!important;"
+									converter="employeurConverter"
+									value="#{rechercheDesClientsAcquereursBean.selectEmployeur}">
+
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems value="#{rechercheDesClientsAcquereursBean.employeurs}"
+										var="emp" itemLabel="#{emp.abreviation}"
+										itemValue="#{emp}" />
+								</p:selectOneMenu>
+								<p:column>
+									<h:outputText value="" styleClass="required-star-right" />
+								</p:column>
+								<p:column style="text-align: right;" width="150">
+									<h:outputText value="#{precarmsgs['impaye.groupe']}:" dir="rtl"
+										styleClass="weightBoldAr" />
+								</p:column>
+							</p:column>
+						</p:row>
+						
+						<!-- 							recherche assureur -->
+
+						<p:row>
+							<p:column>
+								<h:outputText value="assureur:"
+									styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="recherche_assureur">
+								<p:selectOneMenu styleClass="selectOneMenu" filter="true"
+									required="false" style="width: 495px!important;"
+									converter="assureurConverter"
+									value="#{rechercheDesClientsAcquereursBean.selectAssureur}">
+
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems value="#{rechercheDesClientsAcquereursBean.assureurs}"
+										var="assureur" itemLabel="#{assureur.abreviation}"
+										itemValue="#{assureur}" />
+								</p:selectOneMenu>
+								<p:column>
+									<h:outputText value="" styleClass="required-star-right" />
+								</p:column>
+								<p:column style="text-align: right;" width="150">
+									<h:outputText value="assureur::" dir="rtl"
+										styleClass="weightBoldAr" />
+								</p:column>
+							</p:column>
+						</p:row>
+
+
+
+
+					</p:panelGrid>
+					<div style="width: 100%; text-align: right">
+						<p:commandButton id="initRech" styleClass="ui-priority-primary"
+							value="#{generalmsgs['navigation.new']}" ajax="true"
+							process="@this"
+							actionListener="#{rechercheDesClientsAcquereursBean.createClientAcquereur}"
+							update="@all" rendered="true">
+							<p:resetInput target="utilisateurForm" />
+
+
+							<p:commandButton id="RechBtn" styleClass="ui-priority-primary"
+								disabled="false"
+								actionListener="#{rechercheDesClientsAcquereursBean.rechercher}"
+								value="Rechercher" ajax="true" update=":utilisateurForm:dta"
+								rendered="true" />
+							<p:spacer width="5px" />
+						</p:commandButton>
+					</div>
+
+
+
+
+
+
+
+
+				</p:fieldset>
+
+
+
+
+
+
+				<br />
+
+
+				<br></br>
+				<p:dataTable id="dta"
+					value="#{rechercheDesClientsAcquereursBean.listClients}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.codeAcquereur}"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					
+
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta"
+								fileName="ListeDesClientsAcquereurs" />
+						</h:commandLink>
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/pdf.png" width="24px" />
+							<p:dataExporter type="pdf" target="dta"
+								fileName="ListeDesClientsAcquereurs" />
+						</h:commandLink>
+					</f:facet>
+
+
+
+
+					<!--                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/> -->
+
+
+
+					<p:column width="60"
+						filterBy="#{current.codeAcquereur}"
+						filterMatchMode="contains"
+						sortBy="#{current.codeAcquereur}">
+						<f:facet name="header">
+							<h:outputText value="Code" />
+						</f:facet>
+						<h:outputText
+							value="#{current.codeAcquereur}" />
+					</p:column>
+
+					<p:column width="60"
+						filterBy="#{current.nomPrenomFr}"
+						filterMatchMode="contains"
+						sortBy="#{current.nomPrenomFr}">
+						<f:facet name="header">
+							<h:outputText value="Nom" />
+						</f:facet>
+						<h:outputText
+							value="#{current.nomPrenomFr}" />
+					</p:column>
+
+					<p:column width="60"
+						filterBy="#{current.adresseCorrespondance}"
+						filterMatchMode="contains"
+						sortBy="#{current.adresseCorrespondance}">
+						<f:facet name="header">
+							<h:outputText value="Adresse" />
+						</f:facet>
+						<h:outputText
+							value="#{current.adresseCorrespondance}" />
+					</p:column>
+					
+					<p:column width="60" filterStyle="width: 60px !important;" style="height: 25px;width: 60px!important;" filterOptions="#{rechercheDesClientsAcquereursBean.etatFilter}"
+						filterBy="#{current.employeur.abreviation}"
+						filterMatchMode="exact"
+						headerText="Employeur">
+						<f:facet name="header">
+							<h:outputText value="Employeur" />
+						</f:facet>
+						<h:outputText
+							value="#{current.employeur.abreviation}" />
+					</p:column>
+					
+					
+					
+					
+					
+					
+					
+					
+					<p:column width="60" filterStyle="width: 60px !important;" style="height: 25px;width: 60px!important;" filterOptions="#{rechercheDesClientsAcquereursBean.etatFilterAssureur}"
+						filterBy="#{current.assurance1.assureur.abreviation}"
+						filterMatchMode="exact"
+						headerText="Assureur">
+						<f:facet name="header">
+							<h:outputText value="Assureur" />
+						</f:facet>
+						<h:outputText
+							value="#{current.assurance1.assureur.abreviation}" />
+					</p:column>
+					
+					
+					
+					
+					
+<!-- 					<p:column width="60" -->
+<!-- 						filterBy="#{current.assurance1.id}" -->
+<!-- 						filterMatchMode="contains" -->
+<!-- 						sortBy="#{current.assurance1.id}"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Assurance" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText -->
+<!-- 							value="#{current.assurance1.id}" /> -->
+<!-- 					</p:column> -->
+					
+<!-- 					<p:column width="60" -->
+<!-- 						filterBy="#{current.assureur.abreviation}" -->
+<!-- 						filterMatchMode="contains" -->
+<!-- 						sortBy="#{current.assureur.abreviation}"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Assureur" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText -->
+<!-- 							value="#{current.assureur.abreviation}" /> -->
+<!-- 					</p:column> -->
+					
+<!-- 					<p:column width="60" -->
+<!-- 						filterBy="#{current.assurance1.assureur.abreviation}" -->
+<!-- 						filterMatchMode="contains" -->
+<!-- 						sortBy="#{current.assurance1.assureur.abreviation}"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Assureur" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText -->
+<!-- 							value="#{current.assurance1.assureur.abreviation}" /> -->
+<!-- 					</p:column> -->
+
+<!-- 					<p:column width="60" filterBy="#{current.impayee.soldeDebiteur}" -->
+<!-- 						filterMatchMode="contains" -->
+<!-- 						sortBy="#{current.impayee.soldeDebiteur}"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Solde débiteur" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText value="#{current.impayee.soldeDebiteur}" /> -->
+<!-- 					</p:column> -->
+
+
+<!-- 					<p:column width="60" filterStyle="width: 70px;" -->
+<!-- 						filterBy="#{utilities.customFormatDate(current.impayee.dateRelance)}" -->
+<!-- 						sortBy="#{utilities.customFormatDate(current.impayee.dateRelance)}" -->
+<!-- 						filterMatchMode="contains" style="height: 25px;"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Date de relance" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText value="#{current.impayee.dateRelance}"> -->
+<!-- 							<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 						</h:outputText> -->
+<!-- 					</p:column> -->
+
+<!-- 					<p:column width="60" filterStyle="width: 70px;" -->
+<!-- 						filterBy="#{utilities.customFormatDate(current.dateHuissierNotaire)}" -->
+<!-- 						sortBy="#{utilities.customFormatDate(current.dateHuissierNotaire)}" -->
+<!-- 						filterMatchMode="contains" style="height: 25px;"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Date Affectation HN" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText value="#{current.dateHuissierNotaire}"> -->
+<!-- 							<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+<!-- 						</h:outputText> -->
+<!-- 					</p:column> -->
+
+<!-- 					<p:column width="60" filterBy="#{current.huissiersNotaires.nomfr}" -->
+<!-- 						filterMatchMode="contains" -->
+<!-- 						sortBy="#{current.huissiersNotaires.nomfr}"> -->
+<!-- 						<f:facet name="header"> -->
+<!-- 							<h:outputText value="Huissier notaire" /> -->
+<!-- 						</f:facet> -->
+<!-- 						<h:outputText value="#{current.huissiersNotaires.nomfr}" /> -->
+<!-- 					</p:column> -->
+
+
+
+					
+
+
+
+
+
+
+					<p:column width="60" filterStyle="width: 60px !important;"
+						filterBy="#{current.groupe.libelle}"
+						style="height: 25px;width: 60px!important;"
+						filterOptions="#{suiviDesRecouvrementsBean.etatFilter}"
+						filterMatchMode="exact" headerText="Groupe">
+						<f:facet name="header">
+							<h:outputText value="Groupe" />
+						</f:facet>
+
+						<h:outputText
+							value="#{current.groupe.libelle}" />
+					</p:column>
+
+
+
+
+					<!-- 					<p:column width="60" filterBy="#{current.clientAcquereur.nomPrenomFr}" filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.clientAcquereur.nomPrenomFr}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Nom" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.clientAcquereur.nomPrenomFr}" /> -->
+					<!-- 					</p:column> -->
+
+					<!-- 					<p:column width="60" filterBy="#{current.soldeDebiteur}" filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.soldeDebiteur}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Solde debiteur" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.soldeDebiteur}" /> -->
+					<!-- 					</p:column> -->
+
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 30px;" filterBy="#{utilities.customFormatDate(current.dateRelance)}" sortBy="#{utilities.customFormatDate(current.dateRelance)}" -->
+					<!-- 								  filterMatchMode="contains" style="height: 25px;"> -->
+					<!-- 										<f:facet name="header"> -->
+					<!-- 											<h:outputText value="Date de relance" /> -->
+					<!-- 										</f:facet> -->
+					<!-- 										<h:outputText value="#{current.dateRelance}"> -->
+					<!-- 											<f:convertDateTime pattern="dd/MM/yyyy"/> -->
+					<!-- 										</h:outputText> -->
+					<!-- 					</p:column> -->
+
+
+
+
+
+
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 60px !important;" filterBy="#{current.clientAcquereur.groupe.libelle}" style="height: 25px;width: 60px!important;" filterOptions="#{suiviDesRecouvrementsBean.etatFilter}" filterMatchMode="exact"  -->
+					<!-- 								  headerText="Groupe"> -->
+					<!--                                   		<f:facet name="header"> -->
+					<!-- 											<h:outputText value="Groupe" /> -->
+					<!-- 										</f:facet> -->
+
+					<!-- 										<h:outputText value="#{current.clientAcquereur.groupe.libelle}" /> -->
+
+
+
+
+					<!-- 								  </p:column> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<p:confirmDialog id="diagRelancer"
+			message="Confirmez vous l'edition des lettres de relances"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="lettreCom" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm">
+
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						update=":utilisateurForm:dta"
+						action="#{suiviPrecontentieuxBean.mettreAjourPrec}"
+						oncomplete="PF('lettreCom').hide();"
+						styleClass="ui-priority-primary" />
+
+
+
+
+
+
+
+
+
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}"
+						update=":utilisateurForm:dta" onclick="PF('lettreCom').hide()"
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

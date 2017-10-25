@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Arrangement;
+
+public interface ArrangementDAO  extends AbstractDAO<Arrangement>{
+	Arrangement findById(String id);
+}

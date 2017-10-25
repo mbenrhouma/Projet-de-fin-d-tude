@@ -1,0 +1,16 @@
+groupe.code=Code
+groupe.nomGroupe=Nom 
+groupe.nature=Nature
+groupe.fonctionnalite=Fonctionnalit\u00e9
+
+groupe.nature_administrateur=Administrateur
+groupe.nature_structure=Structure gestion
+groupe.nature_beneficiaire=B\u00e9n\u00e9ficiaire
+groupe.nature_utilisateur=Simple Utilisateur
+
+groupe.erreur.existe=Profil existe d\u00e9ja \!
+groupe.cree.succes=Profil cr\u00e9\u00e9 avec succ\u00e8s
+groupe.modifie.succes=Profil modifi\u00e9 avec succ\u00e8s
+groupe.supprime.succes=Profil Supprim\u00e9 avec succ\u00e8s
+groupe.error.supprimer.ligne=Vous ne pouvez pas supprimer cette ligne
+groupe.error.supprimer.groupe.utilise=Impossible de supprimer ce profil : un ou plusieurs utilisateurs lui appartient ! 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+
+
+
+
+	<application>
+		<locale-config>
+			<default-locale>fr</default-locale>
+			<supported-locale>ar</supported-locale>
+		</locale-config>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.general-resources</base-name>
+			<var>generalmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.general_ar-resources</base-name>
+			<var>generalarmsgs</var>
+		</resource-bundle>
+		
+		
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.header-resources_fr</base-name>
+			<var>toppanmsgs</var>
+		</resource-bundle>
+  
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.header-resources_ar</base-name>
+			<var>toppanarmsgs</var>
+		</resource-bundle>
+		
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.groupe-resources_fr</base-name>
+			<var>groupefrmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.groupe-resources_ar</base-name>
+			<var>groupearmsgs</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.utilisateur-resources_fr</base-name>
+			<var>utilisateurfrmsgs</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.utilisateur-resources_ar</base-name>
+			<var>utilisateurarmsgs</var>
+		</resource-bundle>
+
+	
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.accueil-resources_fr</base-name>
+			<var>accueilfrmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.accueil-resources_ar</base-name>
+			<var>accueilarmsgs</var>
+		</resource-bundle>
+	
+								
+								
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+</faces-config>

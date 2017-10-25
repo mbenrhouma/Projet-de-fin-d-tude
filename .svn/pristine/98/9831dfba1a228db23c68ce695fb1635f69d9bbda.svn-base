@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ImpayeeDAO;
+import com.cynapsys.entities.Impayee;
+
+@SuppressWarnings("serial")
+@Repository("impayeeDAO")
+public class ImpayeeDAOImpl extends AbstractDAOImpl<Impayee>
+		implements ImpayeeDAO, Serializable {
+
+	public ImpayeeDAOImpl() {
+		super(Impayee.class);
+	}
+
+	@Override
+	public Impayee findById(String id) {
+		
+		List<Impayee> list=new ArrayList<Impayee>();
+		try {
+			Criteria criteria= getSession().createCriteria(Impayee.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

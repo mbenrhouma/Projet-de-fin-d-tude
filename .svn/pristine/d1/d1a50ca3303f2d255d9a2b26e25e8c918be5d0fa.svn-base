@@ -1,0 +1,9 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.QuitanceEmployeur;
+
+
+public interface QuitanceEmployeurDAO extends AbstractDAO<QuitanceEmployeur>{
+	
+	QuitanceEmployeur findById(String id);
+}

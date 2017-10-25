@@ -1,0 +1,10 @@
+package com.cynapsys.dao;
+
+import java.util.List;
+
+import com.cynapsys.entities.Quitance;
+
+public interface QuitanceDAO  extends AbstractDAO<Quitance>{
+	Quitance findById(String id);
+	public List<Quitance> rechercheQuitance(Quitance quitance);
+}

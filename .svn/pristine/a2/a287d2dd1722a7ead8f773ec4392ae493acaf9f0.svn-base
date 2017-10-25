@@ -1,0 +1,210 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.dao.DuplicateKeyException;
+
+import com.cynapsys.entities.ClientLocataire;
+
+import com.cynapsys.service.ClientLocataireService;
+import com.cynapsys.utils.Constants;
+import com.cynapsys.utils.JsfUtil;
+
+@ManagedBean(name = "clientLocataireBean")
+@ViewScoped
+public class ClientLocataireBean implements Serializable {
+	@ManagedProperty(value = "#{clientLocataireService}")
+	private ClientLocataireService clientLocataireService;
+
+	private static final long serialVersionUID = 1L;
+	private ClientLocataire newClientLocataire;
+	private ClientLocataire selectClientLocataire;
+	private int modif = 0; // Modification 0 : insertion 1;
+	private List<ClientLocataire> ClientLocataireFilter;
+	private List<ClientLocataire> listClientLocataire;
+	private boolean enabledBoutonDelete;
+	public HttpSession session;
+	private int ModifClientLocataire = 1;
+
+	public ClientLocataireBean() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		session = (HttpSession) extContext.getSession(false);
+
+	}
+
+	@PostConstruct
+	public void initialisation() {
+
+		newClientLocataire = new ClientLocataire();
+
+		listClientLocataire = new ArrayList<ClientLocataire>();
+		listClientLocataire = clientLocataireService.findDTA();
+
+		ClientLocataireFilter = new ArrayList<ClientLocataire>();
+
+	}
+
+	public void createClientLocataire() {
+		newClientLocataire = new ClientLocataire();
+		ModifClientLocataire = 1;
+		selectClientLocataire = null;
+		listClientLocataire = clientLocataireService.findDTA();
+		modif = 0;
+	}
+
+	public void onselectClientLocataire() {
+		newClientLocataire = selectClientLocataire;
+		ModifClientLocataire = 0;
+		modif = 1;
+		listClientLocataire = clientLocataireService.findDTA();
+	}
+
+	public void saveClientLocataire() {
+		if (ModifClientLocataire == 1) {
+			try {
+				clientLocataireService.save(newClientLocataire);
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.clientLocataire.cree.succes"));
+				else {
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.clientLocataire.cree.succes"));
+				}
+				createClientLocataire();
+			} catch (DuplicateKeyException e) {
+
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.clientLocataire.error.existe"));
+				else
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.clientLocataire.error.existe"));
+
+				newClientLocataire.setCodeLocataire(null);
+			}
+		} else if (ModifClientLocataire == 0) {
+			clientLocataireService.update(newClientLocataire);
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.clientLocataire.modifie.succes"));
+			else
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.clientLocataire.modifie.succes"));
+
+			createClientLocataire();
+		}
+
+	}
+
+	public void deleteClientLocataire() {
+		try {
+			clientLocataireService.delete(newClientLocataire);
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.clientLocataire.supprime.succes"));
+			else {
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.clientLocataire.supprime.succes"));
+			}
+
+		} catch (Exception e) {
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.clientLocataire.error.supprimer"));
+			else
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.clientLocataire.error.supprimer"));
+		}
+		createClientLocataire();
+	}
+
+	public ClientLocataireService getClientLocataireService() {
+		return clientLocataireService;
+	}
+
+	public void setClientLocataireService(ClientLocataireService ClientLocataireService) {
+		this.clientLocataireService = ClientLocataireService;
+	}
+
+	public ClientLocataire getNewClientLocataire() {
+		return newClientLocataire;
+	}
+
+	public void setNewClientLocataire(ClientLocataire newClientLocataire) {
+		this.newClientLocataire = newClientLocataire;
+	}
+
+	public ClientLocataire getSelectClientLocataire() {
+		return selectClientLocataire;
+	}
+
+	public void setSelectClientLocataire(ClientLocataire selectClientLocataire) {
+		this.selectClientLocataire = selectClientLocataire;
+	}
+
+	public int getModif() {
+		return modif;
+	}
+
+	public void setModif(int modif) {
+		this.modif = modif;
+	}
+
+	public List<ClientLocataire> getClientLocataireFilter() {
+		return ClientLocataireFilter;
+	}
+
+	public void setClientLocataireFilter(List<ClientLocataire> ClientLocataireFilter) {
+		this.ClientLocataireFilter = ClientLocataireFilter;
+	}
+
+	public List<ClientLocataire> getListClientLocataire() {
+		return listClientLocataire;
+	}
+
+	public void setListClientLocataire(List<ClientLocataire> listClientLocataire) {
+		this.listClientLocataire = listClientLocataire;
+	}
+
+	public boolean isEnabledBoutonDelete() {
+		return enabledBoutonDelete;
+	}
+
+	public void setEnabledBoutonDelete(boolean enabledBoutonDelete) {
+		this.enabledBoutonDelete = enabledBoutonDelete;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
+	public int getModifClientLocataire() {
+		return ModifClientLocataire;
+	}
+
+	public void setModifClientLocataire(int modifClientLocataire) {
+		ModifClientLocataire = modifClientLocataire;
+	}
+
+}

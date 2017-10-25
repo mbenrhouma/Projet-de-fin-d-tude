@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ArrangementDAO;
+import com.cynapsys.entities.Arrangement;
+
+@SuppressWarnings("serial")
+@Repository("arrangementDAO")
+public class ArrangementDAOImpl extends AbstractDAOImpl<Arrangement>
+		implements ArrangementDAO, Serializable {
+
+	public ArrangementDAOImpl() {
+		super(Arrangement.class);
+	}
+
+	@Override
+	public Arrangement findById(String id) {
+		
+		List<Arrangement> list=new ArrayList<Arrangement>();
+		try {
+			Criteria criteria= getSession().createCriteria(Arrangement.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

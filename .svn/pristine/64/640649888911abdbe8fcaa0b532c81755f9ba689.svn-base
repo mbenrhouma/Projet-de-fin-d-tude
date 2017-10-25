@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.DecesDAO;
+import com.cynapsys.entities.Deces;
+
+@SuppressWarnings("serial")
+@Repository("decesDAO")
+public class DecesDAOImpl extends AbstractDAOImpl<Deces>
+		implements DecesDAO, Serializable {
+
+	public DecesDAOImpl() {
+		super(Deces.class);
+	}
+
+	@Override
+	public Deces findById(String id) {
+		
+		List<Deces> list=new ArrayList<Deces>();
+		try {
+			Criteria criteria= getSession().createCriteria(Deces.class);
+			criteria.add(Restrictions.eq("codeDeces", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

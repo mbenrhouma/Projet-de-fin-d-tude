@@ -1,0 +1,180 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@SequenceGenerator(name="SEQ_CESSION",sequenceName="S_CESSION")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Cession.findAll", query = "SELECT c FROM Cession c"),
+    @NamedQuery(name = "Cession.findById", query = "SELECT c FROM Cession c WHERE c.id = :id"),
+    @NamedQuery(name = "Cession.findByDatedebut", query = "SELECT c FROM Cession c WHERE c.datedebut = :datedebut"),
+    @NamedQuery(name = "Cession.findByDateFin", query = "SELECT c FROM Cession c WHERE c.dateFin = :dateFin"),
+    @NamedQuery(name = "Cession.findByMensualite", query = "SELECT c FROM Cession c WHERE c.mensualite = :mensualite"),
+    @NamedQuery(name = "Cession.findByDatedebutc", query = "SELECT c FROM Cession c WHERE c.datedebutc = :datedebutc"),
+    @NamedQuery(name = "Cession.findByDateFinc", query = "SELECT c FROM Cession c WHERE c.dateFinc = :dateFinc"),
+    @NamedQuery(name = "Cession.findByMensualitec", query = "SELECT c FROM Cession c WHERE c.mensualitec = :mensualitec")})
+public class Cession implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_CESSION")
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datedebut;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATE_FIN", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateFin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private BigInteger mensualite;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datedebutc;
+    @Column(name = "DATE_FINC")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateFinc;
+    private BigInteger mensualitec;
+    @JoinColumn(name = "CODE_ACQUEREUR", referencedColumnName = "CODE_ACQUEREUR", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private ClientAcquereur clientAcquereur;
+
+    public Cession() {
+    }
+
+    public Cession(Integer id) {
+        this.id = id;
+    }
+
+    public Cession(Integer id, Date datedebut, Date dateFin, BigInteger mensualite) {
+        this.id = id;
+        this.datedebut = datedebut;
+        this.dateFin = dateFin;
+        this.mensualite = mensualite;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Date getDatedebut() {
+        return datedebut;
+    }
+
+    public void setDatedebut(Date datedebut) {
+        this.datedebut = datedebut;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public BigInteger getMensualite() {
+        return mensualite;
+    }
+
+    public void setMensualite(BigInteger mensualite) {
+        this.mensualite = mensualite;
+    }
+
+    public Date getDatedebutc() {
+        return datedebutc;
+    }
+
+    public void setDatedebutc(Date datedebutc) {
+        this.datedebutc = datedebutc;
+    }
+
+    public Date getDateFinc() {
+        return dateFinc;
+    }
+
+    public void setDateFinc(Date dateFinc) {
+        this.dateFinc = dateFinc;
+    }
+
+    public BigInteger getMensualitec() {
+        return mensualitec;
+    }
+
+    public void setMensualitec(BigInteger mensualitec) {
+        this.mensualitec = mensualitec;
+    }
+
+    public ClientAcquereur getClientAcquereur() {
+        return clientAcquereur;
+    }
+
+    public void setClientAcquereur(ClientAcquereur clientAcquereur) {
+        this.clientAcquereur = clientAcquereur;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Cession)) {
+            return false;
+        }
+        Cession other = (Cession) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.Cession[ id=" + id + " ]";
+    }
+    
+}

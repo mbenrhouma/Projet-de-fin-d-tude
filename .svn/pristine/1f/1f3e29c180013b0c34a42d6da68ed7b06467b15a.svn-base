@@ -1,0 +1,7 @@
+package com.cynapsys.service;
+
+import com.cynapsys.entities.Mouvement;
+
+public interface MouvementService extends AbstractService<Mouvement>{
+	Mouvement	findById(String id);
+}

@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.TableauAmortissement;
+
+public interface TableauAmortissementService extends AbstractService<TableauAmortissement>{
+	TableauAmortissement	findById(String id);
+}

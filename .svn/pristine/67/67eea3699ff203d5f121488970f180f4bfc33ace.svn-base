@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="cessionForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.cession_sur_salaire']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:fieldset legend="Identification Client" id="identification"
+					toggleable="false" toggleSpeed="500" rendered="true">
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientaqmsgs['clientAcquereur.codeclient']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="width: 150px;">
+								<p:inputText id="code_client_aquéreur" style="width:210px"
+									maxlength="17"
+									onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+									value="#{cessionBean.codeclient}" rendred="true"
+									required="true"
+									label="#{clientaqfrmsgs['clientAcquereur.codeclient']}"
+									disabled="#{cessionBean.modifCession == 0}">
+									<p:ajax event="keyup"
+										update="nom_client adress_client conj groupe_client "
+										listener="#{cessionBean.onChange}" />
+								</p:inputText>
+
+							</p:column>
+							<p:column>
+
+								<p:commandButton id="search" styleClass="ui-priority-primary"
+									icon="ui-icon-search" process="@this"
+									oncomplete="{PF('rechConfirmation').show()};" />
+
+							</p:column>
+
+
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientaqmsgs['clientAcquereur.nomPrenomFr']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nom_client" style="width:210px" disabled="true"
+									value="#{cessionBean.clientRechercher.nomPrenomFr}"
+									rendred="true" required="true"
+									label="#{clientaqfrmsgs['clientAcquereur.nomPrenomFr']}:">
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientaqmsgs['clientAcquereur.adresseCorrespondance']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column colspan="2">
+								<p:inputText id="adress_client" style="width:210px"
+									disabled="true"
+									value="#{cessionBean.clientRechercher.adresseCorrespondance}"
+									rendred="true" required="true"
+									label="#{clientaqfrmsgs['clientAcquereur.adresseCorrespondance']}">
+								</p:inputText>
+							</p:column>
+
+
+
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientaqmsgs['clientAcquereur.groupe']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column colspan="2">
+								<p:inputText id="groupe_client" style="width:210px"
+									disabled="true"
+									value="#{cessionBean.clientRechercher.groupe.libelle}"
+									rendred="true" required="true"
+									label="#{clientaqfrmsgs['clientAcquereur.groupe']}:">
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{cessionfrmsgs['cession.compte_conjoint']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column colspan="2">
+								<p:selectBooleanCheckbox id="conj" disabled="true"
+									value="#{cessionBean.etat}" />
+							</p:column>
+
+
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+
+				<p:fieldset legend="Employeur" id="Employeur" toggleable="false"
+					toggleSpeed="500" rendered="true">
+					<p:panelGrid id="detailEmployeur" style="width: 100%"
+						styleClass="noBorder">
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{employeurfrmsgs['employeur.nom']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="employeur" colspan="2">
+								<p:selectOneMenu filter="true" style="width:194px"
+									required="false" converter="employeurConverter"
+									value="#{cessionBean.employeur}" disabled="false">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{cessionBean.employeurs}" var="em"
+										itemLabel="#{em.nomEmployeurFr}" />
+									<p:ajax event="change" update="code_employeur" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<h:outputText value="#{employeurfrmsgs['employeur.nom']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="employeurC" colspan="2">
+								<p:selectOneMenu filter="true" style="width:194px"
+									disabled="#{cessionBean.clientRechercher.compteConjoint !=1 }"
+									converter="employeurConverter"
+									value="#{cessionBean.employeurC}">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{cessionBean.employeurs}" var="em"
+										itemLabel="#{em.nomEmployeurFr}" />
+									<p:ajax event="change" update="code_employeurC" />
+								</p:selectOneMenu>
+							</p:column>
+
+
+
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{employeurfrmsgs['employeur.code']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column colspan="2">
+								<p:inputText id="code_employeur" style="width:210px"
+									disabled="true" value="#{cessionBean.employeur.codeEmployeur}"
+									rendred="true" required="true"
+									label="#{employeurfrmsgs['employeur.code']}">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{employeurfrmsgs['employeur.code']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column colspan="2">
+								<p:inputText id="code_employeurC"
+									value="#{cessionBean.employeurC.codeEmployeur}" rendred="true"
+									disabled="#{cessionBean.clientRechercher.compteConjoint !=1 }"
+									style="width:210px"
+									label="#{employeurfrmsgs['employeur.code']}">
+								</p:inputText>
+							</p:column>
+
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="matricule" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column colspan="2">
+								<p:inputText id="matricule1" style="width:210px"
+									value="#{cessionBean.matriculeEmployer1}" rendred="true"
+									required="true" label="">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="matriculeC" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column colspan="2">
+								<p:inputText id="matricule2"
+									value="#{cessionBean.matriculeEmployer2}" rendred="true"
+									disabled="#{cessionBean.clientRechercher.compteConjoint !=1 }"
+									style="width:210px" label="">
+								</p:inputText>
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+
+				<p:panelGrid id="cd" style="width: 100%" styleClass="noBorder">
+					<p:row>
+						<p:column>
+							<p:fieldset legend="Cession 1" style="width: 95%;  float: left;">
+								<p:panelGrid id="detailAssure" style="width: 100%"
+									styleClass="noBorder">
+									<p:row>
+
+										<p:column>
+											<h:outputText value="#{cessionfrmsgs['cession.date_debut']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+
+										</p:column>
+										<p:column colspan="2">
+											<p:calendar id="datedebut1" styleClass="datef"
+												yearRange="c-100:c+100" showOn="button" label=""
+												navigator="true" width="250"
+												required="cessionBean.employeur != null"
+												value="#{cessionBean.newCession1.dateDebut}">
+												<p:ajax event="dateSelect" update="datefin1" />
+											</p:calendar>
+										</p:column>
+									</p:row>
+
+									<p:row>
+										<p:column>
+
+											<h:outputText value="#{cessionfrmsgs['cession.date_fin']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+
+									<p:column colspan="2">
+											<p:calendar id="datefin1" styleClass="datef"
+												required="cessionBean.employeur != null"
+												yearRange="c-100:c+100" showOn="button" label=""
+												navigator="true" value="#{cessionBean.newCession1.dateFin}"
+												disabled="#{cessionBean.newCession1.dateDebut == null}"
+												mindate="#{cessionBean.newCession1.dateDebut}" 
+												>
+												<p:ajax event="dateSelect" update="datedebut2" />
+												</p:calendar>
+										</p:column>
+									</p:row>
+
+
+									<p:row>
+										<p:column style="width: 150px;">
+											<h:outputText value="#{cessionfrmsgs['cession.mensualité']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+										<p:column colspan="2">
+											<p:inputText id="mensualité1" style="width:210px"
+												value="#{cessionBean.newCession1.mensualite}" rendred="true"
+												required="cessionBean.employeur != null"
+												label="#{cessionfrmsgs['cession.mensualité']}:">
+											</p:inputText>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</p:fieldset>
+						</p:column>
+
+						<p:column>
+							<p:fieldset legend="Cession 2 " style="width: 95%;float: right;">
+								<p:panelGrid id="detailVeh" style="width: 100%"
+									styleClass="noBorder">
+									<p:row>
+										<p:column>
+											<h:outputText value="#{cessionfrmsgs['cession.date_debut']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+										<p:column>
+											<p:calendar id="datedebut2" styleClass="datef"
+												yearRange="c-100:c+100" showOn="button" label=""
+												navigator="true" width="250" mindate="#{cessionBean.newCession1.dateFin}"
+												value="#{cessionBean.newCession2.dateDebut}">
+												<p:ajax event="dateSelect" update="datefin2" />
+											</p:calendar>
+										</p:column>
+									</p:row>
+
+									<p:row>
+										<p:column>
+
+											<h:outputText value="#{cessionfrmsgs['cession.date_fin']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+
+										<p:column colspan="2">
+											<p:calendar id="datefin2" styleClass="datef"
+												yearRange="c-100:c+100" showOn="button" label="" disabled="#{cessionBean.newCession2.dateDebut == null}"
+												mindate="#{cessionBean.newCession2.dateDebut}" 
+												navigator="true" value="#{cessionBean.newCession2.dateFin}" />
+										</p:column>
+
+
+									</p:row>
+									<p:row>
+										<p:column style="width: 150px;">
+											<h:outputText value="#{cessionfrmsgs['cession.mensualité']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+										<p:column>
+											<p:inputText id="mensualité2" style="width:210px"
+												value="#{cessionBean.newCession2.mensualite}" rendred="true"
+												label="#{cessionfrmsgs['cession.mensualité']}:">
+											</p:inputText>
+										</p:column>
+									</p:row>
+
+								</p:panelGrid>
+							</p:fieldset>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:fieldset legend="Cession Conjoint1"
+								style="width: 95%;float: left;">
+								<p:panelGrid id="detailC1" style="width: 100%"
+									styleClass="noBorder">
+									<p:row>
+
+										<p:column>
+											<h:outputText value="#{cessionfrmsgs['cession.date_debut']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+
+										</p:column>
+										<p:column colspan="2">
+											<p:calendar id="datedebut1C" styleClass="datef"
+												yearRange="c-100:c+100" showOn="button" label=""
+												required="cessionBean.employeurC != null" navigator="true"
+												width="250"  
+												disabled="#{cessionBean.clientRechercher.compteConjoint !=1 }"
+												value="#{cessionBean.newCession1C.dateDebut}">
+												<p:ajax event="dateSelect" update="datefin1C" />
+											</p:calendar>
+										</p:column>
+									</p:row>
+
+									<p:row>
+										<p:column>
+											<h:outputText value="#{cessionfrmsgs['cession.date_fin']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+
+										<p:column colspan="2">
+											<p:calendar id="datefin1C" styleClass="datef"
+												disabled="#{cessionBean.clientRechercher.compteConjoint !=1 or cessionBean.newCession1C.dateDebut == null}"
+												yearRange="c-100:c+100" showOn="button" label="" mindate="#{cessionBean.newCession1C.dateDebut}" 
+												required="cessionBean.employeurC != null" navigator="true"
+												value="#{cessionBean.newCession1C.dateFin}" >
+												<p:ajax event="dateSelect" update="datedebut2C" />
+												</p:calendar>
+										</p:column>
+									</p:row>
+
+
+									<p:row>
+										<p:column style="width: 150px;">
+											<h:outputText value="#{cessionfrmsgs['cession.mensualité']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+										<p:column colspan="2">
+											<p:inputText id="mensualité1C" style="width:210px"
+												value="#{cessionBean.newCession1C.mensualite}"
+												rendred="true" required="cessionBean.employeurC != null"
+												disabled="#{cessionBean.clientRechercher.compteConjoint !=1 }"
+												label="#{cessionfrmsgs['cession.mensualité']}:">
+											</p:inputText>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</p:fieldset>
+						</p:column>
+						<p:column>
+							<p:fieldset legend="Cession Conjoint 2 "
+								style="width: 95%;float: right;">
+								<p:panelGrid id="detailC2" style="width: 100%"
+								styleClass="noBorder">
+									<p:row>
+										<p:column>
+											<h:outputText value="#{cessionfrmsgs['cession.date_debut']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+										<p:column>
+											<p:calendar id="datedebut2C" styleClass="datef"
+												yearRange="c-100:c+100" showOn="button" label=""
+												navigator="true" width="250" mindate="#{cessionBean.newCession1C.dateFin}"
+												disabled="#{cessionBean.clientRechercher.compteConjoint !=1 }"
+												value="#{cessionBean.newCession2C.dateDebut}">
+												<p:ajax event="dateSelect" update="datefin2C" />
+										  </p:calendar>
+										</p:column>
+									</p:row>
+
+									<p:row>
+										<p:column>
+
+											<h:outputText value="#{cessionfrmsgs['cession.date_fin']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+
+										<p:column colspan="2">
+											<p:calendar id="datefin2C" styleClass="datef"
+												yearRange="c-100:c+100" showOn="button" label=""
+												navigator="true" value="#{cessionBean.newCession2C.dateFin}"
+												disabled="#{cessionBean.clientRechercher.compteConjoint !=1 or cessionBean.newCession2C.dateDebut == null }" 
+												mindate="#{cessionBean.newCession2C.dateDebut}"/>
+										</p:column>
+
+
+									</p:row>
+									<p:row>
+										<p:column style="width: 150px;">
+											<h:outputText value="#{cessionfrmsgs['cession.mensualité']}:"
+												styleClass="weightBold" />
+											<h:outputText value="*" styleClass="required-star-right" />
+										</p:column>
+										<p:column>
+											<p:inputText id="mensualité2C" style="width:210px"
+												value="#{cessionBean.newCession2C.mensualite}"
+												rendred="true"
+												disabled="#{cessionBean.clientRechercher.compteConjoint !=1 }"
+												label="#{cessionfrmsgs['cession.mensualité']}:">
+											</p:inputText>
+										</p:column>
+									</p:row>
+
+								</p:panelGrid>
+							</p:fieldset>
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+
+
+
+
+
+				<div style="width: 100%; text-align: right">
+
+					<p:commandButton id="initRechF" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this" actionListener="#{cessionBean.createCession}"
+						update="@all" rendered="true">
+						<p:resetInput target="cessionForm" />
+					</p:commandButton>
+
+
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						onstart="PF('newConfirmation').show()" update="@form">
+						<p:resetInput target="cessionForm" />
+					</p:commandButton>
+
+					<p:commandButton id="Lister" styleClass="ui-priority-primary"
+						value="#{generalmsgs['cession.lister']}" ajax="true"
+						actionListener="#{menuController.goToPageModifierCession}"
+						rendered="true" process="@this">
+					</p:commandButton>
+
+				
+
+				</div>
+
+				<br></br>
+			</p:panel>
+
+		</h:form>
+
+
+
+		<p:confirmDialog id="diagSave"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="newConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form>
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update=":cessionForm"
+						oncomplete="PF('newConfirmation').hide() ;"
+						actionListener="#{cessionBean.saveCession}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update=":cessionForm"
+						onclick="PF('newConfirmation').hide() "
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+		<p:confirmDialog id="diagUpd" appendTo="@(body)"
+			message="#{generalmsgs['navigation.recherche']}" severity="search"
+			widgetVar="rechConfirmation">
+			<div align="right">
+				<h:form id="diagForm1"  dir="#{languageBean.languageAffich}">
+
+
+					<ui:include
+						src="/views/rechercheAcquereur/rechercheClientAcquereur.xhtml"></ui:include>
+
+					<p:commandButton id="confirm"
+						disabled="#{rechercheClientAcquereurBean.selectClientAcquereur== null}"
+						value="#{generalmsgs['popup.confirmer']}" update="@all"
+						oncomplete="PF('updConfirmation').hide();"
+						styleClass="ui-priority-primary"
+						action="#{cessionBean.confirmerClient}" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="PF('updConfirmation').hide()"
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.LogementDAO;
+import com.cynapsys.entities.Logement;
+
+@SuppressWarnings("serial")
+@Repository("logementDAO")
+public class LogementDAOImpl extends AbstractDAOImpl<Logement>
+		implements LogementDAO, Serializable {
+
+	public LogementDAOImpl() {
+		super(Logement.class);
+	}
+
+	@Override
+	public Logement findById(String id) {
+		
+		List<Logement> list=new ArrayList<Logement>();
+		try {
+			Criteria criteria= getSession().createCriteria(Logement.class);
+			criteria.add(Restrictions.eq("codelogement", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

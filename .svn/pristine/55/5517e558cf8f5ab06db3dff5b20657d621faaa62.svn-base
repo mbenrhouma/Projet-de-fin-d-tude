@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Contentieux;
+
+public interface ContentieuxDAO  extends AbstractDAO<Contentieux>{
+	Contentieux findById(String id);
+}

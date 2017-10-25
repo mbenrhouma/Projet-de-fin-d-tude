@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ClientAcquereurDAO;
+import com.cynapsys.entities.ClientAcquereur;
+
+@SuppressWarnings("serial")
+@Repository("clientAcquereurDAO")
+public class ClientAcquereurDAOImpl extends AbstractDAOImpl<ClientAcquereur>
+		implements ClientAcquereurDAO, Serializable {
+
+	public ClientAcquereurDAOImpl() {
+		super(ClientAcquereur.class);
+	}
+
+	@Override
+	public ClientAcquereur findById(String id) {
+		
+		List<ClientAcquereur> list=new ArrayList<ClientAcquereur>();
+		try {
+			Criteria criteria= getSession().createCriteria(ClientAcquereur.class);
+			criteria.add(Restrictions.eq("codeAcquereur", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

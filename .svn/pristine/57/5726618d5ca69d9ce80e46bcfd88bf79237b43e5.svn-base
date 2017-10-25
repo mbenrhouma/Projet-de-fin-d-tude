@@ -1,0 +1,669 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="utilisateurForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['conultationContentieux']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:fieldset legend="Rechercher" id="cont_rech" toggleable="true"
+					toggleSpeed="500" rendered="true">
+					<p:panelGrid style="width: 100%" styleClass="noBorder">
+
+
+						<!-- 					recherche par date debut trans -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['contentieux.dateDebTransmission']}:" styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+								<p:calendar id="rech_date_deb_trans" disabled="false"
+									value="#{contentieuxBean.dateDebTrans}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button" label=""
+									navigator="true" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right" width="150">
+								<h:outputText value="#{precarmsgs['contentieux.dateDebTransmission']}:" dir="rtl"
+									styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+
+
+						<!-- 					recherche par date fin trans -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['contentieux.dateFinTransmission']}:" styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+								<p:calendar id="rech_date_fin_trans" disabled="false"
+									value="#{contentieuxBean.dateFinTrans}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button" label=""
+									navigator="true" />
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right" width="150">
+								<h:outputText value="#{precarmsgs['contentieux.dateFinTransmission']}:" dir="rtl"
+									styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+
+
+						<!-- 					champs recherche par code client acquereur -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['arrangement.impaye.code']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rechCont_code_clt" styleClass="inputText"
+									required="false" value="#{contentieuxBean.codeC}"
+									rendered="true">
+									<p:ajax event="blur"></p:ajax>
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right;" width="150">
+								<h:outputText value="#{precarmsgs['arrangement.impaye.code']}:"
+									dir="rtl" styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+
+						<!-- 					champs recherche par num doss contentieux -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['contentieux.numDoss']}:" styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rechCont_numCont" styleClass="inputText"
+									required="false" value="#{contentieuxBean.numDossierC}"
+									rendered="true">
+									<p:ajax event="blur"></p:ajax>
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right;" width="150">
+								<h:outputText value="#{precarmsgs['contentieux.numDoss']}:" dir="rtl"
+									styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+
+
+
+						<!-- 					champs recherche par nom client acquereur -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['arrangement.impaye.nom']}:" styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rechCont_nom_clt" styleClass="inputText"
+									required="false" value="#{contentieuxBean.nomC}"
+									rendered="true">
+									<p:ajax event="blur"></p:ajax>
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right;" width="150">
+								<h:outputText value="#{precarmsgs['arrangement.impaye.nom']}:" dir="rtl" styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+
+
+
+						<!-- 							recherche groupe -->
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['impaye.groupe']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="arr_recherche_groupe">
+								<p:selectOneMenu styleClass="selectOneMenu" filter="true"
+									required="false" style="width: 495px!important;"
+									converter="groupeConverter"
+									value="#{contentieuxBean.selectGroupe}">
+
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems value="#{contentieuxBean.groupes}" var="groupe"
+										itemLabel="#{groupe.libelle}" itemValue="#{groupe}" />
+								</p:selectOneMenu>
+								<p:column>
+									<h:outputText value="" styleClass="required-star-right" />
+								</p:column>
+								<p:column style="text-align: right;" width="150">
+									<h:outputText value="#{precarmsgs['impaye.groupe']}:" dir="rtl"
+										styleClass="weightBoldAr" />
+								</p:column>
+							</p:column>
+						</p:row>
+
+
+
+						<!-- 					Champs recherche par : relancé ou non -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{precfrmsgs['contentieux.relance']}:" styleClass="weightBold" />
+
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+
+								<center>
+									<p:selectOneRadio value="#{contentieuxBean.etatRelance}">
+										<f:selectItem itemLabel="Oui" itemValue="o" />
+										<f:selectItem itemLabel="Non" itemValue="n" />
+										<f:selectItem itemLabel="Tous" itemValue="t" />
+									</p:selectOneRadio>
+								</center>
+							</p:column>
+							<p:column>
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right" width="150">
+								<h:outputText value="#{precarmsgs['contentieux.relance']}:" dir="rtl"
+									styleClass="weightBoldAr" />
+							</p:column>
+						</p:row>
+
+
+					</p:panelGrid>
+					<div style="width: 100%; text-align: right">
+						<p:commandButton id="initRech" styleClass="ui-priority-primary"
+							value="#{generalmsgs['navigation.new']}" ajax="true"
+							process="@this"
+							actionListener="#{contentieuxBean.createContentieux}"
+							update="@all" rendered="true">
+							<p:resetInput target="utilisateurForm" />
+
+
+							<p:commandButton id="RechBtn" styleClass="ui-priority-primary"
+								disabled="false" actionListener="#{contentieuxBean.rechercher}"
+								value="Rechercher" ajax="true" update=":utilisateurForm:dta"
+								rendered="true" />
+							<p:spacer width="5px" />
+						</p:commandButton>
+					</div>
+				</p:fieldset>
+
+
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</p:panelGrid>
+
+
+
+
+
+
+				<br />
+				<br></br>
+				<br></br>
+				<br></br>
+				<br></br>
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="initRechF" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this"
+						actionListener="#{contentieuxBean.createContentieux}"
+						update="@all" rendered="true">
+						<p:resetInput target="utilisateurForm" />
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="ajoutCont" styleClass="ui-priority-primary"
+						disabled="#{dossierAenvoyerAuContentieuxBean.selectPrec==null or dossierAenvoyerAuContentieuxBean.selectPrec.contentieux !=null}"
+						onstart="PF('Reglement').show()" value="Enregistrer" ajax="true"
+						update=":utilisateurForm" />
+					<p:spacer width="5px" />
+<!-- 					<p:commandLink ajax="false" title="arrangement" -->
+<!-- 						action="gestionArrangement.xhtml" value="Edit" type="button"> -->
+<!-- 						<f:param name="objectId" value="aaaaaa" /> -->
+<!-- 					</p:commandLink> -->
+<!-- 					<p:spacer width="5px" /> -->
+					
+					
+					<p:commandButton ajax="false" styleClass="ui-priority-primary" value="Arrangement" action="gestionArrangement.xhtml">
+						<f:param name="objectId" value="aaaaaa" ></f:param>
+					</p:commandButton>
+					
+					
+					<p:spacer width="5px" />
+					<p:commandButton id="reglement" styleClass="ui-priority-primary"
+						disabled="#{contentieuxBean.selectContentieux == null}"
+						onstart="PF('Reglement').show()" value="Régler situation"
+						ajax="true" update=":utilisateurForm" />
+
+
+
+				</div>
+
+				<br></br>
+				<p:dataTable id="dta" value="#{contentieuxBean.contentieuxs}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}"
+					selection="#{contentieuxBean.selectContentieux}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect" listener="#{contentieuxBean.onSelectC}"
+						update=":utilisateurForm" />
+
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta"
+								fileName="ListeDesContentieux" />
+						</h:commandLink>
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/pdf.png" width="24px" />
+							<p:dataExporter type="pdf" target="dta"
+								fileName="ListeDesContentieux" />
+						</h:commandLink>
+					</f:facet>
+
+
+
+
+					<!--                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/> -->
+
+
+
+					<p:column width="60"
+						filterBy="#{current.precontentieu.impayee.clientAcquereur.codeAcquereur}"
+						filterMatchMode="contains"
+						sortBy="#{current.precontentieu.impayee.clientAcquereur.codeAcquereur}">
+						<f:facet name="header">
+							<h:outputText value="Code" />
+						</f:facet>
+						<h:outputText
+							value="#{current.precontentieu.impayee.clientAcquereur.codeAcquereur}" />
+					</p:column>
+
+					<p:column width="60" filterStyle="width: 60px !important;"
+						filterBy="#{current.precontentieu.impayee.clientAcquereur.groupe.libelle}"
+						style="height: 25px;width: 60px!important;"
+						filterOptions="#{suiviDesRecouvrementsBean.etatFilter}"
+						filterMatchMode="exact" headerText="Groupe">
+						<f:facet name="header">
+							<h:outputText value="Groupe" />
+						</f:facet>
+
+						<h:outputText
+							value="#{current.precontentieu.impayee.clientAcquereur.groupe.libelle}" />
+					</p:column>
+
+					<p:column width="60"
+						filterBy="#{current.precontentieu.impayee.clientAcquereur.nomPrenomFr}"
+						filterMatchMode="contains"
+						sortBy="#{current.precontentieu.impayee.clientAcquereur.nomPrenomFr}">
+						<f:facet name="header">
+							<h:outputText value="Nom" />
+						</f:facet>
+						<h:outputText
+							value="#{current.precontentieu.impayee.clientAcquereur.nomPrenomFr}" />
+					</p:column>
+
+
+					<p:column width="60" filterBy="#{current.numDossier}"
+						filterMatchMode="contains" sortBy="#{current.numDossier}">
+						<f:facet name="header">
+							<h:outputText value="Num dossier" />
+						</f:facet>
+						<h:outputText value="#{current.numDossier}" />
+					</p:column>
+
+
+
+					<p:column width="60" filterStyle="width: 70px;"
+						filterBy="#{utilities.customFormatDate(current.dateTransmission)}"
+						sortBy="#{utilities.customFormatDate(current.dateTransmission)}"
+						filterMatchMode="contains" style="height: 25px;">
+						<f:facet name="header">
+							<h:outputText value="Date de transmission" />
+						</f:facet>
+						<h:outputText value="#{current.dateTransmission}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+
+					<p:column width="60" filterStyle="width: 70px;"
+						filterBy="#{utilities.customFormatDate(current.dateRelanceContentieux)}"
+						sortBy="#{utilities.customFormatDate(current.dateRelanceContentieux)}"
+						filterMatchMode="contains" style="height: 25px;">
+						<f:facet name="header">
+							<h:outputText value="Date de relance" />
+						</f:facet>
+						<h:outputText value="#{current.dateRelanceContentieux}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+
+
+
+					<p:column width="60" filterStyle="width: 70px;"
+						filterBy="#{utilities.customFormatDate(current.dateFin)}"
+						sortBy="#{utilities.customFormatDate(current.dateFin)}"
+						filterMatchMode="contains" style="height: 25px;">
+						<f:facet name="header">
+							<h:outputText value="Date de fin" />
+						</f:facet>
+						<h:outputText value="#{current.dateFin}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+
+
+					<!-- 					<p:column width="60" -->
+					<!-- 						filterBy="#{current.impayee.clientAcquereur.nomPrenomFr}" -->
+					<!-- 						filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.impayee.clientAcquereur.nomPrenomFr}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Nom" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText -->
+					<!-- 							value="#{current.impayee.clientAcquereur.nomPrenomFr}" /> -->
+					<!-- 					</p:column> -->
+
+					<!-- 					<p:column width="60" -->
+					<!-- 						filterBy="#{current.impayee.clientAcquereur.adresseCorrespondance}" -->
+					<!-- 						filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.impayee.clientAcquereur.adresseCorrespondance}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Adresse" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText -->
+					<!-- 							value="#{current.impayee.clientAcquereur.adresseCorrespondance}" /> -->
+					<!-- 					</p:column> -->
+
+					<!-- 					<p:column width="60" filterBy="#{current.impayee.soldeDebiteur}" -->
+					<!-- 						filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.impayee.soldeDebiteur}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Solde débiteur" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.impayee.soldeDebiteur}" /> -->
+					<!-- 					</p:column> -->
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 70px;" -->
+					<!-- 						filterBy="#{utilities.customFormatDate(current.impayee.dateRelance)}" -->
+					<!-- 						sortBy="#{utilities.customFormatDate(current.impayee.dateRelance)}" -->
+					<!-- 						filterMatchMode="contains" style="height: 25px;"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Date de relance" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.impayee.dateRelance}"> -->
+					<!-- 							<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+					<!-- 						</h:outputText> -->
+					<!-- 					</p:column> -->
+
+					<!-- 					<p:column width="60" filterStyle="width: 70px;" -->
+					<!-- 						filterBy="#{utilities.customFormatDate(current.dateHuissierNotaire)}" -->
+					<!-- 						sortBy="#{utilities.customFormatDate(current.dateHuissierNotaire)}" -->
+					<!-- 						filterMatchMode="contains" style="height: 25px;"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Date Affectation HN" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.dateHuissierNotaire}"> -->
+					<!-- 							<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+					<!-- 						</h:outputText> -->
+					<!-- 					</p:column> -->
+
+					<!-- 					<p:column width="60" filterBy="#{current.huissiersNotaires.nom}" -->
+					<!-- 						filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.huissiersNotaires.nom}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Huissier notaire" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.huissiersNotaires.nom}" /> -->
+					<!-- 					</p:column> -->
+
+
+					<!-- 					<p:column width="60" filterBy="#{current.contentieux.numDossier}" -->
+					<!-- 						filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.contentieux.numDossier}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Num Dossier" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.contentieux.numDossier}" /> -->
+					<!-- 					</p:column> -->
+
+
+
+
+
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 60px !important;" -->
+					<!-- 						filterBy="#{current.impayee.clientAcquereur.groupe.libelle}" -->
+					<!-- 						style="height: 25px;width: 60px!important;" -->
+					<!-- 						filterOptions="#{suiviDesRecouvrementsBean.etatFilter}" -->
+					<!-- 						filterMatchMode="exact" headerText="Groupe"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Groupe" /> -->
+					<!-- 						</f:facet> -->
+
+					<!-- 						<h:outputText -->
+					<!-- 							value="#{current.impayee.clientAcquereur.groupe.libelle}" /> -->
+					<!-- 					</p:column> -->
+
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 70px;" -->
+					<!-- 						filterBy="#{utilities.customFormatDate(current.contentieux.dateTransmission)}" -->
+					<!-- 						sortBy="#{utilities.customFormatDate(current.contentieux.dateTransmission)}" -->
+					<!-- 						filterMatchMode="contains" style="height: 25px;"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Date de transmission" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.contentieux.dateTransmission}"> -->
+					<!-- 							<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+					<!-- 						</h:outputText> -->
+					<!-- 					</p:column> -->
+
+
+
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 70px;" -->
+					<!-- 						filterBy="#{utilities.customFormatDate(current.dateeffectuation)}" -->
+					<!-- 						sortBy="#{utilities.customFormatDate(current.dateeffectuation)}" -->
+					<!-- 						filterMatchMode="contains" style="height: 25px;"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Date d'effectuation" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.dateeffectuation}"> -->
+					<!-- 							<f:convertDateTime pattern="dd/MM/yyyy" /> -->
+					<!-- 						</h:outputText> -->
+					<!-- 					</p:column> -->
+
+
+
+					<!-- 					<p:column width="60" filterBy="#{current.clientAcquereur.nomPrenomFr}" filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.clientAcquereur.nomPrenomFr}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Nom" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.clientAcquereur.nomPrenomFr}" /> -->
+					<!-- 					</p:column> -->
+
+					<!-- 					<p:column width="60" filterBy="#{current.soldeDebiteur}" filterMatchMode="contains" -->
+					<!-- 						sortBy="#{current.soldeDebiteur}"> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="Solde debiteur" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.soldeDebiteur}" /> -->
+					<!-- 					</p:column> -->
+
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 30px;" filterBy="#{utilities.customFormatDate(current.dateRelance)}" sortBy="#{utilities.customFormatDate(current.dateRelance)}" -->
+					<!-- 								  filterMatchMode="contains" style="height: 25px;"> -->
+					<!-- 										<f:facet name="header"> -->
+					<!-- 											<h:outputText value="Date de relance" /> -->
+					<!-- 										</f:facet> -->
+					<!-- 										<h:outputText value="#{current.dateRelance}"> -->
+					<!-- 											<f:convertDateTime pattern="dd/MM/yyyy"/> -->
+					<!-- 										</h:outputText> -->
+					<!-- 					</p:column> -->
+
+
+
+
+
+
+
+
+					<!-- 					<p:column width="60" filterStyle="width: 60px !important;" filterBy="#{current.clientAcquereur.groupe.libelle}" style="height: 25px;width: 60px!important;" filterOptions="#{suiviDesRecouvrementsBean.etatFilter}" filterMatchMode="exact"  -->
+					<!-- 								  headerText="Groupe"> -->
+					<!--                                   		<f:facet name="header"> -->
+					<!-- 											<h:outputText value="Groupe" /> -->
+					<!-- 										</f:facet> -->
+
+					<!-- 										<h:outputText value="#{current.clientAcquereur.groupe.libelle}" /> -->
+
+
+
+
+					<!-- 								  </p:column> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<p:confirmDialog id="diagReglement"
+			message="Confirmez vous le réglement contentieux"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="Reglement" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm">
+
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						update=":utilisateurForm:dta"
+						action="#{contentieuxBean.reglerContentieux}"
+						oncomplete="PF('Reglement').hide();"
+						styleClass="ui-priority-primary" />
+
+
+
+
+
+
+
+
+
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}"
+						update=":utilisateurForm:dta" onclick="PF('Reglement').hide()"
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

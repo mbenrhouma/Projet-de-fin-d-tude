@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cession sur salaire " language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="745cb8ae-c447-42cb-a3fe-4ce78247c0aa">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="336"/>
+	<parameter name="année" class="java.lang.String"/>
+	<parameter name="mois" class="java.lang.String"/>
+	<parameter name="nomprenomAR" class="java.lang.String"/>
+	<parameter name="adresse" class="java.lang.String"/>
+	<parameter name="employeur" class="java.lang.String"/>
+	<parameter name="desc" class="java.lang.String"/>
+	<parameter name="code" class="java.lang.String"/>
+	<parameter name="adresselogement" class="java.lang.String"/>
+	<parameter name="periode" class="java.lang.String"/>
+	<parameter name="interet" class="java.lang.String"/>
+	<parameter name="periodecession" class="java.lang.String"/>
+	<parameter name="montant" class="java.lang.String"/>
+	<parameter name="datedebut" class="java.lang.String"/>
+	<parameter name="mensualité" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="226" y="58" width="101" height="37" uuid="e279e89e-6130-4a06-b067-c4e06b096a86"/>
+				<textElement textAlignment="Center">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[إحالة على مرتب
+*******]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="399" y="0" width="156" height="61" uuid="4ad0628c-80fa-45ef-bc02-7a07de9336fd"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[محكمة ناحية :
+عدد الدفتر :
+عدد التسجيل :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="100" width="100" height="20" uuid="efadb457-9c6e-45c7-8e14-90aa71de73c4"/>
+				<textElement textAlignment="Center">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[وصرح بانه]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="0" width="100" height="20" uuid="c1eb7339-d934-4e55-903c-043d0666af07"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[سنة ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="20" width="100" height="20" uuid="89e65851-f011-4d68-8d15-b005e7734042"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[من شهر]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="40" width="100" height="20" uuid="bc7bf9e0-29c0-4cbb-a3fa-c96144fcf6aa"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[صرح لدينا السيد]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="60" width="100" height="20" uuid="fa46fd5e-617c-4ac3-9c8f-195d092017eb"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[القاطن ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="80" width="100" height="20" uuid="e623a8fc-9af0-4a1f-aeef-7cafba06dd57"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[الأجير]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="100" width="100" height="20" uuid="3c1b16de-fd75-4465-9c18-5be13cb26d5f"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[بصفته]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="247" y="0" width="100" height="20" uuid="7e7cc7fd-00cf-439c-b967-c72cd91b6b2d"/>
+				<textElement>
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{année}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="20" width="100" height="20" uuid="05db8718-d0d5-4f0d-90d0-0ffffc83eb05"/>
+				<textElement>
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mois}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="40" width="100" height="20" uuid="9d3c7b3a-f939-4719-b439-223b97418ea4"/>
+				<textElement>
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomprenomAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="60" width="100" height="20" uuid="e57b241d-fa0c-4cd2-87c5-4a5e0332e20f"/>
+				<textElement>
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{adresse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="80" width="100" height="20" uuid="71d675c3-c043-434b-9e7b-e24a4b7fab11"/>
+				<textElement>
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{employeur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="100" width="100" height="20" uuid="8c0d7477-5342-4e56-a4a6-57eff7cec981"/>
+				<textElement>
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="281" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="36" uuid="72c73856-8009-4380-8b43-9e73f20b65ae"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1) اسند له محل رقم "+$P{code}+"كائن ب "+$P{adresselogement}+" من طرف الشركة القومية للبلاد التونسية على وجه الكراء أو البيع ."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="36" width="555" height="43" uuid="da0fd3b1-3d37-4ac6-9316-6fbd8728ef6e"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2) وتخلد بذمته بتلك الصفة بقية خلاص ثمن المحل لمدة " +$P{periode}+ "مع فائض  قدره" +$P{interet}+" في السنة الواحدة من الثمن المذكور يقع دفعه اقساط شهرية متعادلة."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="79" width="555" height="64" uuid="7caa7b49-e4db-423f-b9c1-b00284dd94a2"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["3) ولذا فهو موافق على إحالة لفائدة الشركة القومية العقارية للبلاد التونسية التي مقرها بتونس حي المهرجان عمارة الانطلاق شارع شارل نيكول بالمنزه نافذة المفعول لمدة "+$P{periodecession}+" سنوات بمبلغ قدره"+$P{montant}+" يخصم من أجور مرتباته حسب التفصيل الآتي بيانه :"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="143" width="555" height="30" uuid="0b63ef25-8527-43d0-8bb6-db349352d00d"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["إبتداء من "+$P{datedebut}+" بما قدره شهرياً"+$P{mensualité}+"دينارا."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="173" width="555" height="68" uuid="cbe06e9e-aa83-4c05-b45e-6cab710a9109"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["4) وعليه فهو يأذن مستأجره السيد الرئيس المدير العام "+$P{employeur}+" بدفع المبالغ المخصوصة مباشرة ولو في غيابه لفائدة الشركة القومية العقارية للبلاد التونسية  بحسابها الجاري رقم 139.80 تونس أو حسابها بالبنك القومي التونسي شارع  باريس عدد 19 رقم 10.0395173 حسب التفصيل الأنف الذكر إلى نهاية خلاصه بمجرد الاستظهار بنسخة من هاته الإحالة ."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="241" width="555" height="40" uuid="3a61b6ef-6c61-4cf3-8ba1-153be8613a4c"/>
+				<textElement textAlignment="Right">
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[وبعد تلاوة مضمون هذه الإحالة على صاحبها أمضى معنا وطلب منا إعلام المستأجر ومن يحل محله بمكتب مضمون الوصول طبق القانون . حررت الاحالة ذات المفعول الناجز لحينه  في نطاق أحكام القانون 58.82 المؤرخ في 25 أوت 1958 .]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="41" y="25" width="100" height="20" uuid="5d2754b3-80a7-4624-8f89-9104f009bf97"/>
+				<textElement>
+					<font size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[الامضاء ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

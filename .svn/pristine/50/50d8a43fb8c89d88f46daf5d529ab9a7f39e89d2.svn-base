@@ -1,0 +1,70 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.TypeFraisDAO;
+import com.cynapsys.entities.TypeFrais;
+import com.cynapsys.service.TypeFraisService;
+@Service("typeFraisService")
+public class TypeFraisServiceImpl  implements TypeFraisService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private TypeFraisDAO typeFraisDAO;
+	
+	@Override
+	public Object save(TypeFrais entity) {
+		return typeFraisDAO.save(entity);
+	}
+	
+	@Override
+	public void flush(TypeFrais entity) {
+		typeFraisDAO.flush(entity);		
+	}
+	@Override
+	public void update(TypeFrais entity) {
+		typeFraisDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(TypeFrais entity) throws Exception {
+		return typeFraisDAO.delete(entity);
+	}
+	@Override
+	public TypeFrais find(Object idClass) {
+		return typeFraisDAO.find(idClass);
+	}
+	@Override
+	public List<TypeFrais> findAll() {
+		return typeFraisDAO.findAll();
+	}
+	@Override
+	public List<TypeFrais> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return typeFraisDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return typeFraisDAO.getCount(filters);
+	}
+	@Override
+	public List<TypeFrais> findSorted(String sortField, boolean sortOrder) {
+		return typeFraisDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public TypeFrais findById(String id) {
+		return typeFraisDAO.findById(id);
+	}
+	public TypeFraisDAO getTypeFraisDAO() {
+		return typeFraisDAO;
+	}
+	public void setTypeFraisDAO(TypeFraisDAO typeFraisDAO) {
+		this.typeFraisDAO = typeFraisDAO;
+	}
+
+
+}

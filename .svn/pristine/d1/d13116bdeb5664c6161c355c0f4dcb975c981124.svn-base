@@ -1,0 +1,15 @@
+package com.cynapsys.dao;
+
+import java.util.Date;
+import java.util.List;
+
+import com.cynapsys.entities.Arrangement;
+
+
+public interface ArrangementDAO extends AbstractDAO<Arrangement> {
+	Arrangement findById(String id);
+
+	List<Arrangement> findByCriteres(Arrangement arrangement,Date dateD, Date dateF);
+
+	List<Arrangement> findAllDta();
+}

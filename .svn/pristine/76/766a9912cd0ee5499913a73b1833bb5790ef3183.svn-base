@@ -1,0 +1,72 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.MensualiteDAO;
+import com.cynapsys.entities.Mensualite;
+import com.cynapsys.entities.TableauAmortissement;
+import com.cynapsys.service.MensualiteService;
+@Service("mensualiteService")
+public class MensualiteServiceImpl  implements MensualiteService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private MensualiteDAO mensualiteDAO;
+	@Override
+	public Object save(Mensualite entity) {
+		return mensualiteDAO.save(entity);
+	}
+	@Override
+	public void flush(Mensualite entity) {
+		mensualiteDAO.flush(entity);		
+	}
+	@Override
+	public void update(Mensualite entity) {
+		mensualiteDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(Mensualite entity) throws Exception {
+		return mensualiteDAO.delete(entity);
+	}
+	@Override
+	public Mensualite find(Object idClass) {
+		return mensualiteDAO.find(idClass);
+	}
+	@Override
+	public List<Mensualite> findAll() {
+		return mensualiteDAO.findAll();
+	}
+	@Override
+	public List<Mensualite> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return mensualiteDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return mensualiteDAO.getCount(filters);
+	}
+	@Override
+	public List<Mensualite> findSorted(String sortField, boolean sortOrder) {
+		return mensualiteDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public Mensualite findById(String id) {
+		return mensualiteDAO.findById(id);
+	}
+	public MensualiteDAO getMensualiteDAO() {
+		return mensualiteDAO;
+	}
+	public void setMensualiteDAO(MensualiteDAO mensualiteDAO) {
+		this.mensualiteDAO = mensualiteDAO;
+	}
+	@Override
+	public List<Mensualite> findByTa(TableauAmortissement ta) {
+		return mensualiteDAO.findByTa(ta);
+	}
+
+}

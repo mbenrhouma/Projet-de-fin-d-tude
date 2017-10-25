@@ -1,0 +1,137 @@
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+
+
+/**
+*
+* @author UC057
+*/
+@Entity
+@Table(name = "HISTORIQE_LOCATAIRE")
+@SequenceGenerator(name="SEQ_HISTORIQE_LOCATAIRE",sequenceName="S_HISTORIQE_LOCATAIRE")
+public class HistoriqueClientLoc implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_HISTORIQE_LOCATAIRE")
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "HIS_ID", nullable = false, precision = 22, scale = 0)
+	private Integer hisCode;
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "DATE_DEBUT", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateDebut;
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "DATE_FIN", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateFin;
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "DATE_MODIF", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateModif;
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "MONTANT_MENSUEL", nullable = false)
+	private Double loyerMensuel;
+	@JoinColumn(name = "CLIENT_LOCATAIRE", referencedColumnName = "CODE_LOCATAIRE")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private ClientLocataire clientLocataire;
+	@JoinColumn(name = "LOGEMENT", referencedColumnName = "CODE_LOGEMENT")
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Logement logement;
+	
+	
+	public Integer getHisCode() {
+		return hisCode;
+	}
+	public void setHisCode(Integer hisCode) {
+		this.hisCode = hisCode;
+	}
+	public Date getDateDebut() {
+		return dateDebut;
+	}
+	public void setDateDebut(Date dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+	public Date getDateFin() {
+		return dateFin;
+	}
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
+	}
+	public Double getLoyerMensuel() {
+		return loyerMensuel;
+	}
+	public void setLoyerMensuel(Double loyerMensuel) {
+		this.loyerMensuel = loyerMensuel;
+	}
+	public ClientLocataire getClientLocataire() {
+		return clientLocataire;
+	}
+	public void setClientLocataire(ClientLocataire clientLocataire) {
+		this.clientLocataire = clientLocataire;
+	}
+		@Override
+	public String toString() {
+		return "HistoriqueClientLoc [hisCode=" + hisCode + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((hisCode == null) ? 0 : hisCode.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HistoriqueClientLoc other = (HistoriqueClientLoc) obj;
+		if (hisCode == null) {
+			if (other.hisCode != null)
+				return false;
+		} else if (!hisCode.equals(other.hisCode))
+			return false;
+		return true;
+	}
+	public Logement getLogement() {
+		return logement;
+	}
+	public void setLogement(Logement logement) {
+		this.logement = logement;
+	}
+	public Date getDateModif() {
+		return dateModif;
+	}
+	public void setDateModif(Date dateModif) {
+		this.dateModif = dateModif;
+	}
+	
+	
+}

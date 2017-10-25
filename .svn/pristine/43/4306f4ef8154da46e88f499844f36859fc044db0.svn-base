@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GCLettreDeCommande" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8aab63f-17be-4bba-9c95-c9a6a88fe149">
+	<property name="ireport.zoom" value="1.1000000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="370"/>
+	<parameter name="HuissN" class="java.lang.String"/>
+	<parameter name="huissAdr" class="java.lang.String"/>
+	<parameter name="impNom" class="java.lang.String"/>
+	<parameter name="impAdr" class="java.lang.String"/>
+	<parameter name="impDate" class="java.lang.String"/>
+	<parameter name="impMontant" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="211" splitType="Stretch">
+			<staticText>
+				<reportElement x="354" y="178" width="177" height="20" uuid="97d670da-6f94-4ea7-a408-85dd90264501"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[إدارة التصرف و الاستخلاص]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="344" y="101" width="100" height="20" uuid="9fa685a0-5436-42dc-9a4e-74b6e7dab963"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="5" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="569" splitType="Stretch">
+			<staticText>
+				<reportElement x="354" y="95" width="177" height="20" uuid="01ceed75-ff83-4c85-a07c-861f4138fc21"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[الموضوع : مهمة تكليف للقيام بتنبيه.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="155" width="200" height="20" uuid="083ab07e-2de6-4489-a311-839254e9e859"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[المصاحيب : نسخة مصورة من عقد البيع]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="331" y="135" width="200" height="19" uuid="fe053687-d0ac-417f-838e-2884e995e94e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["العنوان : "+$P{impAdr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="115" width="158" height="20" uuid="314275d3-2a8d-4256-978c-41798109fb09"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["الضد : "+$P{impNom} ]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="202" y="26" width="100" height="20" uuid="ae2a819c-4306-4aec-8e2c-65b9076d30d2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[العدل المنفذ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="202" y="46" width="100" height="20" uuid="08e94f5e-7510-45ae-af1c-24f41629b6cf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{huissAdr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="183" y="5" width="135" height="21" uuid="3f3a6faa-f0f9-433f-85ea-0f65bd173c06"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["الأستاذ "+$P{HuissN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="395" y="488" width="100" height="20" uuid="30cfefe8-438f-4226-93d5-c2ab1e3abe1b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[مع الشكر سلفا]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="508" width="100" height="20" uuid="1829c91c-634b-4cea-a8b7-3e9b11af5481"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="16" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[والسلام]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="19" y="185" width="512" height="285" uuid="b0f20b7c-0952-4a8d-b93c-0f11e11fd44c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="16"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="20.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["و بعد، المرجو منكم القيام بالإجراء ات القانونية اللازمة للتنبيه على السيد "+$P{impNom}+" و إعلامه بضرورة الاتصال بالشركة لخلاص الدين المتخلد بذمته و البالغ إلى شهر "+$P{impDate}+" ما قدره "+$P{impMontant}+" د أصلا و فائضا و دون احتساب مصاريف هذا التنبيه و تذكيره بفصول العقد الرابط بينه و بين الشركة خاصة منها الفصل الرابع عشر و الذي ينص على ما يلي : 'إن كل مخالفة لفصل من فصول هذا العقد أو شروطه و خاصة عدم دفع قسط من الاقساط المتفق عليها يترتب عنه فسخ هذا العقد وجوبا و بدون قيد أو شرط و يصير المشتري يتصرف في المبيع بدون وجه قانوني طبقا للفصل 680 من مجلة العقود و الالتزامات و يمكن للشركة القيام بقضية اسعجالية في طلب الحكم بالخروج من المحل لعدم الصفة أو عدم الخلاص.' هذا مع منحه أجلا لا يتعدى الخمسة أيام من تاريخ التنبيه عليه و إلا فإن الشركة ستضطر لاتخاذ الإجراء ات القانونية الازمة ضده لتطبيق القانون و دلك باللجوء إلى المحكمة ذات النظر، كما نرجوكم موافاتنا بالمحضر تام الموجبات القانونية مع قائمة أتباعكم و إرجاع أصل التكليف حتى يتسنى لنا خلاص مصاريف أتعابكم في أحسن الظروف."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

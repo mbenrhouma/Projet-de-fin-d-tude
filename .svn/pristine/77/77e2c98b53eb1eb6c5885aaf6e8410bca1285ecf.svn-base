@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Contrat;
+
+public interface ContratDAO  extends AbstractDAO<Contrat>{
+	Contrat findById(String id);
+}

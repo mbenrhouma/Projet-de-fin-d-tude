@@ -1,0 +1,68 @@
+decompte.codeClient=Code Client
+decompte.fraisContrat=Frais contrat
+decompte.fraisLotissement=Frais lotissement
+decompte.AutreFrais=Autres frais
+decompte.nomPrenomClient=Nom et prenom
+decompte.groupe=Groupe
+decompte.adreseLogement=Adresse Logement
+decompte.adresse=Adresse
+decompte.codePostal=Code postal
+decompte.fraisAssurance=Frais assurance
+decompte.fraisContentieux=Frais contentieux
+decompte.dateDebutContrat=Date Debut Contrat
+decompte.dateFinContrat=Date fin contrat
+decompte.calculerDecompte=Calculer decompte
+decompte.imprimerDecompte=Imprimer d\u00E9compte
+decompte.decompte=D\u00E9compte
+decompte.identification=Identification
+decompte.partieFinanciere=Partie financi\u00E8re
+decompte.ta=Tableau d'amortissement
+decompte.cd=Cession sur salaire
+
+decompte.frais=Frais
+decompte.recap=Recap
+
+decompte.interetretard=Interet de retard
+decompte.apresEch=Interet apr\u00E8s \u00E9cheance
+
+decompte.prixProv=Prix provisoire
+decompte.prixDef=Prix definitif
+decompte.avance = Avance
+decompte.solde = Solde
+decompte.assure=Assure (O/N)
+decompte.dateDeb= Date debut
+decompte.dateFin=Date fin
+decompte.numOrdre= Num\u00E9ro d'ordre
+decompte.rang=Rang
+decompte.totalFrais=Total frais
+decompte.mensualite = Mensualilt\u00E9
+decompte.cumul=Cumul-Mois
+decompte.interet=Interet
+decompte.annees=Ann\u00E9es
+decompte.rms=R-MS
+decompte.debit=Debit
+decompte.credit=Credit
+decompte.echeance=Echeance
+decompte.cumulArriere=Cumul arriere
+
+decompte.date=Date
+decompte.montant=Montant
+decompte.interet1=Interet 1
+decompte.interet2=Interet 2
+decompte.restantDu=Capital restant-Du
+decompte.reliquatPrix=Reliquat prix
+decompte.cdnp=C.D.N.P
+decompte.capitalDeces=Capital deces
+decompte.versAprEch=Vers apres ech\u00E9ance
+decompte.echeanceDC=Ech\u00E9ance DC
+decompte.recetteDC=Recette DC
+decompte.soldeDef=Solde definitif
+
+decompte.cree.succes=Decompte cr\u00E9\u00E9 avec succ\u00E9s
+decompte.modifie.succes=Decompte modif\u00E9 avec succ\u00E9s
+decompte.supprime.succes=Decompte supprimer avec succ\u00E9s
+decompte.error.supprimer=Vous ne pouvez pas supprimer ce decompte 
+decompte.error.existe=Decompte existe 
+
+decompte.alertProv=Ce d\u00E9compte est bas\u00E9 sur le prix provisoire
+decompte.genererDecompte=Imprimer d\u00E9compte

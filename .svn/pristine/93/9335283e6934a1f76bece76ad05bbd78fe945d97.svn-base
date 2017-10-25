@@ -1,0 +1,312 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@Table(name = "CLIENT_LOCATAIRE")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "ClientLocataire.findAll", query = "SELECT c FROM ClientLocataire c")})
+public class ClientLocataire implements Serializable {
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CODE_LOCATAIRE", nullable = false, precision = 22, scale = 0)
+    private BigDecimal codeLocataire;
+    private Integer cin;
+    @Size(max = 254)
+    @Column(name = "NOM_PRENOM_AR", length = 254)
+    private String nomPrenomAr;
+    @Size(max = 254)
+    @Column(name = "NOM_PRENOM_FR", length = 254)
+    private String nomPrenomFr;
+    @Size(max = 254)
+    @Column(name = "RAISON_SOCIALE", length = 254)
+    private String raisonSociale;
+    @Size(max = 254)
+    @Column(name = "ADRESSE_LOGEMENT", length = 254)
+    private String adresseLogement;
+    @Size(max = 254)
+    @Column(name = "ADRESSE_CORRESPONDANCE", length = 254)
+    private String adresseCorrespondance;
+    @Column(name = "SOLDE_LOYER")
+    private BigInteger soldeLoyer;
+    @Size(max = 254)
+    @Column(name = "CODE_MAJ", length = 254)
+    private String codeMaj;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private short duree;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATE_DEBUT", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateDebut;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATE_FIN", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateFin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "LOYER_ANNUEL", nullable = false)
+    private BigInteger loyerAnnuel;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "LOYER_MENSUEL", nullable = false)
+    private BigInteger loyerMensuel;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ETAT_CONTRAT", nullable = false)
+    private short etatContrat;
+    @Column(name = "DATE_ENREGISTREMENT")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateEnregistrement;
+    @Column(name = "TAUX_AUGMETATION", precision = 5, scale = 2)
+    private BigDecimal tauxAugmetation;
+    @OneToMany(mappedBy = "clientLocataire", fetch = FetchType.LAZY)
+    private List<NoteDebit> noteDebitList;
+    @JoinColumn(name = "GROUPE", referencedColumnName = "CODE", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Groupe groupe;
+    @JoinColumn(name = "LOGEMENT", referencedColumnName = "CODE_LOGEMENT")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Logement logement;
+
+    public ClientLocataire() {
+    }
+
+    public ClientLocataire(BigDecimal codeLocataire) {
+        this.codeLocataire = codeLocataire;
+    }
+
+    public ClientLocataire(BigDecimal codeLocataire, short duree, Date dateDebut, Date dateFin, BigInteger loyerAnnuel, BigInteger loyerMensuel, short etatContrat) {
+        this.codeLocataire = codeLocataire;
+        this.duree = duree;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.loyerAnnuel = loyerAnnuel;
+        this.loyerMensuel = loyerMensuel;
+        this.etatContrat = etatContrat;
+    }
+
+    public BigDecimal getCodeLocataire() {
+        return codeLocataire;
+    }
+
+    public void setCodeLocataire(BigDecimal codeLocataire) {
+        this.codeLocataire = codeLocataire;
+    }
+
+    public Integer getCin() {
+        return cin;
+    }
+
+    public void setCin(Integer cin) {
+        this.cin = cin;
+    }
+
+    public String getNomPrenomAr() {
+        return nomPrenomAr;
+    }
+
+    public void setNomPrenomAr(String nomPrenomAr) {
+        this.nomPrenomAr = nomPrenomAr;
+    }
+
+    public String getNomPrenomFr() {
+        return nomPrenomFr;
+    }
+
+    public void setNomPrenomFr(String nomPrenomFr) {
+        this.nomPrenomFr = nomPrenomFr;
+    }
+
+    public String getRaisonSociale() {
+        return raisonSociale;
+    }
+
+    public void setRaisonSociale(String raisonSociale) {
+        this.raisonSociale = raisonSociale;
+    }
+
+    public String getAdresseLogement() {
+        return adresseLogement;
+    }
+
+    public void setAdresseLogement(String adresseLogement) {
+        this.adresseLogement = adresseLogement;
+    }
+
+    public String getAdresseCorrespondance() {
+        return adresseCorrespondance;
+    }
+
+    public void setAdresseCorrespondance(String adresseCorrespondance) {
+        this.adresseCorrespondance = adresseCorrespondance;
+    }
+
+    public BigInteger getSoldeLoyer() {
+        return soldeLoyer;
+    }
+
+    public void setSoldeLoyer(BigInteger soldeLoyer) {
+        this.soldeLoyer = soldeLoyer;
+    }
+
+    public String getCodeMaj() {
+        return codeMaj;
+    }
+
+    public void setCodeMaj(String codeMaj) {
+        this.codeMaj = codeMaj;
+    }
+
+    public short getDuree() {
+        return duree;
+    }
+
+    public void setDuree(short duree) {
+        this.duree = duree;
+    }
+
+    public Date getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public BigInteger getLoyerAnnuel() {
+        return loyerAnnuel;
+    }
+
+    public void setLoyerAnnuel(BigInteger loyerAnnuel) {
+        this.loyerAnnuel = loyerAnnuel;
+    }
+
+    public BigInteger getLoyerMensuel() {
+        return loyerMensuel;
+    }
+
+    public void setLoyerMensuel(BigInteger loyerMensuel) {
+        this.loyerMensuel = loyerMensuel;
+    }
+
+    public short getEtatContrat() {
+        return etatContrat;
+    }
+
+    public void setEtatContrat(short etatContrat) {
+        this.etatContrat = etatContrat;
+    }
+
+    public Date getDateEnregistrement() {
+        return dateEnregistrement;
+    }
+
+    public void setDateEnregistrement(Date dateEnregistrement) {
+        this.dateEnregistrement = dateEnregistrement;
+    }
+
+    public BigDecimal getTauxAugmetation() {
+        return tauxAugmetation;
+    }
+
+    public void setTauxAugmetation(BigDecimal tauxAugmetation) {
+        this.tauxAugmetation = tauxAugmetation;
+    }
+
+    @XmlTransient
+    public List<NoteDebit> getNoteDebitList() {
+        return noteDebitList;
+    }
+
+    public void setNoteDebitList(List<NoteDebit> noteDebitList) {
+        this.noteDebitList = noteDebitList;
+    }
+
+    public Groupe getGroupe() {
+        return groupe;
+    }
+
+    public void setGroupe(Groupe groupe) {
+        this.groupe = groupe;
+    }
+
+    public Logement getLogement() {
+        return logement;
+    }
+
+    public void setLogement(Logement logement) {
+        this.logement = logement;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codeLocataire != null ? codeLocataire.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ClientLocataire)) {
+            return false;
+        }
+        ClientLocataire other = (ClientLocataire) object;
+        if ((this.codeLocataire == null && other.codeLocataire != null) || (this.codeLocataire != null && !this.codeLocataire.equals(other.codeLocataire))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.ClientLocataire[ codeLocataire=" + codeLocataire + " ]";
+    }
+    
+}

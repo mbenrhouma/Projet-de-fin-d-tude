@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="ancienneQuittanceForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.edition']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel value="#{toppanmsgs['header.tableauSoldeClient']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					
+					
+				</p:breadCrumb>
+				<p:fieldset>
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+					
+						<p:row>
+						
+							<p:column>
+								<p:outputLabel 
+									value="#{ancienneQuitmsgs['ancienneQuittance.arreterau']}:"
+									styleClass="weightBoldAr" />
+									
+							</p:column>
+
+							<p:column>
+							
+									<p:calendar id="dateval"   lang="#{languageBean.locale}"
+										showOn="button" value="#{tablSoldesClientBean.dateArret}"
+										label="#{ancienneQuitmsgs['ancienneQuittance.arreterau']}" 
+										pattern="dd/MM/yyyy" 
+										navigator="true" yearRange="1900:2100"
+										style="width:210px" 
+										
+										required="true">
+										<p:ajax event="dateSelect" listener="#{tablSoldesClientBean.updateDateFin}"></p:ajax>
+										
+									</p:calendar>
+								
+							</p:column>
+						</p:row>
+
+				
+				</p:panelGrid>
+				<div style="width: 100%;text-align: right">
+				<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{tabSoldeClientmsgs['tableSolde.rechercher']}"
+						ajax="true"
+						action="#{tablSoldesClientBean.rechercher}"
+						process="@this" 
+						update="@form">
+						
+				</p:commandButton>
+				</div>
+				</p:fieldset>
+				<br />
+
+				<br></br>
+				<div style="width: 100%;text-align: right" 
+				>
+				<h:commandLink
+					actionListener="#{tablSoldesClientBean.imprimerTableauDesSolesClients}">
+				
+					<p:commandButton id="impr" styleClass="ui-priority-primary"
+						value="#{tabSoldeClientmsgs['tableSolde.imprimer']}" ajax="true"
+						 update="@form"
+					/>
+
+					
+					</h:commandLink>
+				</div> 
+
+
+
+				<br></br>
+						<p:dataTable id="dta" value="#{tablSoldesClientBean.listTableauSoldeClientPOJO}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}" 
+					selection="#{tablSoldesClientBean.selectTableauSoldeClientPOJO}"
+					selectionMode="single"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					rowsPerPageTemplate="10,20,50,100,200,500"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}" 
+					scrollable="true"  
+					
+					>
+					
+						
+					<f:facet name="header" >
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="type Frais" />
+						</h:commandLink>
+						<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/pdf.png" width="25px;" />
+							<p:dataExporter type="pdf" encoding="ISO-8859-1" target="dta"
+								fileName="tableau solde client" />
+						</h:commandLink>
+					</f:facet>
+					</f:facet>
+					<p:column  
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.codeClient']}"/>
+						</f:facet>
+						<h:outputText value="#{current.codeClient}" />
+					</p:column>
+						<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.nometPrenom']}"/>
+						</f:facet>
+						<h:outputText value="#{current.nometPrenom}" />
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.groupeClient']}"/>
+						</f:facet>
+						<h:outputText value="#{current.groupeClient}" />
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.typeClient']}"/>
+						</f:facet>
+						<h:outputText value="" />
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.prix']}"/>
+						</f:facet>
+						<h:outputText value="#{current.prix}" />
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.avance']}"/>
+						</f:facet>
+						<h:outputText value="#{current.avance}" />
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.dateDebut']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateDebut}" >
+						<f:convertDateTime pattern="dd/mm/yyyy"/>
+						
+						</h:outputText>
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.dateFin']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateFin}" >
+						<f:convertDateTime pattern="dd/mm/yyyy"/>
+						</h:outputText>
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.mensualite']}"/>
+						</f:facet>
+						<h:outputText value="#{current.mensualite}" />
+						
+						
+					</p:column>
+						<p:column  
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.echeancesDe']}"/>
+						</f:facet>
+						<h:outputText value="#{current.echeancesDe}" />
+						
+						
+					</p:column>
+					<p:column  
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.echeancesAu']}"/>
+						</f:facet>
+						<h:outputText value="#{current.echeancesAu}" />
+						
+						
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.noteDebitDEbit']}"/>
+						</f:facet>
+						<h:outputText value="#{current.echeancesDe}" />
+						
+						
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.noteDebitCredit']}"/>
+						</f:facet>
+						<h:outputText value="#{current.noteDebitCredit}" />
+						
+						
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.recetteAu']}"/>
+						</f:facet>
+						<h:outputText value="#{current.recetteAu}" />
+						
+						
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.recetteDe']}"/>
+						</f:facet>
+						<h:outputText value="#{current.recetteDe}" />
+						
+						
+					</p:column>
+					<p:column 
+						 filterBy="" sortBy=""
+						filterMatchMode="contains" 		style="text-align:center;width:100px" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tabSoldeClientmsgs['tableSolde.soldeClientAu']}"/>
+						</f:facet>
+						<h:outputText value="#{current.soldeClientAu}" />
+						
+						
+					</p:column>
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="14" style="text-align:right"
+								footerText="#{tabSoldeClientmsgs['tableSolde.totalGeneral']}" />
+						
+							<p:column footerText="#{current.totalGeneral}" />
+						</p:row>
+					</p:columnGroup>
+
+
+
+
+
+
+				</p:dataTable>
+
+				
+			</p:panel>
+
+
+		</h:form>
+	
+
+
+	</ui:define>
+</ui:composition>
+</html>

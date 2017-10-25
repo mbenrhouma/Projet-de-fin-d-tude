@@ -1,0 +1,68 @@
+package com.cynapsys.Views.controller;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpSession;
+
+@ManagedBean(name = "languageBean")
+@SessionScoped
+public class LanguageBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private Locale locale;
+	private HttpSession session;
+
+	public LanguageBean() {
+		 FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+	        FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext extContext = context.getExternalContext();
+			session = (HttpSession) context.getExternalContext()
+					.getSession(false);
+			session.setAttribute("locale", context.getViewRoot().getLocale());
+	}
+	
+	@PostConstruct
+	public void initialisation() {
+		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		session.setAttribute("locale", locale);
+		
+	}
+
+	public Locale getLocale() {
+        return locale;
+    }
+
+    public String getLanguage() {
+        return locale.getLanguage();
+    }
+
+    public void setLanguage(String language) {
+        locale = new Locale(language);
+		session.setAttribute("locale", locale);
+    }
+    
+    public void reload(){
+    	try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
+    }
+}

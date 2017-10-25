@@ -1,0 +1,332 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
+
+import com.cynapsys.entities.Assurance;
+import com.cynapsys.entities.Assureur;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Employeur;
+import com.cynapsys.entities.Groupe;
+import com.cynapsys.service.AssureurService;
+import com.cynapsys.service.ClientAcquereurService;
+import com.cynapsys.service.EmployeurService;
+import com.cynapsys.service.GroupeService;
+
+@ManagedBean(name = "rechercheDesClientsAcquereursBean")
+@ViewScoped
+public class RechercheDesClientsAcquereursBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@ManagedProperty(value = "#{clientAcquereurService}")
+	private ClientAcquereurService clientAcquereurService;
+	
+	@ManagedProperty(value = "#{groupeService}")
+	private GroupeService groupeService;
+	
+	@ManagedProperty(value = "#{employeurService}")
+	private EmployeurService employeurService;
+	
+	@ManagedProperty(value = "#{assureurService}")
+	private AssureurService assureurService;
+	
+	private List<ClientAcquereur> listClients;
+	private String codeC;
+	private String nomC;
+	private ClientAcquereur clientAcquereurRech=new ClientAcquereur();
+	private Groupe selectGroupe;
+	private Employeur selectEmployeur;
+	private Assureur selectAssureur;
+	private List<Groupe> groupes;
+	private List<Employeur> employeurs;
+	private List<Assureur> assureurs;
+	private static SelectItem[] etatFilter;
+	private static SelectItem[] etatFilterAssureur;
+	private String enContentieux=null;
+	private String enArrangement=null;
+	private Boolean cessionSalaire;
+	private Boolean cessionActive;
+	private Boolean cessionEchue;
+	private String etatAmortissement;
+
+	@PostConstruct
+	public void initialisation() {
+		//listClients=clientAcquereurService.findAllDta();
+		groupes=groupeService.findAll();
+		employeurs=employeurService.findAll();
+		assureurs=assureurService.findAll();
+		selectGroupe=null;
+		selectEmployeur=null;
+		selectAssureur=null;
+		codeC=null;
+		nomC=null;
+		enContentieux=null;
+		enArrangement=null;
+		cessionSalaire=false;
+		cessionActive=false;
+		cessionEchue=false;
+		etatAmortissement=null;
+		
+	}
+
+	public void createClientAcquereur() {
+		groupes=groupeService.findAll();
+		employeurs=employeurService.findAll();
+		assureurs=assureurService.findAll();
+		selectGroupe=null;
+		selectEmployeur=null;
+		selectAssureur=null;
+		codeC=null;
+		nomC=null;
+		//listClients=clientAcquereurService.findAllDta();
+		enContentieux=null;
+		enArrangement=null;
+		
+		cessionSalaire=false;
+		cessionActive=false;
+		cessionEchue=false;
+		etatAmortissement=null;
+		
+	}
+	
+	public void rechercher(){
+		if(codeC!=null && !codeC.isEmpty() && !codeC.equals("")){
+			clientAcquereurRech.setCodeAcquereur(new BigDecimal(codeC));
+		}
+		else{
+			clientAcquereurRech.setCodeAcquereur(null);
+		}
+			clientAcquereurRech.setNomPrenomFr(nomC);
+		Assurance assurance=new Assurance();
+		assurance.setAssureur(selectAssureur);
+		//clientAcquereurRech.setAssurance(assurance);
+		clientAcquereurRech.setGroupe(selectGroupe);
+//		clientAcquereurRech.setEmployeur(selectEmployeur);
+		listClients=clientAcquereurService.findByCriteres(clientAcquereurRech, enContentieux, enArrangement, cessionSalaire, cessionActive, cessionEchue, selectEmployeur, etatAmortissement,null);
+		
+		
+		System.out.println(cessionActive);
+		System.out.println(cessionSalaire);
+		System.out.println(cessionEchue);
+	}
+	
+//	public SelectItem[] getEtatFilter() {
+//
+//		etatFilter = new SelectItem[employeurs.size() + 1];
+//		etatFilter[0] = new SelectItem("", "");
+//		for (int i = 1; i <= employeurs.size(); i++) {
+//			etatFilter[i] = new SelectItem(employeurs.get(i - 1).getAbreviation(),
+//					employeurs.get(i - 1).getAbreviation());
+//		}
+//		// etatFilter[1] = new
+//		// SelectItem(groupes.get(0).getLibelle(),groupes.get(0).getLibelle());
+//		// etatFilter[2] = new
+//		// SelectItem(groupes.get(1).getLibelle(),groupes.get(1).getLibelle());
+//		// etatFilter[3] = new
+//		// SelectItem(groupes.get(2).getLibelle(),groupes.get(2).getLibelle());
+//
+//		return etatFilter;
+//	}
+
+	public void setEtatFilter(SelectItem[] etatFilter) {
+		RechercheDesClientsAcquereursBean.etatFilter = etatFilter;
+	}
+	
+	
+	public SelectItem[] getEtatFilterAssureur() {
+
+		etatFilterAssureur = new SelectItem[assureurs.size() + 1];
+		etatFilterAssureur[0] = new SelectItem("", "");
+		for (int i = 1; i <= assureurs.size(); i++) {
+			etatFilterAssureur[i] = new SelectItem(assureurs.get(i - 1).getAbreviation(),
+					assureurs.get(i - 1).getAbreviation());
+		}
+		// etatFilter[1] = new
+		// SelectItem(groupes.get(0).getLibelle(),groupes.get(0).getLibelle());
+		// etatFilter[2] = new
+		// SelectItem(groupes.get(1).getLibelle(),groupes.get(1).getLibelle());
+		// etatFilter[3] = new
+		// SelectItem(groupes.get(2).getLibelle(),groupes.get(2).getLibelle());
+
+		return etatFilterAssureur;
+	}
+
+	public void setEtatFilterAssureur(SelectItem[] etatFilterAssureur) {
+		RechercheDesClientsAcquereursBean.etatFilterAssureur = etatFilterAssureur;
+	}
+
+	public ClientAcquereurService getClientAcquereurService() {
+		return clientAcquereurService;
+	}
+
+	public void setClientAcquereurService(ClientAcquereurService clientAcquereurService) {
+		this.clientAcquereurService = clientAcquereurService;
+	}
+
+	public List<ClientAcquereur> getListClients() {
+		return listClients;
+	}
+
+	public void setListClients(List<ClientAcquereur> listClients) {
+		this.listClients = listClients;
+	}
+
+	public String getCodeC() {
+		return codeC;
+	}
+
+	public void setCodeC(String codeC) {
+		this.codeC = codeC;
+	}
+
+	public String getNomC() {
+		return nomC;
+	}
+
+	public void setNomC(String nomC) {
+		this.nomC = nomC;
+	}
+
+	public ClientAcquereur getClientAcquereurRech() {
+		return clientAcquereurRech;
+	}
+
+	public void setClientAcquereurRech(ClientAcquereur clientAcquereurRech) {
+		this.clientAcquereurRech = clientAcquereurRech;
+	}
+
+	public GroupeService getGroupeService() {
+		return groupeService;
+	}
+
+	public void setGroupeService(GroupeService groupeService) {
+		this.groupeService = groupeService;
+	}
+
+	public Groupe getSelectGroupe() {
+		return selectGroupe;
+	}
+
+	public void setSelectGroupe(Groupe selectGroupe) {
+		this.selectGroupe = selectGroupe;
+	}
+
+	public Employeur getSelectEmployeur() {
+		return selectEmployeur;
+	}
+
+	public void setSelectEmployeur(Employeur selectEmployeur) {
+		this.selectEmployeur = selectEmployeur;
+	}
+
+	public EmployeurService getEmployeurService() {
+		return employeurService;
+	}
+
+	public void setEmployeurService(EmployeurService employeurService) {
+		this.employeurService = employeurService;
+	}
+
+	public List<Groupe> getGroupes() {
+		return groupes;
+	}
+
+	public void setGroupes(List<Groupe> groupes) {
+		this.groupes = groupes;
+	}
+
+	public List<Employeur> getEmployeurs() {
+		return employeurs;
+	}
+
+	public void setEmployeurs(List<Employeur> employeurs) {
+		this.employeurs = employeurs;
+	}
+
+	public AssureurService getAssureurService() {
+		return assureurService;
+	}
+
+	public void setAssureurService(AssureurService assureurService) {
+		this.assureurService = assureurService;
+	}
+
+	public List<Assureur> getAssureurs() {
+		return assureurs;
+	}
+
+	public void setAssureurs(List<Assureur> assureurs) {
+		this.assureurs = assureurs;
+	}
+
+	public Assureur getSelectAssureur() {
+		return selectAssureur;
+	}
+
+	public void setSelectAssureur(Assureur selectAssureur) {
+		this.selectAssureur = selectAssureur;
+	}
+
+	public String getEnContentieux() {
+		return enContentieux;
+	}
+
+	public void setEnContentieux(String enContentieux) {
+		this.enContentieux = enContentieux;
+	}
+
+	public String getEnArrangement() {
+		return enArrangement;
+	}
+
+	public void setEnArrangement(String enArrangement) {
+		this.enArrangement = enArrangement;
+	}
+
+	public Boolean getCessionSalaire() {
+		return cessionSalaire;
+	}
+
+	public void setCessionSalaire(Boolean cessionSalaire) {
+		this.cessionSalaire = cessionSalaire;
+	}
+
+	public Boolean getCessionActive() {
+		return cessionActive;
+	}
+
+	public void setCessionActive(Boolean cessionActive) {
+		this.cessionActive = cessionActive;
+	}
+
+	public Boolean getCessionEchue() {
+		return cessionEchue;
+	}
+
+	public void setCessionEchue(Boolean cessionEchue) {
+		this.cessionEchue = cessionEchue;
+	}
+
+	public String getEtatAmortissement() {
+		return etatAmortissement;
+	}
+
+	public void setEtatAmortissement(String etatAmortissement) {
+		this.etatAmortissement = etatAmortissement;
+	}
+	
+	
+	
+
+}

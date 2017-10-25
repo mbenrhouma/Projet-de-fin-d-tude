@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Localite;
+
+public interface LocaliteDAO  extends AbstractDAO<Localite>{
+	Localite findById(String id);
+}

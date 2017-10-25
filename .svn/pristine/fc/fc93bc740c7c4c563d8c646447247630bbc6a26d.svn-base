@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="utilisateurForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['rechercheClientsacqueruers']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+
+
+				<p:fieldset legend="#{precmsgs['clientAcqueruer.Rechercher']}" id="Impayee_rech" toggleable="true"
+					toggleSpeed="500" >
+					<p:panelGrid style="width: 100%" styleClass="noBorder">
+
+
+						<p:row>
+
+
+
+							<p:column style="width:210px">
+								<h:outputText value="#{precmsgs['impaye.groupe']}:"
+									styleClass="weightBold" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="recherche_groupe">
+								<p:selectOneMenu filter="true"
+								converter="groupeConverter"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.groupe}">
+									<p:ajax event="change"></p:ajax>
+
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems
+										value="#{rechercheDesClientsAcquereursBean.groupes}"
+										var="groupe" itemLabel="#{groupe.code}||#{groupe.libelle}"
+										itemValue="#{groupe}" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{precmsgs['arrangement.impaye.code']}:"
+									styleClass="weightBold" style="width:210px" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rechCont_code_clt" styleClass="inputText"
+									required="false"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.codeAcquereur}"
+								 style="width:210px">
+								 	<p:ajax event="keyup"></p:ajax>
+								
+								</p:inputText>
+							</p:column>
+
+
+
+
+
+
+
+
+						</p:row>
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{precmsgs['clientAcqueruer.cin']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+							<p:column>
+
+
+								<p:inputText id="prix-logement" style="width:212px"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.cin}"
+									label="#{precmsgs['clientAcqueruer.cin']}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+										<p:ajax event="keyup"></p:ajax>
+
+								</p:inputText>
+
+							</p:column>
+							<p:column>
+								<h:outputText value="#{precmsgs['arrangement.impaye.nom']}:"
+									styleClass="weightBold" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rechCont_nom_clt" styleClass="inputText"
+									style="width:210px" required="false" 	onkeyup="this.value=this.value.toUpperCase();"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.nomPrenomFr}"
+									>
+									<p:ajax event="keyup"></p:ajax>
+								
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+
+
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcqueruer.etatAmortissement']}:"
+									styleClass="weightBold" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+
+
+								<p:selectOneRadio style="width:210px"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.etatTableauAmortissemet}">
+									<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.actif']}" itemValue="1" />
+									<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.echu']}" itemValue="2" />
+									<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.tous']}" itemValue="3" />
+									   <p:ajax  event="change"/>
+								</p:selectOneRadio>
+
+							</p:column>
+							<p:column>
+								<h:outputText value="#{precmsgs['clientAcquereur.employeur']}:"
+									styleClass="weightBold" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu filter="true" required="false"
+									 converter="employeurConverter"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.employeur}">
+								<p:ajax event="change"></p:ajax>
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems
+										value="#{rechercheDesClientsAcquereursBean.employeurs}"
+										var="emp" itemLabel="#{emp.nomEmployeurFr}" itemValue="#{emp}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							
+
+
+
+
+						</p:row>
+						<p:row>
+						<p:column style="width:210px">
+								<h:outputText
+									value="#{precmsgs['clientAcqueruer.enContentieux']}:"
+									styleClass="weightBold" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+
+								<center>
+									<p:selectOneRadio style="width:210px"
+										value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.contentieux}">
+										<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.oui']}" itemValue="1" />
+										<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.non']}" itemValue="2" />
+										<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.tous']}" itemValue="3" />
+										<p:ajax event="change"></p:ajax>
+										
+									</p:selectOneRadio>
+								</center>
+							</p:column>
+								<p:column>
+								<h:outputText value="#{precmsgs['clientAcquereur.assurance']}:"
+									styleClass="weightBold" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column id="recherche_assureur">
+								<p:selectOneMenu filter="true" required="false"
+									converter="assureurConverter"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.assureur}">
+										<p:ajax event="change"></p:ajax>
+
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems
+										value="#{rechercheDesClientsAcquereursBean.assureurs}"
+										var="assureur" itemLabel="#{assureur.abreviation}"
+										itemValue="#{assureur}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:210px">
+								<h:outputText
+									value="#{precmsgs['clientAcqueruer.enArrangement']}:"
+									styleClass="weightBold" />
+
+
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+
+								<center>
+									<p:selectOneRadio style="width:210px"
+										value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.arrongement}">
+										<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.oui']}" itemValue="1" />
+										<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.non']}" itemValue="2" />
+										<f:selectItem itemLabel="#{precmsgs['clientAcqueruer.tous']}" itemValue="3" />
+										<p:ajax event="change"></p:ajax>
+									</p:selectOneRadio>
+								</center>
+							</p:column>
+							</p:row>
+						<p:row>
+
+							<p:column style="width:210px">
+								<h:outputText value="#{precmsgs['clientAcqueruer.Cession']}:"
+									styleClass="weightBold" />
+
+
+
+							</p:column>
+							<p:column style="width:210px">
+
+
+
+
+								<p:selectBooleanCheckbox
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.cessionSalaire}">
+									<p:ajax update="CActive CEchue"
+										listener="#{rechercheDesClientsAcquereursBean.updateteCession()}"></p:ajax>
+								</p:selectBooleanCheckbox>
+
+								<h:outputText value="#{precmsgs['clientAcqueruer.Cession']}" />
+
+
+
+							</p:column>
+							<p:column style="width:210px">
+								<p:selectBooleanCheckbox id="CActive"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.cessionActive}"
+									disabled="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.cessionSalaire!=true}">
+									<p:ajax event="change"></p:ajax>
+								</p:selectBooleanCheckbox>
+
+								<h:outputText
+									value="#{precmsgs['clientAcqueruer.Cessionactive']}" />
+
+							</p:column>
+							<p:column style="width:210px">
+								<p:selectBooleanCheckbox id="CEchue"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.cessEchu}"
+									disabled="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.cessionSalaire!=true}">
+									<p:ajax event="change"></p:ajax>
+								</p:selectBooleanCheckbox>
+
+								<h:outputText value="#{precmsgs['clientAcqueruer.Cessionechu']}" />
+
+							</p:column>
+
+						</p:row>
+
+						<p:row>
+
+							<p:column style="width:210px">
+								<h:outputText value="#{clientmsgs['clientAcqueruer.clientarchive']}:"
+									styleClass="weightBold" />
+
+
+
+							</p:column>
+							<p:column style="width:210px">
+
+
+
+
+								<p:selectBooleanCheckbox
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.archive}">
+									<p:ajax update="nV Anc"
+										listener="#{rechercheDesClientsAcquereursBean.updatetearchivage}"></p:ajax>
+								</p:selectBooleanCheckbox>
+
+								<h:outputText value="#{clientmsgs['clientAcqueruer.clientarchive']}" />
+
+
+
+							</p:column>
+							<p:column style="width:210px">
+								<p:selectBooleanCheckbox id="nV"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.archiveNv}"
+									disabled="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.archive!=true}">
+									<p:ajax event="change"></p:ajax>
+								</p:selectBooleanCheckbox>
+
+								<h:outputText
+									value="#{clientmsgs['clientAcqueruer.ancienArchive']}" />
+									</p:column>
+							<p:column style="width:210px">
+
+								<p:selectBooleanCheckbox id="Anc"
+									value="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.archiveAnc}"
+									disabled="#{rechercheDesClientsAcquereursBean.clientAcquereurRecherchPOJO.archive!=true}">
+									<p:ajax event="change"></p:ajax>
+								</p:selectBooleanCheckbox>
+
+								<h:outputText value="#{clientmsgs['clientAcqueruer.archiverecent']}" />
+
+							</p:column>
+
+						</p:row>
+
+
+					</p:panelGrid>
+					<br></br>
+					<br></br>
+					<br></br>
+					<div style="width: 100%; text-align: right">
+						<p:spacer width="5px"/>
+						<p:commandButton id="initRech" styleClass="ui-priority-primary"
+							value="#{generalmsgs['navigation.new']}" ajax="true"
+							process="@this"
+							actionListener="#{rechercheDesClientsAcquereursBean.initialisation}"
+							update="@all" rendered="true">
+							<p:resetInput target="utilisateurForm" />
+							</p:commandButton>
+							
+
+								<p:spacer width="5px" />
+							<p:commandButton id="RechBtn" styleClass="ui-priority-primary"
+							
+								actionListener="#{rechercheDesClientsAcquereursBean.rechercheAV}"
+								value="#{precmsgs['clientAcqueruer.Rechercher']}" ajax="true" update=":utilisateurForm:dta"
+								process="@this"
+								 />
+							
+							<p:spacer width="5px"/>
+
+
+					<p:commandButton value="#{generalmsgs['ajouter']}"
+					
+						action="#{menuController.goToPageClientacquereur}"
+						actionListener="#{clientAcquereurBean.initClient}"
+						
+						styleClass="ui-priority-primary" />
+					<p:spacer width="5px"/>
+							<p:commandButton id="Consulter_doss"
+								styleClass="ui-priority-primary"
+								value="#{clientmsgs['clientAcqueruer.consulter']}"
+								ajax="true"
+								actionListener="#{menuController.goToPageModifClientacquereur}"
+								disabled="#{clientAcquereurBean.selectClientAcquereur==null}"
+								>
+							</p:commandButton>
+								<p:spacer width="5px"/>
+							<p:commandButton id="supp_doss"
+								styleClass="ui-priority-primary"
+								value="#{clientmsgs['clientAcqueruer.supprimer']}"
+								ajax="true"
+								actionListener="#{clientAcquereurBean.supprimerClient}"
+								disabled="#{clientAcquereurBean.selectClientAcquereur==null}"
+							
+								>
+							</p:commandButton>
+							<p:spacer width="5px"/>
+							<h:commandLink actionListener="#{clientAcquereurBean.imprimerlisteClient}">
+							<p:commandButton id="imprimer"
+							
+								styleClass="ui-priority-primary"
+								value="#{clientmsgs['clientAcqueruer.imprimer']}"
+								ajax="true"
+								
+								>
+							</p:commandButton>
+							</h:commandLink>
+						
+					</div>
+
+
+
+
+
+
+
+
+				</p:fieldset>
+
+
+
+
+
+
+				<br />
+
+
+				<br></br>
+				<p:dataTable id="dta"
+					value="#{rechercheDesClientsAcquereursBean.listClients}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.codeAcquereur}"
+					selection="#{clientAcquereurBean.selectClientAcquereur}"
+					selectionMode="single"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					rowsPerPageTemplate="10,20,50,100,200,500"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					scrollable="true">
+
+					<p:ajax event="rowSelect"
+						listener="#{clientAcquereurBean.onSelect}"
+						update=":utilisateurForm:Consulter_doss :utilisateurForm:supp_doss " />
+					<p:column filterBy="#{current.codeAcquereur}"
+						style="text-align:center;width:100px" filterMatchMode="contains"
+						sortBy="#{current.codeAcquereur}">
+						<f:facet name="header">
+							<h:outputText value="#{precmsgs['arrangement.impaye.code']}" />
+						</f:facet>
+						<h:outputText value="#{current.codeAcquereur}" />
+					</p:column>
+					<p:column filterBy="#{current.cin}"
+						style="text-align:center;width:100px" filterMatchMode="contains"
+						sortBy="#{current.cin}">
+						<f:facet name="header">
+							<h:outputText value="#{clientmsgs['clientAcquereur.cin']}" />
+						</f:facet>
+						<h:outputText value="#{current.cin}" />
+					</p:column>
+
+
+
+
+					<p:column  filterStyle="width: 60px !important;"
+						filterBy="#{current.groupe.libelle}"
+						style="text-align:center;width:100px"
+						filterOptions="#{rechercheDesClientsAcquereursBean.etatFilter}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{precmsgs['impaye.groupe']}" />
+						</f:facet>
+
+						<h:outputText
+							value="#{current.groupe.libelle}||#{current.groupe.libelle}" />
+					</p:column>
+					<p:column style="text-align:center;width:100px"
+						filterBy="#{current.dateNaissance}" filterMatchMode="contains"
+						sortBy="#{current.dateNaissance}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcqueruer.dateNaissance']}" />
+						</f:facet>
+						<h:outputText value="#{current.dateNaissance}" />
+					</p:column>
+
+
+
+
+					<p:column style="text-align:center;width:100px"
+						filterBy="#{current.nomPrenomFr}" filterMatchMode="contains"
+						sortBy="#{current.nomPrenomFr}">
+						<f:facet name="header">
+							<h:outputText value="#{precmsgs['arrangement.impaye.nom']}" />
+						</f:facet>
+						<h:outputText value="#{current.nomPrenomFr}" />
+					</p:column>
+
+					<p:column style="text-align:center;width:100px"
+						filterBy="#{current.logement.adresseLoge}"
+						filterMatchMode="contains"
+						sortBy="#{current.logement.adresseLoge}">
+						<f:facet name="header">
+							<h:outputText value="#{precmsgs['arrangement.impaye.adresse']}" />
+						</f:facet>
+						<h:outputText value="#{current.logement.adresseLoge}" />
+					</p:column>
+					<p:column style="text-align:center;width:100px"
+						filterBy="#{current.adresseCorrespondance}"
+						filterMatchMode="contains"
+						sortBy="#{current.adresseCorrespondance}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.adresseCorrespondance']}" />
+						</f:facet>
+						<h:outputText value="#{current.adresseCorrespondance}" />
+					</p:column>
+					<p:column style="text-align:center;width:100px"
+						filterBy="#{current.logement.codePostal}"
+						filterMatchMode="contains" sortBy="#{current.logement.codePostal}">
+						<f:facet name="header">
+							<h:outputText value="#{logementmsgs['logement.codePostal']}" />
+						</f:facet>
+						<h:outputText value="#{current.logement.codePostal}" />
+					</p:column>
+					<p:column style="text-align:center;width:100px"
+						filterBy="#{current.prix}" filterMatchMode="contains"
+						sortBy="#{current.prix}">
+						<f:facet name="header">
+							<h:outputText value="#{clientmsgs['clientAcquereur.prix']}" />
+						</f:facet>
+						<h:outputText value="#{current.prix}" />
+					</p:column>
+					<p:column style="text-align:center;width:100px">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.clientArchive']}" />
+						</f:facet>
+						<h:outputText value="#{precmsgs['clientAcqueruer.non']}"
+							rendered="#{current.datearchivage==null}" />
+						<h:outputText value="#{precmsgs['clientAcqueruer.oui']}"
+							rendered="#{current.datearchivage!=null}" />
+					</p:column>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<p:confirmDialog id="diagRelancer"
+			message="Confirmez vous l'edition des lettres de relances"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="lettreCom" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm">
+
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						update=":utilisateurForm:dta"
+						action="#{suiviPrecontentieuxBean.mettreAjourPrec}"
+						oncomplete="PF('lettreCom').hide();"
+						styleClass="ui-priority-primary" />
+					
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}"
+						update=":utilisateurForm:dta" onclick="PF('lettreCom').hide()"
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

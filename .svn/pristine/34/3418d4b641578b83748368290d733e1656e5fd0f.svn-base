@@ -1,0 +1,143 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.PrecontentieuDAO;
+import com.cynapsys.entities.Arrangement;
+import com.cynapsys.entities.HuissiersNotaires;
+import com.cynapsys.entities.Impayee;
+import com.cynapsys.entities.Precontentieu;
+
+@SuppressWarnings("serial")
+@Repository("precontentieuDAO")
+public class PrecontentieuDAOImpl extends AbstractDAOImpl<Precontentieu>
+		implements PrecontentieuDAO, Serializable {
+
+	public PrecontentieuDAOImpl() {
+		super(Precontentieu.class);
+	}
+
+	@Override
+	public Precontentieu findById(String id) {
+		
+		List<Precontentieu> list=new ArrayList<Precontentieu>();
+		try {
+			Criteria criteria= getSession().createCriteria(Precontentieu.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+	@Override
+	public List<Precontentieu> findAllDta() {
+		try {
+			Criteria criteria = getSession().createCriteria(Precontentieu.class);
+			// clause select
+			criteria.setProjection(Projections
+					.projectionList()
+					.add(Projections.alias(Projections.property("id"),
+							"id"))
+					.add(Projections.alias(Projections.property("dateRelance"),
+							"dateRelance"))
+					.add(Projections.alias(Projections.property("huissiersNotaires"),
+							"huissiersNotaires"))
+					.add(Projections.alias(Projections.property("impayee"),
+							"impayee"))
+					.add(Projections.alias(Projections.property("contentieux"),
+							"contentieux"))
+					.add(Projections.alias(Projections.property("dateHuissierNotaire"),
+							"dateHuissierNotaire"))
+					.add(Projections.alias(Projections.property("dateeffectuation"),
+							"dateeffectuation"))
+					.add(Projections.alias(Projections.property("arrangement"),
+							"arrangement")));
+
+			// Set to result transformer
+			criteria.setResultTransformer(Transformers
+					.aliasToBean(Precontentieu.class));
+			
+			List<Precontentieu> list = criteria.list();
+			
+//			for(Locataire l:list){
+//				if(l.isEtat()){		
+//					locatairesActifs.add(l);
+//				}
+//			}
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<Precontentieu>();
+		}
+	}
+
+	@Override
+	public List<Precontentieu> findByHuissierNotaire(
+			HuissiersNotaires huissiersNotaires) {
+		
+		StringBuilder req = new StringBuilder();
+		req.append("from Precontentieu as p "
+				+ "left join fetch p.impayee as i "
+				+ "left join fetch i.clientAcquereur as c "
+				+ "left join fetch c.groupe "
+				+ "left join fetch p.huissiersNotaires");
+		req.append(" where p.huissiersNotaires.id= ")
+				.append(huissiersNotaires.getId().intValue()
+						);
+		List<Precontentieu> listPrec=this.getHibernateTemplate().find(req.toString());
+			return listPrec;
+	}
+
+	@Override
+	public List<Precontentieu> findByDelai(Date delai) {
+		List<Precontentieu> list=new ArrayList<Precontentieu>();
+		//System.out.println(arrangement.getPrecontentieu().getImpayee().getClientAcquereur().getCodeAcquereur());
+		
+		try {
+			Criteria criteria = getSession().createCriteria(Precontentieu.class);
+
+			
+			if(delai!=null){
+				System.out.println("resultat date");
+				criteria.add(Restrictions.eq("dateeffectuation", delai));
+			}
+			
+
+			
+			
+			
+		
+		
+		
+		
+		
+		
+			 list = criteria.list();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		System.out.println("recherche Precontentieu, taille de la liste : "+list.size());
+		return list;
+}
+
+	
+
+}

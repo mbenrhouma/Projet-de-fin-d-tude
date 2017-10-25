@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Deces;
+
+public interface DecesDAO  extends AbstractDAO<Deces>{
+	Deces findById(String id);
+}

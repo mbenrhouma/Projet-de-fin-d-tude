@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="noteDebitForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true"
+				life="200" />
+			
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem immediate="true">
+						<p:outputLabel value="#{toppanmsgs['header.Partage_des_biens']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel
+							value="#{toppanmsgs['header.Gestion_des_titres_en_copropriete']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel
+							value="Ajout Dossier De partage"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<br />
+				<p:panelGrid id="detailNoteDebit" style="width: 100%"
+					styleClass="noBorder">
+<!--**********************************************************************TYPE CLIENT**************************************************************************  -->
+					<p:row>
+						<p:column>
+						<h:outputText value="Type Client"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							
+							<h:selectOneRadio
+								value="#{noteDebitBean.typeClient}" label="Type Client"  required="true"
+								
+								>
+								<f:selectItem itemValue="1" itemLabel="ACQUEREUR" />
+								<f:selectItem itemValue="2" itemLabel="LOCATAIRE" />
+								
+							<p:ajax  event="change" listener="#{noteDebitBean.recherchepartype}" update="@form"/>
+
+							</h:selectOneRadio>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;">
+
+							<h:outputText
+								value="#{noteDebitarmsgs['noteDebit.typeClient']}:"
+								dir="rtl" styleClass="weightBold" style="  margin-left: 100px;" />
+						</p:column>
+					</p:row>
+		</p:panelGrid>
+					
+<!--**********************************************************************Code Client ACQEREUR**************************************************************  -->
+			<p:panelGrid id="detaiClientAcquereur" style="width: 100%"
+					styleClass="noBorder" rendered="#{noteDebitBean.typeClient==1}">			
+					<p:row >
+						<p:column>
+							<h:outputText
+								 value="#{noteDebitfrmsgs['noteDebit.clientAcquereur.codeAcquereur']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:selectOneMenu id="codeAcquereur" filter="true"
+								filterMatchMode="contains" style="width: 470px"
+								value="#{noteDebitBean.newNoteDebit.clientAcquereur}"
+								required="true" converter="clientAcquereurConverter"
+								label="#{noteDebitfrmsgs['noteDebit.clientAcquereur.codeAcquereur']}/ #{noteDebitarmsgs['noteDebit.clientAcquereur.codeAcquereur']}"
+								rendered="true">
+								<p:ajax event="change" update=":noteDebitForm:note_debit_client_groupe :noteDebitForm:note_debit_client_adress :noteDebitForm:note_debit_client_nom"></p:ajax>
+
+								<f:selectItem noSelectionOption="true"
+									itemLabel="--------------------------------------------------"
+									itemValue="" />
+								<f:selectItems value="#{noteDebitBean.listClientAcquereur}"
+									var="client" itemLabel="#{client.codeAcquereur}"
+									itemValue="#{client}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;">
+
+							<h:outputText
+								 value="#{noteDebitarmsgs['noteDebit.clientAcquereur.codeAcquereur']}:"
+								dir="rtl" styleClass="weightBold" style="  margin-left: 100px;" />
+						</p:column>
+					</p:row>
+<!--************************************************************Groupe*******************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.groupe']}:"
+								styleClass="weightBold" />
+									
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="note_debit_client_groupe" style="width: 480px"
+								value="#{noteDebitBean.newNoteDebit.clientAcquereur.groupe.libelle}"
+								readonly="true"
+								label="#{noteDebitfrmsgs['noteDebit.groupe']}/ #{noteDebitarmsgs['noteDebit.groupe']}"
+								rendered="true">
+							</p:inputText>
+
+						</p:column>
+						
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.groupe']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row >
+					
+<!--***********************************************NOM ACQUEREUR*********************************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.clientAcquereur.nomPrenomFr']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="note_debit_client_nom" style="width: 480px"
+								value="#{noteDebitBean.newNoteDebit.clientAcquereur.adresseCorrespondance}"
+								readonly="true"
+								label="#{noteDebitfrmsgs['noteDebit.clientAcquereur.nomPrenomFr']}/ #{noteDebitarmsgs['noteDebit.clientAcquereur.nomPrenomFr']}"
+								rendered="true">
+							</p:inputText>
+
+						</p:column>
+								
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.clientAcquereur.nomPrenomFr']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					
+<!--********************************************************************ADRESSE ACQUEREUR********************************************************************  -->
+<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="note_debit_client_adress" style="width: 480px"
+								value="#{noteDebitBean.newNoteDebit.clientAcquereur.nomPrenomFr}"
+								readonly="true"
+								label="#{noteDebitfrmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}/ #{noteDebitarmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}"
+								rendered="true">
+							</p:inputText>
+
+						</p:column>
+								
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+				</p:row>
+		</p:panelGrid> 
+		
+			<p:panelGrid id="detaiClientLocataire" style="width: 100%"
+					styleClass="noBorder" rendered="#{noteDebitBean.typeClient==2}">			
+					<p:row >
+						<p:column>
+							<h:outputText
+								 value="#{clientLocatairefrmsgs['codeLocataire.codeLocataire']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:selectOneMenu id="codeAcquereurloc" filter="true"
+								filterMatchMode="contains" style="width: 470px"
+								value="#{noteDebitBean.newNoteDebit.clientLocataire}"
+								required="true" converter="clientLocataireConverter"
+								label="#{clientLocatairefrmsgs['codeLocataire.codeLocataire']}/ #{clientLocatairearmsgs['codeLocataire.codeLocataire']}"
+								rendered="true">
+								<p:ajax event="change" update=":noteDebitForm:note_debit_client_groupeloc :noteDebitForm:note_debit_client_adressloc :noteDebitForm:note_debit_client_nomloc"></p:ajax>
+
+								<f:selectItem noSelectionOption="true"
+									itemLabel="--------------------------------------------------"
+									itemValue="" />
+								<f:selectItems value="#{noteDebitBean.listClientLocataire}"
+									var="client" itemLabel="#{client.codeLocataire}"
+									itemValue="#{client}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;">
+
+							<h:outputText
+								 value="#{clientLocatairearmsgs['codeLocataire.codeLocataire']}:"
+								dir="rtl" styleClass="weightBold" style="  margin-left: 100px;" />
+						</p:column>
+					</p:row>
+<!--************************************************************Groupe*******************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.groupe']}:"
+								styleClass="weightBold" />
+									
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="note_debit_client_groupeloc" style="width: 480px"
+								value="#{noteDebitBean.newNoteDebit.clientLocataire.groupe.libelle}"
+								readonly="true"
+								label="#{noteDebitfrmsgs['noteDebit.groupe']}/ #{noteDebitarmsgs['noteDebit.groupe']}"
+								rendered="true">
+							</p:inputText>
+
+						</p:column>
+						
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.groupe']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row >
+					
+<!--***********************************************NOM ACQUEREUR*********************************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.clientAcquereur.nomPrenomFr']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="note_debit_client_nomloc" style="width: 480px"
+								value="#{noteDebitBean.newNoteDebit.clientLocataire.adresseCorrespondance}"
+								readonly="true"
+								label="#{noteDebitfrmsgs['noteDebit.clientAcquereur.nomPrenomFr']}/ #{noteDebitarmsgs['noteDebit.clientAcquereur.nomPrenomFr']}"
+								rendered="true">
+							</p:inputText>
+
+						</p:column>
+								
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.clientAcquereur.nomPrenomFr']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					
+<!--********************************************************************ADRESSE ACQUEREUR********************************************************************  -->
+<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="note_debit_client_adressloc" style="width: 480px"
+								value="#{noteDebitBean.newNoteDebit.clientLocataire.nomPrenomFr}"
+								readonly="true"
+								label="#{noteDebitfrmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}/ #{noteDebitarmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}"
+								rendered="true">
+							</p:inputText>
+
+						</p:column>
+								
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+				</p:row>
+		</p:panelGrid>
+		<p:panelGrid id="detaiNotetous" style="width: 100%"
+					styleClass="noBorder"> 
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+<!--*****************************************************************TYPE FRAIS*******************************************************************  -->				
+				<p:row>
+						<p:column>
+							<h:outputText
+								 value="#{noteDebitfrmsgs['noteDebit.typeFrais']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:selectOneMenu id="typeFrais" filter="true"
+								filterMatchMode="contains" style="width: 470px"
+								value="#{noteDebitBean.newNoteDebit.typeFrais}"
+								required="true" converter="typeFraisConverter"
+								label="#{noteDebitfrmsgs['noteDebit.typeFrais']}/ #{noteDebitarmsgs['noteDebit.typeFrais']}"
+								rendered="true">
+
+								<f:selectItem noSelectionOption="true"
+									itemLabel="--------------------------------------------------"
+									itemValue="" />
+								<f:selectItems value="#{noteDebitBean.listTypeFrais}"
+									var="typeFrais" itemLabel="#{typeFrais.libelleFr}"
+									itemValue="#{typeFrais}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;">
+
+							<h:outputText
+								 value="#{noteDebitarmsgs['noteDebit.typeFrais']}:"
+								dir="rtl" styleClass="weightBold" style="  margin-left: 100px;" />
+						</p:column>
+					</p:row>
+<!--*********************************************************MONTANT****************************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.montant']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<pe:inputNumber id="note_debit_montant"
+								value="#{noteDebitBean.newNoteDebit.montant}"
+								label="#{noteDebitfrmsgs['noteDebit.montant']}/ #{noteDebitarmsgs['noteDebit.montant']}"
+								minValue="0.000">
+									<p:ajax event="blur" ></p:ajax>
+
+							</pe:inputNumber>
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.montant']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+<!--*******************************************************DATE DEBIT***************************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{noteDebitfrmsgs['noteDebit.datedebit']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:calendar id="note_debit_date_debit" styleClass="calendarClass"
+								showOn="button" value="#{noteDebitBean.newNoteDebit.dateDebit}"
+								pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+								label="#{noteDebitfrmsgs['noteDebit.datedebit']}/ #{noteDebitarmsgs['noteDebit.datedebit']}"
+								style="width: 80px !important;" />
+
+
+
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText value="#{noteDebitarmsgs['noteDebit.datedebit']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+				<br />
+				<!--***********************************************COMMAND BUTTON********************************************************-->
+				
+			
+				<div style="width: 100%; text-align: right">
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						oncomplete="if(!args.validationFailed){PF('updConfirmation').show()};"
+						>
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						actionListener="#{noteDebitBean.createNoteDebit}" update="@form" 
+						process="@this" >
+
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="decline"
+						value="#{noteDebitfrmsgs['noteDebit.consulter']}"
+						 styleClass="ui-priority-primary"
+						process="@this"
+						actionListener="#{noteDebitBean.createNoteDebit}" update="@form" 
+						action="#{menuController.goToPageGestionNoteDebit}"/>
+				</div>
+			</p:panel>
+		</h:form>
+<!-- **********************************FIN FORMULAIRE ********DEBUT DIALOGUE AJOUT******************************************************** -->
+		<p:confirmDialog id="diagUpd" appendTo="@(body)"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="updConfirmation" showEffect="explode" hideEffect="bounce">
+			<div align="right">
+				<h:form id="diagForm1">
+					<p:commandButton id="confirm_save"
+						value="#{generalmsgs['popup.confirmer']}"
+						oncomplete="PF('updConfirmation').hide();"
+						actionListener="#{noteDebitBean.saveNoteDebit}"
+						
+						styleClass="ui-priority-primary"   />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="updConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

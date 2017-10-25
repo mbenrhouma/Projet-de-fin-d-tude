@@ -1,0 +1,175 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@SequenceGenerator(name="SEQ_DECES",sequenceName="S_DECES")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Deces.findAll", query = "SELECT d FROM Deces d"),
+    @NamedQuery(name = "Deces.findByCodeDeces", query = "SELECT d FROM Deces d WHERE d.codeDeces = :codeDeces"),
+    @NamedQuery(name = "Deces.findByDatedeces", query = "SELECT d FROM Deces d WHERE d.datedeces = :datedeces"),
+    @NamedQuery(name = "Deces.findByCapitaleassure", query = "SELECT d FROM Deces d WHERE d.capitaleassure = :capitaleassure"),
+    @NamedQuery(name = "Deces.findByCapitalerembourse", query = "SELECT d FROM Deces d WHERE d.capitalerembourse = :capitalerembourse"),
+    @NamedQuery(name = "Deces.findByDateRemboursement", query = "SELECT d FROM Deces d WHERE d.dateRemboursement = :dateRemboursement")})
+public class Deces implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_DECES")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CODE_DECES", nullable = false)
+    private Integer codeDeces;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datedeces;
+    private BigInteger capitaleassure;
+    private BigInteger capitalerembourse;
+    @Column(name = "DATE_REMBOURSEMENT")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateRemboursement;
+    @JoinColumn(name = "CODE_ACQUEREUR", referencedColumnName = "CODE_ACQUEREUR", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private ClientAcquereur clientAcquereur;
+    @OneToMany(mappedBy = "deces", fetch = FetchType.LAZY)
+    private List<ClientAcquereur> clientAcquereurList;
+    @OneToMany(mappedBy = "deces1", fetch = FetchType.LAZY)
+    private List<ClientAcquereur> clientAcquereurList1;
+
+    public Deces() {
+    }
+
+    public Deces(Integer codeDeces) {
+        this.codeDeces = codeDeces;
+    }
+
+    public Deces(Integer codeDeces, Date datedeces) {
+        this.codeDeces = codeDeces;
+        this.datedeces = datedeces;
+    }
+
+    public Integer getCodeDeces() {
+        return codeDeces;
+    }
+
+    public void setCodeDeces(Integer codeDeces) {
+        this.codeDeces = codeDeces;
+    }
+
+    public Date getDatedeces() {
+        return datedeces;
+    }
+
+    public void setDatedeces(Date datedeces) {
+        this.datedeces = datedeces;
+    }
+
+    public BigInteger getCapitaleassure() {
+        return capitaleassure;
+    }
+
+    public void setCapitaleassure(BigInteger capitaleassure) {
+        this.capitaleassure = capitaleassure;
+    }
+
+    public BigInteger getCapitalerembourse() {
+        return capitalerembourse;
+    }
+
+    public void setCapitalerembourse(BigInteger capitalerembourse) {
+        this.capitalerembourse = capitalerembourse;
+    }
+
+    public Date getDateRemboursement() {
+        return dateRemboursement;
+    }
+
+    public void setDateRemboursement(Date dateRemboursement) {
+        this.dateRemboursement = dateRemboursement;
+    }
+
+    public ClientAcquereur getClientAcquereur() {
+        return clientAcquereur;
+    }
+
+    public void setClientAcquereur(ClientAcquereur clientAcquereur) {
+        this.clientAcquereur = clientAcquereur;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList() {
+        return clientAcquereurList;
+    }
+
+    public void setClientAcquereurList(List<ClientAcquereur> clientAcquereurList) {
+        this.clientAcquereurList = clientAcquereurList;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList1() {
+        return clientAcquereurList1;
+    }
+
+    public void setClientAcquereurList1(List<ClientAcquereur> clientAcquereurList1) {
+        this.clientAcquereurList1 = clientAcquereurList1;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codeDeces != null ? codeDeces.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Deces)) {
+            return false;
+        }
+        Deces other = (Deces) object;
+        if ((this.codeDeces == null && other.codeDeces != null) || (this.codeDeces != null && !this.codeDeces.equals(other.codeDeces))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.Deces[ codeDeces=" + codeDeces + " ]";
+    }
+    
+}

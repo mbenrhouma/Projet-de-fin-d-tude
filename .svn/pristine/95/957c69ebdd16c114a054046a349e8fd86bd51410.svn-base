@@ -1,0 +1,8 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.DetailMensualite;
+
+public interface DetailMensualiteDAO extends AbstractDAO<DetailMensualite>{
+	
+	DetailMensualite findById(String id);
+}

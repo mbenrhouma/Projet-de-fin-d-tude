@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ta" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8bb4b42e-af9a-480c-8574-265fe3fec383">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\UC057\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="acquereur" class="java.lang.String"/>
+	<field name="avance" class="java.lang.String"/>
+	<field name="duree" class="java.lang.String"/>
+	<field name="typeLog" class="java.lang.String"/>
+	<field name="groupe" class="java.lang.String"/>
+	<field name="prix" class="java.lang.String"/>
+	<field name="localite" class="java.lang.String"/>
+	<field name="lotissement" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="ordre" class="java.lang.String"/>
+	<field name="cite" class="java.lang.String"/>
+	<field name="numLog" class="java.lang.String"/>
+	<field name="listM" class="java.util.List"/>
+	<field name="tauxList" class="java.util.List"/>
+	<title>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c6d07036-0762-4513-bd0b-155ffa8ad4ed" x="270" y="0" width="265" height="44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true" isItalic="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[TABLEAU D'AMORTISSEMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f75df17-36cb-411d-b4c0-e65ac833b69f" x="5" y="0" width="244" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[SOCIETE NATIONALE IMMOBILIERE DE TUNISIE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="25f931ac-cf6c-4e19-8b2d-938ca0aeba3d" key="" mode="Transparent" x="5" y="13" width="188" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[El Manar II - 2092 Tunis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="23dfff4e-db2f-41a2-b6a8-bfd9428824a4" mode="Transparent" x="8" y="57" width="133" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[NOM DE L'ACQUEREURU:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b6072bb8-192e-4318-8a5d-06e2d9d66b4b" mode="Transparent" x="315" y="71" width="55" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[LOCALITE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2f8d182f-cff2-49be-afb7-ccbc52b511d4" mode="Transparent" x="8" y="99" width="32" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PRIX:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="719f71e2-0bcb-472a-9cce-843b7a69c7a8" mode="Transparent" x="505" y="71" width="81" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[LOTISSEMENT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2e97bd4f-c7cf-4fdc-b8af-2475d2212bd2" mode="Transparent" x="172" y="99" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[AVANCE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="860fc154-8ac6-4486-a835-14874d6aa303" mode="Transparent" x="315" y="99" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DUREE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b400a17-10cf-45c6-b0ae-108f9e7cce61" x="8" y="71" width="53" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GROUPE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f0eda565-77f8-457b-a571-f282a70656ee" mode="Transparent" x="315" y="85" width="113" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TYPE DE LOGEMENT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="96174713-0829-4391-8cdb-0e385fbc008f" mode="Transparent" x="8" y="85" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CITE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0e7621c2-4bf1-403f-8dff-64fbca5fe098" mode="Transparent" x="315" y="57" width="46" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CODE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da8f8e87-ffcb-4617-8380-d0138ef42bd5" x="172" y="85" width="46" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORDRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4d2b091e-5fdb-4696-9189-03497a1abbbb" x="505" y="85" width="46" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Log:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3d260e6c-e7c4-462b-bd7b-6d354629f254" x="218" y="99" width="97" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{avance}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b0d3620b-d417-4666-b87e-f83886f8fe14" x="361" y="99" width="95" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{duree}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3fe78e69-e629-446e-853c-87b75c2119a8" x="428" y="85" width="77" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{typeLog}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="53583663-6458-4121-b78b-61ddc6b68907" x="61" y="71" width="254" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{groupe}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f24079cb-6b8d-4224-b99e-029c1aa772c3" x="40" y="99" width="132" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{prix}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ed00f351-601c-4d6a-8b3a-ebf35cdf8af6" x="370" y="71" width="135" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{localite}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="423e99dc-845a-4265-9b27-76c30590bf70" x="586" y="71" width="102" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lotissement}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9e4db833-1980-4199-ade8-4abb650df41d" x="361" y="57" width="116" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fd6078c7-50fc-4e5d-8f5b-a3afde70ff52" x="54" y="85" width="118" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cite}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="43e3b1f1-f70d-42dd-be00-aa54b55230f5" x="218" y="85" width="97" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ordre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="69b14698-264d-4058-9473-23afbf59ba09" x="551" y="85" width="137" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{numLog}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="25f0e6e7-7884-4655-a94b-a4ce5bfc4211" x="726" y="57" width="54" height="59"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{tauxList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ta_sub2.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="801482cd-fd78-4811-b57b-060fd57d084e" x="141" y="57" width="174" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{acquereur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="624a2430-c504-4b19-88a8-81a5fea46b38" mode="Transparent" x="596" y="0" width="202" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[الشركة الوطنية العقارية للبلاد التونسية]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cdb0ee28-ba3b-4cd6-86fd-9f9990d2dc5d" mode="Transparent" x="596" y="14" width="202" height="14" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[المنار 2 ،2092 تونس]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="58" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="046f951a-185d-4ceb-a351-7ca1e592b545" x="0" y="0" width="802" height="58"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listM})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ta_sub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34">
+			<textField>
+				<reportElement uuid="325c3dd5-a26c-4bbc-a66a-de70297431c3" x="336" y="13" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" sur"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="1dd1cc8b-20be-4326-9342-c943202c36d5" x="416" y="13" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

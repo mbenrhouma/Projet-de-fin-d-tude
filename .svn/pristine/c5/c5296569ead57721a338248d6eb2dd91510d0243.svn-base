@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="noteDebitForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true"
+				life="200" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem immediate="true">
+						<p:outputLabel value="#{toppanmsgs['header.recette']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel
+							value="#{toppanmsgs['header.param.gestionNoteDebit']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<br />
+				<!-- *************************************************Recherche MultiCritaires**************************************************************************************************  -->
+				<p:fieldset toggleable="true" id="recherche"
+					legend="#{noteDebitmsgs['noteDebit.recherche']}:" >
+					<p:panelGrid id="panelRecherche" styleClass="noBorder"
+						style="width: 100%">
+
+
+
+						<!-- **************************************DATE DEBIT*******************************************  -->
+						<p:row>
+							<p:column>
+								<p:outputLabel id="dateDebit"
+									value="#{noteDebitmsgs['noteDebit.datedebit']}"
+									styleClass="weightBoldAr" />
+									<p:outputLabel  value="(#{noteDebitmsgs['noteDebit.DateDU']}):" styleClass="weightBoldAr" />
+							</p:column>
+
+							<p:column>
+								<center>
+									
+									<p:calendar id="popupCal"   lang="#{languageBean.locale}"
+										showOn="button" value="#{noteDebitBean.dateDebitRechercheDe}"
+										label="Date Recherche DE" pattern="dd/MM/yyyy" 
+										navigator="true" yearRange="1900:2100"
+										style="width:210px" 
+										maxdate="#{noteDebitBean.dateDebitRechercheA}"
+										required="#{noteDebitBean.dateDebitRechercheA!=null}">
+										<p:ajax update="datepartageA" event="dateSelect"></p:ajax>
+									</p:calendar>
+								</center>
+							</p:column>
+
+							<p:column>
+								<center>
+									<p:outputLabel id="au" value="#{noteDebitmsgs['noteDebit.DateAu']}:" lang="#{languageBean.locale}"  styleClass="weightBoldAr"/>
+									<p:spacer width="12px" />
+									<p:calendar id="datepartageA" style="width:210px" 
+										showOn="button" value="#{noteDebitBean.dateDebitRechercheA}"
+										mindate="#{noteDebitBean.dateDebitRechercheDe}"
+										pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+										label="Date de Partage A"
+										
+										required="#{noteDebitBean.dateDebitRechercheDe!=null}">
+										<p:ajax event="dateSelect" update="popupCal"></p:ajax>
+									</p:calendar>
+								</center>
+							</p:column>
+						
+						</p:row>
+
+						<!-- *************************************Montant**************************************************************  -->
+						<p:row>
+							<p:column>
+								<p:outputLabel 
+									value="#{noteDebitmsgs['noteDebit.montant']}"
+									styleClass="weightBoldAr" />
+									<p:outputLabel id="du" value="(#{noteDebitmsgs['noteDebit.montant.entre']}):" styleClass="weightBoldAr" />
+							</p:column>
+
+							<p:column>
+								<center>
+									
+
+
+
+									<p:inputText id="montan-DE"  	style="width:220px"
+										value="#{noteDebitBean.montantRechercheDE}" label="Prix"
+										required="#{noteDebitBean.montantRechercheDE!=null}"
+										 maxValue="#{noteDebitBean.montantRechercheA}"
+										 onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;">
+									
+									</p:inputText>
+
+								</center>
+						</p:column>
+
+
+								<p:column>
+									<center>
+										<p:outputLabel  value="#{noteDebitmsgs['noteDebit.montant.Et']}:" styleClass="weightBoldAr" />
+										<p:spacer width="12px" />
+
+
+										<p:inputText id="montan-A"  	style="width:217px"
+											value="#{noteDebitBean.montantRechercheA}" label="Prix"
+											required="#{noteDebitBean.montantRechercheA!=null}"
+											minValue="#{noteDebitBean.montantRechercheDE}"
+											onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;"
+											>
+											
+										</p:inputText>
+									</center>
+								</p:column>
+								<p:column></p:column>
+								
+						</p:row>
+						<!-- **************************************GROUPE************************************************************  -->
+							<p:row>
+						<p:column>
+							<h:outputText
+								 value="#{noteDebitmsgs['noteDebit.groupe']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column >
+						
+							<center>
+							<p:selectOneMenu id="groupe" filter="true"
+								filterMatchMode="contains" style="width:205px"
+								value="#{noteDebitBean.groupeRecherche}"
+								required="true" converter="groupeConverter"
+								label="#{noteDebitmsgs['noteDebit.groupe']}"
+								rendered="true">
+
+								<f:selectItem noSelectionOption="true"
+									itemLabel="--------------------------------------------------"
+									itemValue="" />
+								<f:selectItems value="#{noteDebitBean.listGrouperecherche}"
+									var="groupe" itemLabel="#{groupe.libelle}"
+									itemValue="#{groupe}" />
+							</p:selectOneMenu>
+							</center>
+					</p:column>
+					</p:row>
+
+
+
+
+					</p:panelGrid>
+					<br />
+					<div style="width: 100%; text-align: right">
+					<p:commandButton styleClass="ui-priority-primary"
+						id="rechercheButton"
+						actionListener="#{noteDebitBean.rechercheAvance}"
+						value="#{generalmsgs['navigation.recherche']}" update="dta"
+						ajax="true" process="@this" />
+					<p:spacer width="5px" />
+					<p:commandButton id="initButton" styleClass="ui-priority-primary"
+						update="@form" ajax="true" process="@this"
+						value="#{generalmsgs['navigation.new']}"
+						actionListener="#{noteDebitBean.initRecherche}">
+						<p:resetInput target="noteDebitForm" />
+					</p:commandButton>
+					</div>
+
+				</p:fieldset>
+
+				<!--******************************************************Fin Recherche MultiCritaires**************************************************************************************************  -->
+
+				<br />
+				<br />
+
+				<div style="width: 100%; text-align: right">
+					
+					<p:commandButton id="ajoutDoss" styleClass="ui-priority-primary"
+						 value="#{noteDebitmsgs['noteDebit.enregister']}" ajax="true" process="@this"
+						actionListener="#{noteDebitBean.createNoteDebit}"
+						action="#{menuController.goToPageAjouterDebitNotaire}">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="Consulter_doss"
+						styleClass="ui-priority-primary" 	 value="#{noteDebitmsgs['noteDebit.Consultermodif']}" process="@this"
+						actionListener="#{menuController.goToPageModifierNoteDebit}"
+						
+						disabled="#{noteDebitBean.selectNoteDebit==null}">
+					</p:commandButton>
+
+
+
+					<p:spacer width="5px" />
+					<p:commandButton id="delteBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.delete']}" ajax="true"
+						onstart="PF('suppConfirmation').show()"
+						disabled="#{noteDebitBean.selectNoteDebit==null}">
+					</p:commandButton>
+					<p:spacer width="5px" />
+				</div>
+				<br />
+
+
+
+				<!--***************************************************DATA***********************************************************************  -->
+				<p:dataTable id="dta" value="#{noteDebitBean.listNoteDebit}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}" selection="#{noteDebitBean.selectNoteDebit}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect"
+						listener="#{noteDebitBean.onselectNoteDebit}"
+						update=":noteDebitForm:Consulter_doss :noteDebitForm:delteBtn" />
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="Note_Debit" />
+						</h:commandLink>
+					</f:facet>
+					<f:facet name="header">
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/pdf.png" />
+							<p:dataExporter type="pdf" target="dta" fileName="Note_Debit"
+								encoding="ISO-8859-1" pageOnly="true" />
+						</h:commandLink>
+					</f:facet>
+
+					<!--************************************************CODE CLIENT ACQUEREUR*****************************************  -->
+					<p:column filterBy="#{current.clientAcquereur.codeAcquereur}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.clientAcquereur.codeAcquereur}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{noteDebitmsgs['noteDebit.clientAcquereur.codeAcquereur']}" />
+						</f:facet>
+						<h:outputText value="#{current.clientAcquereur.codeAcquereur}" rendered="#{current.clientAcquereur.codeAcquereur!=null}" />
+						<h:outputText value="#{current.clientLocataire.codeLocataire}" rendered="#{current.clientLocataire.codeLocataire!=null}" />
+					</p:column>
+					<!--************************************************NOM CLIENT ACQUREUR*****************************************  -->
+					<p:column filterBy="#{current.clientAcquereur.nomPrenomFr}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.clientAcquereur.nomPrenomFr}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{noteDebitmsgs['noteDebit.clientAcquereur.nomPrenomFr']}" />
+						</f:facet>
+						<h:outputText value="#{current.clientAcquereur.nomPrenomFr}"  rendered="#{current.clientAcquereur.codeAcquereur!=null}"/>
+						<h:outputText value="#{current.clientLocataire.nomPrenomFr}"  rendered="#{current.clientLocataire.codeLocataire!=null}"/>
+					</p:column>
+
+					<!--*************************************************ADRESS CLIENT AQUEREUUUR**********************************  -->
+					<p:column
+						filterBy="#{current.clientAcquereur.adresseCorrespondance}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.clientAcquereur.adresseCorrespondance}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{noteDebitmsgs['noteDebit.clientAcquereur.adresseCorrespondance']}" />
+						</f:facet>
+						<h:outputText
+							value="#{current.clientAcquereur.adresseCorrespondance}" rendered="#{current.clientAcquereur.codeAcquereur!=null}"/>
+							
+							
+					</p:column>
+
+					<!--*****************************************************Type Frais******************************************************  -->
+					<p:column filterBy="#{current.typeFrais.libelleFr}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;" sortBy="#{current.typeFrais.libelleFr}">
+						<f:facet name="header">
+							<h:outputText value="#{noteDebitmsgs['noteDebit.typeFrais']}" />
+						</f:facet>
+						<h:outputText value="#{current.typeFrais.libelleFr}" />
+					</p:column>
+					<!--**************************************************MONTANT*********************************************************  -->
+					<p:column filterBy="#{current.montant}" filterMatchMode="contains"
+						filterStyle="width: 40px;" style="text-align:center;"
+						sortBy="#{current.montant}">
+						<f:facet name="header">
+							<h:outputText value="#{noteDebitmsgs['noteDebit.montant']}" />
+						</f:facet>
+						<h:outputText value="#{current.montant}" />
+					</p:column>
+					<!--*************************************************Date Debit********************************************************  -->
+
+					<p:column filterBy="#{current.dateDebit}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;" sortBy="#{current.dateDebit}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{noteDebitmsgs['noteDebit.datedebit']}">
+
+							</h:outputText>
+						</f:facet>
+						<h:outputText value="#{current.dateDebit}">
+							<f:convertDateTime pattern="MM/dd/yyyy" />
+						</h:outputText>
+					</p:column>
+					<!-- ************************************************************************************************************************** -->
+
+
+
+
+				</p:dataTable>
+
+
+
+				<br></br>
+			</p:panel>
+		</h:form>
+		<!--****************************consulter Doss partage  -->
+		<p:dialog widgetVar="dialogConsulter" modal="true" height="600"
+			width="950px" appendTo="@(body)" draggable="true"
+			id="dialogConsulter" header="Dossier De Partage">
+			<h:form id="dossrachFormConsulter" dir="#{languageBean.languageAffich}">
+				<p:panelGrid id="detaildossPartage" style="width: 100%"
+					styleClass="noBorder">
+				</p:panelGrid>
+				<div style="width: 100%; text-align: right">
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						oncomplete="{PF('updConfirmation').show()};"
+						update=":noteDebitForm:dta">
+					</p:commandButton>
+					<p:spacer width="5px" />
+
+					<p:spacer width="5px" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="PF('dialogdoss').hide()" styleClass="ui-priority-primary"
+						process="@this" actionListener="#{noteDebitBean.createNoteDebit}"
+						update="@form" />
+				</div>
+			</h:form>
+		</p:dialog>
+		<!--*************************fin consultation doss partage  -->
+
+		<!--**************************Ajout dossier de partage  -->
+		<p:confirmDialog id="diagSupp"
+			message="#{generalmsgs['popup.confirm.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="suppConfirmation" appendTo="@(body)" showEffect="explode"
+			hideEffect="bounce">
+			<div align="right">
+				<h:form id="diagForm" dir="#{languageBean.languageAffich}">
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						update=":noteDebitForm:dta"
+						oncomplete="PF('suppConfirmation').hide();"
+						actionListener="#{noteDebitBean.deleteNoteDebit}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}" update="@form"
+						onclick="suppConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

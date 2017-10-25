@@ -1,0 +1,210 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.dao.DuplicateKeyException;
+
+import com.cynapsys.entities.CodePostal;
+
+import com.cynapsys.service.CodePostalService;
+import com.cynapsys.utils.Constants;
+import com.cynapsys.utils.JsfUtil;
+
+@ManagedBean(name = "codePostalBean")
+@ViewScoped
+public class CodePostalBean implements Serializable {
+	@ManagedProperty(value = "#{codePostalService}")
+	private CodePostalService codePostalService;
+
+	private static final long serialVersionUID = 1L;
+	private CodePostal newCodePostal;
+	private CodePostal selectCodePostal;
+	private int modif = 0; // Modification 0 : insertion 1;
+	private List<CodePostal> CodePostalFilter;
+	private List<CodePostal> listCodePostal;
+	private boolean enabledBoutonDelete;
+	public HttpSession session;
+	private int ModifCodePostal = 1;
+
+	public CodePostalBean() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		session = (HttpSession) extContext.getSession(false);
+
+	}
+
+	@PostConstruct
+	public void initialisation() {
+
+		newCodePostal = new CodePostal();
+
+		listCodePostal = new ArrayList<CodePostal>();
+		listCodePostal = codePostalService.findAll();
+
+		CodePostalFilter = new ArrayList<CodePostal>();
+
+	}
+
+	public void createCodePostal() {
+		newCodePostal = new CodePostal();
+		ModifCodePostal = 1;
+		selectCodePostal = null;
+		listCodePostal = codePostalService.findAll();
+		modif = 0;
+	}
+
+	public void onselectCodePostal() {
+		newCodePostal = selectCodePostal;
+		ModifCodePostal = 0;
+		modif = 1;
+		listCodePostal = codePostalService.findAll();
+	}
+
+	public void saveCodePostal() {
+		if (ModifCodePostal == 1) {
+			try {
+				codePostalService.save(newCodePostal);
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.codePostal.cree.succes"));
+				else {
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.codePostal.cree.succes"));
+				}
+				createCodePostal();
+			} catch (DuplicateKeyException e) {
+
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.codePostal.error.existe"));
+				else
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+							.getString("parametrage.codePostal.error.existe"));
+
+				newCodePostal.setCode("");
+			}
+		} else if (ModifCodePostal == 0) {
+			codePostalService.update(newCodePostal);
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.codePostal.modifie.succes"));
+			else
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.codePostal.modifie.succes"));
+
+			createCodePostal();
+		}
+
+	}
+
+	public void deleteCodePostal() {
+		try {
+			codePostalService.delete(newCodePostal);
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.codePostal.supprime.succes"));
+			else {
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.codePostal.supprime.succes"));
+			}
+
+		} catch (Exception e) {
+			if (session.getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.codePostal.error.supprimer"));
+			else
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_parametrage_fr)
+						.getString("parametrage.codePostal.error.supprimer"));
+		}
+		createCodePostal();
+	}
+
+	public CodePostalService getCodePostalService() {
+		return codePostalService;
+	}
+
+	public void setCodePostalService(CodePostalService CodePostalService) {
+		this.codePostalService = CodePostalService;
+	}
+
+	public CodePostal getNewCodePostal() {
+		return newCodePostal;
+	}
+
+	public void setNewCodePostal(CodePostal newCodePostal) {
+		this.newCodePostal = newCodePostal;
+	}
+
+	public CodePostal getSelectCodePostal() {
+		return selectCodePostal;
+	}
+
+	public void setSelectCodePostal(CodePostal selectCodePostal) {
+		this.selectCodePostal = selectCodePostal;
+	}
+
+	public int getModif() {
+		return modif;
+	}
+
+	public void setModif(int modif) {
+		this.modif = modif;
+	}
+
+	public List<CodePostal> getCodePostalFilter() {
+		return CodePostalFilter;
+	}
+
+	public void setCodePostalFilter(List<CodePostal> CodePostalFilter) {
+		this.CodePostalFilter = CodePostalFilter;
+	}
+
+	public List<CodePostal> getListCodePostal() {
+		return listCodePostal;
+	}
+
+	public void setListCodePostal(List<CodePostal> listCodePostal) {
+		this.listCodePostal = listCodePostal;
+	}
+
+	public boolean isEnabledBoutonDelete() {
+		return enabledBoutonDelete;
+	}
+
+	public void setEnabledBoutonDelete(boolean enabledBoutonDelete) {
+		this.enabledBoutonDelete = enabledBoutonDelete;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
+	public int getModifCodePostal() {
+		return ModifCodePostal;
+	}
+
+	public void setModifCodePostal(int modifCodePostal) {
+		ModifCodePostal = modifCodePostal;
+	}
+
+}

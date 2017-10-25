@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Mouvement;
+
+public interface MouvementDAO  extends AbstractDAO<Mouvement>{
+	Mouvement findById(String id);
+}

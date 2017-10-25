@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.MouvementDAO;
+import com.cynapsys.entities.Mouvement;
+
+@SuppressWarnings("serial")
+@Repository("mouvementDAO")
+public class MouvementDAOImpl extends AbstractDAOImpl<Mouvement>
+		implements MouvementDAO, Serializable {
+
+	public MouvementDAOImpl() {
+		super(Mouvement.class);
+	}
+
+	@Override
+	public Mouvement findById(String id) {
+		
+		List<Mouvement> list=new ArrayList<Mouvement>();
+		try {
+			Criteria criteria= getSession().createCriteria(Mouvement.class);
+			criteria.add(Restrictions.eq("codeMv", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

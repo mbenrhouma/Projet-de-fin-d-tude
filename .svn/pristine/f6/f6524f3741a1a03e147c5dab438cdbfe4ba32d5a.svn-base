@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.CessionDAO;
+import com.cynapsys.entities.Cession;
+
+@SuppressWarnings("serial")
+@Repository("cessionDAO")
+public class CessionDAOImpl extends AbstractDAOImpl<Cession>
+		implements CessionDAO, Serializable {
+
+	public CessionDAOImpl() {
+		super(Cession.class);
+	}
+
+	@Override
+	public Cession findById(String id) {
+		
+		List<Cession> list=new ArrayList<Cession>();
+		try {
+			Criteria criteria= getSession().createCriteria(Cession.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="groupeForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem immediate="true" process="@this"  escape="false">
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true" process="@this"  >
+						<p:outputLabel value="#{toppanmsgs['groupe']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				
+				
+
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{groupefrmsgs['groupe.code']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:inputText id="groupe_code" style="width: 512px"
+								value="#{groupeBean.newGroupe.code}" required="true"
+								label="#{groupefrmsgs['groupe.code']}:" rendered="true"
+								maxlength="2"
+								disabled="#{groupeBean.selectGroupe!=null}">
+								<f:validateLength minimum="2" />
+							</p:inputText>
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{groupearmsgs['groupe.code']}:" dir="rtl"
+								styleClass="weightBoldAr"  style="  margin-left: 100px;"/>
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{groupefrmsgs['groupe.nomGroupe']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:inputText id="groupe_disignation" style="width: 512px"
+								disabled="#{groupeBean.newGroupe.code=='01' or groupeBean.newGroupe.code=='02'}"
+								cols="80" rows="5" value="#{groupeBean.newGroupe.nom}"
+								required="true" label="#{groupefrmsgs['groupe.nomGroupe']}:"
+								rendered="true" maxlength="254" counter="counter2"
+								counterTemplate="{0} caractères restants." />
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;">
+
+							<h:outputText value="#{groupearmsgs['groupe.nomGroupe']} :"
+								dir="rtl" styleClass="weightBold"  style="  margin-left: 100px;"/>
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{groupefrmsgs['groupe.nature']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+						
+						
+						
+						
+							<p:selectOneMenu style="width: 500px"
+								disabled="#{groupeBean.newGroupe.code=='01' or groupeBean.newGroupe.code=='02'}"
+								value="#{groupeBean.newGroupe.nature}">
+								<f:selectItem
+									itemLabel="#{groupefrmsgs['groupe.nature_administrateur']}"
+									itemValue="A" />
+								<f:selectItem
+									itemLabel="#{groupefrmsgs['groupe.nature_utilisateur']}"
+									itemValue="U" />
+							</p:selectOneMenu>
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column>
+							<h:outputText value="#{groupearmsgs['groupe.nature']} :"
+								dir="rtl" styleClass="weightBold"  style="  margin-left: 100px;"/>
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{groupefrmsgs['groupe.fonctionnalite']}:"
+								styleClass="weightBold" />
+						</p:column>
+						<p:column>
+
+							<p:treeTable value="#{groupeBean.root}" var="document"
+								id="multiSelect" selection="#{groupeBean.selectedNodes}"
+								scrollable="true" scrollHeight="150" selectionMode="checkbox"
+								style="width:520px;">
+								<p:ajax event="select" listener="#{groupeBean.onNodeSelect}" />
+								<p:ajax event="unselect" listener="#{groupeBean.onNodeUnselect}" />
+								<p:column style="width:150px">
+									<h:outputText value="#{document.nomFonctionnalite}" />
+
+								</p:column>
+
+							</p:treeTable>
+
+						</p:column>
+						<p:column>
+		
+
+						</p:column>
+						<p:column >
+							<h:outputText value="#{groupearmsgs['groupe.fonctionnalite']} :"
+								dir="rtl" styleClass="weightBold" style="  margin-left: 100px;"/>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this" actionListener="#{groupeBean.createGroupe}"
+						update="@form">
+						<p:resetInput target="groupeForm" />
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						oncomplete="if(!args.validationFailed){PF('updConfirmation').show()};" />
+					<p:spacer width="5px" />
+					<p:commandButton id="deleteBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.delete']}" ajax="true"
+						onstart="PF('suppConfirmation').show()" update=":groupeForm"
+						process="@this"
+						disabled="#{groupeBean.selectGroupe==null or(groupeBean.newGroupe.code=='01' or groupeBean.newGroupe.code=='02')}" />
+
+				</div>
+
+				<br></br>
+				<p:dataTable id="dta" value="#{groupeBean.groupes}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.code}"
+					selection="#{groupeBean.selectGroupe}" selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					filteredValue="#{groupeBean.filtered}">
+					<p:ajax event="rowSelect" listener="#{groupeBean.onSelectGroupe}"
+						update=":groupeForm:detail, :groupeForm:deleteBtn " />
+					<f:facet name="footer">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="groupe" />
+						</h:commandLink>
+					</f:facet>
+					<p:column filterBy="codeGroupe" filterMatchMode="contains"
+						sortBy="codeGroupe">
+						<f:facet name="header">
+							<h:outputText value="#{groupefrmsgs['groupe.code']}" />
+						</f:facet>
+						<h:outputText value="#{current.code}" />
+					</p:column>
+					<p:column filterBy="nomGroupe" filterMatchMode="contains"
+						sortBy="nomGroupe">
+						<f:facet name="header">
+							<h:outputText value="#{groupefrmsgs['groupe.nomGroupe']}" />
+						</f:facet>
+						<h:outputText value="#{current.nom}" />
+					</p:column>
+					<p:column filterBy="nature" filterMatchMode="contains"
+						sortBy="nature">
+						<f:facet name="header">
+							<h:outputText value="#{groupefrmsgs['groupe.nature']}" />
+						</f:facet>
+						<h:outputText value="#{current.nature}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+		</h:form>
+		<p:confirmDialog id="diagUpd" appendTo="@(body)"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="updConfirmation">
+			<div align="right">
+				<h:form id="diagForm1" dir="#{languageBean.languageAffich}">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update=":groupeForm"
+						oncomplete="PF('updConfirmation').hide();document.getElementById('diagForm1:confirm').disabled=false;"
+						actionListener="#{groupeBean.saveGroupe}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="PF('updConfirmation').hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog id="diagSupp"
+			message="#{generalmsgs['popup.confirm.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="suppConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm" dir="#{languageBean.languageAffich}">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update=":groupeForm"
+						oncomplete="PF('suppConfirmation').hide();document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{groupeBean.deleteGroupe}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update=":groupeForm"
+						onclick="PF('suppConfirmation').hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+	</ui:define>
+</ui:composition>
+</html>

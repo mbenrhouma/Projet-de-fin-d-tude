@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Assurance;
+
+public interface AssuranceService extends AbstractService<Assurance>{
+	Assurance	findById(String id);
+}

@@ -1,0 +1,417 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+
+import org.springframework.dao.DataIntegrityViolationException;
+
+import com.cynapsys.entities.Assurance;
+import com.cynapsys.entities.Assureur;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.service.AssuranceService;
+import com.cynapsys.service.AssureurService;
+import com.cynapsys.service.ClientAcquereurService;
+import com.cynapsys.utils.Constants;
+import com.cynapsys.utils.JsfUtil;
+
+@ManagedBean(name = "assuranceBean")
+@ViewScoped
+public class AssuranceBean extends AbstractBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Assurance newAssurance;
+	private Assurance selectAssurance;
+	private ClientAcquereur selectClientAcquereur;
+	public Integer modifAssurance = 1;
+	private List<Assurance> assurances;
+	private List<Assurance> clientAssurrer;
+	private Assurance findCodeClient;
+	private Assurance findCodeConjoint;
+	private String CodeClientAcquereur = null;
+	private ClientAcquereur newClientAcquereur;
+	private Assureur newAssureur;
+	private Short typeAssurance;
+	private List<Assureur> assureurs;
+	
+	public Boolean conjoint;
+
+	public Boolean getConjoint() {
+		return conjoint;
+	}
+
+	public void setConjoint(Boolean conjoint) {
+		this.conjoint = conjoint;
+	}
+
+	public List<Assurance> getClientAssurrer() {
+		return clientAssurrer;
+	}
+
+	public void setClientAssurrer(List<Assurance> clientAssurrer) {
+		this.clientAssurrer = clientAssurrer;
+	}
+
+	public Assurance getFindCodeClient() {
+		return findCodeClient;
+	}
+
+	public void setFindCodeClient(Assurance findCodeClient) {
+		this.findCodeClient = findCodeClient;
+	}
+
+	public Assurance getFindCodeConjoint() {
+		return findCodeConjoint;
+	}
+
+	public void setFindCodeConjoint(Assurance findCodeConjoint) {
+		this.findCodeConjoint = findCodeConjoint;
+	}
+
+	
+
+	public Assureur getNewAssureur() {
+		return newAssureur;
+	}
+
+	public void setNewAssureur(Assureur newAssureur) {
+		this.newAssureur = newAssureur;
+	}
+
+	public Short getTypeAssurance() {
+		return typeAssurance;
+	}
+
+	public void setTypeAssurance(Short typeAssurance) {
+		this.typeAssurance = typeAssurance;
+	}
+
+	public ClientAcquereur getNewClientAcquereur() {
+		return newClientAcquereur;
+	}
+
+	public void setNewClientAcquereur(ClientAcquereur newClientAcquereur) {
+		this.newClientAcquereur = newClientAcquereur;
+	}
+
+	public String getCodeClientAcquereur() {
+		return CodeClientAcquereur;
+	}
+
+	public void setCodeClientAcquereur(String CodeClientAcquereur) {
+		this.CodeClientAcquereur = CodeClientAcquereur;
+	}
+
+	public Assurance getNewAssurance() {
+		return newAssurance;
+	}
+
+	public Assurance getSelectAssurance() {
+		return selectAssurance;
+	}
+
+	public void setSelectAssurance(Assurance selectAssurance) {
+		this.selectAssurance = selectAssurance;
+	}
+
+	public ClientAcquereur getSelectClientAcquereur() {
+		return selectClientAcquereur;
+	}
+
+	public void setSelectClientAcquereur(ClientAcquereur selectClientAcquereur) {
+		this.selectClientAcquereur = selectClientAcquereur;
+	}
+
+	public Integer getModifAssurance() {
+		return modifAssurance;
+	}
+
+	public void setModifAssurance(Integer modifAssurance) {
+		this.modifAssurance = modifAssurance;
+	}
+
+	public List<Assurance> getAssurances() {
+		return assurances;
+	}
+
+	public void setAssurances(List<Assurance> assurances) {
+		this.assurances = assurances;
+	}
+
+	public void setNewAssurance(Assurance newAssurance) {
+		this.newAssurance = newAssurance;
+	}
+
+	private List<Assurance> filtered;
+
+	public List<Assureur> getAssureurs() {
+		return assureurs;
+	}
+
+	public void setAssureurs(List<Assureur> assureurs) {
+		this.assureurs = assureurs;
+	}
+
+	public AssureurService getAssureurService() {
+		return assureurService;
+	}
+
+	public void setAssureurService(AssureurService assureurService) {
+		this.assureurService = assureurService;
+	}
+
+	@ManagedProperty(value = "#{assuranceService}")
+	private AssuranceService assuranceService;
+
+	@ManagedProperty(value = "#{clientAcquereurService}")
+	private ClientAcquereurService clientAcquereurService;
+
+	@ManagedProperty(value = "#{assureurService}")
+	private AssureurService assureurService;
+
+	public AssuranceBean() {
+
+		
+	}
+
+	@PostConstruct
+	public void initialisation() {
+		newAssurance = new Assurance();
+		newAssurance.setConjoint(0);
+		newClientAcquereur = null;
+		assureurs = assureurService.findAll();
+		assurances = assuranceService.findAllDta();
+		CodeClientAcquereur = null;
+		modifAssurance = null;
+	}
+
+	public void createAssurance() {
+		newAssurance = new Assurance();
+		modifAssurance = null;
+		selectAssurance = null;
+		selectClientAcquereur = null;
+		newClientAcquereur = null;
+		newAssureur = null;
+		CodeClientAcquereur = null;
+		conjoint=false;
+		assurances = assuranceService.findAllDta();
+	}
+
+	public void onSelectAssurance() {
+		newAssurance = selectAssurance;
+		newClientAcquereur = newAssurance.getClientAcquereur();
+		CodeClientAcquereur = newAssurance.getClientAcquereur().getCodeAcquereur() + "";
+		modifAssurance=0;
+		if (newAssurance.getConjoint()==1){
+			conjoint=true;
+		}else{
+			conjoint=false;
+		}
+	
+	}
+
+	public void deleteAssurance() {
+		try {
+			if (assuranceService.delete(newAssurance)) {
+				assurances.remove(newAssurance);
+				if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+							.getString("assurance.supprime.succes"));
+				else {
+					JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+							.getString("assurance.supprime.succes"));
+				}
+				createAssurance();
+
+			} else {
+				if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+							.getString("assurance.error.supprime.ligne"));
+				else {
+					JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+							.getString("assurance.error.supprime.ligne"));
+				}
+			}
+
+		} catch (DataIntegrityViolationException d) {
+			if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+						.getString("assurance.error.supprime.assurance.utilise"));
+			else {
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+						.getString("assurance.error.supprime.assurance.utilise"));
+			}
+		} catch (Exception e) {
+			if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+						.getString("assurance.error.supprime.ligne"));
+			else {
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+						.getString("assurance.error.supprime.ligne"));
+			}
+		}
+	}
+
+	public void onChange() {
+		newClientAcquereur = new ClientAcquereur();
+		newClientAcquereur = clientAcquereurService.findById(CodeClientAcquereur);
+		newAssurance.setClientAcquereur(newClientAcquereur);
+		modifAssurance = 1;
+		if (newClientAcquereur == null){
+			createAssurance();
+			if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr"))
+				JsfUtil.addWarningMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_fr).getString("reclamation.client.null"));
+			else {
+				JsfUtil.addWarningMessage(
+						ResourceBundle.getBundle(Constants.bundle_reclamation_ar).getString("reclamation.client.null"));
+			}
+		}
+	}
+
+//	public void onchageTypeAssurance() {
+//		
+//		if (newAssurance.getTypeAssurance() == 0) {
+//			afficheMontant1 = false;
+//			afficheMontant2 = true;
+//			type = "Groupe";
+//		}
+//		if (newAssurance.getTypeAssurance() == 1) {
+//			afficheMontant1 = true;
+//			afficheMontant2 = false;
+//			type = "Indeviduelle";
+//			if (session.getAttribute("locale").toString().equals("fr"))
+//				typeAssuranceMontant = ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+//						.getString("assurance.type.idiv");
+//			else {
+//				typeAssuranceMontant = ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+//						.getString("assurance.type.idiv");
+//			}
+//		}
+//		if (newAssurance.getTypeAssurance() == 2) {
+//			afficheMontant1 = true;
+//			afficheMontant2 = true;
+//			type = "Mixte";
+//			if (session.getAttribute("locale").toString().equals("fr"))
+//				typeAssuranceMontant = ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+//						.getString("assurance.type.mixte");
+//			else {
+//				typeAssuranceMontant = ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+//						.getString("assurance.type.mixte");
+//			}
+//		}
+//		}
+
+	public void saveAssurance() {
+		clientAssurrer = assuranceService.findAssuranceByCodeClient(newAssurance);
+		if(conjoint==true){
+			newAssurance.setConjoint(1);
+		}else {
+			newAssurance.setConjoint(0);
+		}
+		if(clientAssurrer==null || clientAssurrer.size()==0){
+				
+			assuranceService.save(newAssurance);
+			if (conjoint==false){
+			if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr")) {
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+						.getString("assurance.succe"));
+			} else {
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+						.getString("assurance.succe"));
+			}
+				}else{
+					if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr")) {
+						JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+								.getString("assurance.conjoint.succe"));
+					} else {
+						JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+								.getString("assurance.conjoint.succe"));
+					}
+					
+				}
+		}else if(clientAssurrer!=null && clientAssurrer.size()==1){
+			
+			if(newAssurance.getConjoint()== 1 && conjoint == true){
+				if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr")) {
+		         	JsfUtil.addErrorMessage(
+					ResourceBundle.getBundle(Constants.bundle_assurance_fr).getString("assurance.erreur.existe"));
+		        } else { 
+		        	JsfUtil.addErrorMessage(
+					ResourceBundle.getBundle(Constants.bundle_assurance_ar).getString("assurance.erreur.existe"));
+		        }
+			}else{
+				assuranceService.save(newAssurance);
+				if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr")) {
+		         	JsfUtil.addSuccessMessage(
+					ResourceBundle.getBundle(Constants.bundle_assurance_fr).getString("assurance.succe"));
+		        } else {
+		        	JsfUtil.addSuccessMessage(
+     				ResourceBundle.getBundle(Constants.bundle_assurance_ar).getString("assurance.succe"));
+		               }
+			}
+		} else{
+			if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr")) {
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+						.getString("assurance.erreur.existe"));
+			} else {
+				JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+						.getString("ssurance.erreur.existe"));
+			}
+			if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr")) {
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_fr)
+						.getString("assurance.erreur.conjoint.existe"));
+			} else {
+				JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assurance_ar)
+						.getString("assurance.erreur.conjoint.existe"));
+			}
+			
+		}
+			createAssurance();
+	}
+	
+	public void updateAssurance() {
+			
+				    newAssurance.setMontant(null);
+					assuranceService.update(newAssurance);
+					createAssurance();
+					if (Constants.getCurrentSession().getAttribute("locale").toString().equals("fr"))
+				    	JsfUtil.addSuccessMessage(
+				    			ResourceBundle.getBundle(Constants.bundle_assurance_fr).getString("assurance.modifie.succes"));
+				    else {
+				    	JsfUtil.addSuccessMessage(
+				    			ResourceBundle.getBundle(Constants.bundle_assurance_ar).getString("assurance.modifie.succes"));
+				         }
+		}
+
+			
+public List<Assurance> getFiltered() {
+		return filtered;
+	}
+
+	public void setFiltered(List<Assurance> filtered) {
+		this.filtered = filtered;
+	}
+
+	public AssuranceService getAssuranceService() {
+		return assuranceService;
+	}
+
+	public void setAssuranceService(AssuranceService assuranceService) {
+		this.assuranceService = assuranceService;
+	}
+
+	public ClientAcquereurService getClientAcquereurService() {
+		return clientAcquereurService;
+	}
+
+	public void setClientAcquereurService(ClientAcquereurService clientAcquereurService) {
+		this.clientAcquereurService = clientAcquereurService;
+	}
+
+}

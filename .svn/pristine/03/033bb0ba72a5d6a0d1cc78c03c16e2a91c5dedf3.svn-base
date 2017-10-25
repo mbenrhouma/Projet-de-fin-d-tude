@@ -1,0 +1,32 @@
+noteDebit.id=code
+noteDebit.montant=Montant
+noteDebit.datedebit=Date Debit
+noteDebit.clientAcquereur=Client Acquereur
+noteDebit.typeFrais=Type Frais
+noteDebit.groupe=Groupe
+
+noteDebit.recherche=Recherche
+noteDebit.clientAcquereur.nomPrenomFr=Nom AC
+noteDebit.clientAcquereur.codeAcquereur=Code Client AC
+noteDebit.clientAcquereur.adresseCorrespondance=Adresse
+noteDebit.typeClient=Type Client
+noteDebit.locataire=locataire
+noteDebit.typeClientLocataire=Locataire
+noteDebit.typeClientAcquereur=Acquereur
+
+
+noteDebit.consulter=Consulter les notes Debit
+noteDebit.DateDU=Du
+noteDebit.DateAu=Au
+noteDebit.montant.entre=Entre
+noteDebit.montant.Et=Et
+noteDebit.Consultermodif=Consulter 
+noteDebit.enregister=Enregistrer
+
+
+
+noteDebit.cree.succes=Note Debit  créé avec succès
+noteDebit.modifie.succes=Note Debit modiféé avec sucès
+noteDebit.supprime.succes=Note Debit supprimé avec sucès
+panoteDebit.error.supprimer=Vous ne pouvez pas supprimer ce Note Debit
+noteDebit.error.existe=Note Debit existe 

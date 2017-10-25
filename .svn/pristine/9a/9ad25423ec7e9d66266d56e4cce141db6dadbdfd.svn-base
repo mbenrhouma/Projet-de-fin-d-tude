@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Precontentieu;
+
+public interface PrecontentieuDAO  extends AbstractDAO<Precontentieu>{
+	Precontentieu findById(String id);
+}

@@ -1,0 +1,85 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.CessionDAO;
+import com.cynapsys.entities.Cession;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.service.CessionService;
+@Service("cessionService")
+public class CessionServiceImpl  implements CessionService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private CessionDAO cessionDAO;
+	
+	@Override
+	public Object save(Cession entity) {
+		return cessionDAO.save(entity);
+	}
+	@Override
+	public void flush(Cession entity) {
+		cessionDAO.flush(entity);		
+	}
+	@Override
+	public void update(Cession entity) {
+		cessionDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(Cession entity) throws Exception {
+		return cessionDAO.delete(entity);
+	}
+	@Override
+	public Cession find(Object idClass) {
+		return cessionDAO.find(idClass);
+	}
+	@Override
+	public List<Cession> findAll() {
+		return cessionDAO.findAll();
+	}
+	@Override
+	public List<Cession> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return cessionDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return cessionDAO.getCount(filters);
+	}
+	@Override
+	public List<Cession> findSorted(String sortField, boolean sortOrder) {
+		return cessionDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public Cession findById(String id) {
+		return cessionDAO.findById(id);
+	}
+	
+	@Override
+	public List<Cession> findAllDta(){
+		return cessionDAO.findAllDta();
+	}
+	
+	@Override
+	public List<Cession> findByCriteres(Cession cession){
+		return cessionDAO.findByCriteres(cession);
+	}
+
+	public CessionDAO getCessionDAO() {
+		return cessionDAO;
+	}
+	public void setCessionDAO(CessionDAO cessionDAO) {
+		this.cessionDAO = cessionDAO;
+	}
+	@Override
+	public List<Cession> findCessionByClientAcquereur(ClientAcquereur clientAcquereur) {
+		return this.cessionDAO.findCessionByClientAcquereur(clientAcquereur);
+	}
+
+	
+}

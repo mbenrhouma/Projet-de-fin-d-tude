@@ -1,0 +1,16 @@
+package com.cynapsys.service;
+
+
+
+import java.util.List;
+
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Employeur;
+
+public interface ClientAcquereurService extends AbstractService<ClientAcquereur>{
+	ClientAcquereur	findById(String id);
+	List<ClientAcquereur> findByCriteres(ClientAcquereur clientAcquereur, String enContentieux, String enArrangement, Boolean cSalaire, Boolean cActive, Boolean cEchue, Employeur employeur,String amortissementEtatActif, String amortissementEtatInactif);
+	List<ClientAcquereur> rechercheClientAcquereur(ClientAcquereur clientAcquereur);
+	List<ClientAcquereur> findAllDta();
+	List<ClientAcquereur> findDTA();
+}

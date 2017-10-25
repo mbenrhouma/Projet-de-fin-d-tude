@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="utilisateurForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['utilisateur']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText value="#{utilisateurfrmsgs['utilisateur.email']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width: 200px;">
+							<p:inputText id="utilisateur_email" styleClass="inputText"
+								value="#{utilisateurBean.newUtilisateur.email}" required="true"
+								label="#{utilisateurfrmsgs['utilisateur.email']}" rendered="true"
+								validatorMessage="#{utilisateurfrmsgs['utilisateur.email']} : #{utilisateurfrmsgs['utilisateur.format.email.invalide']}">
+								<f:validateRegex 
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								<p:ajax update="utilisateur_email,utilisateur_code"
+									listener="#{utilisateurBean.changeemail}"></p:ajax>
+							</p:inputText>
+						</p:column>
+						
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;" width="250">
+							<h:outputText value="#{utilisateurarmsgs['utilisateur.email']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="width: 120px;">
+							<h:outputText value="#{utilisateurfrmsgs['utilisateur.login']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width: 200px;">
+							<p:inputText id="utilisateur_code" styleClass="inputText"
+								value="#{utilisateurBean.newUtilisateur.nom}" disabled="true">
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;" width="250">
+							<h:outputText value="#{utilisateurarmsgs['utilisateur.login']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+						<p:column>
+							<h:outputText
+								value="#{utilisateurfrmsgs['utilisateur.nomGroupe']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column id="groupe">
+							<p:selectOneMenu styleClass="selectOneMenu" required="true" style="width: 430px!important;"
+								label="#{utilisateurfrmsgs['utilisateur.nomGroupe']}"
+								value="#{utilisateurBean.selectGroupe}">
+								<f:selectItem noSelectionOption="true" />
+								<f:selectItems value="#{utilisateurBean.groupes}" var="groupe"
+									itemLabel="#{groupe.nom}"
+									itemValue="#{groupe.code}" />
+								<p:ajax update=":utilisateurForm" event="change"
+									listener="#{utilisateurBean.onChangeGroupe}" />
+							</p:selectOneMenu>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right"/>
+						</p:column>
+						<p:column style="text-align: right;">
+							<h:outputText value="#{utilisateurarmsgs['utilisateur.nomGroupe']}:"
+								dir="rtl" styleClass="weightBoldAr" style="margin-left: 250px;"/>
+						</p:column>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this"
+						actionListener="#{utilisateurBean.createUtilisateur}"
+						update="@form :utilisateurForm:detail">
+						<p:resetInput target="utilisateurForm" />
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						update="@form"
+						oncomplete="if(!args.validationFailed){updConfirmation.show()};" />
+					<p:spacer width="5px" />
+					<p:commandButton id="deleteBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.desactiver']}" ajax="true"
+						rendered="#{utilisateurBean.selectUtilisateur!=null and utilisateurBean.newUtilisateur.active}"
+						onstart="suppConfirmation.show()" update=":utilisateurForm"
+						process="@this"
+						disabled="#{utilisateurBean.selectUtilisateur==null}" />
+                       <p:spacer width="5px" />
+					<p:commandButton id="activeeBtn" styleClass="ui-priority-primary"
+						rendered="#{utilisateurBean.selectUtilisateur!=null and !utilisateurBean.newUtilisateur.active}"
+						value="#{generalmsgs['navigation.activer']}" ajax="true"
+						onstart="activeConfirmation.show()" update=":utilisateurForm"
+						process="@this"
+						disabled="#{utilisateurBean.selectUtilisateur==null}" />
+						<p:spacer width="5px" />
+                   <p:commandButton id="editpassword" styleClass="ui-priority-primary"
+                   rendered="#{utilisateurBean.selectUtilisateur!=null}"
+						value="#{generalmsgs['utilisateur.modif.password']}" ajax="true"
+						update="@form"
+						process="@this"
+						onclick="popupMotDePasse.show();"
+						disabled="#{utilisateurBean.selectUtilisateur==null}" />
+					<p:spacer width="5px" />
+				</div>
+
+				<br></br>
+				<p:dataTable id="dta" value="#{utilisateurBean.utilisateurs}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.nom}"
+					selection="#{utilisateurBean.selectUtilisateur}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					filteredValue="#{utilisateurBean.filtered}">
+					<p:ajax event="rowSelect"
+						listener="#{utilisateurBean.onSelectUtilisateur}"
+						update=":utilisateurForm:" />
+
+
+					<p:column filterBy="login" filterMatchMode="contains"
+						sortBy="#{current.nom}">
+						<f:facet name="header">
+							<h:outputText value="#{utilisateurfrmsgs['utilisateur.login']}" />
+						</f:facet>
+						<h:outputText value="#{current.nom}" />
+					</p:column>
+
+					<p:column filterBy="codeGroupe.nomGroupe"
+						sortBy="#{current.groupe.nom}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{utilisateurfrmsgs['utilisateur.nomGroupe']}" />
+						</f:facet>
+						<h:outputText value="#{current.groupe.nom}" />
+
+					</p:column>
+
+					<!-- Boutton Activer -->
+					<p:column filterBy="#{current.active}" filterMatchMode="contains"
+						sortBy="#{current.active}">
+						<f:facet name="header">
+							<h:outputText value="#{utilisateurfrmsgs['utilisateur.active']}" />
+						</f:facet>
+						<p:selectBooleanCheckbox value="#{current.active}" disabled="true" />
+
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<p:confirmDialog id="diagUpd"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="updConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm1">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}"
+						update=":utilisateurForm" oncomplete="updConfirmation.hide();"
+						actionListener="#{utilisateurBean.saveUtilisateur}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="updConfirmation.hide()" update=":utilisateurForm"
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog id="diagSupp"
+			message="#{generalmsgs['popup.confirm.desactive.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="suppConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}"
+						update=":utilisateurForm"
+						oncomplete="suppConfirmation.hide();document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{utilisateurBean.desactiveUtilisateur}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update=":utilisateurForm"
+						onclick="suppConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+		
+		<p:confirmDialog id="activeSupp"
+			message="#{generalmsgs['popup.confirm.active.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="activeConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm2">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}"
+						update=":utilisateurForm"
+						oncomplete="activeConfirmation.hide();document.getElementById('diagForm2:confirm').disabled=false;"
+						actionListener="#{utilisateurBean.activeUtilisateur}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update=":utilisateurForm"
+						onclick="activeConfirmation.hide()"
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+<p:dialog modal="true" id="popupChangerpassword" resizable="false"
+			style="width:950;" width="950" draggable="false" height="200"
+			header="#{generalmsgs['utilisateur.modif.password']}"
+			widgetVar="popupMotDePasse" appendTo="@(body)">
+			<div align="right">
+				<h:form id="popupChangerMotDePasseFrom">
+
+					<p:panel
+						style="min-height:50px;max-height:400px; border:0!important;">
+						<p:panelGrid id="changepassword" style="width: 100%" styleClass="noBorder">
+						<p:row>
+						<p:column >
+							<h:outputLabel for="password"
+								value="#{utilisateurfrmsgs['utilisateur.nouveau_motPasse']} :"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						
+						<p:column>
+							<p:password value="#{utilisateurBean.motPasse}" id="password"
+								style="width:400px; height:22px; " required="true"
+								match="confirm_password" feedback="true" 
+								label="#{utilisateurfrmsgs['utilisateur.nouveau_motPasse']}"
+								 weakLabel="Faible"
+								goodLabel="Moyen" strongLabel="Bon" >
+								<f:validateLength minimum="5" />
+							</p:password>
+						</p:column>
+						
+						<p:column >
+							<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right;">
+							<h:outputLabel for="password"
+								value=": #{utilisateurarmsgs['utilisateur.nouveau_motPasse']}"
+								 styleClass="weightBoldAr" />
+						</p:column>
+                          </p:row>
+                          <p:row>
+                          <p:column>
+							<h:outputLabel for="confirm_password"
+								value="#{utilisateurfrmsgs['utilisateur.confirmer']} :"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:password value="#{utilisateurBean.motPasse}"
+								id="confirm_password" required="true"
+								label="#{utilisateurfrmsgs['utilisateur.confirmer']}"
+								style="width:400px; height:22px;  ">
+								<f:validateLength minimum="5" />
+							</p:password>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column style="text-align: right;">
+							<h:outputLabel for="confirm_password"
+								value="  :#{utilisateurarmsgs['utilisateur.confirmer']} "
+								 styleClass="weightBoldAr" />
+						</p:column>
+                          
+                          </p:row>
+						</p:panelGrid>
+						<p:commandButton id="confirm"
+							value="#{generalmsgs['popup.confirmer']}"
+							update=":utilisateurForm,popupChangerMotDePasseFrom"
+							oncomplete="if(!args.validationFailed){popupMotDePasse.hide();}"
+							actionListener="#{utilisateurBean.updatePassword}"
+							styleClass="ui-priority-primary" />
+							 <p:spacer width="5px" />
+						<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" 
+						onclick="popupChangerpassword.hide()"
+						styleClass="ui-priority-primary" 
+						immediate="true"
+						/>
+					</p:panel>
+				</h:form>
+			</div>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

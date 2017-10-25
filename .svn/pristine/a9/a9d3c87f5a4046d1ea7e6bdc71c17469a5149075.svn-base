@@ -1,0 +1,55 @@
+package com.cynapsys.Views.Converter;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.service.ClientAcquereurService;
+
+@ManagedBean
+@ApplicationScoped
+public class ClientAcquereurConverterBean {
+
+	@ManagedProperty(value = "#{clientAcquereurService}")
+	private ClientAcquereurService clientAcquereurService;
+
+	public ClientAcquereurService getClientAcquereurService() {
+		return clientAcquereurService;
+	}
+
+	public void setClientAcquereurService(ClientAcquereurService clientAcquereurService) {
+		this.clientAcquereurService = clientAcquereurService;
+	}
+
+	@FacesConverter(value = "clientAcquereurConverter")
+	public static class ClientAcquereurConverter implements Converter {
+
+		@Override
+		public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+			ClientAcquereur clientAcquereur = new ClientAcquereur();
+			if (arg2 != null && !String.valueOf(arg2).equals("") && !arg2.contains("------------")) {
+				ClientAcquereurConverterBean clientAcquereurConverterBean = (ClientAcquereurConverterBean) FacesContext.getCurrentInstance()
+						.getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(),
+								"#{clientAcquereurConverterBean}", ClientAcquereurConverterBean.class);
+
+				clientAcquereur = clientAcquereurConverterBean.getClientAcquereurService().findById((arg2));
+
+			}
+
+			return clientAcquereur;
+		}
+
+		@Override
+		public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
+			String id = (arg2 instanceof ClientAcquereur) ? ((ClientAcquereur) arg2).getCodeAcquereur() : null;
+
+			return (id != null) ? String.valueOf(id) : null;
+		}
+
+	}
+}

@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.ClientLocataire;
+
+public interface ClientLocataireService extends AbstractService<ClientLocataire>{
+	ClientLocataire	findById(String id);
+}

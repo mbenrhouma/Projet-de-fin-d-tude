@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="rechercheReclamationForm" dir="#{languageBean.languageAffich}">
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="Accueil"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.assurance']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.recherche.reclamation']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+				</p:breadCrumb>
+				<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+				<!-- ********************************************************* Début formulaire de recherche************************************************************ -->
+
+				<p:fieldset legend="Rechercher" id="reclamation_rech"
+					toggleable="true" toggleSpeed="500" collapsed="false">
+					<p:panelGrid style="width: 100%" styleClass="noBorder">
+
+						<!--******************************champs recherche par  client acquereur ***** -->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.codeclient']} :"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column >
+								<p:inputText  id="code_client"
+								   style="width: 215px;"
+									value="#{reclamationBean.rechCodeClientAcquereur}"
+									label="#{clientmsgs['clientAcquereur.codeclient']}">
+								</p:inputText>
+							</p:column>
+						
+<!--***********************************************Champ de recherche par Type de réclamation ***********************************************-->
+						
+							<p:column style="width: 150px;">
+								<h:outputText value="#{reclamationmsgs['reclamation.type.client']}:"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column style="width: 210px;">
+								<p:selectOneMenu id="typeRec"
+									label="#{reclamationmsgs['reclamation.type.client']}"
+									value="#{reclamationBean.rechTypeReclamation}"
+									converter="typeReclamationConverter">
+									<p:ajax process="@this" update="typeRec" />
+									<f:selectItem noSelectionOption="true"
+										itemLabel="----------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{reclamationBean.typeReclamations}"
+										var="typeRec" itemLabel="#{typeRec.objetReclamation}"
+										itemValue="#{typeRec}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+<!--***********************************************Fin Champ de recherche par Type de réclamation ***********************************************-->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.groupe']} :"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column style="width: 210px;">
+								<p:selectOneMenu id="groupe"
+									label="#{clientmsgs['clientAcquereur.groupe']}}"
+									value="#{reclamationBean.rechGroupe}"
+									converter="groupeConverter">
+									<p:ajax process="@this" update="groupe" />
+									<f:selectItem noSelectionOption="true"
+										itemLabel="----------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{reclamationBean.groupes}" var="groupe"
+										itemLabel="#{groupe.libelle}" itemValue="#{groupe}" />
+								</p:selectOneMenu>
+							</p:column>
+							
+<!--********************************************** champ de recherche par Assureur ************************************************-->
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{assureurmsgs['assureur.abreviation']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column style="width: 210px;">
+								<p:selectOneMenu id="RechercheAssureur"
+									label="#{assureurfrmsgs['assureur.abreviation']}"
+									value="#{reclamationBean.rechAssureur}"
+									effect="fade" converter="assureurConverter">
+									<p:ajax process="@this" update="RechercheAssureur" />
+									<f:selectItem noSelectionOption="true"
+										itemLabel="----------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{reclamationBean.assureurs}"
+										var="assureur" itemLabel="#{assureur.abreviation}"
+										itemValue="#{assureur}" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+<!--**********************************************Fin champ de recherche par Assureur ************************************************-->
+
+<!--**********************************************Debut champ de recherche par Nom Client ************************************************-->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.nomPrenomFr']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nomfrClient" styleClass="inputText"
+									style="width: 215px;"
+									value="#{reclamationBean.rechNomFRClientAcquereur}"
+									label="#{clientmsgs['clientAcquereur.nomPrenomFr']} :">
+								</p:inputText>
+							</p:column>
+
+						</p:row>
+
+						<!--********************************************** champ de recherche par Date ************************************************-->
+						<!--                          recherche date début Reclamation -->
+
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{reclamationmsgs['reclamation.debut.date.reclamation']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="rech_date_deb_recl"
+								    style="width: 210px;"
+									value="#{reclamationBean.rechDateDebRec}"
+									maxdate="#{reclamationBean.rechDateFinRec}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button"
+									label="Date Recherche DE" navigator="true"
+									placeholder="#{reclamationmsgs['reclamation.debut.date.reclamation']}">
+									<p:ajax update="rech_date_fin_recl" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+
+						<!--                         recherche par date fin Reclamation  -->
+							<p:column>
+								<h:outputText
+									value="#{reclamationmsgs['reclamation.fin.date.reclamation']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="rech_date_fin_recl"
+									value="#{reclamationBean.rechDateFinRec}"
+									mindate="#{reclamationBean.rechDateDebRec}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button"
+									label="Date Recherche A" navigator="true"
+									placeholder="#{reclamationmsgs['reclamation.fin.date.reclamation']}">
+									<p:ajax update="rech_date_deb_recl" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+
+						</p:row>
+
+						<!--                          recherche date début Envoie -->
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{reclamationmsgs['reclamation.debut.date.envoie']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="rech_date_deb_env"
+									value="#{reclamationBean.rechDateDebEnv}"
+									maxdate="#{reclamationBean.rechDateFinEnv}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button"
+									label="Date Recherche De" navigator="true"
+									placeholder="#{reclamationmsgs['reclamation.debut.date.envoie']}">
+									<p:ajax update="rech_date_fin_env" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+
+
+						<!--                          recherche par date fin envoie  -->
+							<p:column>
+								<h:outputText
+									value="#{reclamationmsgs['reclamation.fin.date.envoie']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="rech_date_fin_env"
+									value="#{reclamationBean.rechDateFinEnv}"
+									mindate="#{reclamationBean.rechDateDebEnv}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button"
+									label="Date Recherche A" navigator="true"
+									placeholder="#{reclamationmsgs['reclamation.fin.date.envoie']}">
+									<p:ajax update="rech_date_deb_env" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+
+						<!--                          recherche date début Réponse -->
+						<p:row>	
+							<p:column>
+								<h:outputText
+									value="#{reclamationmsgs['reclamation.debut.date.reponse']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="rech_date_deb_rep"
+									value="#{reclamationBean.rechDateDebRep}"
+									maxdate="#{reclamationBean.rechDateFinRep}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button"
+									label="Date Recherche De" navigator="true"
+									placeholder="#{reclamationmsgs['reclamation.debut.date.reponse']}">
+									<p:ajax update="rech_date_fin_rep" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+
+						<!--                    recherche par date fin Réponse  -->
+							<p:column>
+								<h:outputText
+									value="#{reclamationmsgs['reclamation.fin.date.reponse']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="rech_date_fin_rep"
+									value="#{reclamationBean.rechDateFinRep}"
+									mindate="#{reclamationBean.rechDateDebRep}" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button"
+									label="Date Recherche A" navigator="true"
+									placeholder="#{reclamationmsgs['reclamation.fin.date.reponse']}">
+									<p:ajax update="rech_date_deb_rep" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+
+					<div style="width: 100%; text-align: right;">
+
+						<p:commandButton id="initRech" styleClass="ui-priority-primary"
+							value="#{generalmsgs['navigation.new']}" 
+							process="@this"
+							actionListener="#{reclamationBean.InitialRechReclamation()}"
+							update=":rechercheReclamationForm"/>
+                           
+                            <p:spacer width="5px" />
+							
+							<p:commandButton id="RechBtn" styleClass="ui-priority-primary"
+								actionListener="#{reclamationBean.rechercher}"
+								value="#{generalmsgs['navigation.recherche']}" ajax="true"
+								update=":rechercheReclamationForm:dta" 
+								process="@this" />
+								
+							<p:commandButton id="ModifierReclamation" styleClass="ui-priority-primary"
+								actionListener="#{reclamationBean.onRechSelectReclamation}"
+								action="#{menuController.goToPageReclamation()}"
+								oncomplete="#{reclamationBean.InitialRechReclamation()}"
+								value="#{generalmsgs['navigation.modif']}" ajax="true"
+								rendered="#{reclamationBean.newreclamation != null}"
+								process="@this" />
+							
+					</div>
+				</p:fieldset>
+				
+				<p:spacer/>
+
+				<p:dataTable id="dta" value="#{reclamationBean.rechReclamations}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}"
+					selection="#{reclamationBean.newreclamation}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect"
+						listener="#{reclamationBean.onRechSelectReclamation()}"
+						update="@form" />
+
+					<p:column filterBy="#{current.assurance.clientAcquereur.codeAcquereur}"
+						sortBy="#{current.assurance.clientAcquereur.codeAcquereur}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.codeclient']}" />
+						</f:facet>
+						<h:outputText value="#{current.assurance.clientAcquereur.codeAcquereur}" />
+					</p:column>
+
+					<p:column filterBy="#{current.assurance.clientAcquereur.groupe}"
+						sortBy="#{current.clientAcquereur.groupe}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.groupe']}" />
+						</f:facet>
+						<h:outputText value="#{current.assurance.clientAcquereur.groupe.libelle}" />
+					</p:column>
+
+					<p:column filterBy="#{current.assurance.clientAcquereur.nomPrenomFr}"
+						sortBy="#{current.assurance.clientAcquereur.nomPrenomFr}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.nomPrenomFr']}" />
+						</f:facet>
+						<h:outputText value="#{current.assurance.clientAcquereur.nomPrenomFr}" />
+					</p:column>
+
+					<p:column
+						filterBy="#{current.assurance.clientAcquereur.adresseCorrespondance}"
+						sortBy="#{current.assurance.clientAcquereur.adresseCorrespondance}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.adresseCorrespondance']}" />
+						</f:facet>
+						<h:outputText
+							value="#{current.assurance.clientAcquereur.adresseCorrespondance}" />
+					</p:column>
+
+					<p:column filterBy="#{current.typeReclamation.objetReclamation}"
+						sortBy="#{current.typeReclamation.objetReclamation}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{reclamationmsgs['reclamation.type.client']}" />
+						</f:facet>
+						<h:outputText value="#{current.typeReclamation.objetReclamation}" />
+					</p:column>
+
+					<p:column filterBy="#{current.dateReclamation}"
+						sortBy="#{current.dateReclamation}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{reclamationmsgs['reclamation.date.reclamation']}" />
+						</f:facet>
+						<h:outputText value="#{current.dateReclamation}"
+							converter="myDateTimeConverter" />
+					</p:column>
+
+					<p:column filterBy="#{current.dateEnvoie}"
+						sortBy="#{current.dateEnvoie}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{reclamationmsgs['reclamation.date.envoie']}" />
+						</f:facet>
+						<h:outputText value="#{current.dateReclamation}"
+							converter="myDateTimeConverter" />
+					</p:column>
+
+					<p:column filterBy="#{current.dateReponse}"
+						sortBy="#{current.dateReponse}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{reclamationmsgs['reclamation.date.reponse']}" />
+						</f:facet>
+						<h:outputText value="#{current.dateReponse}"
+							converter="myDateTimeConverter" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		  </h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
+

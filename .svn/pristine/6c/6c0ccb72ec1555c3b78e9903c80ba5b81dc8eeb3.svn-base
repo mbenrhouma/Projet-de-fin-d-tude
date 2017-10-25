@@ -1,0 +1,55 @@
+package com.cynapsys.Views.Converter;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+
+import com.cynapsys.entities.ClientLocataire;
+import com.cynapsys.service.ClientLocataireService;
+
+@ManagedBean
+@ApplicationScoped
+public class ClientLocataireConverterBean {
+
+	@ManagedProperty(value = "#{clientLocataireService}")
+	private ClientLocataireService clientLocataireService;
+
+	public ClientLocataireService getClientLocataireService() {
+		return clientLocataireService;
+	}
+
+	public void setClientLocataireService(ClientLocataireService clientLocataireService) {
+		this.clientLocataireService = clientLocataireService;
+	}
+
+	@FacesConverter(value = "clientLocataireConverter")
+	public static class ClientLocataireConverter implements Converter {
+
+		@Override
+		public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+			ClientLocataire clientLocataire = new ClientLocataire();
+			if (arg2 != null && !String.valueOf(arg2).equals("") && !arg2.contains("------------")) {
+				ClientLocataireConverterBean clientLocataireConverterBean = (ClientLocataireConverterBean) FacesContext.getCurrentInstance()
+						.getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(),
+								"#{clientLocataireConverterBean}", ClientLocataireConverterBean.class);
+
+				clientLocataire = clientLocataireConverterBean.getClientLocataireService().findById(Integer.valueOf(arg2));
+
+			}
+
+			return clientLocataire;
+		}
+
+		@Override
+		public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
+			Integer id = (arg2 instanceof ClientLocataire) ? ((ClientLocataire) arg2).getCodeLocataire().intValue() : null;
+
+			return (id != null) ? String.valueOf(id) : null;
+		}
+
+	}
+}

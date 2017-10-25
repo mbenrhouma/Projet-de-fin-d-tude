@@ -1,0 +1,1292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="modifClientForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{clientmsgs['clientAcqueruer.modificationClient']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<p:panel>
+				<f:facet name="header" >
+			
+           <h:outputLabel value="#{clientAcquereurBean.newClientAcquereur.codeAcquereur} - #{clientAcquereurBean.newClientAcquereur.nomPrenomFr}"/>
+       
+         <p:outputPanel style="float:right;">
+         <h:outputLabel   value="#{clientmsgs['clientAcqueruer.codeMaj']} #{clientAcquereurBean.newClientAcquereur.codeMaj}"></h:outputLabel>
+          <p:spacer width="15px;" />
+         </p:outputPanel>
+				</f:facet> 
+				<br/><br/><br/>
+				<p:tabView>
+				 	
+					<p:tab title="#{toppanmsgs['header.identification']}">
+						<p:fieldset  
+							id="identification" toggleable="false" toggleSpeed="500"
+							rendered="true">
+
+							<p:panelGrid id="detail1" style="width: 100%"
+								styleClass="noBorder">
+								<p:row>
+									<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcquereur.codeclient']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputText id="code_clt" style="width:210px" 
+											value="#{clientAcquereurBean.newClientAcquereur.codeAcquereur}"
+											label="#{clientmsgs['clientAcquereur.codeclient']}"
+											rendered="true" readonly="true">
+
+										</p:inputText>
+									</p:column>
+
+
+									<!--***************************************************************CLIENT-GROUPE***********************************************  -->
+									<p:column style="width: 150px;">
+										<h:outputText value="#{clientmsgs['clientAcquereur.groupe']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputText style="width:210px"
+											label="#{clientmsgs['clientAcquereur.groupe']}"
+											value="#{clientAcquereurBean.newClientAcquereur.groupe.libelle}"
+											readonly="true">
+
+										</p:inputText>
+
+									</p:column>
+
+
+								</p:row>
+
+								<!--***********************************************Nom&Prenom**********************************************************  -->
+
+								<p:row>
+									<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcquereur.nomPrenomFr']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputText id="nom_clt" style="width:210px"
+											label="#{clientmsgs['clientAcquereur.nomPrenomFr']}:"
+											value="#{clientAcquereurBean.newClientAcquereur.nomPrenomFr}"
+											>
+
+										</p:inputText>
+									</p:column>
+
+									<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcquereur.nomPrenomFr']} (Arabe):"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputText id="nom_clt_ar" style="width:210px"
+											label="#{clientmsgs['clientAcquereur.nomPrenomFr']}"
+											value="#{clientAcquereurBean.newClientAcquereur.nomPrenomAr}"
+											>
+
+										</p:inputText>
+									</p:column>
+								</p:row>
+								<!--***********************************************CIN**********************************************************  -->
+
+
+								<p:row>
+									<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcquereur.adresseCorrespondance']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputTextarea id="adresse_clt" style="width:210px"
+											rows="3"
+											label="#{clientmsgs['clientAcquereur.adresseCorrespondance']}"
+											value="#{clientAcquereurBean.newClientAcquereur.adresseCorrespondance}"
+											rendered="true">
+
+										</p:inputTextarea>
+									</p:column>
+									<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcquereur.adresseCorrespondanceAr']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputTextarea  style="width:210px"
+											rows="3"
+											value="#{clientAcquereurBean.newClientAcquereur.adresseCorrespondanceAr}"
+											
+											label="#{clientmsgs['clientAcquereur.adresseCorrespondanceAr']}">
+										</p:inputTextarea>
+
+									</p:column>
+								</p:row>
+								<p:row>
+								<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcquereur.anneebudgetaire']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputText
+											value="#{clientAcquereurBean.newClientAcquereur.anneeBudgetaire.annee}"
+											style="width:210px" readonly="true"
+											label="#{clientmsgs['clientAcquereur.anneebudgetaire']}">
+										</p:inputText>
+
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column style="width: 210px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcqueruer.dateNaissance']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+									<p:calendar id="datnais" 
+									yearRange="c-100:c+100" showOn="button"
+									value="#{clientAcquereurBean.newClientAcquereur.dateNaissance}"
+											style="width:170px"
+											label="#{clientmsgs['clientAcqueruer.dateNaissance']}"
+									navigator="true"  pattern="dd/MM/yyyy"
+									
+									 />
+										
+
+									</p:column>
+									<p:column style="width: 150px;">
+										<h:outputText value="#{clientmsgs['clientAcquereur.cin']} :"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputText id="cin_clt" style="width:210px" 
+											readonly="true" label="#{clientmsgs['clientAcquereur.cin']} "
+											value="#{clientAcquereurBean.newClientAcquereur.cin}">
+
+										</p:inputText>
+									</p:column>
+
+
+								</p:row>
+								<!--***********************************************CONJOINT**********************************************************  -->
+
+
+								<!--***********************************************Nom&Prenom CONJOINT**********************************************************  -->
+
+								<p:row>
+									<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAquereur.nomprenomconjoint']}:"
+											styleClass="weightBold" />
+										<h:outputText value="" styleClass="required-star-right" />
+									</p:column>
+
+									<p:column>
+										<p:inputText id="nom_clt_conj" style="width:210px"
+											value="#{clientAcquereurBean.newClientAcquereur.nomPrenomConjointFr}"
+											readonly="true">
+
+										</p:inputText>
+									</p:column>
+
+									<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAquereur.nomprenomconjoint']} (Arabe)"
+											styleClass="weightBold" />
+										<h:outputText value="" styleClass="required-star-right" />
+									</p:column>
+
+
+									<p:column>
+										<p:inputText id="nom_clt_conj_Ar" style="width:210px"
+											readonly="true"
+											value="#{clientAcquereurBean.newClientAcquereur.nomPrenomConjointAr}">
+
+										</p:inputText>
+									</p:column>
+
+
+								</p:row>
+
+
+								<p:row>
+									<p:column style="width: 150px;">
+										<h:outputText value="#{clientmsgs['clientAcquereur.cin']} :"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputText id="cin_clt_conj" style="width:210px"
+											readonly="true"
+											value="#{clientAcquereurBean.newClientAcquereur.cinConjoint}">
+
+										</p:inputText>
+									</p:column>
+								</p:row>
+
+
+								<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.codelogement']}:"
+									styleClass="weightBold" style="width:210px" />
+								
+							</p:column>
+
+							<p:column>
+
+
+
+								<p:inputText label="#{logementmsgs['logement.codelogement']}"
+									readonly="true" style="width:210px"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.codeLogement}"></p:inputText>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.typeLogement']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="type_log" style="width:210px"
+									readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.typeLogement.libelle}">
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.gouvernorat']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+
+							<p:column>
+								<p:inputText id="gouernerat_log" style="width:210px"
+									readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.gouvernorat.libelle}">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.codePostal']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="code_postal_log" style="width:210px"
+									readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.codePostal}">
+								</p:inputText>
+							</p:column>
+
+
+
+						</p:row>
+
+						<p:row>
+
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.localite']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<p:inputText id="localité_log" style="width:210px"
+									readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.localite.libelleFr}">
+								</p:inputText>
+							</p:column>
+
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.numOrdre']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="num_ordre" style="width:210px" required="false"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.numOrdre}"
+									readonly="true">
+
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseLoge']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputTextarea  style="width:210px"
+											rows="3"
+								id="adresse_logement" 
+									readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.adresseLoge}">
+								</p:inputTextarea>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseAr']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+							<p:inputTextarea rows="3" style="width:210px" 
+												readonly="true"
+												value="#{clientAcquereurBean.newClientAcquereur.logement.adresseLogeAr}">
+							</p:inputTextarea>
+							</p:column>
+
+
+
+
+									</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.prixLog']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText id="prix_log" style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.prixLog}"
+									label="#{clientLocatairemsgs['codeLocataire.LoyerMensuel']}"
+									minValue="0.000">
+
+
+								</p:inputText>
+
+							</p:column>
+						<p:column>
+								<h:outputText value="#{logementmsgs['logement.lotissement']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="lotissment" style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.logement.lotissement.libelleFr}">
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.soldeClient']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.solde}">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{clientmsgs['clientAcquereur.avance']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.avance}">
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.prixdefinitif']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.prix}">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.prixProvisoire']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.prixProvisoire}">
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+						
+								
+
+
+
+							</p:panelGrid>
+
+						</p:fieldset>
+
+					</p:tab>
+					
+				
+					<p:tab title="#{clientmsgs['clientAcquereur.cessionsursalaire']}">
+					<p:fieldset
+					
+					id="CESSION" toggleable="false" toggleSpeed="500" rendered="true">
+					
+					<h3><center><h:outputText  
+					style="color: #00A0B0;line-height: 110%;margin-top: 30px;margin-bottom: 0px;font-size: 1.2em;padding-right: 10px;"
+					 value="#{clientmsgs['clientAcqueruer.historiquecession']}"></h:outputText></center></h3>
+					<br/><br/>
+
+					<p:dataTable id="dta"
+						value="#{clientAcquereurBean.listcessionPasConjPojo}"
+						var="current" rows="10" paginator="true"
+						paginatorPosition="bottom" rowKey="#{current.cession.id}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						rowsPerPageTemplate="10,20,50,100,200,500"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+						
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{parammsgs['parametrage.id']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.id}" />
+						</p:column>
+						<p:column width="20" 
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.employeur']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.employeur.codeEmployeur}" />
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.montantTotalCession']}:" />
+							</f:facet>
+							<h:outputText value="#{current.montantTotal}" />
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.mensualite']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.mensualite}" />
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.dateDebut']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.dateDebut}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+							</h:outputText>
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{clientmsgs['clientAcquereur.dateFin']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.dateFin}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+					<br />
+					<br />
+					<p:dataTable id="dta2"
+						value="#{clientAcquereurBean.listcessionConjPojo}" var="current"
+						rows="10" paginator="true" paginatorPosition="bottom"
+						rendered="#{clientAcquereurBean.listcessionConjPojo.size()!=null}"
+						rowKey="#{current.cession.id}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						rowsPerPageTemplate="10,20,50,100,200,500"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+						
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.matriculeEmployéconjoint']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.id}" />
+						</p:column>
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.employeur']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.employeur.codeEmployeur}" />
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.montantTotalCession']}:" />
+							</f:facet>
+							<h:outputText value="#{current.montantTotal}" />
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.mensualite']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.mensualite}" />
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.dateDebut']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.dateDebut}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+							</h:outputText>
+						</p:column>
+						<p:column width="20" 
+							
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{clientmsgs['clientAcquereur.dateFin']}:" />
+							</f:facet>
+							<h:outputText value="#{current.cession.dateFin}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+
+
+				</p:fieldset>
+					</p:tab>
+					<p:tab title="#{clientmsgs['clientacquereur.contrat']}">
+					<p:fieldset 
+					id="contrant" toggleable="false" toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail3" style="width: 100%" styleClass="noBorder">
+
+						<p:row>
+
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.dureeContrat']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="duréé" style="width:210px"
+									value="#{clientAcquereurBean.newClientAcquereur.dureeContrat}"
+									readonly="true"
+									label="#{clientmsgs['clientAcquereur.dureeContrat']}">
+									<p:ajax event="blur" listener="#{clientAcquereurBean.initDate}"
+										update="datedebut datefin"></p:ajax>
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.DateDebut']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+
+
+								<p:inputText id="datedebut"
+									label="#{clientmsgs['clientAcquereur.DateDebut']}"
+									style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.dateDebut}">
+
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{clientmsgs['clientAcquereur.datefin']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="datefin"
+									label="#{clientmsgs['clientAcquereur.datefin']}"
+									style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.dateFin}">
+
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.etatContrat']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<center>
+									<h:selectOneRadio id="etatContrat"
+										value="#{clientAcquereurBean.newClientAcquereur.etatContrat}"
+										label="#{clientmsgs['clientAcquereur.etatContrat']}:"
+										 style="width:210px">
+
+										<f:selectItem itemValue="0"
+											itemLabel="#{clientmsgs['clientAcquereur.contrat_enreg']}" />
+										<f:selectItem itemValue="1"
+											itemLabel="#{clientmsgs['clientAcquereur.contrat_signe']}" />
+										<p:ajax update="dateenregistrement"></p:ajax>
+
+
+									</h:selectOneRadio>
+								</center>
+							</p:column>
+
+
+						</p:row>
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.DateEnregistrement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column style="width: 190px;">
+								<p:calendar id="dateenregistrement" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button"
+									label="#{clientAquereur['clientAquereur.DateEnregistrement']}:"
+									disabled="#{clientAcquereurBean.newClientAcquereur.etatContrat!=0}"
+									navigator="true" width="200" pattern="dd/MM/yyyy"
+									
+									value="#{clientAcquereurBean.newClientAcquereur.dateEnregistrement}" />
+							</p:column>
+
+
+						</p:row>
+
+
+					</p:panelGrid>
+
+
+				</p:fieldset>
+					</p:tab>
+					
+					<p:tab title="#{clientmsgs['clientAcqueruer.ta']}">
+				<p:fieldset 
+					id="ta" toggleable="false" toggleSpeed="500">
+				<p:panelGrid id="detailTA" style="width: 100%"
+						styleClass="noBorder">
+						<br/><br/>
+						
+					<p:row>
+							<p:column>
+								<h:outputText value="#{clientmsgs['clientAcquereur.prix']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="prix"
+									label="#{clientmsgs['clientAcquereur.prix']}"
+									style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.prix}">
+
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.prixProvisoire']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+							<p:column>
+								<p:inputText id="prixProvisoire"
+									label="#{clientmsgs['clientAcquereur.prixProvisoire']}"
+									style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.prixProvisoire}">
+
+								</p:inputText>
+							</p:column>
+						</p:row>	
+						
+							<p:row>
+							<p:column>
+								<h:outputText value="#{clientmsgs['clientAcquereur.avance']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="avance"
+									label="#{clientmsgs['clientAcquereur.avance']}"
+									style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.avance}">
+
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.soldeClient']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+							<p:column>
+								<p:inputText id="restantDu"
+									label="#{clientmsgs['clientAcquereur.soldeClient']}"
+									style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.solde}">
+
+								</p:inputText>
+							</p:column>
+						</p:row>
+						
+				</p:panelGrid>
+				
+					<div style="width: 100%; text-align: right">
+
+						<br/>
+						<br/>
+						<p:dataTable id="dtaMensualite" value="#{clientAcquereurBean.mensualiteList}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}"
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.typeMensualite']}"/>
+						</f:facet>
+						<h:outputText value="Fixe" rendered="#{current.fixe==1}"/>
+						<h:outputText value="Déterminer" rendered="#{current.fixe==0}"/>
+					</p:column>
+						<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.tauxInteret']}"/>
+						</f:facet>
+						<h:outputText value="#{current.taux}" />
+					</p:column>
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.duree']}"/>
+						</f:facet>
+						<h:outputText value="#{current.duree}" />
+					</p:column>
+					
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.dateDeb']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateDebut}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+						<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.dateFin']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateFin}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					</p:dataTable>
+					
+
+
+				</div>
+				
+					
+					
+					
+						<div style="width: 100%; text-align: right">
+
+								<p:spacer width="5px" />
+					<p:commandButton id="ajouterTA" styleClass="ui-priority-primary"
+								rendered="#{clientAcquereurBean.addTA==1}"
+								actionListener="#{clientAcquereurBean.addOrUpdateTA()}"
+								value="#{clientmsgs['clientAcquereur.addTA']}" 
+								ajax="true" process="@this"
+								 />
+							
+							<p:spacer width="5px"/>
+
+
+					<p:commandButton id="modifierTA" value="#{clientmsgs['clientAcquereur.updateTA']}"
+						rendered="#{clientAcquereurBean.addTA==0}"
+						actionListener="#{clientAcquereurBean.addOrUpdateTA()}"
+						ajax="true" process="@this"
+						styleClass="ui-priority-primary" />
+
+						
+					</div>
+					
+					</p:fieldset>
+					
+					
+					</p:tab>
+					
+					
+				<p:tab title="#{clientmsgs['clientLocataire.juridique']}">
+					<p:fieldset 
+					id="Juridique" toggleable="false" toggleSpeed="500">
+
+					<p:panelGrid id="detailJuridique" style="width: 100%"
+						styleClass="noBorder">
+							<br/><br/>
+						
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientmsgs['client.contentieux']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.contentieuxClient.id}">
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{clientmsgs['client.numDossJuridique']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.contentieuxClient.numDossier}">
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientmsgs['client.dateTransmission']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.contentieuxClient.dateTransmission}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+								</p:inputText>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<br></br><br></br>
+					<h3><center><h:outputText  
+					style="color: #00A0B0;line-height: 110%;margin-top: 30px;margin-bottom: 0px;font-size: 1.2em;padding-right: 10px;"
+					value="#{clientmsgs['clientAcqueruer.historiqueCont']}"></h:outputText></center></h3>
+					
+				
+					<br />
+					<br />
+					<p:dataTable id="dta21" value="#{clientAcquereurBean.listCont}"
+						var="current" rows="10" paginator="true"
+						paginatorPosition="bottom" rowKey="#{current.numDossier}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						rowsPerPageTemplate="10,20,50,100,200,500"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+						
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{clientmsgs['client.numDoss']}:" />
+							</f:facet>
+							<h:outputText value="#{current.numDossier}" />
+						</p:column>
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{clientmsgs['client.dateTransmission']}:" />
+							</f:facet>
+							<h:outputText value="#{current.dateTransmission}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+
+						</p:column>
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{clientmsgs['clientAcquereur.datefin']}:" />
+							</f:facet>
+							<h:outputText value="#{current.dateFin}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+
+						</p:column>
+					</p:dataTable>
+
+				</p:fieldset>
+				</p:tab>
+				<p:tab title="#{clientmsgs['clientLocataire.arrangement']}">
+				<p:fieldset 
+					id="Arrangement" toggleable="false" toggleSpeed="500">
+
+					<p:panelGrid id="detailArrangement" style="width: 100%"
+						styleClass="noBorder">
+							<br/><br/>
+						
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientLocataire.dateDarrangement']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.arrangement.dateDebut}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+								</p:inputText>
+							</p:column>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientLocataire.datefindarrangement']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.arrangement.dateFin}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientLocataire.mensualiteArrangement']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.calculmensualite(clientAcquereurBean.arrangement)}">
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+					<br></br><br></br>
+					<h3><center><h:outputText  
+					style="color: #00A0B0;line-height: 110%;margin-top: 30px;margin-bottom: 0px;font-size: 1.2em;padding-right: 10px;"
+					value="#{clientmsgs['clientAcqueruer.historiqueArrongement']}"></h:outputText></center></h3>
+				
+					
+					<br />
+					<br />
+					<p:dataTable id="dta212"
+						value="#{clientAcquereurBean.listArrangement}" var="current"
+						rows="10" paginator="true" paginatorPosition="bottom"
+						rowKey="#{current.id}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						rowsPerPageTemplate="10,20,50,100,200,500"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+					
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.dateDebut']}:" />
+							</f:facet>
+							<h:outputText value="#{current.dateDebut}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.dateFin']}:" />
+							</f:facet>
+							<h:outputText value="#{current.dateFin}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column width="20" 
+							 style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText
+									value="#{clientmsgs['clientLocataire.dateDarrangement']}:" />
+							</f:facet>
+							<h:outputText
+								value="#{clientAcquereurBean.calculmensualite(current)}" />
+
+
+
+
+						</p:column>
+					</p:dataTable>
+				</p:fieldset>
+				</p:tab>
+				<p:tab title="#{clientmsgs['clientLocataire.autre']}">
+				<p:fieldset 
+					id="autres" toggleable="false" toggleSpeed="500">
+
+					<p:panelGrid id="detailAutres" style="width: 100%"
+						styleClass="noBorder">
+						<p:row>
+
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientmsgs['clientLocataire.decee']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.deces.dateDeces}">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientLocataire.dateMainlevee']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.datemainlevee}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+								</p:inputText>
+							</p:column>
+
+
+
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientLocataire.numeroArchivage']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.numarchivage}">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientLocataire.dateArchivage']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.datearchivage}">
+									<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+
+								</p:inputText>
+							</p:column>
+
+
+
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputText value="#{clientmsgs['clientLocataire.codeMaj']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width:210px" readonly="true"
+									value="#{clientAcquereurBean.newClientAcquereur.codeMaj}">
+								</p:inputText>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+				
+				</p:tab>
+
+				</p:tabView>
+
+</p:panel>
+				
+
+			
+			
+				
+				
+			
+				
+
+				<br />
+				<br />
+				<br />
+				<div style="width: 100%; text-align: right">
+
+					
+					<p:commandButton id="consulter" styleClass="ui-priority-primary"
+						value="#{clientmsgs['navigation.gotopagerech']}" 
+						action="#{menuController.goToPagerechercheClientAcquereur}"
+						
+					>
+				
+						
+					</p:commandButton>
+					<p:spacer width="5px"></p:spacer>
+					
+
+
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" update="@form"
+						oncomplete="if(!args.validationFailed) {PF('newConfirmation').show()};">
+						<p:resetInput target="modifClientForm" />
+					</p:commandButton>
+
+
+				</div>
+			</p:panel>
+		</h:form>
+
+
+
+
+
+		<p:confirmDialog id="diagSave"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="newConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form>
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update="@all"
+						oncomplete="PF('newConfirmation').hide() ; document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{clientAcquereurBean.updateClientAcquereur}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update="@all"
+						onclick="PF('newConfirmation').hide() "
+						styleClass="ui-priority-primary" />
+				</h:form>
+
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

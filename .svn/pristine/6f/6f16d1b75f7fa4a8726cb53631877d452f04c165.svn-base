@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.PrecontentieuDAO;
+import com.cynapsys.entities.Precontentieu;
+
+@SuppressWarnings("serial")
+@Repository("precontentieuDAO")
+public class PrecontentieuDAOImpl extends AbstractDAOImpl<Precontentieu>
+		implements PrecontentieuDAO, Serializable {
+
+	public PrecontentieuDAOImpl() {
+		super(Precontentieu.class);
+	}
+
+	@Override
+	public Precontentieu findById(String id) {
+		
+		List<Precontentieu> list=new ArrayList<Precontentieu>();
+		try {
+			Criteria criteria= getSession().createCriteria(Precontentieu.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

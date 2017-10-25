@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Contentieux;
+
+public interface ContentieuxService extends AbstractService<Contentieux>{
+	Contentieux	findById(String id);
+}

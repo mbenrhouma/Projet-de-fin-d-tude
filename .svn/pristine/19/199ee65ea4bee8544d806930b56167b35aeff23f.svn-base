@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.NoteDebitDAO;
+import com.cynapsys.entities.NoteDebit;
+
+@SuppressWarnings("serial")
+@Repository("noteDebitDAO")
+public class NoteDebitDAOImpl extends AbstractDAOImpl<NoteDebit>
+		implements NoteDebitDAO, Serializable {
+
+	public NoteDebitDAOImpl() {
+		super(NoteDebit.class);
+	}
+
+	@Override
+	public NoteDebit findById(String id) {
+		
+		List<NoteDebit> list=new ArrayList<NoteDebit>();
+		try {
+			Criteria criteria= getSession().createCriteria(NoteDebit.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

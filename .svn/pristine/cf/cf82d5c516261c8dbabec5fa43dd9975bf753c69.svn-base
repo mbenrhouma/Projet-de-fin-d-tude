@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Cession;
+
+public interface CessionService extends AbstractService<Cession>{
+	Cession	findById(String id);
+}

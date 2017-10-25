@@ -1,0 +1,518 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@Table(name = "CLIENT_ACQUEREUR")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "ClientAcquereur.findAll", query = "SELECT c FROM ClientAcquereur c"),
+    @NamedQuery(name = "ClientAcquereur.findByCodeAcquereur", query = "SELECT c FROM ClientAcquereur c WHERE c.codeAcquereur = :codeAcquereur"),
+    @NamedQuery(name = "ClientAcquereur.findByNomPrenomFr", query = "SELECT c FROM ClientAcquereur c WHERE c.nomPrenomFr = :nomPrenomFr"),
+    @NamedQuery(name = "ClientAcquereur.findByNomPrenomAr", query = "SELECT c FROM ClientAcquereur c WHERE c.nomPrenomAr = :nomPrenomAr"),
+    @NamedQuery(name = "ClientAcquereur.findByCompteConjoint", query = "SELECT c FROM ClientAcquereur c WHERE c.compteConjoint = :compteConjoint"),
+    @NamedQuery(name = "ClientAcquereur.findByNomPrenomConjointFr", query = "SELECT c FROM ClientAcquereur c WHERE c.nomPrenomConjointFr = :nomPrenomConjointFr"),
+    @NamedQuery(name = "ClientAcquereur.findByNomprenomconjointar", query = "SELECT c FROM ClientAcquereur c WHERE c.nomprenomconjointar = :nomprenomconjointar"),
+    @NamedQuery(name = "ClientAcquereur.findByDateNaissance", query = "SELECT c FROM ClientAcquereur c WHERE c.dateNaissance = :dateNaissance"),
+    @NamedQuery(name = "ClientAcquereur.findByAdresseCorrespondance", query = "SELECT c FROM ClientAcquereur c WHERE c.adresseCorrespondance = :adresseCorrespondance"),
+    @NamedQuery(name = "ClientAcquereur.findByAnneebudgetaire", query = "SELECT c FROM ClientAcquereur c WHERE c.anneebudgetaire = :anneebudgetaire")})
+public class ClientAcquereur implements Serializable {
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CODE_ACQUEREUR", nullable = false, precision = 22, scale = 0)
+    private BigDecimal codeAcquereur;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(name = "NOM_PRENOM_FR", nullable = false, length = 254)
+    private String nomPrenomFr;
+    @Size(max = 254)
+    @Column(name = "NOM_PRENOM_AR", length = 254)
+    private String nomPrenomAr;
+    @Column(name = "COMPTE__CONJOINT")
+    private BigInteger compteConjoint;
+    @Size(max = 254)
+    @Column(name = "NOM_PRENOM_CONJOINT_FR", length = 254)
+    private String nomPrenomConjointFr;
+    @Size(max = 254)
+    @Column(length = 254)
+    private String nomprenomconjointar;
+    @Column(name = "DATE_NAISSANCE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateNaissance;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(name = "ADRESSE_CORRESPONDANCE", nullable = false, length = 254)
+    private String adresseCorrespondance;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date anneebudgetaire;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Logement> logementList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Deces> decesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<TableauAmortissement> tableauAmortissementList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur1", fetch = FetchType.LAZY)
+    private List<TableauAmortissement> tableauAmortissementList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Contrat> contratList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<NoteDebit> noteDebitList;
+    @OneToMany(mappedBy = "clientAcquereur1", fetch = FetchType.LAZY)
+    private List<NoteDebit> noteDebitList1;
+    @OneToMany(mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Impayee> impayeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Cession> cessionList;
+    @JoinColumn(name = "CODE_EMPLOYEUR", referencedColumnName = "CODE_EMPLOYEUR")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employeur employeur;
+    @JoinColumn(name = "ASSURANCE2", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Assurance assurance;
+    @JoinColumn(name = "ASSURANCE", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Assurance assurance1;
+    @JoinColumn(name = "ID", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Precontentieu precontentieu;
+    @JoinColumn(name = "CODEASSUREUR", referencedColumnName = "CODEASSUREUR", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Assureur assureur;
+    @JoinColumn(name = "CONTENTIEUX", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Contentieux contentieux;
+    @JoinColumn(name = "DECES", referencedColumnName = "CODE_DECES")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Deces deces;
+    @JoinColumn(name = "CODE_DECES", referencedColumnName = "CODE_DECES")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Deces deces1;
+    @JoinColumn(name = "EMPLOYEUR", referencedColumnName = "CODE_EMPLOYEUR")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employeur employeur1;
+    @JoinColumn(name = "EMPLOYEUR2", referencedColumnName = "CODE_EMPLOYEUR")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Employeur employeur2;
+    @JoinColumn(name = "LOGEMENT2", referencedColumnName = "CODELOGEMENT")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Logement logement;
+    @JoinColumn(name = "CODE", referencedColumnName = "CODE", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Groupe groupe;
+    @JoinColumn(name = "RECLAMATION", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Reclamation reclamation;
+    @JoinColumn(name = "CODELOGEMENT", referencedColumnName = "CODELOGEMENT")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Logement logement1;
+    @JoinColumn(name = "LOGEMENT", referencedColumnName = "CODELOGEMENT")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Logement logement2;
+    @JoinColumn(name = "NOTE_DEBIT", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private NoteDebit noteDebit;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Reclamation> reclamationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Mouvement> mouvementList;
+    @OneToMany(mappedBy = "clientAcquereur", fetch = FetchType.LAZY)
+    private List<Assurance> assuranceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientAcquereur1", fetch = FetchType.LAZY)
+    private List<Assurance> assuranceList1;
+
+    public ClientAcquereur() {
+    }
+
+    public ClientAcquereur(BigDecimal codeAcquereur) {
+        this.codeAcquereur = codeAcquereur;
+    }
+
+    public ClientAcquereur(BigDecimal codeAcquereur, String nomPrenomFr, String adresseCorrespondance, Date anneebudgetaire) {
+        this.codeAcquereur = codeAcquereur;
+        this.nomPrenomFr = nomPrenomFr;
+        this.adresseCorrespondance = adresseCorrespondance;
+        this.anneebudgetaire = anneebudgetaire;
+    }
+
+    public BigDecimal getCodeAcquereur() {
+        return codeAcquereur;
+    }
+
+    public void setCodeAcquereur(BigDecimal codeAcquereur) {
+        this.codeAcquereur = codeAcquereur;
+    }
+
+    public String getNomPrenomFr() {
+        return nomPrenomFr;
+    }
+
+    public void setNomPrenomFr(String nomPrenomFr) {
+        this.nomPrenomFr = nomPrenomFr;
+    }
+
+    public String getNomPrenomAr() {
+        return nomPrenomAr;
+    }
+
+    public void setNomPrenomAr(String nomPrenomAr) {
+        this.nomPrenomAr = nomPrenomAr;
+    }
+
+    public BigInteger getCompteConjoint() {
+        return compteConjoint;
+    }
+
+    public void setCompteConjoint(BigInteger compteConjoint) {
+        this.compteConjoint = compteConjoint;
+    }
+
+    public String getNomPrenomConjointFr() {
+        return nomPrenomConjointFr;
+    }
+
+    public void setNomPrenomConjointFr(String nomPrenomConjointFr) {
+        this.nomPrenomConjointFr = nomPrenomConjointFr;
+    }
+
+    public String getNomprenomconjointar() {
+        return nomprenomconjointar;
+    }
+
+    public void setNomprenomconjointar(String nomprenomconjointar) {
+        this.nomprenomconjointar = nomprenomconjointar;
+    }
+
+    public Date getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(Date dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public String getAdresseCorrespondance() {
+        return adresseCorrespondance;
+    }
+
+    public void setAdresseCorrespondance(String adresseCorrespondance) {
+        this.adresseCorrespondance = adresseCorrespondance;
+    }
+
+    public Date getAnneebudgetaire() {
+        return anneebudgetaire;
+    }
+
+    public void setAnneebudgetaire(Date anneebudgetaire) {
+        this.anneebudgetaire = anneebudgetaire;
+    }
+
+    @XmlTransient
+    public List<Logement> getLogementList() {
+        return logementList;
+    }
+
+    public void setLogementList(List<Logement> logementList) {
+        this.logementList = logementList;
+    }
+
+    @XmlTransient
+    public List<Deces> getDecesList() {
+        return decesList;
+    }
+
+    public void setDecesList(List<Deces> decesList) {
+        this.decesList = decesList;
+    }
+
+    @XmlTransient
+    public List<TableauAmortissement> getTableauAmortissementList() {
+        return tableauAmortissementList;
+    }
+
+    public void setTableauAmortissementList(List<TableauAmortissement> tableauAmortissementList) {
+        this.tableauAmortissementList = tableauAmortissementList;
+    }
+
+    @XmlTransient
+    public List<TableauAmortissement> getTableauAmortissementList1() {
+        return tableauAmortissementList1;
+    }
+
+    public void setTableauAmortissementList1(List<TableauAmortissement> tableauAmortissementList1) {
+        this.tableauAmortissementList1 = tableauAmortissementList1;
+    }
+
+    @XmlTransient
+    public List<Contrat> getContratList() {
+        return contratList;
+    }
+
+    public void setContratList(List<Contrat> contratList) {
+        this.contratList = contratList;
+    }
+
+    @XmlTransient
+    public List<NoteDebit> getNoteDebitList() {
+        return noteDebitList;
+    }
+
+    public void setNoteDebitList(List<NoteDebit> noteDebitList) {
+        this.noteDebitList = noteDebitList;
+    }
+
+    @XmlTransient
+    public List<NoteDebit> getNoteDebitList1() {
+        return noteDebitList1;
+    }
+
+    public void setNoteDebitList1(List<NoteDebit> noteDebitList1) {
+        this.noteDebitList1 = noteDebitList1;
+    }
+
+    @XmlTransient
+    public List<Impayee> getImpayeeList() {
+        return impayeeList;
+    }
+
+    public void setImpayeeList(List<Impayee> impayeeList) {
+        this.impayeeList = impayeeList;
+    }
+
+    @XmlTransient
+    public List<Cession> getCessionList() {
+        return cessionList;
+    }
+
+    public void setCessionList(List<Cession> cessionList) {
+        this.cessionList = cessionList;
+    }
+
+    public Employeur getEmployeur() {
+        return employeur;
+    }
+
+    public void setEmployeur(Employeur employeur) {
+        this.employeur = employeur;
+    }
+
+    public Assurance getAssurance() {
+        return assurance;
+    }
+
+    public void setAssurance(Assurance assurance) {
+        this.assurance = assurance;
+    }
+
+    public Assurance getAssurance1() {
+        return assurance1;
+    }
+
+    public void setAssurance1(Assurance assurance1) {
+        this.assurance1 = assurance1;
+    }
+
+    public Precontentieu getPrecontentieu() {
+        return precontentieu;
+    }
+
+    public void setPrecontentieu(Precontentieu precontentieu) {
+        this.precontentieu = precontentieu;
+    }
+
+    public Assureur getAssureur() {
+        return assureur;
+    }
+
+    public void setAssureur(Assureur assureur) {
+        this.assureur = assureur;
+    }
+
+    public Contentieux getContentieux() {
+        return contentieux;
+    }
+
+    public void setContentieux(Contentieux contentieux) {
+        this.contentieux = contentieux;
+    }
+
+    public Deces getDeces() {
+        return deces;
+    }
+
+    public void setDeces(Deces deces) {
+        this.deces = deces;
+    }
+
+    public Deces getDeces1() {
+        return deces1;
+    }
+
+    public void setDeces1(Deces deces1) {
+        this.deces1 = deces1;
+    }
+
+    public Employeur getEmployeur1() {
+        return employeur1;
+    }
+
+    public void setEmployeur1(Employeur employeur1) {
+        this.employeur1 = employeur1;
+    }
+
+    public Employeur getEmployeur2() {
+        return employeur2;
+    }
+
+    public void setEmployeur2(Employeur employeur2) {
+        this.employeur2 = employeur2;
+    }
+
+    public Logement getLogement() {
+        return logement;
+    }
+
+    public void setLogement(Logement logement) {
+        this.logement = logement;
+    }
+
+    public Groupe getGroupe() {
+        return groupe;
+    }
+
+    public void setGroupe(Groupe groupe) {
+        this.groupe = groupe;
+    }
+
+    public Reclamation getReclamation() {
+        return reclamation;
+    }
+
+    public void setReclamation(Reclamation reclamation) {
+        this.reclamation = reclamation;
+    }
+
+    public Logement getLogement1() {
+        return logement1;
+    }
+
+    public void setLogement1(Logement logement1) {
+        this.logement1 = logement1;
+    }
+
+    public Logement getLogement2() {
+        return logement2;
+    }
+
+    public void setLogement2(Logement logement2) {
+        this.logement2 = logement2;
+    }
+
+    public NoteDebit getNoteDebit() {
+        return noteDebit;
+    }
+
+    public void setNoteDebit(NoteDebit noteDebit) {
+        this.noteDebit = noteDebit;
+    }
+
+    @XmlTransient
+    public List<Reclamation> getReclamationList() {
+        return reclamationList;
+    }
+
+    public void setReclamationList(List<Reclamation> reclamationList) {
+        this.reclamationList = reclamationList;
+    }
+
+    @XmlTransient
+    public List<Mouvement> getMouvementList() {
+        return mouvementList;
+    }
+
+    public void setMouvementList(List<Mouvement> mouvementList) {
+        this.mouvementList = mouvementList;
+    }
+
+    @XmlTransient
+    public List<Assurance> getAssuranceList() {
+        return assuranceList;
+    }
+
+    public void setAssuranceList(List<Assurance> assuranceList) {
+        this.assuranceList = assuranceList;
+    }
+
+    @XmlTransient
+    public List<Assurance> getAssuranceList1() {
+        return assuranceList1;
+    }
+
+    public void setAssuranceList1(List<Assurance> assuranceList1) {
+        this.assuranceList1 = assuranceList1;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codeAcquereur != null ? codeAcquereur.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ClientAcquereur)) {
+            return false;
+        }
+        ClientAcquereur other = (ClientAcquereur) object;
+        if ((this.codeAcquereur == null && other.codeAcquereur != null) || (this.codeAcquereur != null && !this.codeAcquereur.equals(other.codeAcquereur))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.ClientAcquereur[ codeAcquereur=" + codeAcquereur + " ]";
+    }
+    
+}

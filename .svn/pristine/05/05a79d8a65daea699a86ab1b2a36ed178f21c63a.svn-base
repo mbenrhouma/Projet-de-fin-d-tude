@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.QuitanceDAO;
+import com.cynapsys.entities.Quitance;
+
+@SuppressWarnings("serial")
+@Repository("quitanceDAO")
+public class QuitanceDAOImpl extends AbstractDAOImpl<Quitance>
+		implements QuitanceDAO, Serializable {
+
+	public QuitanceDAOImpl() {
+		super(Quitance.class);
+	}
+
+	@Override
+	public Quitance findById(String id) {
+		
+		List<Quitance> list=new ArrayList<Quitance>();
+		try {
+			Criteria criteria= getSession().createCriteria(Quitance.class);
+			criteria.add(Restrictions.eq("numQuittance", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

@@ -1,0 +1,73 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.MainleveeDAO;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Mainlevee;
+import com.cynapsys.service.MainleveeService;
+@Service("mainleveeService")
+public class MainleveeServiceImpl  implements MainleveeService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private MainleveeDAO mainleveeDAO;
+	@Override
+	public Object save(Mainlevee entity) {
+		return mainleveeDAO.save(entity);
+	}
+	@Override
+	public void flush(Mainlevee entity) {
+		mainleveeDAO.flush(entity);		
+	}
+	@Override
+	public void update(Mainlevee entity) {
+		mainleveeDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(Mainlevee entity) throws Exception {
+		return mainleveeDAO.delete(entity);
+	}
+	@Override
+	public Mainlevee find(Object idClass) {
+		return mainleveeDAO.find(idClass);
+	}
+	@Override
+	public List<Mainlevee> findAll() {
+		return mainleveeDAO.findAll();
+	}
+	@Override
+	public List<Mainlevee> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return mainleveeDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return mainleveeDAO.getCount(filters);
+	}
+	@Override
+	public List<Mainlevee> findSorted(String sortField, boolean sortOrder) {
+		return mainleveeDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public Mainlevee findById(String id) {
+		return mainleveeDAO.findById(id);
+	}
+	public MainleveeDAO getMainleveeDAO() {
+		return mainleveeDAO;
+	}
+	public void setMainleveeDAO(MainleveeDAO mainleveeDAO) {
+		this.mainleveeDAO = mainleveeDAO;
+	}
+	@Override
+	public Mainlevee findByClientLoc(ClientAcquereur client) {
+		
+		return mainleveeDAO.findByClientLoc(client);
+	}
+
+}

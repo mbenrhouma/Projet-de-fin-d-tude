@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.QuitanceEmployeurDAO;
+import com.cynapsys.entities.QuitanceEmployeur;
+
+@SuppressWarnings("serial")
+@Repository("quitanceEmployeurDAO")
+public class QuitanceEmployeurDAOImpl extends AbstractDAOImpl<QuitanceEmployeur> implements QuitanceEmployeurDAO, Serializable {
+
+	public QuitanceEmployeurDAOImpl () {
+		super(QuitanceEmployeur.class);
+	}
+	
+	@Override
+	public QuitanceEmployeur findById(String id) {
+		
+		List<QuitanceEmployeur> list=new ArrayList<QuitanceEmployeur>();
+		try {
+			Criteria criteria= getSession().createCriteria(QuitanceEmployeur.class);
+			criteria.add(Restrictions.eq("code", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+	
+}

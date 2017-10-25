@@ -1,0 +1,115 @@
+package com.cynapsys.Views.controller;
+
+import java.io.IOException;
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+
+@ManagedBean(name = "menuController")
+@SessionScoped
+public class MenuController implements Serializable {
+	@SuppressWarnings("unused")
+	private String headerValue = "Acceuil";
+	private static final long serialVersionUID = -542260296902930917L;
+	FacesContext context = FacesContext.getCurrentInstance();
+	ExternalContext extContext = context.getExternalContext();
+	HttpSession session = (HttpSession) context.getExternalContext()
+			.getSession(false);
+
+	// accueil  
+	public String goToPageAccueil() throws IOException {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		String url = extContext.encodeActionURL(context.getApplication()
+				.getViewHandler()
+				.getActionURL(context, "/views/pageAccueil/pageAccueil.xhtml"));
+		extContext.redirect(url);
+		headerValue = "Accueil";
+		return "/views/pageAccueil/pageAccueil.xhtml";
+	}
+
+	// Groupe
+	public String goToPageGroupe() throws IOException {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		String url = extContext.encodeActionURL(context.getApplication()
+				.getViewHandler()
+				.getActionURL(context, "/views/groupe/gestionGroupe.xhtml"));
+		extContext.redirect(url);
+		headerValue = "Accueil";
+		return "/views/groupe/gestionGroupe.xhtml";
+	}
+	
+	
+
+	// Utilisateur
+	public String goToPageUtilisateur() throws IOException {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		String url = extContext.encodeActionURL(context
+				.getApplication()
+				.getViewHandler()
+				.getActionURL(context,
+						"/views/utilisateur/gestionUtilisateur.xhtml"));
+		extContext.redirect(url);
+		headerValue = "Accueil";
+		return "/views/utilisateur/gestionUtilisateur.xhtml";
+	}
+
+	public String goToPageChangerMotPasse() throws IOException {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		String url = extContext.encodeActionURL(context
+				.getApplication()
+				.getViewHandler()
+				.getActionURL(context,
+						"/views/utilisateur/changerMotPasse.xhtml"));
+		extContext.redirect(url);
+		headerValue = "Accueil";
+		return "/views/utilisateur/changerMotPasse.xhtml";
+	}
+
+	public String goToPagePremierLogin() throws IOException {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		String url = extContext.encodeActionURL(context.getApplication()
+				.getViewHandler().getActionURL(context, "/premierLogin.xhtml"));
+		extContext.redirect(url);
+		headerValue = "Accueil";
+		return "/premierLogin.xhtml";
+	}
+
+	// PageLogin
+	public String goToPageLogin() throws IOException {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		String url = extContext.encodeActionURL(context.getApplication()
+				.getViewHandler().getActionURL(context, "/pageLogin.xhtml"));
+		extContext.redirect(url);
+		headerValue = "Accueil";
+		return "/pageLogin.xhtml";
+	}
+
+				
+				/**********************************Debut Souhail *******************************************/
+			
+	
+				/**********************************fin Souhail *******************************************/
+
+	
+				/**********************************Debut Mohamed *******************************************/
+
+				/**********************************fin Mohamed *******************************************/
+	
+				
+				/**********************************Debut Rami *******************************************/
+
+				/**********************************fin Rami *******************************************/
+	
+
+}

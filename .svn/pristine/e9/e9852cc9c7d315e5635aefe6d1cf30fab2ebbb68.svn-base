@@ -1,0 +1,229 @@
+republic.tunisienne = R\u00E9publique tunisienne
+header.parametrage=Param\u00E9trage
+precontentieuxAffectationHN=Affectation des huissiers notaires
+header.param.gerance=G\u00E9rance
+header.param.reglement=R\u00E9glement
+header.gestion_des_impayes=Gestion des impayes
+header.suivi_des_lettres_de_relance=Suivi des lettres de relances
+header.param.geographie=G\u00E9ographie
+header.param.rachat.revente=Rachat et Revente
+header.param.contentieux=Contentieux
+header.param.contentieuxPar= Parametrage Contentieux
+header.parametrage=Parametrage
+header.param.typeFrais=Gestion Type Frais
+header.param.typeLogement=Gestion type de logement
+header.param.typeMainlevee=Gestion type de mainlevï¿½e
+header.param.huissiersNotaires=Gestion des huissiers notaires
+header.param.gestionDesGouvernorats=Gestion des gouvernorats
+header.param.gestionGestionDesVilles=Gestion des Villes
+header.param.gestionGestionDesLotissement=Gestion des Lotissement 
+header.param.gestiondeCodePostal=Gestion de code postal
+header.param.paramï¿½trageContentieux=Paramï¿½trage contentieux
+header.param.gestionNoteDebit=Gestion Note Debit
+
+
+precontentieuxSuiviLettreDeCommande=Suivi des lettres de commandes
+header.param.general=G\u00E9n\u00E9ral
+header.param.gerance.typeloc=Type locartaire
+header.param.gerance.positionloc=Position locataire
+header.param.gerance.occupbien=Mode occupation des biens
+header.param.gerance.mandataire=Mandataire
+header.param.gerance.typebien=Type biens
+header.param.gerance.usagebien=Usage biens
+header.param.gerance.codegerant=Code g\u00E9rant
+header.param.gerance.etape.geranceTF=Etape g\u00E9rance TF
+header.param.regl.typerecette=Type recette
+header.param.regl.modereglement=Mode r\u00E8glement
+header.param.regl.typereglement=Type r\u00E8glement 
+header.param.regl.beneficiaire=B\u00E9n\u00E9ficiaire
+header.param.regl.typebeneficiaire=Type b\u00E9n\u00E9ficiaire
+header.param.regl.typedepense=Type d\u00E9pense
+header.param.regl.periodicite=P\u00E9riodicit\u00E9
+header.param.regl.banque=Banque
+header.param.geo.zone=Zone
+header.param.geo.nationalite=Nationalit\u00E9
+header.param.geo.codepostal=Code postal
+header.param.geo.residence=R\u00E9sidence
+header.param.geo.localite=Localit\u00E9
+header.param.geo.gouvernorat=Gouvernorat
+header.param.racrev.participantscommision=Participants commision
+header.param.racrev.situationacquereur=Situation acqu\u00E9reur
+header.param.racrev.bareme=Bar\u00E8me
+header.param.racrev.categorie=Cat\u00E9gorie
+header.param.racrev.typeaccord=Type accord
+header.param.racrev.suitereserveopa=Suite r\u00E9serve OPA
+header.param.racrev.typedevise=Type devise
+header.param.contentieux.huissiernotaire=Huissier notaire
+header.param.contentieux.gestionpartage=Gestion partage
+header.param.contentieux.avocat=Avocat
+header.param.general.piecejointe=Pi\u00E8ce jointe
+header.param.general.piecedemande=Pi\u00E8ce demand\u00E9e
+header.param.general.cellule=Cellule
+header.param.general.employe=Employ\u00E9
+header.param.general.employeur=Employeur
+header.param.general.profession=Profession
+header.param.general.etatcivil=Etat civil 
+header.param.general.sexelocataire=Sexe locataire
+ministereEquipement.nom2 = du territoire et du d\u00E9veloppement durable
+contentieux=Dossiers ï¿½ envoyer au contentieux
+suiviDesPrecontentieux=Suivi des prï¿½contentieux
+rechercheClientsacqueruers=Recherche des clients acquéreurs
+administration=Administration
+changer.mot_passe=Changer mot de passe
+ministereEquipement.nom = Minist\u00E8re de l'\u00E9quipement, de l'am\u00E9nagement
+utilisateur=Gestion utilisateur
+suiviDesRecouvrements= Suivi des recouvrements
+Precontentieux=Prï¿½contentieux
+Arrangement=Gestion des arrangements
+locataire=Gestion des locataires
+locataireImpaye=Locataire Imapay\u00E9
+impayeslettreDeRelance=Lettre de relance
+conultationContentieux=Contentieux
+impayesReglerSituation=Situation des impayï¿½s
+precontentieuxAffectationHN=Affectation des huissiers notaires
+precontentieuxSuiviLettreDeCommande=Suivi des lettres de commandes
+impayesPrecontenteix=Prï¿½contentieux
+impayesAffectation=Affectation des huissiers notaires
+titre=Gestion titre foncier
+groupe=Gestion profil
+header.deconnexion = D\u00E9connexion
+header.accueil=Accueil
+header.Gerance=G\u00E9rance 
+header.Gestion_dossier_gerance=Gestion des dossiers 
+header.Dossiers_gerance=Dossiers de g\u00E9rance
+header.gestion_des_Locataires=Gestion des locataires
+header.nouveau_dossier=Nouveau dossier
+header.gestion_titre_foncier=Gestion Titre Foncier
+header.Gestion_de_bien=Gestion de bien
+header.Gestion_des_locaux=Gestion des locaux
+header.Gestion_des_immeubles=Gestion des immeubles
+header.Gestion_des_locataires_par_bien=Gestion des locataires par bien
+header.Gestion_des_proprietaires=Gestion des propri\u00E9taires
+header.Etat_des_depenses=Etat des d\u00E9penses
+header.Reglement_proprietaires=R\u00E9glement propri\u00E9taires
+header.Reglement_proprietaires_etat=Etat des r\u00E8glements propri\u00E9taires
+header.Gestion_de_la_caisse=Gestion de la caisse
+header.Caisse=Caisse
+header.Encaissement=Encaissement
+header.Fiche_locataire= fiche locataire
+
+header.Lettres_de_relance=lettres de relance
+header.Lettres_des_commandes=lettres des commandes
+header.Suivi_des_precontentieux=Suivi  pr\u00E9contentieux  
+header.Ordre_de_paiement=Ordre de paiement
+header.Arrangement_amiable=Arrangement amiable
+header.Suivi_des_impayes=Suivi des impay\u00E9s 
+header.gestion_des_impayes=Gestion des impay\u00E9s 
+header.suivi_des_lettres_de_relance=Suivi des lettres de relances 
+header.gestion_des_precontentieux=gestion des pr\u00E9contentieux
+header.Gestion_maintenance=Gestion de maintenance 
+header.gestion_des_dossiers=Gestion des dossiers
+header.gestion_devis=Gestion des devis
+header.gestion_bonCommande=Gestion des bons de commandes
+header.Editer_devis=Editer devis
+header.Imprimer_devis= Imprimer devis
+header.Affecter_un_entrepreneur=Affecter un entrepreneur
+header.Enregistrer_les_depenses_de_maintenance=Enregistrer les d\u00E9penses de maintenance
+header.Constat_de_maintenance=Constat de maintenance
+
+header.Rachat=Rachat
+
+header.Liste_des_dossiers_rachat=Liste des dossiers rachat
+
+header.Nouveau_dossier_rachat=Nouveau dossier
+header.Gestion_de_titre_foncier_de_un_dossier_de_rachat=Gestion de titre foncier 
+header.Gestion_des_locaux_de_un_dossier_de_rachat=Gestion des locaux 
+header.Gestion_des_proprietaires=Gestion des propri\u00E9taires
+
+header.Partage_des_biens =Partage des biens
+header.Gestion_des_titres_en_copropriete=Gestion des titres en copropri\u00E9t\u00E9
+header.Suivi_des_dossiers_de_partage_avec_le_contentieux = Suivi des dossiers 
+header.Revente=Revente
+header.Gestion_des_dossier_vente=Gestion des dossiers de revente
+header.Gestion_des_dossier_achat=Gestion des dossiers de rachat
+header.Recherche_des_dossiers_de_revente=recherche dossiers  revente
+header.Creation_et_edition_des_dossiers= Cr\u00E9ation dossiers
+header.Impression_des_details_de_dossier=Impression dossier 
+header.Suivi_des_decisions=Suivi des d\u00E9cisions
+
+header.Commissions=Commissions 
+header.Commissions.national.cession=Commission national de cession
+header.Commissions.interne.prix=Commission interne de prix
+header.Commissions=Commissions
+header.Gestion_des_cips=Gestion des CIPs
+header.Details_de_decision=D\u00E9tails de d\u00E9cision
+header.Gestion_des_cncs=Gestion des CNCs
+
+
+header.Gestion_des_prix_de_vente=Gestion des prix de vente
+header.Frais_de_revente=Frais de revente
+header.Gestion_de_prix_de_achat=Gestion de prix d\u2019achat
+header.Gestion_de_prix_de_rachat_unitaires=Gestion de prix de rachat unitaires 
+header.Prix_de_vente=Prix de vente
+
+header.Gestion_du_reglement_des_prix_de_vente=Gestion du r\u00E9glement des prix de vente
+header.Reglement_huissier_notaire=R\u00E9glement huissier notaire
+header.Gestion_des_honoraires_des_huissiers_notaires=Gestion des honoraires des huissiers notaires
+header.Impression_de_details_de_reglements_des_honoraires= Impression de d\u00E9tails de r\u00E9glements des honoraires
+header.Etat_des_versements=Etat des versements
+header.Gestion_des_mainlevees=Gestion des mainlev\u00E9es
+
+header.Gestion_des_decomptes_acquereurs=Gestion des d\u00E9comptes acqu\u00E9reurs
+header.Gestion_des_decomptes=Gestion des d\u00E9comptes
+
+header.Etats_des_reventes=Etats des reventes
+header.Etats=Etats
+
+header.Editions=Editions
+header.Impression_decompte_avant_rachat=Impression d\u00E9compte avant rachat
+header.Impression_decompte_apres_rachat=Impression d\u00E9compte apr\u00E9s rachat
+header.Impression_decompte_acquereur=Impression d\u00E9compte acqu\u00E9reur 
+header.Impression_remunerations_snit=Impression r\u00E9mun\u00E9rations SNIT
+header.Impression_contrats_de_rachat=Impression contrats de rachat
+
+header.contentieux=Contentieux
+
+header.Gestion_des_dossiers_contentieux =Gestion des dossiers contentieux 
+header.Dossiers_contentieux = Dossiers contentieux 
+
+header.Gestion_des_reglements=Gestion des r\u00E9glements
+header.Gestion_des_reglements_de_contentieux =Gestion des r\u00E9glements de contentieux 
+header.Details_de_affaire =Details d\u2019affaire 
+
+header.Gestion_des_courriers=Gestion des courriers
+
+header.Gestion_des_courriers_envoyes=Gestion des courriers envoy\u00E9s 
+header.Gestion_des_courriers_recus=Gestion des courriers recus
+header.gestion_archive=Gestion d'archive
+header.Gestion_des_courriers_archives=Gestion des courriers archiv\u00E9s
+/*new
+header.assurance=Assurances
+header.assureur=Gestion des assureurs
+header.reclamation=Prise en charge des reclamations
+header.deces=Gestion des dec\u00E9s
+header.cession_deleg=Cession d\u00E9l\u00E9gation
+header.employeur=Gestion des employeurs
+header.cession_sur_salaire=Gestion des cessions sur salaire
+header.reglement_empl=Gestion des r\u00E9glements des employeurs
+header.recette=Recette
+header.impaye=suivi des recouvrements
+header.precontentieux=Gestion des pr\u00E9-contentieux
+header.suivi.precontentieux=Suivi des pr\u00E9-contentieux
+header.dossierContentieux=Envoyer un dossier au contentieux
+header.contentieux=Gestion des contentieux
+header.arrangement=Gestion des arrangements
+header.identification=Identification
+header.client_aquereur=Gestion des clients aqu\u00E9reurs
+header.client_loc=Gestion des clients locataires
+header.tableau_amortissement=Gestion des tableaux d'amortissements
+header.logement=Gestion des logements
+
+header.Comptabilite_auxiliaire=Comptabilit\u00E9 auxiliaire
+
+
+header.Aide_en_ligne_et_messages=Aide en ligne et messages
+header.Aide_en_ligne=Aide en ligne
+header.Les_messages=Les messages
+header.Edition =Edition  
+
+gestionImmeuble=Gestion immeuble

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contentieux" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7fa20550-04f5-472f-b0fb-07de9abcc016">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["H:\\PFE\\Workspace-GC\\GC\\WebContent\\Jasper\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="group" class="java.lang.String"/>
+	<field name="date" class="java.util.Date"/>
+	<field name="codeAquereur" class="java.math.BigDecimal"/>
+	<field name="nomPrenomF" class="java.lang.String"/>
+	<field name="adresseLogement" class="java.lang.String"/>
+	<field name="numDossier" class="java.lang.String"/>
+	<field name="dateTransmission" class="java.util.Date"/>
+	<field name="dateFin" class="java.util.Date"/>
+	<field name="listGroupClient" class="java.util.List"/>
+	<variable name="Count" class="java.lang.Integer" calculation="Count"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="203" y="0" width="397" height="38" uuid="16b8459e-3931-43a0-a0e3-347f6f4cd473"/>
+				<textElement textAlignment="Justified">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Liste des clients au contentieux]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="221">
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="66" width="802" height="101" uuid="289730ac-d7f0-4abb-8e3c-37b3f809cd67"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listGroupClient})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "contentieux_subreport.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="0" y="180" width="225" height="20" uuid="f5ad7f28-2f85-4cf9-bbd7-de6934135440"/>
+				<textFieldExpression><![CDATA["Nombre de clients pour le Groupe"+$F{group}+" : "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="688" y="0" width="114" height="20" uuid="377faaa2-88eb-43b8-81f5-6e5c13361239"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat ("dd/MM/yyyy").format($F{date})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="653" y="0" width="35" height="20" uuid="f4e5ae1c-d833-4065-b9a2-6bed9527df4d"/>
+				<text><![CDATA[Date : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="40" width="100" height="20" uuid="9b15c5bb-6ae3-4ebd-aa61-7478596f0510"/>
+				<text><![CDATA[Groupe]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="402" y="40" width="100" height="20" uuid="6db2d44d-ea4b-4c85-a096-094501ce223d"/>
+				<textFieldExpression><![CDATA[$F{group}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="688" y="20" width="114" height="20" uuid="f13b8bd1-e31d-4760-a56d-3c95bca33f3a"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="653" y="20" width="35" height="20" uuid="a8b02089-4119-4f24-bd7c-738abbed4744"/>
+				<text><![CDATA[Page :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="225" y="180" width="63" height="20" uuid="c4d34466-4714-4115-9038-013191bdc8bb"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Count}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="682" y="0" width="80" height="20" uuid="119753b8-c0c2-4cb6-a61e-7220c7fd0d8b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="0" width="40" height="20" uuid="d1336360-349a-4a92-8cfc-4736ca8aeef0"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

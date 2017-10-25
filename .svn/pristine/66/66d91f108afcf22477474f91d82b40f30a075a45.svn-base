@@ -1,0 +1,53 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.CessionDAO;
+import com.cynapsys.entities.Cession;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Contentieux;
+
+@SuppressWarnings("serial")
+@Repository("cessionDAO")
+public class CessionDAOImpl extends AbstractDAOImpl<Cession>
+		implements CessionDAO, Serializable {
+
+	public CessionDAOImpl() {
+		super(Cession.class);
+	}
+
+	@Override
+	public Cession findById(String id) {
+		
+		List<Cession> list=new ArrayList<Cession>();
+		try {
+			Criteria criteria= getSession().createCriteria(Cession.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+	@Override
+	public List<Cession> findCessionByClientAcquereur(ClientAcquereur clientAcquereur) {
+		
+		StringBuilder req = new StringBuilder();
+		req.append("from Cession C ");
+		req.append("left join fetch C.employeur ");
+		req.append("where C.clientAcquereur.codeAcquereur= ")
+				.append(clientAcquereur.getCodeAcquereur());
+		List<Cession> cessions=this.getHibernateTemplate().find(req.toString());
+			return cessions;
+	}
+
+}

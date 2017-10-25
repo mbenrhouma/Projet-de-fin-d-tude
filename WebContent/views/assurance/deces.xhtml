@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="decesForm" dir="#{languageBean.languageAffich}">
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="Accueil"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.assurance']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.deces']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+				</p:breadCrumb>
+
+
+				<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+				<!-- **************************Formulaire Deces************************************************				 -->
+				<p:fieldset>
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+						<!-- ******************************* Debut Code Client ******************************* -->
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.codeclient']} :"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText style="width: 210px;" id="id_client"
+									value="#{decesBean.codeClientAcquereur}" required="true"
+									label="#{clientmsgs['clientAcquereur.codeclient']}">
+									<p:ajax process="@this" event="change"
+										update="@form"
+										listener="#{decesBean.onChange()}" />
+								</p:inputText>
+							</p:column>
+							<!-- ******************************* Fin Code Client ******************************* -->
+
+							<!-- ******************************* Debut date deces Client ******************************* -->
+
+							<p:column>
+								<h:outputText value="#{decesmsgs['deces.date.deces']} :"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:calendar id="dateDeces" style="width:195px;"
+									value="#{decesBean.newDeces.dateDeces}" pattern="dd/MM/yyyy"
+									required="true" label="#{decesmsgs['deces.date.deces']}"
+									showOn="button"
+									maxdate="#{decesBean.newDeces.dateRemboursement}">
+									<p:ajax update="dateRemb" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+
+						<!-- ******************************* Fin date deces Client ******************************* -->
+
+						<!-- ******************************* Debut groupe Client ******************************* -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{clientmsgs['clientAcquereur.groupe']} :"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column>
+								<p:inputText style="width: 210px;" id="group"
+									value="#{decesBean.newClientAcquereur.groupe.libelle}"
+									label="#{clientmsgs['clientAcquereur.groupe']}" disabled="true">
+								</p:inputText>
+							</p:column>
+<!-- ******************************* Fin groupe Client ******************************* -->
+
+<!-- ******************************* Debut date remboursement  ******************************* -->
+
+							<p:column>
+								<h:outputText value="#{decesmsgs['deces.date.remboursement']} :"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column>
+								<p:calendar id="dateRemb" style="width:195px;"
+									value="#{decesBean.newDeces.dateRemboursement}"
+									pattern="dd/MM/yyyy"
+									label="#{decesmsgs['deces.date.remboursement']}"
+									showOn="button" mindate="#{decesBean.newDeces.dateDeces}">
+									<p:ajax update="dateDeces" event="dateSelect" />
+								</p:calendar>
+							</p:column>
+						</p:row>
+
+<!-- ******************************* Fin date remboursement Client ******************************* -->
+
+<!-- ******************************* Debut Nom Client ******************************* -->
+
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.nomPrenomFr']} :"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nomfr" style="width: 210px;"
+									value="#{decesBean.newClientAcquereur.nomPrenomFr}"
+									disabled="true"
+									label="#{clientmsgs['clientAcquereur.nomPrenomFr']} :">
+								</p:inputText>
+							</p:column>
+
+<!-- ******************************* Fin Nom Client ******************************* -->
+
+<!-- ******************************* Debut capital assurer ******************************* -->
+
+							<p:column>
+								<h:outputText value="#{decesmsgs['deces.capital.assurer']} :"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column>
+								<p:inputText style="width: 220px;"
+									value="#{decesBean.newDeces.capitaleAssure}"
+									label="#{decesmsgs['deces.capital.assurer']}">
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+<!-- ******************************* Fin capital assurer ******************************* -->
+
+<!-- ******************************* Debut adresse Client ******************************* -->
+
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.adresseCorrespondance']} :"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column>
+								<p:inputText style="width: 210px;" id="adresse"
+									value="#{decesBean.newClientAcquereur.adresseCorrespondance}"
+									label="#{clientmsgs['clientAcquereur.adresseCorrespondance']}"
+									disabled="true">
+								</p:inputText>
+							</p:column>
+<!-- ******************************* Fin adresse Client ******************************* -->
+
+<!-- ******************************* Debut capital rembources ******************************* -->
+
+							<p:column>
+								<h:outputText
+									value="#{decesmsgs['deces.capitale.rembources']} :"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column>
+								<p:inputText style="width: 220px;"
+									value="#{decesBean.newDeces.capitaleRembourse}"
+									label="#{decesmsgs['deces.capitale.rembources']}">
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+<!-- ******************************* Fin capital rembources ******************************* -->
+
+<!-- ***********************debut type assurance ****************************************** -->
+                        
+                    <p:row>
+							<p:column>
+								<h:outputText value="#{assurancemsgs['assurance.type.assurance']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							
+                        <p:column >
+								<p:selectOneMenu id="assureur" style="width:195px;"
+									label="#{assurancemsgs['assurance.type.assurance']}"
+									value="#{decesBean.newDeces.assurance}" effect="fade"
+									required="true" converter="assuranceConverter">
+									<p:ajax process="@this" update="assureur" />
+									<f:selectItem noSelectionOption="true"
+										itemLabel="----------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{decesBean.clientAssurer}"
+										var="assurer" 
+											itemLabel="#{assurer.conjoint ==0 ? assurer.clientAcquereur.nomPrenomFr : assurer.clientAcquereur.nomPrenomConjointFr}"
+											itemValue="#{assurer}" />
+								</p:selectOneMenu>
+							</p:column>
+
+<!-- ***********************Fin type assurance****************************************** -->
+
+
+
+<!--**************************************************Debut assureur**************************** -->		
+
+								<p:column>
+									<h:outputText
+										value="#{assureurmsgs['assureur.abreviation']}:"
+										styleClass="weightBold" />
+								</p:column>
+
+								
+								
+								<p:column >
+									<p:inputText 
+									    style="width:220px;"
+										value="#{decesBean.newDeces.assurance.assureur.abreviation}"
+										label="##{assureurmsgs['assureur.abreviation']}"
+										disabled="true">
+									</p:inputText>
+								</p:column>
+								</p:row>
+<!--**************************************************Fin assureur**************************** -->
+
+
+
+					</p:panelGrid>
+				</p:fieldset>
+				<p:spacer />
+
+				<div style="width: 100%; text-align: right">
+
+					<p:commandButton value="#{generalmsgs['navigation.new']}"
+						styleClass="ui-priority-primary"
+						action="#{decesBean.createDeces()}" process="@this"
+						update=":decesForm">
+						<p:resetInput target=":decesForm" />
+					</p:commandButton>
+
+					<p:commandButton value="#{generalmsgs['navigation.ajout']}"
+						styleClass="ui-priority-primary"
+						oncomplete="if(!args.validationFailed){PF('saveDeces').show()};"
+						disabled="#{decesBean.modifDeces != 1}">
+					</p:commandButton>
+
+					<p:commandButton value="#{generalmsgs['navigation.modif']}"
+						styleClass="ui-priority-primary" onstart="PF('saveDeces').show()"
+						oncomplete="if(!args.validationFailed){PF('saveDeces').show()};"
+						process="@this" rendered="#{decesBean.modifDeces == 0}">
+					</p:commandButton>
+
+
+					<p:spacer width="5px" />
+				</div>
+
+				<p:spacer />
+				<p:dataTable id="dta" value="#{decesBean.decess}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.codeDeces}" selection="#{decesBean.selectDeces}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect" listener="#{decesBean.onSelectDeces()}"
+						update=":decesForm:" />
+
+					<p:column filterBy="#{current.assurance.clientAcquereur.codeAcquereur}"
+						sortBy="#{current.assurance.clientAcquereur.codeAcquereur}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{clientmsgs['clientAcquereur.codeclient']}" />
+						</f:facet>
+						<h:outputText value="#{current.assurance.clientAcquereur.codeAcquereur}" />
+					</p:column>
+
+					<p:column filterBy="#{current.assurance.clientAcquereur.groupe}"
+						sortBy="#{current.clientAcquereur.groupe}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{clientmsgs['clientAcquereur.groupe']}" />
+						</f:facet>
+						<h:outputText value="#{current.assurance.clientAcquereur.groupe.libelle}" />
+					</p:column>
+
+					<p:column filterBy="#{current.assurance.clientAcquereur.nomPrenomFr}"
+						sortBy="#{current.clientAcquereur.nomPrenomFr}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.nomPrenomFr']}" />
+						</f:facet>
+						<h:outputText value="#{current.assurance.clientAcquereur.nomPrenomFr}" />
+					</p:column>
+
+					<p:column
+						filterBy="#{current.assurance.clientAcquereur.adresseCorrespondance}"
+						sortBy="#{current.assurance.clientAcquereur.adresseCorrespondance}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.adresseCorrespondance']}" />
+						</f:facet>
+						<h:outputText
+							value="#{current.assurance.clientAcquereur.adresseCorrespondance}" />
+					</p:column>
+
+					<p:column filterBy="#{current.assurance.assureur}"
+						sortBy="#{current.assurance.assureur.abreviation}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{assureurmsgs['assureur.abreviation']}" />
+						</f:facet>
+						<h:outputText
+							value="#{current.assurance.assureur.abreviation}" />
+					</p:column>
+
+					<p:column filterBy="#{current.dateDeces}"
+						sortBy="#{current.dateDeces}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{decesmsgs['deces.date.deces']}" />
+						</f:facet>
+						<h:outputText value="#{current.dateDeces}"
+							converter="myDateTimeConverter" />
+					</p:column>
+
+					<p:column filterBy="#{current.capitaleAssure}"
+						sortBy="#{current.capitaleAssure}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{decesmsgs['deces.capital.assurer']}" />
+						</f:facet>
+						<h:outputText value="#{current.capitaleAssure}" />
+					</p:column>
+
+					<p:column filterBy="#{current.capitaleRembourse}"
+						sortBy="#{current.capitaleRembourse}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{decesmsgs['deces.capitale.rembources']}" />
+						</f:facet>
+						<h:outputText value="#{current.capitaleRembourse}" />
+					</p:column>
+
+					<p:column filterBy="#{current.dateRemboursement}"
+						sortBy="#{current.dateRemboursement}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{decesmsgs['deces.date.remboursement']}" />
+						</f:facet>
+						<h:outputText value="#{current.dateRemboursement}"
+							converter="myDateTimeConverter" />
+					</p:column>
+
+
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<p:confirmDialog showEffect="fade" hideEffect="fade"
+			widgetVar="saveDeces"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}">
+			<div align="right">
+				<h:form>
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						styleClass="ui-priority-primary" icon="ui-icon-check"
+						actionListener="#{decesBean.saveDeces()}"
+						oncomplete="PF('saveDeces').hide() ;" update=":decesForm"
+						immediate="true" />
+					<p:commandButton value="#{generalmsgs['popup.quitter']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('saveDeces').hide()" update=":decesForm" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Arrangement;
+
+public interface ArrangementService extends AbstractService<Arrangement>{
+	Arrangement	findById(String id);
+}

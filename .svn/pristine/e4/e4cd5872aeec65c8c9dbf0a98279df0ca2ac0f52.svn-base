@@ -1,0 +1,72 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.ClientLocataireDAO;
+import com.cynapsys.entities.ClientLocataire;
+import com.cynapsys.service.ClientLocataireService;
+@Service("clientLocataireService")
+public class ClientLocataireServiceImpl  implements ClientLocataireService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private ClientLocataireDAO clientLocataireDAO;
+	@Override
+	public Object save(ClientLocataire entity) {
+		return clientLocataireDAO.save(entity);
+	}
+	@Override
+	public void flush(ClientLocataire entity) {
+		clientLocataireDAO.flush(entity);		
+	}
+	@Override
+	public void update(ClientLocataire entity) {
+		clientLocataireDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(ClientLocataire entity) throws Exception {
+		return clientLocataireDAO.delete(entity);
+	}
+	@Override
+	public ClientLocataire find(Object idClass) {
+		return clientLocataireDAO.find(idClass);
+	}
+	@Override
+	public List<ClientLocataire> findAll() {
+		return clientLocataireDAO.findAll();
+	}
+	@Override
+	public List<ClientLocataire> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return clientLocataireDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return clientLocataireDAO.getCount(filters);
+	}
+	@Override
+	public List<ClientLocataire> findSorted(String sortField, boolean sortOrder) {
+		return clientLocataireDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public ClientLocataire findById(Integer id) {
+		return clientLocataireDAO.findById(id);
+	}
+	public ClientLocataireDAO getClientLocataireDAO() {
+		return clientLocataireDAO;
+	}
+	public void setClientLocataireDAO(ClientLocataireDAO clientLocataireDAO) {
+		this.clientLocataireDAO = clientLocataireDAO;
+	}
+	@Override
+	public List<ClientLocataire> findDTA() {
+		return clientLocataireDAO.findDTA();
+	}
+
+
+}

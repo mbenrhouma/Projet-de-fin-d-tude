@@ -1,0 +1,33 @@
+codeLocataire.codeLocataire=Code Locataire
+codeLocataire.cin=N°CIN
+codeLocataire.nomPrenom= Nom et Prénom
+codeLocataire.raisonSociale=Raison Sociale
+codeLocataire.adresseLogement=Adresse Logement
+codeLocataire.adresseCorrespondance=Adresse Correspondance
+codeLocataire.codeMaj=Code Maj
+codeLocataire.contratLocataire=Contrat Locataire
+codeLocataire.groupe=Groupe
+codeLocataire.logement=Logement
+codeLocataire.montantLogementAnnuel=Montant loyer annuel
+codeLocataire.dureeContrat=Durée contrat 
+codeLocataire.DateDebut=Date Début
+codeLocataire.datefin=Date Fin
+codeLocataire.LoyerMensuel=Loyer mensuel 
+codeLocataire.tauxAugmentationAnnuel=Taux augmentation annuel  
+codeLocataire.contratLocation=Contrat Location
+codeLocataire.DateEnregistrement=Date Enregistrement
+codeLocataire.soldeLoyer=Solde Loyer 
+codeLocataire.prix=Prix
+codeLocataire.recherche=Recherche
+
+
+
+
+
+
+
+clientLocataire.cree.succes=Client Locataire créé avec succès
+clientLocataire.modifie.succes=Client Locataire modiféé avec sucès
+clientLocataire.supprime.succes=Client Locataire supprimé avec sucès
+clientLocataire.error.supprimer=Vous ne pouvez pas supprimer ce Client Locataire
+clientLocataire.error.existe=Client Locataire existe 

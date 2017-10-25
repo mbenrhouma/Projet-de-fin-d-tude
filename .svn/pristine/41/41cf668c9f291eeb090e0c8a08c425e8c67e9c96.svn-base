@@ -1,0 +1,204 @@
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@SequenceGenerator(name="SEQ_MOUVEMENT",sequenceName="S_MOUVEMENT")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Mouvement.findAll", query = "SELECT m FROM Mouvement m"),
+    @NamedQuery(name = "Mouvement.findByCodeMv", query = "SELECT m FROM Mouvement m WHERE m.codeMv = :codeMv"),
+    @NamedQuery(name = "Mouvement.findByDateMv", query = "SELECT m FROM Mouvement m WHERE m.dateMv = :dateMv"),
+    @NamedQuery(name = "Mouvement.findByMontantCredit", query = "SELECT m FROM Mouvement m WHERE m.montantCredit = :montantCredit"),
+    @NamedQuery(name = "Mouvement.findByMontantDebit", query = "SELECT m FROM Mouvement m WHERE m.montantDebit = :montantDebit"),
+    @NamedQuery(name = "Mouvement.findBySoldeDebiteur", query = "SELECT m FROM Mouvement m WHERE m.soldeDebiteur = :soldeDebiteur"),
+    @NamedQuery(name = "Mouvement.findBySoldeCrediteur", query = "SELECT m FROM Mouvement m WHERE m.soldeCrediteur = :soldeCrediteur"),
+    @NamedQuery(name = "Mouvement.findByCCompt", query = "SELECT m FROM Mouvement m WHERE m.cCompt = :cCompt"),
+    @NamedQuery(name = "Mouvement.findByNbrMoisRetard", query = "SELECT m FROM Mouvement m WHERE m.nbrMoisRetard = :nbrMoisRetard")})
+public class Mouvement implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_MOUVEMENT")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CODE_MV", nullable = false)
+    private Integer codeMv;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATE_MV", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateMv;
+    @Column(name = "MONTANT_CREDIT")
+    private BigInteger montantCredit;
+    @Column(name = "MONTANT_DEBIT")
+    private BigInteger montantDebit;
+    @Column(name = "SOLDE_DEBITEUR")
+    private BigInteger soldeDebiteur;
+    @Column(name = "SOLDE_CREDITEUR")
+    private BigInteger soldeCrediteur;
+    @Column(name = "C_COMPT")
+    private Integer cCompt;
+    @Column(name = "NBR_MOIS_RETARD")
+    private Integer nbrMoisRetard;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mouvement")
+    private List<Quitance> quitanceList;
+    @JoinColumn(name = "CODE_ACQUEREUR", referencedColumnName = "CODE_ACQUEREUR", nullable = false)
+    @ManyToOne(optional = false)
+    private ClientAcquereur clientAcquereur;
+    @JoinColumn(name = "NUM_QUITTANCE", referencedColumnName = "NUM_QUITTANCE")
+    @ManyToOne
+    private Quitance quitance;
+
+    public Mouvement() {
+    }
+
+    public Mouvement(Integer codeMv) {
+        this.codeMv = codeMv;
+    }
+
+    public Mouvement(Integer codeMv, Date dateMv) {
+        this.codeMv = codeMv;
+        this.dateMv = dateMv;
+    }
+
+    public Integer getCodeMv() {
+        return codeMv;
+    }
+
+    public void setCodeMv(Integer codeMv) {
+        this.codeMv = codeMv;
+    }
+
+    public Date getDateMv() {
+        return dateMv;
+    }
+
+    public void setDateMv(Date dateMv) {
+        this.dateMv = dateMv;
+    }
+
+    public BigInteger getMontantCredit() {
+        return montantCredit;
+    }
+
+    public void setMontantCredit(BigInteger montantCredit) {
+        this.montantCredit = montantCredit;
+    }
+
+    public BigInteger getMontantDebit() {
+        return montantDebit;
+    }
+
+    public void setMontantDebit(BigInteger montantDebit) {
+        this.montantDebit = montantDebit;
+    }
+
+    public BigInteger getSoldeDebiteur() {
+        return soldeDebiteur;
+    }
+
+    public void setSoldeDebiteur(BigInteger soldeDebiteur) {
+        this.soldeDebiteur = soldeDebiteur;
+    }
+
+    public BigInteger getSoldeCrediteur() {
+        return soldeCrediteur;
+    }
+
+    public void setSoldeCrediteur(BigInteger soldeCrediteur) {
+        this.soldeCrediteur = soldeCrediteur;
+    }
+
+    public Integer getCCompt() {
+        return cCompt;
+    }
+
+    public void setCCompt(Integer cCompt) {
+        this.cCompt = cCompt;
+    }
+
+    public Integer getNbrMoisRetard() {
+        return nbrMoisRetard;
+    }
+
+    public void setNbrMoisRetard(Integer nbrMoisRetard) {
+        this.nbrMoisRetard = nbrMoisRetard;
+    }
+
+    @XmlTransient
+    public List<Quitance> getQuitanceList() {
+        return quitanceList;
+    }
+
+    public void setQuitanceList(List<Quitance> quitanceList) {
+        this.quitanceList = quitanceList;
+    }
+
+    public ClientAcquereur getClientAcquereur() {
+        return clientAcquereur;
+    }
+
+    public void setClientAcquereur(ClientAcquereur clientAcquereur) {
+        this.clientAcquereur = clientAcquereur;
+    }
+
+    public Quitance getQuitance() {
+        return quitance;
+    }
+
+    public void setQuitance(Quitance quitance) {
+        this.quitance = quitance;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codeMv != null ? codeMv.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Mouvement)) {
+            return false;
+        }
+        Mouvement other = (Mouvement) object;
+        if ((this.codeMv == null && other.codeMv != null) || (this.codeMv != null && !this.codeMv.equals(other.codeMv))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entity.Mouvement[ codeMv=" + codeMv + " ]";
+    }
+    
+}

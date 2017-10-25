@@ -1,0 +1,55 @@
+package com.cynapsys.Views.Converter;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+
+import com.cynapsys.entities.CodePostal;
+import com.cynapsys.service.CodePostalService;
+
+@ManagedBean
+@ApplicationScoped
+public class CodePostalConverterBean {
+
+	@ManagedProperty(value = "#{codePostalService}")
+	private CodePostalService codePostalService;
+
+	public CodePostalService getCodePostalService() {
+		return codePostalService;
+	}
+
+	public void setCodePostalService(CodePostalService codePostalService) {
+		this.codePostalService = codePostalService;
+	}
+
+	@FacesConverter(value = "codePostalConverter")
+	public static class CodePostalConverter implements Converter {
+
+		@Override
+		public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+			CodePostal codePostal = new CodePostal();
+			if (arg2 != null && !String.valueOf(arg2).equals("") && !arg2.contains("------------")) {
+				CodePostalConverterBean codePostalConverterBean = (CodePostalConverterBean) FacesContext.getCurrentInstance()
+						.getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(),
+								"#{codePostalConverterBean}", CodePostalConverterBean.class);
+
+				codePostal = codePostalConverterBean.getCodePostalService().findById(arg2);
+
+			}
+
+			return codePostal;
+		}
+
+		@Override
+		public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
+			String id = (arg2 instanceof CodePostal) ? ((CodePostal) arg2).getCode() : null;
+
+			return (id != null) ? String.valueOf(id) : null;
+		}
+
+	}
+}

@@ -1,0 +1,17 @@
+employeur.code=Code employeur
+employeur.conjoint=Nom employeur conjoint
+employeur.erreur.existe=Employeur existe
+employeur.matricule_conjoint=Matricule employeur conjoint
+employeur.cree.succes=Employeur cr\u00E9e
+employeur.modifie.succes=Employeur modifi\u00E9
+employeur.supprime.succes=Employeur supprim\u00E9
+employeur.error.supprime=Impossible de supprimer cet employeur
+employeur.error.modifie=Impossible de modifier cet employeur
+employeur.nom=Nom employeur
+employeur.raison_social=Raison Social
+employeur.abreviation=Abr\u00E9viation
+
+employeur.adresse=Adresse employeur
+employeur.num_tel=Num\u00E9ro de t\u00E9lephone
+employeur.fax=Num\u00E9ro de fax
+employeur.matricule=matricule

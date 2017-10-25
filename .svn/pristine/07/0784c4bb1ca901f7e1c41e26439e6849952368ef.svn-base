@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.ClientLocataire;
+
+public interface ClientLocataireDAO  extends AbstractDAO<ClientLocataire>{
+	ClientLocataire findById(String id);
+}

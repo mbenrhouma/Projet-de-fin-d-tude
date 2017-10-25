@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="recetteForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="Prise en charge des encaissements employeur"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+
+					<p:row>
+
+						<p:column>
+							<h:outputText value="#{quittancemsgs['quittance.num']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column>
+							<p:inputText id="numquittance" yearRange="c-100:c+100"
+								disabled="true" showOn="button" label="" style="width:210px"
+								navigator="true" required="true"
+								value="#{reglemenetEmployeurBean.newQuittanceEmployeur.numQuittance}">
+							</p:inputText>
+						</p:column>
+
+						<p:column>
+
+							<h:outputText value="#{employeurmsgs['employeur.nom']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column id="employeurs">
+
+							<p:selectOneMenu filter="true" style="width:194px"
+								required="true" converter="employeurConverter"
+								value="#{reglemenetEmployeurBean.selectEmployeur}"
+								disabled="true">
+								<p:ajax update="duréé"></p:ajax>
+								<f:selectItem noSelectionOption="true"
+									itemLabel="--------------------------------------------------"
+									itemValue="" />
+								<f:selectItems value="#{reglemenetEmployeurBean.employeurs}"
+									var="em" itemLabel="#{em.nomEmployeurFr}" itemValue="#{em}" />
+							</p:selectOneMenu>
+
+						</p:column>
+
+
+
+					</p:row>
+
+
+
+					<p:row>
+
+						<p:column style="width: 150px;">
+							<h:outputText value="#{quittancemsgs['quittance.nombre_mois']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column>
+							<p:inputText id="duréé" style="width:210px" required="true"
+								value="#{reglemenetEmployeurBean.newQuittanceEmployeur.duree}"
+								rendered="true"
+								disabled="reglemenetEmployeurBean.selectEmployeur == null">
+								<p:ajax event="blur"
+									listener="#{reglemenetEmployeurBean.initDate}"
+									update="datedebut datefin"></p:ajax>
+							</p:inputText>
+						</p:column>
+
+						<p:column style="width: 150px;">
+							<h:outputText value="#{cessionmsgs['cession.date_debut']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column>
+							<p:calendar id="datedebut" style="width: 200px"
+								yearRange="c-100:c+100" showOn="button" required="true"
+								label="#{cessionmsgs['cession.date_debut']}" navigator="true"
+								disabled="#{reglemenetEmployeurBean.newQuittanceEmployeur.duree == 0}"
+								value="#{reglemenetEmployeurBean.newQuittanceEmployeur.dateDeb}">
+								<p:ajax event="dateSelect"
+									listener="#{reglemenetEmployeurBean.updateDateFin}"
+									update="datefin datedebut montant dif  recetteForm:dta det" />
+							</p:calendar>
+						</p:column>
+
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText value="#{cessionmsgs['cession.date_fin']}"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column>
+							<p:inputText id="datefin" yearRange="c-100:c+100" showOn="button"
+								label="#{cessionmsgs['cession.date_fin']}:" style="width:210px"
+								navigator="true" disabled="true" required="true"
+								value="#{reglemenetEmployeurBean.newQuittanceEmployeur.dateFin}">
+
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:inputText>
+						</p:column>
+
+
+
+						<p:column>
+
+							<h:outputText
+								value="#{quittancemsgs['quittance_employeur.montant']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column>
+							<p:inputText id="montant" yearRange="c-100:c+100" showOn="button"
+								label="#{quittancemsgs['quittance_employeur.montant']}"
+								navigator="true" style="width:210px" required="true"
+								value="#{reglemenetEmployeurBean.reste}" disabled="true">
+							</p:inputText>
+						</p:column>
+
+					</p:row>
+
+
+					<p:row>
+
+
+
+						<p:column>
+
+							<h:outputText value="#{quittancemsgs['quittance.montant']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column>
+							<p:inputText id="montantpayé" yearRange="c-100:c+100"
+								style="width:210px" showOn="button" required="true"
+								label="#{quittancemsgs['quittance.montant']}" navigator="true"
+								value="#{reglemenetEmployeurBean.newQuittanceEmployeur.montantEnc}"
+								disabled="true">
+								<p:ajax event="keyup" update="dif"
+									listener="#{reglemenetEmployeurBean.calculerDifference}" />
+							</p:inputText>
+						</p:column>
+
+						<p:column>
+
+							<h:outputText
+								value="#{quittancemsgs['quittance_employeur.montant_restant']}:"
+								styleClass="weightBold" />
+					 		<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+
+						<p:column>
+
+							<p:inputText id="dif" yearRange="c-100:c+100" showOn="button"
+								label="#{quittancemsgs['quittance_employeur.montant_restant']}"
+								style="width:210px" required="true"
+								value="#{reglemenetEmployeurBean.difference}" disabled="true">
+							</p:inputText>
+						</p:column>
+					</p:row>
+
+
+
+
+
+
+				</p:panelGrid>
+				<br />
+				<br />
+
+				<div style="width: 100%; text-align: right">
+
+
+
+
+
+
+					<p:commandButton id="det" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.consulter']}" ajax="true"
+						process="@this" disabled="#{reglemenetEmployeurBean.difference == null}"
+						actionListener="#{reglemenetEmployeurBean.ListerCession}"
+						update="@all" rendered="true">
+						<p:resetInput target="recetteForm" />
+					</p:commandButton>
+
+				</div>
+				<br />
+				<br />
+				<p:dataTable id="dta"
+					value="#{reglemenetEmployeurBean.cessioneEmploye}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.cession.id}" editable="true" editMode="cell"
+					widgetVar="cellCession"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+					<!-- 					<p:column> -->
+					<!-- 						<f:facet name="header"> -->
+					<!-- 							<h:outputText value="codeEmployeur" /> -->
+					<!-- 						</f:facet> -->
+					<!-- 						<h:outputText value="#{current.cession.cessionClient.clientAcquereur }" /> -->
+					<!-- 					</p:column> -->
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.codeclient']}" />
+						</f:facet>
+						<h:outputText
+							value="#{current.cession.cessionClient.clientAcquereur.codeAcquereur}">
+
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientmsgs['clientAcquereur.nomPrenomFr']}" />
+						</f:facet>
+						<h:outputText rendered="#{current.cession.conjoint == 0}"
+							value="#{current.cession.cessionClient.clientAcquereur.nomPrenomFr}">
+						</h:outputText>
+						<h:outputText rendered="#{current.cession.conjoint == 1}"
+							value="#{current.cession.cessionClient.clientAcquereur.nomPrenomConjointFr}">
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{cessionmsgs['employeur']}:" />
+						</f:facet>
+						<h:outputText value="#{current.cession.employeur.abreviation}">
+						</h:outputText>
+
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{cessionmsgs['cession.matriculeemploye']}" />
+						</f:facet>
+						<h:outputText value="#{current.cession.matriculeEmployer}">
+						</h:outputText>
+
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{cessionmsgs['cession.mensualité']}" />
+						</f:facet>
+						<h:outputText value="#{current.cession.mensualite}">
+						</h:outputText>
+
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{quittancemsgs['quittance.nombre_mois']}" />
+						</f:facet>
+						<h:outputText value="#{current.duree}" />
+					</p:column>
+
+
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText
+								value="#{quittancemsgs['quittance_employeur.montant']}" />
+						</f:facet>
+						<h:outputText value="#{current.montant}">
+							<f:convertNumber type="currency" currencySymbol="DT" />
+						</h:outputText>
+					</p:column>
+
+
+
+					<p:column headerText="#{quittancemsgs['quitttance.montantrecu']}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{current.montantrecu}">
+									<f:convertNumber type="currency" currencySymbol="DT" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="modelInput" value="#{current.montantrecu}" required="true"
+									style="width:96%">
+									
+								</p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText
+								value="#{quittancemsgs['quittance_employeur.montant_restant']}" />
+						</f:facet>
+						<h:outputText id="diff"
+							value="#{current.montant - current.montantrecu}">
+							<f:convertNumber type="currency" currencySymbol="DT" />
+						</h:outputText>
+
+					</p:column>
+
+
+				</p:dataTable>
+				<br />
+				<br />
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						oncomplete="if(!args.validationFailed) {PF('newConfirmation').show()};"
+						update="@form">
+
+						<p:resetInput target="recetteForm" />
+					</p:commandButton>
+
+					<!-- 					<p:commandButton id="valide" styleClass="ui-priority-primary" -->
+					<!-- 						value="Valider" ajax="true" onstart="PF('newConfirmation').show()" -->
+					<!-- 						update="@form"> -->
+					<!-- 						<p:resetInput target="recetteForm" /> -->
+					<!-- 					</p:commandButton> -->
+				</div>
+			</p:panel>
+
+
+
+
+
+		</h:form>
+
+		<p:confirmDialog id="diagSave"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="newConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form>
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update="@all"
+						oncomplete="PF('newConfirmation').hide() ;"
+						actionListener="#{reglemenetEmployeurBean.saveQuittance}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update=":recetteForm"
+						onclick="PF('newConfirmation').hide() "
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+	</ui:define>
+</ui:composition>
+</html>

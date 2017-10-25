@@ -1,0 +1,196 @@
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@Table(name = "CONTRAT_LOCATAIRE")
+@SequenceGenerator(name="SEQ_CONTRAT_LOCATAIRE",sequenceName="S_CONTRAT_LOCATAIRE")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "ContratLocataire.findAll", query = "SELECT c FROM ContratLocataire c"),
+    @NamedQuery(name = "ContratLocataire.findById", query = "SELECT c FROM ContratLocataire c WHERE c.id = :id"),
+    @NamedQuery(name = "ContratLocataire.findByDuree", query = "SELECT c FROM ContratLocataire c WHERE c.duree = :duree"),
+    @NamedQuery(name = "ContratLocataire.findByDatedebut", query = "SELECT c FROM ContratLocataire c WHERE c.datedebut = :datedebut"),
+    @NamedQuery(name = "ContratLocataire.findByDateFin", query = "SELECT c FROM ContratLocataire c WHERE c.dateFin = :dateFin"),
+    @NamedQuery(name = "ContratLocataire.findByLoyermensuel", query = "SELECT c FROM ContratLocataire c WHERE c.loyermensuel = :loyermensuel"),
+    @NamedQuery(name = "ContratLocataire.findByEtatcontrat", query = "SELECT c FROM ContratLocataire c WHERE c.etatcontrat = :etatcontrat"),
+    @NamedQuery(name = "ContratLocataire.findByDateenregistrement", query = "SELECT c FROM ContratLocataire c WHERE c.dateenregistrement = :dateenregistrement")})
+public class ContratLocataire implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_CONTRAT_LOCATAIRE")
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private short duree;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datedebut;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATE_FIN", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateFin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private BigInteger loyermensuel;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private short etatcontrat;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateenregistrement;
+    @JoinColumn(name = "CODE_LOCATAIRE", referencedColumnName = "CODE_LOCATAIRE", nullable = false)
+    @ManyToOne(optional = false)
+    private ClientLocataire clientLocataire;
+    @OneToMany(mappedBy = "contratLocataire")
+    private List<ClientLocataire> clientLocataireList;
+
+    public ContratLocataire() {
+    }
+
+    public ContratLocataire(Integer id) {
+        this.id = id;
+    }
+
+    public ContratLocataire(Integer id, short duree, Date datedebut, Date dateFin, BigInteger loyermensuel, short etatcontrat) {
+        this.id = id;
+        this.duree = duree;
+        this.datedebut = datedebut;
+        this.dateFin = dateFin;
+        this.loyermensuel = loyermensuel;
+        this.etatcontrat = etatcontrat;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public short getDuree() {
+        return duree;
+    }
+
+    public void setDuree(short duree) {
+        this.duree = duree;
+    }
+
+    public Date getDatedebut() {
+        return datedebut;
+    }
+
+    public void setDatedebut(Date datedebut) {
+        this.datedebut = datedebut;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+
+    public BigInteger getLoyermensuel() {
+        return loyermensuel;
+    }
+
+    public void setLoyermensuel(BigInteger loyermensuel) {
+        this.loyermensuel = loyermensuel;
+    }
+
+    public short getEtatcontrat() {
+        return etatcontrat;
+    }
+
+    public void setEtatcontrat(short etatcontrat) {
+        this.etatcontrat = etatcontrat;
+    }
+
+    public Date getDateenregistrement() {
+        return dateenregistrement;
+    }
+
+    public void setDateenregistrement(Date dateenregistrement) {
+        this.dateenregistrement = dateenregistrement;
+    }
+
+    public ClientLocataire getClientLocataire() {
+        return clientLocataire;
+    }
+
+    public void setClientLocataire(ClientLocataire clientLocataire) {
+        this.clientLocataire = clientLocataire;
+    }
+
+    @XmlTransient
+    public List<ClientLocataire> getClientLocataireList() {
+        return clientLocataireList;
+    }
+
+    public void setClientLocataireList(List<ClientLocataire> clientLocataireList) {
+        this.clientLocataireList = clientLocataireList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof ContratLocataire)) {
+            return false;
+        }
+        ContratLocataire other = (ContratLocataire) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entity.ContratLocataire[ id=" + id + " ]";
+    }
+    
+}

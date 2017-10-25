@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.CodePostalDAO;
+import com.cynapsys.entities.CodePostal;
+
+@SuppressWarnings("serial")
+@Repository("codePostalDAO")
+public class CodePostalDAOImpl extends AbstractDAOImpl<CodePostal>
+		implements CodePostalDAO, Serializable {
+
+	public CodePostalDAOImpl() {
+		super(CodePostal.class);
+	}
+
+	@Override
+	public CodePostal findById(String id) {
+		
+		List<CodePostal> list=new ArrayList<CodePostal>();
+		try {
+			Criteria criteria= getSession().createCriteria(CodePostal.class);
+			criteria.add(Restrictions.eq("code", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

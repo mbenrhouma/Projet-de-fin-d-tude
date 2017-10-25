@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Reclamation;
+
+public interface ReclamationService extends AbstractService<Reclamation>{
+	Reclamation	findById(String id);
+}

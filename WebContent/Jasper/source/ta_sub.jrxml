@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ta_sub" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0b4c1f85-76c4-496e-a408-c0c9d38fbec1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="97"/>
+	<property name="ireport.y" value="0"/>
+	<field name="dateDeb" class="java.util.Date"/>
+	<field name="dateFin" class="java.util.Date"/>
+	<field name="capitalRestantDu" class="java.lang.Number"/>
+	<field name="interet" class="java.lang.Number"/>
+	<field name="amortissement" class="java.lang.Number"/>
+	<field name="annuite" class="java.lang.Number"/>
+	<field name="montantMens" class="java.lang.Number"/>
+	<field name="assuranceAnnuelle" class="java.lang.Number"/>
+	<field name="taxeAssurance" class="java.lang.Number"/>
+	<field name="mensualiteDef" class="java.lang.Number"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="802027cc-adfd-49f7-a6d7-0b1ea2c07949" mode="Transparent" x="21" y="13" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DATE DEBUT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a280db36-b4c4-493d-b5ca-8365abc897ba" mode="Transparent" x="285" y="13" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="0" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[AMORTISSEMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3b74d108-5b70-47a5-8c5c-93270c6d6deb" mode="Transparent" x="153" y="13" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CRD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8f12dba4-f4d4-443a-b81b-806acd7bc993" mode="Transparent" x="87" y="13" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DATE FIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="acbce3f6-0cc0-4235-a23f-36f3dd930ffb" mode="Transparent" x="219" y="13" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[INTERET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="93dd6bb2-29c6-418d-a577-479dc27e22c1" mode="Transparent" x="353" y="13" width="79" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ANNUITE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="30170748-d6cd-4cac-a70a-e987afa2d532" mode="Transparent" x="432" y="13" width="72" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MENSUALITE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9eece2f7-9571-4e20-a4fa-6241ee9d8028" mode="Transparent" x="504" y="13" width="95" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ASSURANCE ANNUELLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="084ff7c3-fedc-4334-bd20-38d96353b64c" mode="Transparent" x="599" y="13" width="96" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TAX ASSURANCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bbc3e29e-9e86-423b-bd3a-1e188993d8fb" mode="Transparent" x="695" y="13" width="97" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box topPadding="1" leftPadding="0" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MENSUALITE DEF]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="MM/yyyy">
+				<reportElement uuid="3d45ddab-fc82-4208-888d-c63aa1301788" mode="Transparent" x="21" y="0" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateDeb}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/yyyy">
+				<reportElement uuid="1e426738-3779-4565-9740-15843170d683" mode="Transparent" x="87" y="0" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateFin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="010920d9-72d4-4a1b-a407-04bc9015fcb9" mode="Transparent" x="153" y="0" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{capitalRestantDu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="300273eb-e037-4be1-98a0-cc1537f21eb6" mode="Transparent" x="219" y="0" width="66" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{interet}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b101c22d-9ffa-43f1-9eb2-4c51b4391de3" mode="Transparent" x="285" y="0" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amortissement}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="68fde0f9-2a71-4284-9159-4180f576310b" mode="Transparent" x="353" y="0" width="79" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{annuite}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="45454a24-89bb-4580-9f36-f812e85321db" mode="Transparent" x="432" y="0" width="72" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montantMens}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="01e8f0b3-e28f-440f-b45e-16a514d99625" mode="Transparent" x="504" y="0" width="95" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assuranceAnnuelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="11dcaa70-f340-458a-8bb0-6e78b744971b" mode="Transparent" x="599" y="0" width="96" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxeAssurance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="829d284f-c68c-4b40-9d59-3496ce7c7b63" mode="Transparent" x="695" y="0" width="97" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mensualiteDef}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

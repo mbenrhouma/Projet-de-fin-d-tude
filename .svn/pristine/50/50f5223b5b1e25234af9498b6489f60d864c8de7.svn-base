@@ -1,0 +1,136 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.QuitanceDAO;
+import com.cynapsys.entities.Quitance;
+
+@SuppressWarnings("serial")
+@Repository("quitanceDAO")
+public class QuitanceDAOImpl extends AbstractDAOImpl<Quitance>
+		implements QuitanceDAO, Serializable {
+
+	public QuitanceDAOImpl() {
+		super(Quitance.class);
+	}
+
+	@Override
+	public Quitance findById(String id) {
+		
+		List<Quitance> list=new ArrayList<Quitance>();
+		try {
+			Criteria criteria= getSession().createCriteria(Quitance.class);
+			criteria.add(Restrictions.eq("numQuittance", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+	
+	@Override
+	public List<Quitance> rechercheQuitance(Quitance quitance) {
+		List<Quitance> list = new ArrayList<Quitance>();
+		try {
+		
+			Criteria criteria = getSession().createCriteria(Quitance.class);
+
+			
+
+			if(quitance.getNumQuittance()!=null && !quitance.getNumQuittance().equals("") ){
+				criteria.add(Restrictions.eq("numQuittance", quitance.getNumQuittance()));
+			}
+
+			if(quitance.getMontant()!=null ){
+				criteria.add(Restrictions.eq("montant", quitance.getMontant()));
+			}
+			if(quitance.getNomEmployeur()!=null ){
+				criteria.add(Restrictions.eq("nomEmployeur", quitance.getNomEmployeur()));
+			}
+			
+			if(quitance.getCompteAttente()!=null && quitance.getCompteAttente().getNumCompte()!=null ){
+				criteria.add(Restrictions.eq("compteAttente.numCompte", quitance.getCompteAttente().getNumCompte()));
+			}
+		
+					    
+			if(quitance.getEtatQuitance()!=null ){
+				criteria.add(Restrictions.eq("etatQuittance", quitance.getEtatQuitance()));
+			}
+			
+			return criteria.list();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return list;
+		}
+	}
+
+	@Override
+	public List<Quitance> findDTA() {
+		List<Quitance> list = new ArrayList<Quitance>();
+		StringBuilder req = new StringBuilder();
+		req.append(
+				"from Quitance I left join fetch I.compteAttente ");
+		list = (List<Quitance>) this.getHibernateTemplate().find(req.toString());
+
+		if (list != null && !list.isEmpty()) {
+			return list;
+		} else {
+			return null;
+
+		}
+	}
+
+	@Override
+	public List<Quitance> rechercheAv(Integer montantQuittanceRecheche, String numQuittancerecherche,
+			Date dateversemenDe, Date DatedateversemenA, String numCompteDattenterecherche, Date dateVersement,Integer etatQuitannace) {
+		
+SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		
+		List<Quitance> list = new ArrayList<Quitance>();
+		StringBuilder req = new StringBuilder();
+		req.append("from Quitance I left join fetch I.compteAttente where 1=1");
+		
+		if (etatQuitannace != null) {
+			req.append(" and I.etatQuittance =").append(etatQuitannace);
+		}
+	
+		if (montantQuittanceRecheche != null) {
+			req.append(" and I.montant =").append(montantQuittanceRecheche);
+		}
+		if (numQuittancerecherche != null ) {
+			req.append(" and I.numQuittance ='").append(numQuittancerecherche).append("'");
+		}
+		if(dateversemenDe!=null){
+			req.append(" and I.dateVersement >= to_date('").append(format.format(dateversemenDe)).append("','dd/MM/yyyy')");
+		}
+			if(DatedateversemenA!=null){	
+			req.append(" and I.dateVersement <= to_date('").append(format.format(DatedateversemenA)).append("','dd/MM/yyyy')");
+		}
+		if(dateVersement!=null){
+			req.append(" and I.dateVersement == to_date('").append(format.format(dateVersement)).append("','dd/MM/yyyy')");
+		}
+			
+		if(numCompteDattenterecherche!=null){	
+			req.append(" and I.compteAttente.numCompte =='").append(numCompteDattenterecherche).append("'");
+		
+		
+
+		}
+	
+		list = (List<Quitance>) this.getHibernateTemplate().find(req.toString());
+
+		return list;
+	}
+
+}

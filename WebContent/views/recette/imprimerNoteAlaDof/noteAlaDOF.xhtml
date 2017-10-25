@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+
+
+		<h:form id="imprimerMainleveeForm"
+			dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.recette']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel
+							value="#{toppanmsgs['header.recette.imprimerNoteAlaDOF']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+
+				</p:breadCrumb>
+				<p:fieldset>
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+						<!--  ***********************************************CODE LOGEMENT***************************************************   -->
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.Client']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="imprimermainlevee_client" filter="true"
+									filterMatchMode="contains"
+									value="#{noteAlaDOFBean.clientAquereur}"
+									required="true" converter="clientAcquereurConverter"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.Client']}"
+									rendered="true">
+									<p:ajax event="change"
+										update="mainLevee_client_groupe mainlevee_client_nom mainlevee_client_adress"></p:ajax>
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems
+										value="#{noteAlaDOFBean.listClientAcquereur}"
+										var="clientAc" itemLabel="#{clientAc.codeAcquereur}"
+										itemValue="#{clientAc}" />
+								</p:selectOneMenu>
+							</p:column>
+							<!--************************************************************Groupe*******************************************************************  -->
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.groupe']}:"
+									styleClass="weightBold" />
+
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="mainLevee_client_groupe" style="width:210px"
+									value="#{noteAlaDOFBean.clientAquereur.groupe.libelle}"
+									readonly="true"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.groupe=']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+						</p:row>
+						<!--***********************************************NOM ACQUEREUR*********************************************************************************  -->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.nomPrenom']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="mainlevee_client_nom" style="width:210px"
+									value="#{noteAlaDOFBean.clientAquereur.nomPrenomFr}"
+									readonly="true"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.nomPrenom']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+
+
+							<!--********************************************************************ADRESSE ACQUEREUR********************************************************************  -->
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.adresseClient']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="mainlevee_client_adress" style="width:210px"
+									value="#{noteAlaDOFBean.clientAquereur.adresseCorrespondance}"
+									readonly="true"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.adresseClient']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+						
+					
+						<p:row>
+							<p:column style="width: 150px;">
+								
+								<h:outputText 
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.datedernierequittance']}:"
+									styleClass="weightBold" />
+									
+									
+								<h:outputText   value="*" styleClass="required-star-right" />
+								
+							</p:column>
+							<p:column>
+								<p:calendar id="datedernierequittance" style="width:210px"
+								showOn="button" lang="#{languageBean.locale}"
+								value="#{noteAlaDOFBean.datedernereQuittance}"
+								label="#{imprimerMainleveemsgs['imprimerMainlevee.datedernierequittance']}"
+								pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+								/>
+								
+
+							</p:column>
+							<p:column style="width: 150px;">
+								
+								<h:outputText 
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.dateenvoienotealaDOF']}:"
+									styleClass="weightBold" />
+									
+									
+								<h:outputText   value="*" styleClass="required-star-right" />
+								
+							</p:column>
+							<p:column>
+								<p:calendar id="dateenvoienotealaDOF" style="width:210px"
+								showOn="button" lang="#{languageBean.locale}" label="#{imprimerMainleveemsgs['imprimerMainlevee.dateenvoienotealaDOF']}"
+								value="#{noteAlaDOFBean.dateEnvoieAlaDof}"
+								pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+								/>
+							
+
+							</p:column>
+
+						
+						
+
+
+
+						
+							
+							
+							</p:row>
+						
+<!--********************************************************************DOF*************************************  -->
+
+
+					</p:panelGrid>
+				</p:fieldset>
+				<br />
+
+				<br></br>
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this"
+						actionListener="#{noteAlaDOFBean.initialisation}"
+						update="@form">
+						<p:resetInput target="imprimerMainleveeForm" />
+					</p:commandButton>
+				
+						
+
+					<br></br>
+					
+
+
+				</div>
+				<br></br>
+				
+			
+
+			
+				
+			</p:panel>
+
+
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

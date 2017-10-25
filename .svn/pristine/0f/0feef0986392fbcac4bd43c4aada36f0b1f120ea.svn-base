@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ClientLocataireDAO;
+import com.cynapsys.entities.ClientLocataire;
+
+@SuppressWarnings("serial")
+@Repository("clientLocataireDAO")
+public class ClientLocataireDAOImpl extends AbstractDAOImpl<ClientLocataire>
+		implements ClientLocataireDAO, Serializable {
+
+	public ClientLocataireDAOImpl() {
+		super(ClientLocataire.class);
+	}
+
+	@Override
+	public ClientLocataire findById(String id) {
+		
+		List<ClientLocataire> list=new ArrayList<ClientLocataire>();
+		try {
+			Criteria criteria= getSession().createCriteria(ClientLocataire.class);
+			criteria.add(Restrictions.eq("codeLocataire", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

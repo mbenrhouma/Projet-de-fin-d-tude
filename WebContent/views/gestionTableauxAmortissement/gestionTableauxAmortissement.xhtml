@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="tableau_amortissement" 
+			dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true"/>
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.identification']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel
+							value="#{toppanmsgs['header.tableau_amortissement']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+
+				</p:breadCrumb>
+				<p:fieldset legend="#{tableauAmortissementmsgs['amortissement.ta']}">
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder" >
+
+						<!--*****************************************************Client_Acquereur******************************************************************* -->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.clientAcquereur']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+								<p:inputText id="client_acquereur" style="width:210px"
+								disabled="#{tableauAmortissementBean.disabled==1 or tableauAmortissementBean.consultTA==1 or tableauAmortissementBean.consulterTAClientAcquereur==1}" 
+									maxlength="17"
+									onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+									value="#{tableauAmortissementBean.codeclient}" 
+									rendred="true"
+									required="true"
+									label="#{tableauAmortissementmsgs['amortissement.clientAcquereur']}">
+								</p:inputText>
+
+
+
+							</p:column>
+
+						</p:row>
+
+						<!--**********************************************Date_Effet***************************************************************************  -->
+						<p:row>
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.dateEffet']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:calendar id="date_effet" style="width:210px" showOn="button"
+									value="#{tableauAmortissementBean.newTableauAmortissement.dateEffet}"
+									disabled="#{tableauAmortissementBean.disabled==1  or tableauAmortissementBean.consultTA==1}" required="true"
+									pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+									label="#{tableauAmortissementmsgs['amortissement.dateEffet']}">
+
+								</p:calendar>
+
+
+
+							</p:column>
+							<!--**********************************************Duree***************************************************************************  -->
+							<p:column>
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.duree']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="duree" style="width:210px"
+									disabled="#{tableauAmortissementBean.disabled==1  or tableauAmortissementBean.consultTA==1}"
+									required="true"
+									value="#{tableauAmortissementBean.newTableauAmortissement.duree}"
+									label="#{tableauAmortissementmsgs['amortissement.duree']}">
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+
+						<!--**********************************************Tax_assurance***************************************************************************  -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.taxAssurance']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="taxAssurance" style="width:210px"
+									disabled="#{tableauAmortissementBean.disabled==1  or tableauAmortissementBean.consultTA==1}"
+									required="true"
+									value="#{tableauAmortissementBean.newTableauAmortissement.taxAssurance}"
+									label="#{tableauAmortissementmsgs['amortissement.taxAssurance']}">
+								</p:inputText>
+
+
+
+							</p:column>
+							<!--**********************************************Assurance_Annuelle***************************************************************************  -->
+							<p:column>
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.assuranceAnnuelle']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="assuranceAnnuelle" style="width:210px"
+									disabled="#{tableauAmortissementBean.disabled==1  or tableauAmortissementBean.consultTA==1}"
+									required="true"
+									value="#{tableauAmortissementBean.newTableauAmortissement.assuranceAnnuelle}"
+									label="#{tableauAmortissementmsgs['amortissement.assuranceAnnuelle']}">
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+
+
+					</p:panelGrid>
+			<div style="width: 100%; text-align: right">
+					<p:commandButton id="validBtn" styleClass="ui-priority-primary" 
+					disabled="#{tableauAmortissementBean.disabled==1  or tableauAmortissementBean.consultTA==1}"
+						value="#{generalmsgs['navigation.valider']}" ajax="true" update="@form"
+						 actionListener="#{tableauAmortissementBean.validTableauAmortissement()}" >
+					</p:commandButton>
+			</div>
+
+				</p:fieldset>
+				
+				<br/>
+				<p:fieldset legend="#{tableauAmortissementmsgs['amortissement.mensualite']}:" >
+
+					<p:panelGrid id="detailMensualite" style="width: 100%" 
+						styleClass="noBorder">
+							<!--**********************************************Fixe_Mensualite***************************************************************************  -->				
+					<p:row >
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.typeMensualite']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="fixe_mensualite" filter="true"
+									filterMatchMode="contains" 
+									disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+									value="#{tableauAmortissementBean.newMensualite.fixe}"
+									required="true" 
+									label="#{tableauAmortissementmsgs['amortissement.typeMensualite']}"
+									rendered="true">
+									<p:ajax event="change" ></p:ajax>
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										/>
+										
+										<f:selectItem
+										itemLabel="Fixe"
+										itemValue="1" />
+										
+										<f:selectItem
+										itemLabel="Determiner"
+										itemValue="0" />
+
+								</p:selectOneMenu>
+
+							</p:column>
+						<!--**********************************************Taux_interet***************************************************************************  -->
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.tauxInteret']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="taux_mensualite" style="width:210px"
+								 disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+									value="#{tableauAmortissementBean.newMensualite.taux}" required="true"
+									label="#{tableauAmortissementmsgs['amortissement.tauxInteret']}">
+								</p:inputText>
+
+							</p:column>
+							</p:row>
+							<p:row>
+
+						
+							<!--**********************************************Duree_Mensualite***************************************************************************  -->
+							<p:column>
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.duree']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="duree_mensualite" style="width:210px"
+									disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+									required="true"
+									value="#{tableauAmortissementBean.newMensualite.duree}"
+									label="#{tableauAmortissementmsgs['amortissement.duree']}">
+								
+					<p:ajax event="blur" listener="#{tableauAmortissementBean.initDate}" update="date_debut_Mensualite date_fin_Mensualite"></p:ajax>
+					</p:inputText>
+							</p:column>
+<!--**********************************************Mensualite***************************************************************************  -->
+					
+							<p:column>
+							<p:outputPanel autoUpdate="true">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.mensualite']}:"
+									styleClass="weightBold" rendered="#{tableauAmortissementBean.newMensualite.fixe==1}" />
+								<h:outputText value="*" styleClass="required-star-right" rendered="#{tableauAmortissementBean.newMensualite.fixe==1}"/>
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:outputPanel   autoUpdate="true">
+								<p:inputText id="mensualite" style="width:210px"
+									disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+									rendered="#{tableauAmortissementBean.newMensualite.fixe==1}"
+									required="true"
+									value="#{tableauAmortissementBean.newMensualite.mensualite}"
+									label="#{tableauAmortissementmsgs['amortissement.mensualite']}">
+								</p:inputText>
+					</p:outputPanel>
+							</p:column>
+							
+					
+						</p:row>
+						<!--**********************************************Date_Debut***************************************************************************  -->
+						<p:row>
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.dateDeb']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:calendar id="date_debut_Mensualite" style="width:210px"
+									showOn="button" disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+									required="true"
+									value="#{tableauAmortissementBean.newMensualite.dateDebut}"
+									pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+									label="#{tableauAmortissementmsgs['amortissement.dateDeb']}">
+
+								
+
+								<p:ajax event="dateSelect"
+									listener="#{tableauAmortissementBean.updateDateFin}"
+									update="date_debut_Mensualite date_fin_Mensualite" />
+								</p:calendar>
+							</p:column>
+<!--**********************************************Date_Fin***************************************************************************  -->
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{tableauAmortissementmsgs['amortissement.dateFin']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:calendar id="date_fin_Mensualite" style="width:210px"
+									showOn="button" disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+									required="true"
+									value="#{tableauAmortissementBean.newMensualite.dateFin}"
+									pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+									label="#{tableauAmortissementmsgs['amortissement.dateFin']}">
+
+								</p:calendar>
+
+
+
+							</p:column>
+
+
+						</p:row>
+
+
+					</p:panelGrid>
+					<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}"
+						ajax="true" disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+						process="@this" actionListener="#{tableauAmortissementBean.initMensualite()}"
+						update="@form">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary" 
+					disabled="#{tableauAmortissementBean.disabled==0  or tableauAmortissementBean.consultTA==1}"
+						value="#{generalmsgs['navigation.save']}" ajax="true" update="@form"
+						 actionListener="#{tableauAmortissementBean.addMensualite()}" process="@this,detailMensualite" >
+					</p:commandButton>
+					<p:spacer width="5px" />
+
+						<br/>
+						<br/>
+						<p:dataTable id="dta" value="#{tableauAmortissementBean.mensualiteList}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.id}"
+					selection="#{tableauAmortissementBean.selectedMensualite}"
+					selectionMode="single"
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					
+					>
+					<p:ajax event="rowSelect"
+						listener="#{tableauAmortissementBean.onselectMensualite()}"
+						update="@form" />
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.typeMensualite']}"/>
+						</f:facet>
+						<h:outputText value="Fixe" rendered="#{current.fixe==1}"/>
+						<h:outputText value="Déterminer" rendered="#{current.fixe==0}"/>
+					</p:column>
+						<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.tauxInteret']}"/>
+						</f:facet>
+						<h:outputText value="#{current.taux}" />
+					</p:column>
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.duree']}"/>
+						</f:facet>
+						<h:outputText value="#{current.duree}" />
+					</p:column>
+					
+					<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.dateDeb']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateDebut}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+						<p:column  width="20" style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{tableauAmortissementmsgs['amortissement.dateFin']}"/>
+						</f:facet>
+						<h:outputText value="#{current.dateFin}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					</p:dataTable>
+					
+
+
+				</div>
+					
+				</p:fieldset>
+				<br />
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="annulBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['popup.quitter']}"
+						ajax="true"
+						rendered="#{tableauAmortissementBean.consulterTAClientAcquereur==1}"
+						process="@this" actionListener="#{tableauAmortissementBean.annuler()}"
+						update="@form">
+						</p:commandButton>
+						<p:spacer width="5px" />
+						<p:commandButton id="initBtn" styleClass="ui-priority-primary"
+						value="#{tableauAmortissementmsgs['amortissement.initialiserTa']}"
+						rendered="#{tableauAmortissementBean.consulterTAClientAcquereur==0}"
+						ajax="true"
+						process="@this" actionListener="#{tableauAmortissementBean.initialisation()}"
+						update="@form">
+						</p:commandButton>
+						<p:spacer width="5px" />
+						<p:commandButton id="tableau_amortissement" styleClass="ui-priority-primary"
+						value="#{tableauAmortissementmsgs['amortissement.calculerTa']}"
+						ajax="true"
+						process="@this" actionListener="#{tableauAmortissementBean.calculTableauAmortissement()}"
+						update="@form">
+						</p:commandButton>
+						</div>
+				<br />
+
+			<br></br>
+						<p:dataTable id="dtable" value="#{tableauAmortissementBean.tableauAmortissementList}"
+						var="current" rows="10" paginator="true" rendered="#{tableauAmortissementBean.consulterTAClientAcquereur==0}"
+						paginatorPosition="bottom" rowKey="#{current.id}"
+						selection="#{tableauAmortissementBean.selectedTableauAmortissement}" selectionMode="single"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						rowsPerPageTemplate="10,20,50,100,200,500"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+						<p:ajax event="rowSelect"
+							listener="#{tableauAmortissementBean.onselectTA}"
+							update="@form" />
+						<f:facet name="header">
+							<h:commandLink immediate="true">
+								<p:graphicImage value="/resources/images/excel.png"
+									width="25px;" />
+								<p:dataExporter type="xls" target="dta" fileName="T.A" />
+							</h:commandLink>
+							<f:facet name="header">
+								<h:commandLink immediate="true">
+									<p:graphicImage value="/resources/images/pdf.png" width="25px;" />
+									<p:dataExporter type="pdf" encoding="ISO-8859-1" target="dta"
+										fileName="T.A" />
+								</h:commandLink>
+							</f:facet>
+						</f:facet>
+						<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.clientAcquereur}"
+							sortBy="#{current.clientAcquereur}" filterMatchMode="contains"
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{tableauAmortissementmsgs['amortissement.clientAcquereur']}:" />
+							</f:facet>
+							<h:outputText value="#{current.clientAcquereur.nomPrenomFr}" />
+						</p:column>
+						
+							<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.dateEffet}"
+							sortBy="#{current.dateEffet}" filterMatchMode="contains"
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{tableauAmortissementmsgs['amortissement.dateEffet']}:" />
+							</f:facet>
+							<h:outputText value="#{current.dateEffet}">
+							<f:convertDateTime pattern="MM/yyyy"/>
+							</h:outputText>
+						</p:column>
+						
+							<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.duree}"
+							sortBy="#{current.duree}" filterMatchMode="contains"
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{tableauAmortissementmsgs['amortissement.duree']}:" />
+							</f:facet>
+							<h:outputText value="#{current.duree}" />
+						</p:column>
+						
+							<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.assuranceAnnuelle}"
+							sortBy="#{current.assuranceAnnuelle}" filterMatchMode="contains"
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{tableauAmortissementmsgs['amortissement.assuranceAnnuelle']}:" />
+							</f:facet>
+							<h:outputText value="#{current.assuranceAnnuelle}" />
+						</p:column>
+						
+							<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.taxAssurance}"
+							sortBy="#{current.taxAssurance}" filterMatchMode="contains"
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{tableauAmortissementmsgs['amortissement.taxAssurance']}:" />
+							</f:facet>
+							<h:outputText value="#{current.taxAssurance}" />
+						</p:column>
+					</p:dataTable>
+			</p:panel>
+
+
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

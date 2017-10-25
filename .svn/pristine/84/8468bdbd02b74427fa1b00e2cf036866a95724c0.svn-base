@@ -1,0 +1,107 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@Table(name = "TYPE_LOGEMENT")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TypeLogement.findAll", query = "SELECT t FROM TypeLogement t"),
+    @NamedQuery(name = "TypeLogement.findByCodetype", query = "SELECT t FROM TypeLogement t WHERE t.codetype = :codetype"),
+    @NamedQuery(name = "TypeLogement.findByLibelle", query = "SELECT t FROM TypeLogement t WHERE t.libelle = :libelle")})
+public class TypeLogement implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(nullable = false, length = 254)
+    private String codetype;
+    @Size(max = 254)
+    @Column(length = 254)
+    private String libelle;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeLogement", fetch = FetchType.LAZY)
+    private List<Logement> logementList;
+
+    public TypeLogement() {
+    }
+
+    public TypeLogement(String codetype) {
+        this.codetype = codetype;
+    }
+
+    public String getCodetype() {
+        return codetype;
+    }
+
+    public void setCodetype(String codetype) {
+        this.codetype = codetype;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    @XmlTransient
+    public List<Logement> getLogementList() {
+        return logementList;
+    }
+
+    public void setLogementList(List<Logement> logementList) {
+        this.logementList = logementList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codetype != null ? codetype.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TypeLogement)) {
+            return false;
+        }
+        TypeLogement other = (TypeLogement) object;
+        if ((this.codetype == null && other.codetype != null) || (this.codetype != null && !this.codetype.equals(other.codetype))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.cynapsys.entities.TypeLogement[ codetype=" + codetype + " ]";
+    }
+    
+}

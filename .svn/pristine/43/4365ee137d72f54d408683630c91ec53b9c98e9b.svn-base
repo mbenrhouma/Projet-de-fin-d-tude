@@ -1,0 +1,456 @@
+package com.cynapsys.Views;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+
+import org.springframework.dao.DuplicateKeyException;
+
+import com.cynapsys.entities.AnneeBudgetaire;
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.CodePostal;
+import com.cynapsys.entities.Gouvernorat;
+import com.cynapsys.entities.Groupe;
+import com.cynapsys.entities.Localite;
+import com.cynapsys.entities.Logement;
+import com.cynapsys.entities.Lotissement;
+import com.cynapsys.entities.TypeLogement;
+import com.cynapsys.service.AnneeBudgetaireService;
+import com.cynapsys.service.ClientAcquereurService;
+import com.cynapsys.service.CodePostalService;
+import com.cynapsys.service.GouvernoratService;
+import com.cynapsys.service.GroupeService;
+import com.cynapsys.service.LocaliteService;
+import com.cynapsys.service.LogementService;
+import com.cynapsys.service.LotissementService;
+import com.cynapsys.service.TypeLogementService;
+import com.cynapsys.utils.Constants;
+import com.cynapsys.utils.JsfUtil;
+
+@ManagedBean(name = "clientAcquereurBean")
+@ViewScoped
+public class ClientAcquereurBean {
+
+	@ManagedProperty(value = "#{clientAcquereurService}")
+	private ClientAcquereurService clientAcquereurService;
+	
+
+	@ManagedProperty(value = "#{groupeService}")
+	private GroupeService groupeService;
+	
+	@ManagedProperty(value = "#{anneeBudgetaireService}")
+	private AnneeBudgetaireService anneeBudgetaireService;
+
+	@ManagedProperty(value = "#{logementService}")
+	private LogementService logementService;
+	
+	@ManagedProperty(value = "#{codePostalService}")
+	private CodePostalService codePostalService;
+	
+	@ManagedProperty(value = "#{gouvernoratService}")
+	private GouvernoratService gouvernoratService;
+	
+	@ManagedProperty(value = "#{typeLogementService}")
+	private TypeLogementService typeLogementService;
+	
+	@ManagedProperty(value = "#{localiteService}")
+	private LocaliteService localiteService;
+	
+	@ManagedProperty(value = "#{lotissementService}")
+	private LotissementService lotissementService;
+	
+	
+	
+
+	private ClientAcquereur newClientAcquereur;
+	private Boolean compteConjoint;
+	private ClientAcquereur selectClientAcquereur;
+	public int ModifClientAcquereur = 1;
+	private List<ClientAcquereur> clientAcquereurs;
+	private Groupe Employeur;
+	private List<Groupe> groupes;
+    private int log = 0;
+	
+	private List<Gouvernorat> gouvernerats;
+	private List<Localite> localites;
+	private List<Lotissement> lotissments ;
+	private List<CodePostal> codepostales;
+	private List<TypeLogement> typeslogements ;
+	private List<Logement> logements;
+	private List<AnneeBudgetaire> anneebudgetaires;
+
+	private Logement newLogement;
+
+	private Logement selectLogement;
+	private Groupe selectGroupe;
+
+	private String dateFin;
+
+	@PostConstruct
+	public void initialisation() {
+		newLogement=new Logement();
+		newClientAcquereur = new ClientAcquereur();
+		newClientAcquereur.setDureeContrat(1);
+		logements = new ArrayList<Logement>();
+		logements = logementService.finAllJoinLibre();
+		groupes = groupeService.findAll();
+		gouvernerats=gouvernoratService.findAll();
+		codepostales=codePostalService.findAll();
+		typeslogements= typeLogementService.findAll();
+		anneebudgetaires=anneeBudgetaireService.findAll();
+
+	}
+	
+	
+	public void CreateClientAcquereur(){
+		newClientAcquereur=new ClientAcquereur();
+		selectLogement= new Logement();
+		log=0;
+	}
+	
+	public void findlocaliteByGouverner(){
+		localites=new ArrayList<Localite>();
+		localites=localiteService.finlocaliteByGov(newLogement.getGouvernorat());
+	}
+	
+	public List<TypeLogement> getTypeslogements() {
+		return typeslogements;
+	}
+	
+public void AjoutLogement(){
+	     log = 1 ;
+		 selectLogement=newLogement ;
+		
+	}
+
+	public void setEtat() {
+		if (compteConjoint) {
+			newClientAcquereur.setCompteConjoint(1);
+		} else {
+			newClientAcquereur.setCompteConjoint(0);
+		}
+	}
+	
+
+
+
+
+
+	
+	public void saveClientAcquereur(){
+		
+		if(log==0){
+			try{
+	      selectLogement.setEtatLog(2);;
+	      logementService.update(selectLogement);
+	      setEtat();
+		  newClientAcquereur.setLogement(selectLogement);
+		  clientAcquereurService.save(newClientAcquereur);
+		  }
+		  catch (DuplicateKeyException e){
+			  JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_employeur_fr).getString("employeur.erreur.existe"));
+	      }
+		}else{
+			
+			try{
+			selectLogement.setEtatLog(2);
+			logementService.save(selectLogement);
+			newClientAcquereur.setLogement(selectLogement);
+			setEtat();
+			clientAcquereurService.save(newClientAcquereur);}
+			  catch (DuplicateKeyException e){
+				 JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_employeur_fr).getString("employeur.erreur.existe"));
+		      }
+
+		}
+		
+		if(! isValidFailed()){
+		CreateClientAcquereur();
+		}
+	}
+	
+	private boolean  isValidFailed(){
+		return JsfUtil.isValidationFailed();
+	}
+
+
+	
+	public void setTypeslogements(List<TypeLogement> typeslogements) {
+		this.typeslogements = typeslogements;
+	}
+
+
+	public void findlotissementBylocalite(){
+		lotissments=lotissementService.findLotissemByLocalite(newLogement.getLocalite());
+	}
+
+	public void updateDateFin() {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar c = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		c2.setTime(newClientAcquereur.getDateDebut());
+		newClientAcquereur.setDateDebut(new Date(newClientAcquereur
+				.getDateDebut().getYear(), newClientAcquereur.getDateDebut()
+				.getMonth(), 1));
+		c.setTime(newClientAcquereur.getDateDebut());
+		c.add(Calendar.YEAR, newClientAcquereur.getDureeContrat());
+		c.add(Calendar.MONTH, 1);
+		c.add(Calendar.DAY_OF_MONTH, -1);
+
+		newClientAcquereur.setDateFin(c.getTime());
+		dateFin = format.format(newClientAcquereur.getDateFin());
+
+	}
+
+	public void initDate() {
+		newClientAcquereur.setDateDebut(null);
+		newClientAcquereur.setDateFin(null);
+		dateFin = null;
+	}
+
+	public ClientAcquereurService getClientAcquereurService() {
+		return clientAcquereurService;
+	}
+
+	public void setClientAcquereurService(
+			ClientAcquereurService clientAcquereurService) {
+		this.clientAcquereurService = clientAcquereurService;
+	}
+
+	public GroupeService getGroupeService() {
+		return groupeService;
+	}
+
+	public void setGroupeService(GroupeService groupeService) {
+		this.groupeService = groupeService;
+	}
+
+	public ClientAcquereur getNewClientAcquereur() {
+		return newClientAcquereur;
+	}
+
+	public void setNewClientAcquereur(ClientAcquereur newClientAcquereur) {
+		this.newClientAcquereur = newClientAcquereur;
+	}
+
+	public Boolean getCompteConjoint() {
+		return compteConjoint;
+	}
+
+	public void setCompteConjoint(Boolean compteConjoint) {
+		this.compteConjoint = compteConjoint;
+	}
+
+	public ClientAcquereur getSelectClientAcquereur() {
+		return selectClientAcquereur;
+	}
+
+	public void setSelectClientAcquereur(ClientAcquereur selectClientAcquereur) {
+		this.selectClientAcquereur = selectClientAcquereur;
+	}
+
+	public int getModifClientAcquereur() {
+		return ModifClientAcquereur;
+	}
+
+	public void setModifClientAcquereur(int modifClientAcquereur) {
+		ModifClientAcquereur = modifClientAcquereur;
+	}
+
+	public List<ClientAcquereur> getClientAcquereurs() {
+		return clientAcquereurs;
+	}
+
+	public void setClientAcquereurs(List<ClientAcquereur> clientAcquereurs) {
+		this.clientAcquereurs = clientAcquereurs;
+	}
+
+	public Groupe getEmployeur() {
+		return Employeur;
+	}
+
+	public void setEmployeur(Groupe employeur) {
+		Employeur = employeur;
+	}
+
+	public List<Groupe> getGroupes() {
+		return groupes;
+	}
+
+	public void setGroupes(List<Groupe> groupes) {
+		this.groupes = groupes;
+	}
+
+	public LogementService getLogementService() {
+		return logementService;
+	}
+
+	public void setLogementService(LogementService logementService) {
+		this.logementService = logementService;
+	}
+
+	public List<Logement> getLogements() {
+		return logements;
+	}
+
+	public void setLogements(List<Logement> logements) {
+		this.logements = logements;
+	}
+
+	public Logement getNewLogement() {
+		return newLogement;
+	}
+
+	public void setNewLogement(Logement newLogement) {
+		this.newLogement = newLogement;
+	}
+
+	public Logement getSelectLogement() {
+		return selectLogement;
+	}
+
+	public void setSelectLogement(Logement selectLogement) {
+		this.selectLogement = selectLogement;
+	}
+
+	public Groupe getSelectGroupe() {
+		return selectGroupe;
+	}
+
+	public void setSelectGroupe(Groupe selectGroupe) {
+		this.selectGroupe = selectGroupe;
+	}
+
+	public String getDateFin() {
+		return dateFin;
+	}
+
+	public void setDateFin(String dateFin) {
+		this.dateFin = dateFin;
+	}
+
+	public CodePostalService getCodePostalService() {
+		return codePostalService;
+	}
+
+	public void setCodePostalService(CodePostalService codePostalService) {
+		this.codePostalService = codePostalService;
+	}
+
+	public GouvernoratService getGouvernoratService() {
+		return gouvernoratService;
+	}
+
+	public void setGouvernoratService(GouvernoratService gouvernoratService) {
+		this.gouvernoratService = gouvernoratService;
+	}
+
+	public TypeLogementService getTypeLogementService() {
+		return typeLogementService;
+	}
+
+	public void setTypeLogementService(TypeLogementService typeLogementService) {
+		this.typeLogementService = typeLogementService;
+	}
+
+	public LocaliteService getLocaliteService() {
+		return localiteService;
+	}
+
+	public void setLocaliteService(LocaliteService localiteService) {
+		this.localiteService = localiteService;
+	}
+
+	public LotissementService getLotissementService() {
+		return lotissementService;
+	}
+
+	public void setLotissementService(LotissementService lotissementService) {
+		this.lotissementService = lotissementService;
+	}
+
+	public List<Gouvernorat> getGouvernerats() {
+		return gouvernerats;
+	}
+
+	public void setGouvernerats(List<Gouvernorat> gouvernerats) {
+		this.gouvernerats = gouvernerats;
+	}
+
+	public List<Localite> getLocalites() {
+		return localites;
+	}
+
+	public void setLocalites(List<Localite> localites) {
+		this.localites = localites;
+	}
+
+	public List<Lotissement> getLotissments() {
+		return lotissments;
+	}
+
+	public void setLotissments(List<Lotissement> lotissments) {
+		this.lotissments = lotissments;
+	}
+
+	public List<CodePostal> getCodepostales() {
+		return codepostales;
+	}
+
+	public void setCodepostales(List<CodePostal> codepostales) {
+		this.codepostales = codepostales;
+	}
+
+	public List<TypeLogement> getTypeslogement() {
+		return typeslogements;
+	}
+
+	public void setTypeslogement(List<TypeLogement> typeslogements) {
+		this.typeslogements = typeslogements;
+	}
+
+
+	public int getLog() {
+		return log;
+	}
+
+
+	public void setLog(int log) {
+		this.log = log;
+	}
+
+
+	
+
+
+	public AnneeBudgetaireService getAnneeBudgetaireService() {
+		return anneeBudgetaireService;
+	}
+
+
+	public void setAnneeBudgetaireService(
+			AnneeBudgetaireService anneeBudgetaireService) {
+		this.anneeBudgetaireService = anneeBudgetaireService;
+	}
+
+
+	public List<AnneeBudgetaire> getAnneebudgetaires() {
+		return anneebudgetaires;
+	}
+
+
+	public void setAnneebudgetaires(List<AnneeBudgetaire> anneebudgetaires) {
+		this.anneebudgetaires = anneebudgetaires;
+	}
+	
+	
+
+}

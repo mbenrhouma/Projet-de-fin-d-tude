@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.request.contextPath}/css/style.css" />
+	<link rel="shortcut icon" href="#{facesContext.externalContext.request.contextPath}/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="#{facesContext.externalContext.request.contextPath}/favicon.ico" type="image/x-icon" />
+</h:head>
+<h:body >
+	<h:form id="form" dir="#{languageBean.languageAffich}">
+		<p:growl sticky="true" id="growl" autoUpdate="true" closable="true" />
+
+		<center>
+			<p:fieldset style="border:none;height:200px;"></p:fieldset>
+			<p:panel id="dialog" header="Changer mot de passe"
+				style="width:500px;">
+
+				<p:panelGrid cellpadding="5" styleClass="noBorder">
+					<p:row>
+						<p:column colspan="3"
+							style="font-size: 14px;font-style: italic;color: crimson;">
+							<h:outputText value="#{Constants.premierLoginMessage}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="height:20px;">
+
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column style="width:200px;">
+							<h:outputLabel for="password"
+								value="#{utilisateurfrmsgs['utilisateur.nouveau_motPasse']} :"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:password value="#{loginBean.password}" id="password"
+								redisplay="true" style="width:230px; height:22px; "
+								required="true" match="confirm_password"
+								label="#{utilisateurfrmsgs['utilisateur.nouveau_motPasse']}"
+								feedback="true" promptLabel="Indiquer un mot de passe"
+								weakLabel="Faible" goodLabel="Moyen" strongLabel="Bon">
+								<f:validateLength minimum="5" />
+							</p:password>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="confirm_password"
+								value="#{utilisateurfrmsgs['utilisateur.confirmer']} :"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:password value="#{loginBean.password}" id="confirm_password"
+								redisplay="true" required="true"
+								label="#{utilisateurfrmsgs['utilisateur.confirmer']}"
+								style="width:230px; height:22px;  ">
+								<f:validateLength minimum="5" />
+							</p:password>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="loginButton" value="Confirmer" update=":form"
+						style="width:80px;" actionListener="#{loginBean.confirm}"
+						styleClass="ui-priority-primary" />
+				</div>
+
+			</p:panel>
+		</center>
+	</h:form>
+
+</h:body>
+</html>
+

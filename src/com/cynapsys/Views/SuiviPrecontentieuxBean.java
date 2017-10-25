@@ -1,0 +1,150 @@
+package com.cynapsys.Views;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+
+import com.cynapsys.entities.HuissiersNotaires;
+import com.cynapsys.entities.Precontentieu;
+import com.cynapsys.service.HuissiersNotairesService;
+import com.cynapsys.service.PrecontentieuService;
+import com.cynapsys.utils.JsfUtil;
+
+@ManagedBean(name = "suiviPrecontentieuxBean")
+@ViewScoped
+public class SuiviPrecontentieuxBean implements Serializable{
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@ManagedProperty(value = "#{precontentieuService}")
+	private PrecontentieuService precontentieuService;
+	
+	
+	
+	@ManagedProperty(value = "#{huissiersNotairesService}")
+	private HuissiersNotairesService huissiersNotairesService;
+	
+	private List<Precontentieu> precontentieus;
+	private Precontentieu selectPrec;
+	private Precontentieu newPrecontentieu;
+	private List<HuissiersNotaires> huissiersNotaires;
+	private HuissiersNotaires selectHuissNotaire;
+	
+	
+	
+	
+	
+	
+	@PostConstruct
+	public void initialisation() {
+		newPrecontentieu=new Precontentieu();
+		precontentieus=new ArrayList<Precontentieu>();
+		selectPrec=null;
+		huissiersNotaires=huissiersNotairesService.findAll();
+		//selectHuissNotaire=new HuissiersNotaires();
+	}
+	
+	public void createPrecontentieux(){
+		selectPrec=null;
+		precontentieus=new ArrayList<Precontentieu>();
+		newPrecontentieu=new Precontentieu();
+		selectHuissNotaire=new HuissiersNotaires();
+	}
+	
+	public void createPrecontentieuxPopup(){
+		newPrecontentieu.setMontantFacture(null);
+		newPrecontentieu.setDateTransmission(null);
+		newPrecontentieu.setDateFacture(null);
+	}
+	public void editionLettreDeCommande(){
+		
+	}
+	
+	public void mettreAjourPrec(){
+		precontentieuService.update(newPrecontentieu);
+		JsfUtil.addSuccessMessage("Précontentieux mis à jour avec succés");
+	}
+	
+	
+	
+	public void onSelectPrec(){
+		newPrecontentieu=selectPrec;
+	}
+	public void onChangeHuissierNotaire(){
+		System.out.println("nombre de prec affectes est : "+precontentieuService.findByHuissierNotaire(selectHuissNotaire).size());
+		precontentieus=precontentieuService.findByHuissierNotaire(selectHuissNotaire);
+	}
+
+	public PrecontentieuService getPrecontentieuService() {
+		return precontentieuService;
+	}
+
+	public void setPrecontentieuService(PrecontentieuService precontentieuService) {
+		this.precontentieuService = precontentieuService;
+	}
+
+	public List<Precontentieu> getPrecontentieus() {
+		return precontentieus;
+	}
+
+	public void setPrecontentieus(List<Precontentieu> precontentieus) {
+		this.precontentieus = precontentieus;
+	}
+
+	public Precontentieu getSelectPrec() {
+		return selectPrec;
+	}
+
+	public void setSelectPrec(Precontentieu selectPrec) {
+		this.selectPrec = selectPrec;
+	}
+
+	public HuissiersNotairesService getHuissiersNotairesService() {
+		return huissiersNotairesService;
+	}
+
+	public void setHuissiersNotairesService(
+			HuissiersNotairesService huissiersNotairesService) {
+		this.huissiersNotairesService = huissiersNotairesService;
+	}
+
+	public List<HuissiersNotaires> getHuissiersNotaires() {
+		return huissiersNotaires;
+	}
+
+	public void setHuissiersNotaires(List<HuissiersNotaires> huissiersNotaires) {
+		this.huissiersNotaires = huissiersNotaires;
+	}
+
+	public HuissiersNotaires getSelectHuissNotaire() {
+		return selectHuissNotaire;
+	}
+
+	public void setSelectHuissNotaire(HuissiersNotaires selectHuissNotaire) {
+		this.selectHuissNotaire = selectHuissNotaire;
+	}
+
+	public Precontentieu getNewPrecontentieu() {
+		return newPrecontentieu;
+	}
+
+	public void setNewPrecontentieu(Precontentieu newPrecontentieu) {
+		this.newPrecontentieu = newPrecontentieu;
+	}
+	
+	
+	
+	
+	
+	
+
+}

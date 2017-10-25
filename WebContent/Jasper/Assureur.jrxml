@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relence Client_subreport" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ffdd5fea-c073-41c8-a38f-3ce95c2c1271">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\asus\\Desktop\\PFE\\Jreport\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="assureurList" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="164" y="14" width="397" height="65" uuid="26fd65f1-4459-4105-8290-13ce71e7e7d3"/>
+				<textElement textAlignment="Justified">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Liste des clients au contentieux]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="449" splitType="Stretch">
+			<subreport>
+				<reportElement x="10" y="0" width="792" height="100" uuid="0b233286-a5e0-4166-b783-7a5a0812199c"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Assureur_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

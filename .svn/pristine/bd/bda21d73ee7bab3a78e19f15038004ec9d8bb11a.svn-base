@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.LocaliteDAO;
+import com.cynapsys.entities.Localite;
+
+@SuppressWarnings("serial")
+@Repository("localiteDAO")
+public class LocaliteDAOImpl extends AbstractDAOImpl<Localite>
+		implements LocaliteDAO, Serializable {
+
+	public LocaliteDAOImpl() {
+		super(Localite.class);
+	}
+
+	@Override
+	public Localite findById(String id) {
+		
+		List<Localite> list=new ArrayList<Localite>();
+		try {
+			Criteria criteria= getSession().createCriteria(Localite.class);
+			criteria.add(Restrictions.eq("code", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

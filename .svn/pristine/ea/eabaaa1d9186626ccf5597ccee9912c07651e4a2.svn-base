@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.CodePostal;
+
+public interface CodePostalDAO  extends AbstractDAO<CodePostal>{
+	CodePostal findById(String id);
+}

@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ContentieuxDAO;
+import com.cynapsys.entities.Contentieux;
+
+@SuppressWarnings("serial")
+@Repository("contentieuxDAO")
+public class ContentieuxDAOImpl extends AbstractDAOImpl<Contentieux>
+		implements ContentieuxDAO, Serializable {
+
+	public ContentieuxDAOImpl() {
+		super(Contentieux.class);
+	}
+
+	@Override
+	public Contentieux findById(String id) {
+		
+		List<Contentieux> list=new ArrayList<Contentieux>();
+		try {
+			Criteria criteria= getSession().createCriteria(Contentieux.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

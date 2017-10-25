@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelanceClient" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="889394b0-5851-4c55-a94d-9014725acd6f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nom" class="java.lang.String"/>
+	<parameter name="adresse" class="java.lang.String"/>
+	<parameter name="mois" class="java.lang.String"/>
+	<parameter name="montant" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="421" y="41" width="132" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="8090273d-6a3c-45ff-b242-9bdcb0d0e69c"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[إدارة التصرف والاستخلاص]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="342" y="0" width="100" height="20" uuid="bb023b43-6472-48a2-a9da-71c3f0c3f012"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="321" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="25a27c72-ca8b-4cf0-aabc-8bc519d086d9"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[السيد : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="221" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7d74ba5c-5597-4c22-8112-95155b366cc9"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="321" y="20" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="63f3c670-5fd2-4bfd-947d-899a2836f59c"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[محل من ]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="221" y="20" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="2f94a0ad-1f37-45aa-9371-8d3036e8878c"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{adresse}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="488" y="24" width="67" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9519f6b4-95e3-4a91-9de5-be8b2fee3970"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[الموضوع ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="388" y="24" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="136dfdec-90a1-4571-a3fb-c7c3b113447e"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[تذكير بدين]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="161" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="453" y="0" width="100" height="25" forecolor="#000000" backcolor="#FFFFFF" uuid="62a04f59-6d53-4dc8-a948-6e03f8d50fe6"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[وبعد،]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="23" y="40" width="530" height="69" forecolor="#000000" backcolor="#FFFFFF" uuid="24ac61d6-c38b-4999-a2ad-fcf9da59dcd0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["نذكركم أنه تخلد بذمتكم، إلى غاية شهر "+$P{mois}+" دين لفائدة الشركة الوطنية العقارية للبلاد التونسية قدره "+$P{montant}+" دينارا ( ما عدا الغلط والنسيان ودون اعتبار لفائض التأخير ) المرجو منكم تسديده في أجل أقصاه خمسة عشر (15) يوما، وفي حالة تخلفكم فإنه سيقع اللجوء إلى التراتيب القانونية."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="23" y="109" width="530" height="32" forecolor="#000000" backcolor="#FFFFFF" uuid="24f2f532-a7f7-4087-9642-ee3feca0daed"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[المرجو الاتصال بمصالح الشركة (مكتب الأنسة رحاب سلامة ) في الآجال المحددة حتى يقع تسوية ملفكم.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="141" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9afb503d-34b9-4398-b825-75e10b113327"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[والسلام ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="clientLocataireForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true"
+				life="200" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem immediate="true">
+						<p:outputLabel value="#{toppanmsgs['header.identification']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel
+							value="#{toppanmsgs['header.client_loc']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<br />
+				<!-- *************************************************Recherche MultiCritaires**************************************************************************************************  -->
+			<!-- 	<p:fieldset toggleable="true" id="recherche"
+					legend="#{clientLocatairefrmsgs['codeLocataire.recherche']}:" >
+					<p:panelGrid id="panelRecherche" styleClass="noBorder"
+						style="width: 100%">
+
+
+
+					
+
+
+
+					</p:panelGrid>
+					<br />
+
+				</p:fieldset> -->
+
+				<!--******************************************************Fin Recherche MultiCritaires**************************************************************************************************  -->
+
+				<br />
+				<br />
+
+				<div style="width: 100%; text-align: right">
+					<p:spacer width="5px" />
+					<p:commandButton id="ajoutDoss" styleClass="ui-priority-primary"
+						value="Ajouter" ajax="true" process="@this"
+						actionListener="#{clientLocataireBean.createClientLocataire}"
+						action="#{menuController.goToPageAjouterClientLocataire}">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="Consulter_doss"
+						styleClass="ui-priority-primary" value="Consulter" ajax="true"
+						actionListener="#{menuController.goToPageModifierClientLocataire}"
+					
+						disabled="#{clientLocataireBean.selectClientLocataire==null}">
+					</p:commandButton>
+
+
+
+					<p:spacer width="5px" />
+					<p:commandButton id="delteBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.delete']}" ajax="true"
+						onstart="PF('suppConfirmation').show()"
+						disabled="#{clientLocataireBean.selectClientLocataire==null}">
+					</p:commandButton>
+					<p:spacer width="5px" />
+				</div>
+				<br />
+
+
+
+				<!--***************************************************DATA***********************************************************************  -->
+				<p:dataTable id="dta" value="#{clientLocataireBean.listClientLocataire}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.codeLocataire}" selection="#{clientLocataireBean.selectClientLocataire}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect"
+						listener="#{clientLocataireBean.onselectClientLocataire}"
+						update=":clientLocataireForm:Consulter_doss :clientLocataireForm:delteBtn" />
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="ClientAcquereur" />
+						</h:commandLink>
+					</f:facet>
+					<f:facet name="header">
+						<h:commandLink>
+							<p:graphicImage value="/resources/images/pdf.png" />
+							<p:dataExporter type="pdf" target="dta" fileName="ClientAcquereur"
+								encoding="ISO-8859-1" pageOnly="true" />
+						</h:commandLink>
+					</f:facet>
+<!--*******************************************************CODE LOCATAIRE******************************************************************  -->
+					<p:column filterBy="#{current.codeLocataire}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.codeLocataire}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.codeLocataire']}" />
+						</f:facet>
+						<h:outputText value="#{current.codeLocataire}" />
+					</p:column>
+
+<!-- *******************************************************GROUPE**************************************************************************  -->
+					<p:column filterBy="#{current.groupe.libelle}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.groupe.libelle}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.groupe']}" />
+						</f:facet>
+						<h:outputText value="#{current.groupe.libelle}" />
+					</p:column>				
+<!--**********************************************************CIN********************************************************************************  -->
+					<p:column filterBy="#{current.cin}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.cin}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.cin']}" />
+						</f:facet>
+						<h:outputText value="#{current.cin}" />
+					</p:column>	
+<!--**********************************************************NomEtPrénom**********************************************************************  -->
+					<p:column filterBy="#{current.nomPrenomFr}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.nomPrenomFr}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.nomPrenom']}" />
+						</f:facet>
+						<h:outputText value="#{current.nomPrenomFr}" />
+					</p:column>
+<!--***********************************************************ADRESSE_LOGEMENT*****************************************************************  -->
+					<p:column filterBy="#{current.adresseLogement}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.adresseLogement}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.adresseLogement']}" />
+						</f:facet>
+						<h:outputText value="#{current.adresseLogement}" />
+					</p:column>
+<!--************************************************************ADRESSE_CORESSPENDANCE**********************************************************  -->
+					<p:column filterBy="#{current.adresseCorrespondance}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.adresseCorrespondance}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.adresseCorrespondance']}" />
+						</f:facet>
+						<h:outputText value="#{current.adresseCorrespondance}" />
+					</p:column>
+<!--***********************************************************CODE_POSTAL***********************************************************************  -->
+					<p:column filterBy="#{current.logement.codePostal.libelleFr}"
+						filterMatchMode="contains" filterStyle="width: 40px;"
+						style="text-align:center;"
+						sortBy="#{current.logement.codePostal.libelleFr}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.codePostal']}" />
+						</f:facet>
+						<h:outputText value="#{current.logement.codePostal.libelleFr}" />
+					</p:column>
+				
+<!--**********************************************************Prix_Provisoire***********************************************************************  -->
+				
+<!--**********************************************************Etat ClientLocatiare***************************************************  -->				
+					
+				 <p:column 
+				 filterBy="#{current.etatClientLoc}"
+						filterMatchMode="exact" 
+						filterStyle="width: 40px;" 
+						style="text-align:center;"   
+						filterOptions="#{clientLocataireBean.etatFilter}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.etatClient']}" />
+						</f:facet>
+						<h:outputText value="Client Desactivé"  rendered="#{current.etatClientLoc==1}"/>
+						<h:outputText value="Client Active"  rendered="#{current.etatClientLoc==2}"/>
+					</p:column> 
+				</p:dataTable>
+
+
+
+				<br></br>
+			</p:panel>
+		</h:form>
+		<!--****************************consulter Doss partage  -->
+		<p:dialog widgetVar="dialogConsulter" modal="true" height="600"
+			width="950px" appendTo="@(body)" draggable="true"
+			id="dialogConsulter" header="Dossier De Partage">
+			<h:form id="dossrachFormConsulter">
+				<p:panelGrid id="detaildossPartage" style="width: 100%"
+					styleClass="noBorder">
+				</p:panelGrid>
+				<div style="width: 100%; text-align: right">
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						oncomplete="{PF('updConfirmation').show()};"
+						update=":clientLocataireForm:dta">
+					</p:commandButton>
+					<p:spacer width="5px" />
+
+					<p:spacer width="5px" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="PF('dialogdoss').hide()" styleClass="ui-priority-primary"
+						process="@this" actionListener="#{clientLocataireBean.createClientLocataire}"
+						update="@form" />
+				</div>
+			</h:form>
+		</p:dialog>
+		<!--*************************fin consultation doss partage  -->
+
+		<!--**************************Ajout dossier de partage  -->
+		<p:confirmDialog id="diagSupp"
+			message="#{generalmsgs['popup.confirm.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="suppConfirmation" appendTo="@(body)" showEffect="explode"
+			hideEffect="bounce">
+			<div align="right">
+				<h:form id="diagForm">
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						update=":clientLocataireForm:dta"
+						oncomplete="PF('suppConfirmation').hide();"
+						actionListener="#{clientLocataireBean.deleteClientLocataire}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}" update="@form"
+						onclick="suppConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

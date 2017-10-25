@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="clientLocataireForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true"
+				life="200" />
+
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem immediate="true">
+						<p:outputLabel value="#{toppanmsgs['header.identification']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel value="#{toppanmsgs['header.client_loc']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem immediate="true">
+						<p:outputLabel value="Ajout Dossier De partage"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<br />
+				<p:panelGrid id="detailClientLocataire" style="width: 100%"
+					styleClass="noBorder" >
+					<!--********************************************** Code Locataire ***********************************************************-->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.codeLocataire']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="code_Locataire" style="width: 480px"
+								value="#{clientLocataireBean.newClientLocataire.codeLocataire}"
+								label="#{clientLocatairefrmsgs['codeLocataire.codeLocataire']}/ #{clientLocatairearmsgs['codeLocataire.codeLocataire']}"
+								rendered="true">
+							</p:inputText>
+
+						</p:column>
+
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.codeLocataire']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--***************************************************************CLIENT-GROUPE***********************************************  -->
+					<p:row>
+						<p:column>
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.groupe']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:selectOneMenu id="groupe" filter="true"
+								filterMatchMode="contains" style="width: 470px"
+								value="#{clientLocataireBean.newClientLocataire.groupe}"
+								required="true" converter="groupeConverter"
+								label="#{clientLocatairefrmsgs['codeLocataire.groupe']}/ #{clientLocatairearmsgs['codeLocataire.groupe']}"
+								rendered="true">
+
+
+								<f:selectItem noSelectionOption="true"
+									itemLabel="--------------------------------------------------"
+									itemValue="" />
+								<f:selectItems value="#{clientLocataireBean.listGroupe}"
+									var="group" itemLabel="#{group.libelle}" itemValue="#{group}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;">
+
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.groupe']}:"
+								dir="rtl" styleClass="weightBold" style="  margin-left: 100px;" />
+						</p:column>
+					</p:row>
+					<!--***************************************************CIN**************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.cin']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputMask id="cin"
+								value="#{clientLocataireBean.newClientLocataire.cin}"
+								mask="09 99 99 99" style="width: 480px;"
+								label="#{clientLocatairefrmsgs['codeLocataire.cin']}/ #{clientLocatairearmsgs['codeLocataire.cin']}"
+								rendered="true" />
+
+
+						</p:column>
+
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.cin']}:" dir="rtl"
+								styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--***********************************************Nom&Prenom**********************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.nomPrenom']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:inputText id="nom_prenom" style="width:200px;" required="true"
+								label="libelle" onkeyup="this.value=this.value.toUpperCase();"
+								value="#{clientLocataireBean.newClientLocataire.nomPrenomFr}">
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:inputText id="gouvernoratar_libelle" style="width:200px;"
+								value="#{clientLocataireBean.newClientLocataire.nomPrenomAr}"
+								onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;">
+							</p:inputText>
+
+
+
+						</p:column>
+						<p:column>
+						</p:column>
+						<p:column style="text-align: right;" width="100">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.nomPrenom']}:"
+								dir="rtl" styleClass="weightBoldAr" style="  margin-left: 10px;" />
+						</p:column>
+					</p:row>
+					<!--***********************************************LOGEMENT**************************************************************  -->
+					<p:row>
+						<p:column>
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.logement']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+
+							<p:inputText id="logement" style="width:480px;"
+								value="#{clientLocataireBean.newClientLocataire.logement.codeLogement}"
+								readonly="true">
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="text-align: right;">
+
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.logement']}:"
+								dir="rtl" styleClass="weightBold" style="  margin-left: 100px;" />
+						</p:column>
+					</p:row>
+					<!--***********************************************ADRESSE LOGEMENT******************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.adresseLogement']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="adress"
+								value="#{clientLocataireBean.newClientLocataire.adresseLogement}"
+								onkeyup="this.value=this.value.toUpperCase();"
+								style="width: 480px;"
+								label="#{clientLocatairefrmsgs['codeLocataire.adresseLogement']}/ #{clientLocatairearmsgs['codeLocataire.adresseLogement']}"
+								rendered="true" />
+
+
+						</p:column>
+
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.adresseLogement']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--***********************************************ADRESSE Correspendance*****************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.adresseCorrespondance']}:"
+								styleClass="weightBold" />
+
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="adress_corresp"
+								value="#{clientLocataireBean.newClientLocataire.adresseCorrespondance}"
+								onkeyup="this.value=this.value.toUpperCase();"
+								style="width: 480px;"
+								label="#{clientLocatairefrmsgs['codeLocataire.adresseCorrespondance']}/ #{clientLocatairearmsgs['codeLocataire.adresseCorrespondance']}"
+								rendered="true" />
+
+
+
+						</p:column>
+
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.adresseCorrespondance']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--**********************************************************Montant Anuelle*******************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.montantLogementAnnuel']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<pe:inputNumber id="montant_annuel"
+								value="#{clientLocataireBean.newClientLocataire.loyerAnnuel}"
+								label="#{clientLocatairefrmsgs['codeLocataire.montantLogementAnnuel']}/ #{clientLocatairearmsgs['codeLocataire.montantLogementAnnuel']}"
+								minValue="0.000">
+								<p:ajax event="blur"></p:ajax>
+
+							</pe:inputNumber>
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.montantLogementAnnuel']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--***********************************************************DUREE CONTRAT (Nombre Annee ) Par defaul =1 *************************** -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.dureeContrat']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:inputText id="duree_contrat"
+								value="#{clientLocataireBean.newClientLocataire.duree}"
+								label="#{clientLocatairefrmsgs['codeLocataire.dureeContrat']}/ #{clientLocatairearmsgs['codeLocataire.dureeContrat']}">
+								<p:ajax event="blur" listener="#{clientLocataireBean.initDate}"
+									update="date_debut date_fin"></p:ajax>
+							</p:inputText>
+
+
+
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.dureeContrat']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--**********************************************Date DEBUT***************************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.DateDebut']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:calendar id="date_debut" styleClass="calendarClass"
+								showOn="button"
+								value="#{clientLocataireBean.newClientLocataire.dateDebut}"
+								pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+								label="#{clientLocatairefrmsgs['codeLocataire.DateDebut']}/ #{clientLocatairearmsgs['codeLocataire.DateDebut']}"
+								style="width: 80px !important;">
+
+								<p:ajax event="dateSelect"
+									listener="#{clientLocataireBean.updateDateFin}"
+									update="date_fin" />
+
+							</p:calendar>
+
+
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.DateDebut']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+
+					<!--**********************************************DATE FINT****************************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.datefin']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+
+							<p:inputText id="date_fin" readonly="true"
+								value="#{clientLocataireBean.dateFin}"
+								label="#{clientLocatairefrmsgs['codeLocataire.datefin']}/ #{clientLocatairearmsgs['codeLocataire.datefin']}">
+								<f:convertDateTime pattern="dd/mm/yyyy" />
+
+							</p:inputText>
+
+
+
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.datefin']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--**********************************************************LOYER MENSUEL************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.LoyerMensuel']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<pe:inputNumber id="montant_mensuel"
+								value="#{clientLocataireBean.newClientLocataire.loyerMensuel}"
+								label="#{clientLocatairefrmsgs['codeLocataire.LoyerMensuel']}/ #{clientLocatairearmsgs['codeLocataire.LoyerMensuel']}"
+								minValue="0.000">
+								<p:ajax event="blur"></p:ajax>
+
+							</pe:inputNumber>
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.LoyerMensuel']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--***********************************************************TAUX DAUGMENTATION*********************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.tauxAugmentationAnnuel']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<pe:inputNumber id="taux_augmentation"
+								value="#{clientLocataireBean.newClientLocataire.tauxAugmetation}"
+								label="#{clientLocatairefrmsgs['codeLocataire.tauxAugmentationAnnuel']}/ #{clientLocatairearmsgs['codeLocataire.tauxAugmentationAnnuel']}"
+								minValue="0.00">
+								<p:ajax event="blur"></p:ajax>
+
+							</pe:inputNumber>%
+							
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.tauxAugmentationAnnuel']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--************************************************************ETAT CONTRAT*******************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.etatContrat']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<center>
+								<h:selectOneRadio id="etatContrat"
+									value="#{clientLocataireBean.newClientLocataire.etatContrat}"
+									label="etatContrat" required="true">
+
+									<f:selectItem itemValue="0" itemLabel="Enregistré" />
+									<f:selectItem itemValue="1" itemLabel="Signé" />
+									<p:ajax update="date_enregistrement"></p:ajax>
+
+
+								</h:selectOneRadio>
+							</center>
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.etatContrat']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--***********************************************Date enregistrement ***************************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.DateEnregistrement']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:calendar id="date_enregistrement" styleClass="calendarClass"
+								showOn="button"
+								value="#{clientLocataireBean.newClientLocataire.dateEnregistrement}"
+								pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+								readonly="#{clientLocataireBean.newClientLocataire.etatContrat==1}"
+								required="#{clientLocataireBean.newClientLocataire.etatContrat==0}"
+								label="#{clientLocatairefrmsgs['codeLocataire.DateEnregistrement']}/ #{clientLocatairearmsgs['codeLocataire.DateEnregistrement']}"
+								style="width: 80px !important;" />
+
+
+
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.DateEnregistrement']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+					<!--****************************************************************Solde Loyer*********************************************************  -->
+					<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.soldeLoyer']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<center>
+								<h:selectOneRadio id="solde_loyer"
+									value="#{clientLocataireBean.newClientLocataire.soldeLoyer}"
+									label="#{clientLocatairefrmsgs['codeLocataire.soldeLoyer']}/#{clientLocatairearmsgs['codeLocataire.soldeLoyer']}"
+									required="true">
+
+									<f:selectItem itemValue="0" itemLabel="Provisoire" />
+									<f:selectItem itemValue="1" itemLabel="Définitif " />
+									<p:ajax update="date_enregistrement"></p:ajax>
+
+
+								</h:selectOneRadio>
+							</center>
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.soldeLoyer']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+<!--**************************************************************Date FinContrat ********************************************************************  -->
+	<p:row>
+						<p:column style="width: 150px;">
+							<h:outputText
+								value="#{clientLocatairefrmsgs['codeLocataire.dateFinLocation']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column colspan="2">
+							<p:calendar id="date_fin_Contrat" styleClass="calendarClass"
+								showOn="button"
+								value="#{clientLocataireBean.newClientLocataire.dateFinLocation}"
+								pattern="dd/MM/yyyy" navigator="true" yearRange="1900:2100"
+								label="#{clientLocatairefrmsgs['codeLocataire.dateFinLocation']}/ #{clientLocatairearmsgs['codeLocataire.dateFinLocation']}"
+								style="width: 80px !important;">
+
+								<p:ajax event="dateSelect"
+									listener="#{clientLocataireBean.updateDateFin}"
+									update="date_fin" />
+
+							</p:calendar>
+
+
+
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+
+						</p:column>
+						<p:column style="width: 150px;text-align: right;">
+							<h:outputText
+								value="#{clientLocatairearmsgs['codeLocataire.dateFinLocation']}:"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+				<!--***********************************************COMMAND BUTTON***********************************************************************-->
+
+
+				<div style="width: 100%; text-align: right">
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						oncomplete="{PF('updConfirmation').show()};">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						actionListener="#{clientLocataireBean.createClientLocataire}"
+						update="@form" process="@this">
+
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="decline"
+						value="#{clientLocatairefrmsgs['codeLocataireconsulter']}"
+						styleClass="ui-priority-primary" process="@this"
+						actionListener="#{clientLocataireBean.createClientLocataire}"
+						update="@form"
+						action="#{menuController.goToPageGestionClientLocataire}" />
+				</div>
+			</p:panel>
+		</h:form>
+		<!-- **********************************FIN FORMULAIRE ********DEBUT DIALOGUE AJOUT******************************************************** -->
+		<p:confirmDialog id="diagUpd" appendTo="@(body)"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="updConfirmation" showEffect="explode" hideEffect="bounce">
+			<div align="right">
+				<h:form id="diagForm1">
+					<p:commandButton id="confirm_save"
+						value="#{generalmsgs['popup.confirmer']}"
+						oncomplete="PF('updConfirmation').hide();"
+						actionListener="#{clientLocataireBean.saveClientLocataire}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="updConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

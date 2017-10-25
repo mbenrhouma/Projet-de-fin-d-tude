@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.ContratLocataire;
+
+public interface ContratLocataireDAO  extends AbstractDAO<ContratLocataire>{
+	ContratLocataire findById(String id);
+}

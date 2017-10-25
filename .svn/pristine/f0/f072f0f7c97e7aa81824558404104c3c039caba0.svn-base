@@ -1,0 +1,167 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.AbstractDAO;
+
+@SuppressWarnings("serial")
+@Repository("abstractDAO")
+public class AbstractDAOImpl<T>  implements
+		AbstractDAO<T> {
+	@Autowired
+	protected HibernateTemplate hibernateTemplate;
+
+	private Class<T> entityClass;
+	
+	protected Session session ;
+
+	public AbstractDAOImpl() {
+		super();
+	
+	}
+
+	public AbstractDAOImpl(Class<T> entityClass) {
+		this.entityClass = entityClass;
+	}
+
+	@Override
+	public Object save(T entity) {
+		if(session!=null){
+			session.close();
+			session=null;
+		}
+		this.getHibernateTemplate().save(entity);
+		return entity ;
+	}
+	
+	
+	@Override
+	public void update(T entity) {
+		if(session!=null){
+			session.close();
+			session=null;
+		}
+	this.getHibernateTemplate().update(entity);
+	}
+
+	@Override
+	public List<T> findAll() {
+		if(session!=null){
+			session.close();
+			session=null;
+		}
+		return this.getHibernateTemplate().loadAll(entityClass);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findByFilter(int first, int pageSize, String sortField,
+			boolean sortOrder, Map<String, String> filters) {
+		String filterProperty, filterValue;
+		final DetachedCriteria detachedCriteria = DetachedCriteria
+				.forClass(entityClass);
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			filterProperty = it.next();
+			filterValue = filters.get(filterProperty);
+			if (!"".equals(filterValue)) {
+				detachedCriteria.add(Restrictions.ilike(filterProperty,
+						filterValue, MatchMode.START));
+			}
+		}
+		if (sortOrder && sortField != null) {
+			detachedCriteria.addOrder(Order.asc(sortField));
+		} else if (!sortOrder && sortField != null) {
+			detachedCriteria.addOrder(Order.desc(sortField));
+		}
+		// detachedCriteria.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
+		return this.getHibernateTemplate().findByCriteria(detachedCriteria,
+				first, pageSize);
+	}
+
+	@Override
+	public int getCount(Map<String, String> filters) {
+		String filterProperty, filterValue;
+		final DetachedCriteria detachedCriteria = DetachedCriteria
+				.forClass(entityClass);
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			filterProperty = it.next();
+			filterValue = filters.get(filterProperty);
+			if (!"".equals(filterValue)) {
+				detachedCriteria.add(Restrictions.ilike(filterProperty,
+						filterValue, MatchMode.START));
+			}
+		}
+		return this.getHibernateTemplate().findByCriteria(detachedCriteria)
+				.size();
+	}
+
+	@Override
+	public T find(Object idClass) {
+		return (T) this.getHibernateTemplate().get(entityClass,
+				(Serializable) idClass);
+	}
+
+	@Override
+	public boolean delete(T entitys) throws Exception {		
+		
+		if(session!=null){
+			session.close();
+			session=null;
+		}
+		
+			this.getHibernateTemplate().delete(entitys);
+		
+		return true;
+	}
+
+	@Override
+	public void flush(T entity) {
+		this.getHibernateTemplate().flush();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findSorted(String sortField, boolean sortOrder) {
+		String filterProperty, filterValue;
+		final DetachedCriteria detachedCriteria = DetachedCriteria
+				.forClass(entityClass);
+		if (sortOrder && sortField != null) {
+			detachedCriteria.addOrder(Order.asc(sortField));
+		} else if (!sortOrder && sortField != null) {
+			detachedCriteria.addOrder(Order.desc(sortField));
+		}
+		return this.getHibernateTemplate().findByCriteria(detachedCriteria);
+	}
+
+	public HibernateTemplate getHibernateTemplate() {
+		return hibernateTemplate;
+	}
+
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate = hibernateTemplate;
+	}
+
+	protected Session getSession(){
+		if(session==null){
+			session = hibernateTemplate.getSessionFactory().openSession();
+		}
+		return session;
+		
+	}
+	
+	
+	
+}

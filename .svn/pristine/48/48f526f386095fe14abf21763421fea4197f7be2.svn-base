@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<f:view locale="#{languageBean.locale}">
+
+
+		<div id="header">
+
+			<div class="RepTunis">
+				<table>
+					<tr>
+						<td><strong class="textRepub">#{toppanmsgs['republic.tunisienne']}</strong>
+							<p class="bodytext">
+								#{toppanmsgs['ministereEquipement.nom']} <br />
+								#{toppanmsgs['ministereEquipement.nom2']}
+							</p></td>
+						<td style="vertical-align: middle; padding-bottom: 13px;"><img
+							id="imgTun"
+							src="#{facesContext.externalContext.request.contextPath}/resources/images/tun.gif" />
+						</td>
+
+					</tr>
+				</table>
+
+			</div>
+			<table>
+				<tr>
+					<td><p:commandLink value="Français" ajax="true"
+							actionListener="#{languageBean.reload}">
+							<f:setPropertyActionListener value="fr"
+								target="#{languageBean.language}"></f:setPropertyActionListener>
+						</p:commandLink></td>
+					<td><p:commandLink style="margin-left: 20px;" value="Arabe"
+							ajax="true" actionListener="#{languageBean.reload}">
+							<f:setPropertyActionListener value="ar"
+								target="#{languageBean.language}"></f:setPropertyActionListener>
+						</p:commandLink></td>
+
+				</tr>
+
+			</table>
+			<img height="140"
+				src="#{facesContext.externalContext.request.contextPath}/resources/images/header-fr.jpg"
+				style="width: 100%; border-radius: 5px; padding-bottom: 1px;" />
+			<h:form>
+
+				<p:menubar autoSubmenuDisplay="true"
+					style="width: 953px; margin-left: -3px;">
+
+					<p:menuitem icon="ui-icon-home"
+						value="#{toppanmsgs['header.accueil']}"
+						action="#{menuController.goToPageAccueil}"
+						onstart="PF('modDia').show();" />
+						
+						
+				  <p:submenu label="#{toppanmsgs['header.identification']}"
+						icon="ui-icon-person" >
+						<p:menuitem value="#{toppanmsgs['header.client_aquereur']}"
+						onstart="PF('modDia').show();" />
+						<p:menuitem value="#{toppanmsgs['header.client_loc']}" ajax="false"
+							action="#{menuController.goToPageGestionClientLocataire}"
+							onstart="PF('modDia').show();"  />
+						<p:menuitem value="#{toppanmsgs['header.tableau_amortissement']}" 
+							
+							onstart="PF('modDia').show();" />
+							<p:menuitem value="#{toppanmsgs['header.logement']}" 
+							action="#{menuController.goToPageConsulterLogement}"
+							onstart="PF('modDia').show();" />
+					</p:submenu>
+					
+					 <p:submenu label="#{toppanmsgs['header.recette']}"
+						icon="ui-icon-person" >
+						<p:menuitem value="#{toppanmsgs['header.impaye']}"
+						onstart="PF('modDia').show();" 
+						action="#{menuController.goToPageSuiviDesRecouvrements}"/>
+						
+						<p:menuitem value="#{toppanmsgs['header.precontentieux']}" ajax="false"
+			      		onstart="PF('modDia').show();"  
+			      		action="#{menuController.goToPageSuiviPrecontentieux}"/>
+			      		<p:menuitem value="#{toppanmsgs['header.suivi.precontentieux']}" ajax="false"
+			      		onstart="PF('modDia').show();"  
+			      		action="#{menuController.goToPageGestionPrecontentieux}"/>
+			      		<p:menuitem value="#{toppanmsgs['header.arrangement']}" 
+						onstart="PF('modDia').show();" 
+						action="#{menuController.goToPageGestionArrangement}"/>
+						<p:menuitem value="#{toppanmsgs['header.param.gestionNoteDebit']}" 
+						onstart="PF('modDia').show();" 
+						action="#{menuController.goToPageGestionNoteDebit}"/>
+						
+					</p:submenu>
+					
+
+						
+						
+						
+					<p:submenu label="#{toppanmsgs['header.contentieux']}"
+						icon="ui-icon-home" >
+						
+						<p:menuitem value="#{toppanmsgs['header.dossierContentieux']}" ajax="false"
+			      		onstart="PF('modDia').show();"  
+			      		action="#{menuController.goToPageDossierContentieux}"/>
+			      		
+			      		<p:menuitem value="#{toppanmsgs['header.contentieux']}" ajax="false"
+			      		onstart="PF('modDia').show();"  
+			      		action="#{menuController.goToPageContentieux}"/>
+						
+						
+						
+					</p:submenu>
+						
+					<p:submenu label="#{toppanmsgs['header.assurance']}"
+						icon="ui-icon-person" >
+						<p:menuitem value="#{toppanmsgs['header.assureur']}"
+						onstart="PF('modDia').show();" />
+						<p:menuitem value="#{toppanmsgs['header.assurance']}" ajax="false"
+			      	onstart="PF('modDia').show();"  />
+						<p:menuitem value="#{toppanmsgs['header.reclamation']}" 
+						onstart="PF('modDia').show();" />
+						<p:menuitem value="#{toppanmsgs['header.deces']}" 
+						onstart="PF('modDia').show();" />
+					</p:submenu>
+					
+				 <p:submenu label="#{toppanmsgs['header.cession_deleg']}"
+						icon="ui-icon-person" >
+						<p:menuitem value="#{toppanmsgs['header.employeur']}"
+						action="#{menuController.goToPageEmployeur}"
+						onstart="PF('modDia').show();" />
+						<p:menuitem value="#{toppanmsgs['header.cession_sur_salaire']}" ajax="false"
+			      	onstart="PF('modDia').show();"  />
+						<p:menuitem value="#{toppanmsgs['header.reglement_empl']}" 
+						onstart="PF('modDia').show();" />
+					</p:submenu>
+					
+
+					<p:submenu label="#{toppanmsgs['administration']}"
+						icon="ui-icon-person">
+						<p:menuitem value="#{toppanmsgs['header.Aide_en_ligne']}"
+							onstart="PF('modDia').show();" />
+						<p:menuitem value="#{toppanmsgs['utilisateur']}" ajax="false"
+						action="#{menuController.goToPageUtilisateur}"
+							onstart="PF('modDia').show();" />
+						<p:menuitem value="#{toppanmsgs['groupe']}" 
+							action="#{menuController.goToPageGroupe}"
+							onstart="PF('modDia').show();" />
+					</p:submenu>
+					<p:submenu label="#{toppanmsgs['header.parametrage']}"
+						icon="ui-icon-person">
+
+						<p:menuitem value="#{toppanmsgs['header.param.typeFrais']}"
+							actionListener="#{menuController.goToPageParametrageTypeFrais}"
+							ajax="false" onstart="PF('modDia').show();" />
+						<p:menuitem value="#{toppanmsgs['header.param.typeLogement']}"
+						actionListener="#{menuController.goToPageParametrageTypeLogement}"
+							onstart="PF('modDia').show();" />
+						
+							<p:menuitem value="#{toppanmsgs['header.param.huissiersNotaires']}"
+							actionListener="#{menuController.goToPageParametrageHuissierNotaire}"
+							onstart="PF('modDia').show();" />
+							<p:menuitem value="#{toppanmsgs['header.param.gestionDesGouvernorats']}"
+							actionListener="#{menuController.goToPageParametrageGouvernerat}"
+							onstart="PF('modDia').show();" />
+							<p:menuitem value="#{toppanmsgs['header.param.gestionGestionDesVilles']}"
+							actionListener="#{menuController.goToPageParametrageVilles}"
+							onstart="PF('modDia').show();" />
+							<p:menuitem value="#{toppanmsgs['header.param.gestiondeCodePostal']}"
+							actionListener="#{menuController.goToPageParametrageCodePostale}"
+							onstart="PF('modDia').show();" />
+							<p:menuitem value="#{toppanmsgs['header.param.contentieuxPar']}"
+							actionListener="#{menuController.goToPageParametrageContentieux}"
+							onstart="PF('modDia').show();" />
+							<p:menuitem value="#{toppanmsgs['header.param.typeMainlevee']}"
+							actionListener="#{menuController.goToPageParametrageMainlevee}"
+							onstart="PF('modDia').show();" />
+					</p:submenu>
+
+					<f:facet name="options">
+
+						<p:menuButton value="#{loginBean.currentUtilisateur}" id="m6"
+							style="color:#0081C2; font-size: 13px !important; position:relative;right: 5px; font-weight: bold;">
+							<p:menuitem value="#{toppanmsgs['header.deconnexion']}" id="m61"
+								icon="ui-icon-power"
+								actionListener="#{loginBean.getDeconnexion}" />
+							<p:menuitem value="#{toppanmsgs['changer.mot_passe']}"
+								icon="ui-icon-wrench" id="m62" ajax="false"
+								action="#{menuController.goToPageChangerMotPasse}"
+								onstart="PF('modDia').show();" />
+						</p:menuButton>
+					</f:facet>
+
+				</p:menubar>
+
+			</h:form>
+		</div>
+
+	</f:view>
+	<p:dialog modal="true" widgetVar="modDia" appendTo="@(body)"
+		styleClass="dialogLoading" id="dialogLoadingMenu" showHeader="false"
+		draggable="false" closable="false" resizable="false"
+		style="border: none!important;">
+		<center>
+			<p:graphicImage value="/resources/images/indicator.gif"
+				style="height:40px;" />
+		</center>
+	</p:dialog>
+</ui:composition>
+
+

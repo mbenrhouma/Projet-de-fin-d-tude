@@ -1,0 +1,281 @@
+package com.cynapsys.Views;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.dao.DuplicateKeyException;
+
+import com.cynapsys.entities.Assurance;
+import com.cynapsys.entities.Assureur;
+import com.cynapsys.entities.DetailAssureur;
+import com.cynapsys.service.AssuranceService;
+import com.cynapsys.service.AssureurService;
+import com.cynapsys.utils.Constants;
+import com.cynapsys.utils.GenerateRapport;
+import com.cynapsys.utils.JsfUtil;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+@ManagedBean(name = "assureurBean")
+@ViewScoped
+public class AssureurBean extends AbstractBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Assureur newAssureur;
+	private Assureur selectAssureur;
+	public Integer modifAssureur;
+	private List<Assureur> assureurs;
+	public HttpSession session;
+	public Date date = new Date();
+	public String abreviation;
+
+	public String getAbreviation() {
+		return abreviation;
+	}
+
+	public void setAbreviation(String abreviation) {
+		this.abreviation = abreviation;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Assureur getNewAssureur() {
+		return newAssureur;
+	}
+
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
+	public void setNewAssureur(Assureur newAssureur) {
+		this.newAssureur = newAssureur;
+	}
+
+	public Assureur getSelectAssureur() {
+		return selectAssureur;
+	}
+
+	public void setSelectAssureur(Assureur selectAssureur) {
+		this.selectAssureur = selectAssureur;
+	}
+
+	public Integer getModifAssureur() {
+		return modifAssureur;
+	}
+
+	public void setModifAssureur(Integer modifAssureur) {
+		this.modifAssureur = modifAssureur;
+	}
+
+	public List<Assureur> getAssureurs() {
+		return assureurs;
+	}
+
+	public void setAssureurs(List<Assureur> assureurs) {
+		this.assureurs = assureurs;
+	}
+
+	public List<Assureur> getFiltered() {
+		return filtered;
+	}
+
+	public void setFiltered(List<Assureur> filtered) {
+		this.filtered = filtered;
+	}
+
+	public SelectItem[] getAssureurOptions() {
+		return assureurOptions;
+	}
+
+	public void setAssureurOptions(SelectItem[] assureurOptions) {
+		this.assureurOptions = assureurOptions;
+	}
+
+	public AssureurService getAssureurService() {
+		return assureurService;
+	}
+
+	public void setAssureurService(AssureurService assureurService) {
+		this.assureurService = assureurService;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public AssuranceService getAssuranceService() {
+		return assuranceService;
+	}
+
+	public void setAssuranceService(AssuranceService assuranceService) {
+		this.assuranceService = assuranceService;
+	}
+
+	private List<Assureur> filtered;
+	private SelectItem[] assureurOptions;
+
+	@ManagedProperty(value = "#{assureurService}")
+	private AssureurService assureurService;
+
+	@ManagedProperty(value = "#{assuranceService}")
+	private AssuranceService assuranceService;
+
+	public AssureurBean() {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		session = (HttpSession) extContext.getSession(false);
+	}
+
+	@PostConstruct
+	public void initialisation() {
+		newAssureur = new Assureur();
+		assureurs = assureurService.findAll();
+		modifAssureur = 0;
+
+	}
+
+	public void createAssureur() {
+		newAssureur = new Assureur();
+		assureurs = assureurService.findAll();
+		modifAssureur = 0;
+		selectAssureur = new Assureur();
+	}
+
+	public void onChange() {
+		modifAssureur = 1;
+	}
+
+	public void onSelectAssureur() {
+		newAssureur = selectAssureur;
+		modifAssureur = 1;
+	}
+
+	public void deleteAssureur() throws Exception {
+
+		List<Assurance> findAssureur = assuranceService.findAllDta();
+		if (findAssureur.size() > 0) {
+			for (Assurance assurance : findAssureur) {
+				if (assurance.getAssureur().getCode().equals(newAssureur.getCode())) {
+					if (session.getAttribute("locale").toString().equals("fr")) {
+						JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assureur_fr)
+								.getString("assureur.error.supprime.assureur.utilise"));
+					} else {
+						JsfUtil.addErrorMessage(ResourceBundle.getBundle(Constants.bundle_assureur_ar)
+								.getString("assureur.error.supprime.assureur.utilise"));
+					}
+					break;
+				} else {
+					assureurService.delete(newAssureur);
+					createAssureur();
+					if (session.getAttribute("locale").toString().equals("fr")) {
+						JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assureur_fr)
+								.getString("assureur.supprime.succes"));
+					} else {
+						JsfUtil.addSuccessMessage(ResourceBundle.getBundle(Constants.bundle_assureur_ar)
+								.getString("assureur.supprime.succes"));
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	public void saveAssureur() {
+		if (modifAssureur == 0) {
+			Boolean existe = true;
+			for (Assureur assureur : assureurs) {
+
+				if (assureur.getAbreviation().equals((newAssureur.getAbreviation()))) {
+
+					existe=true;
+					break;
+				} else {
+					existe=false;
+
+				}
+			}
+			if (existe == true) {
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addWarningMessage(
+							ResourceBundle.getBundle(Constants.bundle_assureur_fr).getString("assureur.erreur.existe"));
+				else {
+					JsfUtil.addWarningMessage(
+							ResourceBundle.getBundle(Constants.bundle_assureur_ar).getString("assureur.erreur.existe"));
+				}
+			} else {
+				assureurService.save(newAssureur);
+				createAssureur();
+				if (session.getAttribute("locale").toString().equals("fr"))
+					JsfUtil.addSuccessMessage(
+							ResourceBundle.getBundle(Constants.bundle_assureur_fr).getString("assureur.cree.succes"));
+				else {
+					JsfUtil.addSuccessMessage(
+							ResourceBundle.getBundle(Constants.bundle_assureur_ar).getString("assureur.cree.succes"));
+				}
+			}
+		} else {
+
+			assureurService.update(newAssureur);
+			createAssureur();
+			if (session.getAttribute("locale").toString().equals("fr")) {
+				JsfUtil.addSuccessMessage(
+						ResourceBundle.getBundle(Constants.bundle_assureur_fr).getString("assureur.modifie.succes"));
+			} else {
+				JsfUtil.addSuccessMessage(
+						ResourceBundle.getBundle(Constants.bundle_assureur_ar).getString("assureur.modifie.succes"));
+			}
+
+		}
+		if (!isValidFailed()) {
+			createAssureur();
+		}
+	}
+
+	private boolean isValidFailed() {
+		return JsfUtil.isValidationFailed();
+	}
+
+	public void imprimer(){
+	    Map<String,Object> params = new HashMap<String, Object>();
+	    Date d= new Date();
+	    String subreportFile="Assureur_subreport.jasper";
+	    String masterReportFile="Assureur.jasper";
+	    List<DetailAssureur> listAssureur=new ArrayList<DetailAssureur>();
+	    DetailAssureur detailAssureur =new DetailAssureur();
+	    detailAssureur.setAssureurList(assureurs);
+	    listAssureur.add(detailAssureur);
+	    GenerateRapport.exportPDFWithDataSourceSubReport(masterReportFile, subreportFile, listAssureur, params, "assureur", "assureurList");
+	}
+}

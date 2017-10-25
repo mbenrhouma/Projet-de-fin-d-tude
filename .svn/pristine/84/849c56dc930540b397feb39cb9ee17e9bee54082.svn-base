@@ -1,0 +1,943 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="utilisateurForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['ajoutClientAcquereur']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:fieldset legend="#{toppanmsgs['header.identification']}"
+					id="identification" toggleable="false" toggleSpeed="500"
+					rendered="true">
+
+					<p:panelGrid id="detail1" style="width: 100%" styleClass="noBorder">
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.codeclient']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="code_clt" style="width:210px" required="true"
+									value="#{clientAcquereurBean.newClientAcquereur.codeAcquereur}"
+									label="#{clientmsgs['clientAcquereur.codeclient']}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+
+							<!--***************************************************************CLIENT-GROUPE***********************************************  -->
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientmsgs['clientAcquereur.groupe']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu filter="true" required="true"
+									label="#{clientmsgs['clientAcquereur.groupe']}"
+									converter="groupeConverter" filterMatchMode="contains"
+									style="width:194px"
+									value="#{clientAcquereurBean.newClientAcquereur.groupe}"
+									disabled="false">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{clientAcquereurBean.groupes}"
+										var="groupe" itemLabel="#{groupe.code}|#{groupe.libelle}"
+										itemValue="#{group}" />
+								</p:selectOneMenu>
+							</p:column>
+
+
+						</p:row>
+
+						<!--***********************************************Nom&Prenom**********************************************************  -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.nomPrenomFr']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nom_clt" style="width:210px" required="true"
+									onkeyup="this.value=this.value.toUpperCase();"
+									label="#{clientmsgs['clientAcquereur.nomPrenomFr']}:"
+									value="#{clientAcquereurBean.newClientAcquereur.nomPrenomFr}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.nomPrenomFr']} (Arabe):"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nom_clt_ar" style="width:210px"
+									required="false"
+									label="#{clientmsgs['clientAcquereur.nomPrenomFr']}"
+									onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;"
+									value="#{clientAcquereurBean.newClientAcquereur.nomPrenomAr}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+						</p:row>
+						<!--***********************************************CIN**********************************************************  -->
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+										<h:outputText
+											value="#{clientmsgs['clientAcquereur.adresseCorrespondanceAr']}:"
+											styleClass="weightBold" />
+										
+									</p:column>
+
+									<p:column>
+										<p:inputTextarea  
+											rows="3"
+											value="#{clientAcquereurBean.newClientAcquereur.adresseCorrespondanceAr}"
+											style="width:210px" 
+											label="#{clientmsgs['clientAcquereur.adresseCorrespondanceAr']}">
+										</p:inputTextarea>
+
+									
+									</p:column>
+							
+
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.adresseCorrespondance']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+									<p:inputTextarea 
+											rows="3" id="adresse_clt" style="width:210px"
+									required="true"
+									label="#{clientmsgs['clientAcquereur.adresseCorrespondance']}"
+									value="#{clientAcquereurBean.newClientAcquereur.adresseCorrespondance}"
+									rendered="true">
+
+								</p:inputTextarea>
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.anneebudgetaire']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:selectOneMenu filter="true" required="true"
+									converter="anneeBudgetaireConverter" filterMatchMode="contains"
+									style="width:194px"
+									label="#{clientmsgs['clientAcquereur.anneebudgetaire']}"
+									value="#{clientAcquereurBean.newClientAcquereur.anneeBudgetaire}"
+									disabled="false">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{clientAcquereurBean.anneebudgetaires}"
+										var="annee" itemLabel="#{annee.annee}" itemValue="#{annee}" />
+								</p:selectOneMenu>
+							</p:column>
+						
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientmsgs['clientAcquereur.cin']} :"
+									styleClass="weightBold" />
+								
+							</p:column>
+
+							<p:column>
+								<p:inputText id="cin_clt" style="width:210px" 
+									rendered="true" label="#{clientmsgs['clientAcquereur.cin']} "
+									value="#{clientAcquereurBean.newClientAcquereur.cin}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;"
+									maxlength="8">
+
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+						<!--***********************************************CONJOINT**********************************************************  -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientmsgs['clientAcquereur.conjoint']}:"
+									styleClass="weightBold" />
+								<h:outputText styleClass="required-star-right" value="*" />
+							</p:column>
+							<p:column style="width: 150px;">
+								<p:selectBooleanCheckbox id="conj"
+									value="#{clientAcquereurBean.compteConjoint}">
+									<p:ajax event="change"
+										update="nom_clt_conj nom_clt_conj_Ar cin_clt_conj" />
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:row>
+						<!--***********************************************Nom&Prenom CONJOINT**********************************************************  -->
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAquereur.nomprenomconjoint']}:"
+									styleClass="weightBold" />
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="nom_clt_conj" style="width:210px"
+									required="#{clientAcquereurBean.compteConjoint == true}"
+									onkeyup="this.value=this.value.toUpperCase();"
+									disabled="#{clientAcquereurBean.compteConjoint == false}"
+									value="#{clientAcquereurBean.newClientAcquereur.nomPrenomConjointFr}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAquereur.nomprenomconjoint']} (Arabe)"
+									styleClass="weightBold" />
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+
+
+							<p:column>
+								<p:inputText id="nom_clt_conj_Ar" style="width:210px"
+									required="false"
+									disabled="#{clientAcquereurBean.compteConjoint == false}"
+									onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;"
+									value="#{clientAcquereurBean.newClientAcquereur.nomPrenomConjointAr}"
+									rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{clientmsgs['clientAcquereur.cin']} :"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="cin_clt_conj" style="width:210px"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;"
+									maxlength="8"
+									required="#{clientAcquereurBean.compteConjoint == true}"
+									value="#{clientAcquereurBean.newClientAcquereur.cinConjoint}"
+									disabled="#{clientAcquereurBean.compteConjoint == false}"
+									rendered="true"
+									label="#{clientAcquereurBean.newClientAcquereur.nomPrenomConjointAr}">
+
+								</p:inputText>
+							</p:column>
+						</p:row>
+
+
+
+
+
+
+					</p:panelGrid>
+
+				</p:fieldset>
+				<br />
+				<br />
+
+				<p:fieldset legend="#{toppanmsgs['header.logement']}" id="logement"
+					toggleable="false" toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail2" style="width: 100%" styleClass="noBorder">
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.codelogement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<h:panelGroup>
+									<p:selectOneMenu filter="true" required="true"
+										label="#{logementmsgs['logement.codelogement']}"
+										filterMatchMode="contains" converter="logementConverter"
+										rendered="#{clientAcquereurBean.log==0}" style="width:164px"
+										value="#{clientAcquereurBean.selectLogement}">
+										<f:selectItem noSelectionOption="true"
+											itemLabel="----------------------------------------"
+											itemValue="" />
+										<f:selectItems value="#{clientAcquereurBean.logements}"
+											var="log" itemValue="#{log}" itemLabel="#{log.codeLogement}" />
+										<p:ajax event="change"
+											update="type_log gouernerat_log code_postal_log prix_log num_ordre localité_log adresse_logement lotissment" />
+									</p:selectOneMenu>
+
+									<p:inputText id="logement_code" style="width:210px"
+										disabled="true"
+										value="#{clientAcquereurBean.selectLogement.codeLogement}"
+										label="code" rendered="#{clientAcquereurBean.log==1}">
+									</p:inputText>
+
+
+
+
+
+									<p:commandButton id="ajoutLogement" icon="ui-icon-plus"
+										rendered="#{clientAcquereurBean.log==0}"
+										title="Ajouter Logement" style="padding-top:8px;height:25px"
+										onclick="PF('newlogement').show();" immediate="true">
+									</p:commandButton>
+								</h:panelGroup>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.typeLogement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="type_log" required="false" style="width:210px"
+									disabled="true"
+									value="#{clientAcquereurBean.selectLogement.typeLogement.libelle}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.gouvernorat']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+
+							<p:column>
+								<p:inputText id="gouernerat_log" style="width:210px"
+									disabled="true"
+									value="#{clientAcquereurBean.selectLogement.gouvernorat.libelle}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.codePostal']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="code_postal_log" style="width:210px"
+									disabled="true"
+									value="#{clientAcquereurBean.selectLogement.localite.libelleFr}|#{clientAcquereurBean.selectLogement.localite.codePostal}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+
+
+
+						</p:row>
+
+						<p:row>
+
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.localite']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column style="width: 150px;">
+								<p:inputText id="localité_log" style="width:210px"
+									required="true" disabled="true"
+									value="#{clientAcquereurBean.selectLogement.localite.libelleFr}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+
+
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.numOrdre']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="num_ordre" style="width:210px" required="false"
+									value="#{clientAcquereurBean.selectLogement.numOrdre}"
+									disabled="true" rendered="true">
+
+								</p:inputText>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseLoge']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputTextarea id="adresse_logement" style="width:210px"
+									required="false" disabled="true"
+									value="#{clientAcquereurBean.selectLogement.adresseLoge}"
+									rendered="true">
+								</p:inputTextarea>
+							</p:column>
+								<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseAr']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputTextarea  style="width:210px"
+									required="false" disabled="true"
+									value="#{clientAcquereurBean.selectLogement.adresseLogeAr}"
+									rendered="true">
+								</p:inputTextarea>
+							</p:column>
+							
+
+
+						</p:row>
+
+						<p:row>
+						<p:column>
+								<h:outputText value="#{logementmsgs['logement.lotissement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="lotissment" style="width:210px"
+									required="false" disabled="true"
+									value="#{clientAcquereurBean.selectLogement.lotissement.libelleFr}"
+									rendered="true">
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.prixLog']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							<p:column>
+								<p:inputText id="prix_log" style="width:210px" disabled="true"
+									value="#{clientAcquereurBean.selectLogement.prixLog}"
+									label="#{clientLocatairemsgs['codeLocataire.LoyerMensuel']}/ #{clientLocatairearmsgs['codeLocataire.LoyerMensuel']}"
+									minValue="0.000">
+									<p:ajax event="blur"></p:ajax>
+
+								</p:inputText>
+
+							</p:column>
+
+
+
+						</p:row>
+
+
+
+					</p:panelGrid>
+
+
+				</p:fieldset>
+
+				<br />
+				<br />
+				<p:fieldset legend="#{clientmsgs['clientacquereur.contrat']}"
+					id="contrant" toggleable="false" toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail3" style="width: 100%" styleClass="noBorder">
+
+						<p:row>
+
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.dureeContrat']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="duréé" style="width:220px" required="true"
+									value="#{clientAcquereurBean.newClientAcquereur.dureeContrat}"
+									rendered="true"
+									label="#{clientmsgs['clientAcquereur.dureeContrat']}">
+									<p:ajax event="blur" listener="#{clientAcquereurBean.initDate}"
+										update="datedebut datefin"></p:ajax>
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.DateDebut']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="datedebut" style="width: 200px"
+									yearRange="c-100:c+100" showOn="button"
+									label="#{clientmsgs['clientAcquereur.DateDebut']}"
+									navigator="true"
+									value="#{clientAcquereurBean.newClientAcquereur.dateDebut}">
+									<p:ajax event="dateSelect"
+										listener="#{clientAcquereurBean.updateDateFin}"
+										update="datefin datedebut" />
+								</p:calendar>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{clientmsgs['clientAcquereur.datefin']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="datefin" yearRange="c-100:c+100"
+									showOn="button"
+									label="#{clientmsgs['clientAcquereur.datefin']}"
+									style="width:220px" navigator="true"
+									value="#{clientAcquereurBean.newClientAcquereur.dateFin}">
+
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+
+							<p:column>
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.etatContrat']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<center>
+									<p:selectOneRadio id="etatContrat"
+										value="#{clientAcquereurBean.newClientAcquereur.etatContrat}"
+										label="#{clientmsgs['clientAcquereur.etatContrat']}:"
+										required="true" style="width:210px">
+
+										<f:selectItem itemValue="0"
+											itemLabel="#{clientmsgs['clientAcquereur.contrat_enreg']}" />
+										<f:selectItem itemValue="1"
+											itemLabel="#{clientmsgs['clientAcquereur.contrat_signe']}" />
+										<p:ajax update="dateenregistrement"></p:ajax>
+
+
+									</p:selectOneRadio>
+								</center>
+							</p:column>
+
+
+						</p:row>
+
+
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{clientmsgs['clientAcquereur.DateEnregistrement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column >
+								<p:calendar id="dateenregistrement" styleClass="datef"
+									yearRange="c-100:c+100" showOn="button" style="width: 180px;"
+									label="#{clientAquereur['clientAquereur.DateEnregistrement']}:"
+									disabled="#{clientAcquereurBean.newClientAcquereur.etatContrat!=0}"
+									navigator="true" 
+									required="#{clientAcquereurBean.newClientAcquereur.etatContrat==0}"
+									value="#{clientAcquereurBean.newClientAcquereur.dateEnregistrement}" />
+							</p:column>
+
+
+						</p:row>
+
+
+					</p:panelGrid>
+
+
+				</p:fieldset>
+				<br />
+				<br />
+				<br />
+				<div style="width: 100%; text-align: right">
+
+					<p:commandButton id="initRechF" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this"
+						actionListener="#{clientAcquereurBean.CreateClientAcquereur}"
+						update="@all" rendered="true">
+						<p:resetInput target="utilisateurForm" />
+					</p:commandButton>
+
+					<p:spacer width="5px" />
+					<p:commandButton id="consulter" styleClass="ui-priority-primary"
+						value="#{clientmsgs['navigation.gotopagerech']}"
+						action="#{menuController.goToPagerechercheClientAcquereur}"  immediate="true"/>
+
+					<p:spacer width="5px" />
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" update="@form"
+						oncomplete="if(!args.validationFailed) {PF('newConfirmation').show()};">
+						<p:resetInput target="utilisateurForm" />
+					</p:commandButton>
+
+
+				</div>
+
+
+
+			</p:panel>
+		</h:form>
+
+
+		<p:dialog header="Ajout Logement" widgetVar="newlogement"  modal="true">
+			<h:form id="logementFormlog">
+				<p:growl id="growllogement" sticky="true" autoUpdate="true"
+					closable="true" />
+				<p:panel
+					style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+					
+						<p:panelGrid id="detaillog" style="width: 100%"
+							styleClass="noBorder">
+							<p:row>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.codelogement']}:"
+									styleClass="weightBold" />
+									
+								
+							</p:column>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							<p:spacer width="5px" />
+								<p:inputText id="logement_code" style="width:210px;font-family: Arial;"
+									disabled="#{logementBean.modif==1}"
+									value="#{logementBean.newLogement.codeLogement}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;"
+								maxlength="4"
+									required="true" label="#{logementmsgs['logement.codelogement']}">
+								</p:inputText>
+							</p:column>
+
+
+							<!--*******************************************************N° D ORDRE*********************************************************** -->
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.numOrdre']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							<p:spacer width="5px" />
+								<p:inputText id="logement_num_ordre" style="width:210px;font-family: Arial;"
+									value="#{logementBean.newLogement.numOrdre}"
+									label="#{logementmsgs['logement.numOrdre']}"
+									rendered="true" required="true">
+								</p:inputText>
+
+							</p:column>
+						</p:row>
+						
+						<p:row>
+						
+							<!--*****************************************************GOUVERNERAT********************************************************** -->
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.gouvernorat']}:"
+									styleClass="weightBold" />
+
+								
+							</p:column>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							<p:spacer width="5px" />
+								<p:selectOneMenu id="gouvernerat" filter="true"
+									filterMatchMode="contains"
+									value="#{logementBean.newLogement.gouvernorat}" required="true"
+									converter="gouvernoratConverter"
+									label="#{logementmsgs['logement.gouvernorat']}"
+									rendered="true">
+									<p:ajax event="change"
+										listener="#{logementBean.findlocaliteByGouvernerat}"
+										update="localite"></p:ajax>
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listGouvernerat}"
+										var="gov" itemLabel="#{gov.libelle}" itemValue="#{gov}" />
+								</p:selectOneMenu>
+							</p:column>
+							
+							<!--*****************************************************CODE POSTAL******************************************************************* -->
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.codePostal']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+							<p:column>
+									<h:outputText value="*" styleClass="required-star-right" />
+									<p:spacer width="5px" />
+
+								<p:selectOneMenu id="localite" filter="true"
+									disabled="#{logementBean.newLogement.gouvernorat==null}"
+									filterMatchMode="contains"
+									value="#{logementBean.newLogement.localite}" required="true"
+									converter="localiteConverter"
+									label="#{logementmsgs['logement.localite']}"
+									rendered="true">
+									<p:ajax event="change"
+										listener="#{logementBean.findLotissByLoc}"
+										update="lotiseement"></p:ajax>
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listLocalite}" var="loc"
+										itemLabel="#{loc.libelleFr}/#{loc.codePostal}" itemValue="#{loc}" />
+								</p:selectOneMenu>
+
+							</p:column>
+
+
+
+
+						</p:row>
+
+						<!--*****************************************************LOCALITE************************************************************* -->
+						<p:row>
+							<!-- *****************************************************LOTISSEMENT*********************************************************	 -->
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.lotissement']}:"
+									styleClass="weightBold" />
+
+								
+							</p:column>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							<p:spacer width="5px" />
+								<p:selectOneMenu id="lotiseement" filter="true"
+									filterMatchMode="contains"
+									disabled="#{logementBean.newLogement.localite==null}"
+									value="#{logementBean.newLogement.lotissement}" required="true"
+									converter="lotissementConverter"
+									label="#{logementmsgs['logement.lotissement']}" rendered="true">
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="---------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listLotissement}"
+										var="typlog" itemLabel="#{typlog.libelleFr}"
+										itemValue="#{typlog}" />
+								</p:selectOneMenu>
+							</p:column>
+						
+							
+
+							<!--  *****************************************************TYPE LOGEMENT********************************************************-->
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.typeLogement']}:"
+									styleClass="weightBold" />
+
+								
+							</p:column>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							<p:spacer width="5px" />
+								<p:selectOneMenu id="typLogement" filter="true"
+									filterMatchMode="contains"
+									value="#{logementBean.newLogement.typeLogement}"
+									required="true" converter="typeLogementConverter"
+									label="#{logementmsgs['logement.typeLogement']}"
+									rendered="true">
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="---------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listTypeLogement}"
+										var="typlog" itemLabel="#{typlog.libelle}"
+										itemValue="#{typlog}" />
+								</p:selectOneMenu>
+							</p:column>
+
+						</p:row>
+						<!-- ****************************************************ADRESSE LOGEMENT**************************************************** -->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseLoge']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							<p:spacer width="5px" />
+								<p:inputText id="logement_adresse" style="width:210px;font-family: Arial;"
+									value="#{logementBean.newLogement.adresseLoge}"
+									onkeyup="this.value=this.value.toUpperCase();"
+									label="#{logementmsgs['logement.adresseLoge']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseAr']}:"
+									styleClass="weightBold" />
+								
+							</p:column>
+							<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+							<p:spacer width="5px" />
+								<p:inputText id="logement_adressear" style="width:210px;font-family: Arial;"
+									value="#{logementBean.newLogement.adresseLogeAr}"
+									 onkeypress="if(event.which &lt; 1569  || event.which  &gt; 1791  )  return false;"
+									label="#{logementmsgs['logement.adresseAr']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+							</p:row>
+							<p:row>
+							
+							
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.prixLog']}:"
+									styleClass="weightBold" />
+							
+							</p:column>
+							<p:column>
+								<h:outputText value="*" styleClass="required-star-right" />
+								<p:spacer width="5px" />
+
+
+
+								<p:inputText id="prix-logement" style="width:210px;font-family: Arial;"
+									value="#{logementBean.newLogement.prixLog}"
+									label="#{logementmsgs['logement.prixLog']}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;"
+									>
+									
+								</p:inputText>
+
+							</p:column>
+
+
+						
+
+						</p:row>
+						<!--  **************************************************PRIX LOGEMENT*************************************************************** 	-->
+						
+						</p:panelGrid>
+				
+					<br />
+
+					<br></br>
+					<div style="width: 100%; text-align: right">
+						<p:commandButton id="newBtnlog" styleClass="ui-priority-primary"
+							value="#{generalmsgs['navigation.new']}" ajax="true"
+							process="@this" actionListener="#{logementBean.createLogement}"
+							update="utilisateurForm:logement">
+							<p:resetInput target="logementFormlog" />
+						</p:commandButton>
+
+
+
+
+
+						<p:commandButton id="editBtnlog" styleClass="ui-priority-primary"
+							value="#{generalmsgs['navigation.save']}" ajax="true"
+							oncomplete="if(!args.validationFailed){PF('newlogement').hide()};"
+							update="utilisateurForm:logement"
+							actionListener="#{clientAcquereurBean.AjoutLogement}">
+						</p:commandButton>
+					</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+
+		<p:confirmDialog id="diagSave"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="newConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form>
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update="@all"
+						oncomplete="PF('newConfirmation').hide() ; document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{clientAcquereurBean.saveClientAcquereur}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}" update="@all"
+						onclick="PF('newConfirmation').hide() "
+						styleClass="ui-priority-primary" />
+				</h:form>
+
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

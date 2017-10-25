@@ -1,0 +1,24 @@
+logement.codelogement=Code Logement
+logement.numOrdre=Num Ordre
+logement.adresseLoge=Adresse Logement
+logement.lotissement= Lotissement
+logement.prixLog=Prix Logemnt
+logement.etatlog=Etat Logement
+logement.codeclientAcquereur=Code Client AC
+logement.nometPrenom=Nom
+logement.codePostal=Code Postal
+logement.gouvernorat=Gouvernerat
+logement.localite=Localite
+logement.typeLogement=Type Logement
+
+
+
+
+
+
+
+logement.cree.succes=Logement créé avec succès
+logement.modifie.succes=Logement modiféé avec sucès
+logement.supprime.succes=Logement supprimé avec sucès
+logement.error.supprimer=Vous ne pouvez pas supprimer ce Logement
+logement.error.existe=Logement existe 

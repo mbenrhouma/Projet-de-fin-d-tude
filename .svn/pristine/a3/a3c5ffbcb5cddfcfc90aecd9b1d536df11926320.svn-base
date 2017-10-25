@@ -1,0 +1,12 @@
+package com.cynapsys.service;
+
+
+
+import java.util.List;
+
+import com.cynapsys.entities.Quitance;
+
+public interface QuitanceService extends AbstractService<Quitance>{
+	Quitance	findById(String id);
+	public List<Quitance> rechercheQuitance(Quitance quitance);
+}

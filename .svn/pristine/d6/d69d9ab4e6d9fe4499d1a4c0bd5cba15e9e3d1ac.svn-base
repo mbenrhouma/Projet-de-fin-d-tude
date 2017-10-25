@@ -1,0 +1,56 @@
+package com.cynapsys.Views.Converter;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
+
+import com.cynapsys.entities.AnneeBudgetaire;
+import com.cynapsys.service.AnneeBudgetaireService;
+
+@ManagedBean
+@ApplicationScoped
+public class AnneeBudgetaireConverterBean {
+
+	@ManagedProperty(value = "#{anneeBudgetaireService}")
+	private AnneeBudgetaireService anneeBudgetaireService;
+
+	public AnneeBudgetaireService getAnneeBudgetaireService() {
+		return anneeBudgetaireService;
+	}
+
+	public void setAnneeBudgetaireService(AnneeBudgetaireService anneeBudgetaireService) {
+		this.anneeBudgetaireService = anneeBudgetaireService;
+	}
+
+	@FacesConverter(value = "anneeBudgetaireConverter")
+	public static class AnneeBudgetaireConverter implements Converter {
+
+		@Override
+		public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+			AnneeBudgetaire anneeBudgetaire = new AnneeBudgetaire();
+			if (arg2 != null && !String.valueOf(arg2).equals("") && !arg2.contains("------------")) {
+				AnneeBudgetaireConverterBean anneeBudgetaireConverterBean = (AnneeBudgetaireConverterBean) FacesContext.getCurrentInstance()
+						.getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(),
+								"#{anneeBudgetaireConverterBean}", AnneeBudgetaireConverterBean.class);
+
+				anneeBudgetaire = anneeBudgetaireConverterBean.getAnneeBudgetaireService().findById(arg2);
+
+			}
+
+			return anneeBudgetaire;
+		}
+
+		@Override
+		public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
+			String id = (arg2 instanceof AnneeBudgetaire) ? ((AnneeBudgetaire) arg2).getCode() : null;
+
+			return (id != null) ? String.valueOf(id) : null;
+		}
+
+	}
+}
+

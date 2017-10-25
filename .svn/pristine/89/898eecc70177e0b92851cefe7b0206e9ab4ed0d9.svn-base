@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Logement;
+
+public interface LogementDAO  extends AbstractDAO<Logement>{
+	Logement findById(String id);
+}

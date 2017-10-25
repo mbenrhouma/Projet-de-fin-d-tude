@@ -1,0 +1,39 @@
+package com.cynapsys.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import com.cynapsys.dao.ReclamationDAO;
+import com.cynapsys.entities.Reclamation;
+
+@SuppressWarnings("serial")
+@Repository("reclamationDAO")
+public class ReclamationDAOImpl extends AbstractDAOImpl<Reclamation>
+		implements ReclamationDAO, Serializable {
+
+	public ReclamationDAOImpl() {
+		super(Reclamation.class);
+	}
+
+	@Override
+	public Reclamation findById(String id) {
+		
+		List<Reclamation> list=new ArrayList<Reclamation>();
+		try {
+			Criteria criteria= getSession().createCriteria(Reclamation.class);
+			criteria.add(Restrictions.eq("id", id));
+			 list = criteria.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list.get(0);	
+		
+	}
+
+}

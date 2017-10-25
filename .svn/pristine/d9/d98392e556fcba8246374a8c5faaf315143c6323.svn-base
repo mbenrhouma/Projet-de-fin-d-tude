@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="quittanceForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="Déclasser les quittances"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:fieldset legend="#{generalmsgs['navigation.recherche']}" id="cont_rech" toggleable="true"
+					toggleSpeed="500" rendered="true">
+
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+						<p:row>
+
+							<p:column>
+
+								<h:outputText value="#{quittancemsgs['quittance.num']}:"
+									styleClass="weightBold" />
+
+							</p:column>
+
+							
+							<p:column>
+
+								<p:inputText id="rech_num_quittance" style="width:210px"
+									required="false"
+									value="#{reglemenetEmployeurBean.newQuitance.numQuittance}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+
+
+
+
+
+						</p:row>
+
+						<p:row>
+
+							<p:column>
+
+								<h:outputText value="#{quittancemsgs['quittance.montant']}:"
+									styleClass="weightBold" />
+
+
+
+							</p:column>
+
+						
+
+							<p:column>
+
+								<p:inputText id="rech_mont_quittance" style="width:210px"
+									required="false"
+									value="#{reglemenetEmployeurBean.newQuitance.montant}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+						</p:row>
+
+						<p:row>
+
+							<p:column>
+
+								<h:outputText value="#{employeurmsgs['employeur.nom']}:"
+									styleClass="weightBold" />
+			
+							</p:column>
+
+							
+
+
+								<p:column id="employeur" colspan="2">
+									<p:selectOneMenu filter="true" style="width:194px"
+										required="true" converter="employeurConverter"
+										value="#{reglemenetEmployeurBean.selectEmployeur}"
+										disabled="false">
+										<f:selectItem noSelectionOption="true"
+											itemLabel="--------------------------------------------------"
+											itemValue="" />
+										<f:selectItems value="#{reglemenetEmployeurBean.employeurs}"
+											var="em" itemLabel="#{em.nomEmployeurFr}" />
+										<p:ajax />
+									</p:selectOneMenu>
+								</p:column>
+
+
+
+
+
+
+						</p:row>
+
+
+
+					</p:panelGrid>
+				</p:fieldset>
+
+				<br></br>
+
+				<br></br>
+
+				<br></br>
+
+				<br></br>
+
+
+				<div style="width: 100%; text-align: right">
+
+
+					<p:commandButton id="initRefrech" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this" update="@all" rendered="true"
+						actionListener="#{reglemenetEmployeurBean.createQuittance}">
+						<p:resetInput target="quittanceForm" />
+					</p:commandButton>
+
+
+					<p:commandButton id="initRechF" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.recherche']}" 	 ajax="true"
+						actionListener="#{reglemenetEmployeurBean.chercherQuittance}"
+						update=":quittanceForm:dta" rendered="true">
+						<p:resetInput target="quittanceForm" />
+					</p:commandButton>
+
+					<p:commandButton id="declasser" styleClass="ui-priority-primary"
+						value="#{quittancemsgs['quittance.declasser']}" ajax="true" update="@form"
+						disabled="#{reglemenetEmployeurBean.selectQ == 1}"
+						action="#{menuController.goToPageQuittanceEmployeur}" />
+					<p:spacer width="5px" />
+
+				</div>
+
+				<br></br>
+
+
+
+				<p:dataTable id="dta"
+					value="#{reglemenetEmployeurBean.quitancesAttentes}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.numQuittance}"
+					selection="#{reglemenetEmployeurBean.selectQuitance}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+
+					<f:facet name="header">
+                       
+                      </f:facet>
+
+
+					<p:ajax event="rowSelect"
+						listener="#{reglemenetEmployeurBean.onSelectQuittance}"
+						update=":quittanceForm:" />
+
+					<p:column filterBy="#{current.numQuittance}"
+						sortBy="#{current.numQuittance}" filterMatchMode="contains">
+						<f:facet name="header">
+
+							<h:outputText value="#{quittancemsgs['quittance.num']}" />
+
+						</f:facet>
+
+						<h:outputText value="#{current.numQuittance}"></h:outputText>
+
+					</p:column>
+
+
+					<p:column filterBy="#{current.nomEmployeur}"
+						sortBy="#{current.nomEmployeur}" filterMatchMode="contains">
+
+						<f:facet name="header">
+
+							<h:outputText value="#{employeurmsgs['employeur.nom']}" />
+
+						</f:facet>
+
+						<h:outputText value="#{current.nomEmployeur}"></h:outputText>
+
+					</p:column>
+
+					<p:column filterBy="#{current.dateVersement}"
+						sortBy="#{current.dateVersement}" filterMatchMode="contains">
+
+						<f:facet name="header">
+
+							<h:outputText
+								value="#{quittancemsgs['quittance.Date_versement']}">
+								
+							</h:outputText>
+
+						</f:facet>
+
+						<h:outputText value="#{current.dateVersement}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column filterBy="#{current.montant}" sortBy="#{current.montant}"
+						filterMatchMode="contains">
+
+						<f:facet name="header">
+
+							<h:outputText value="#{quittancemsgs['quittance.montant']}" />
+
+						</f:facet>
+
+						<h:outputText value="#{current.montant}"></h:outputText>
+
+					</p:column>
+
+
+				</p:dataTable>
+			</p:panel>
+
+
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

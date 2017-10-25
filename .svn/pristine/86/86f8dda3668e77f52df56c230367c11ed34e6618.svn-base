@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="logementForm" dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.parametrage']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.logement']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+
+				</p:breadCrumb>
+				<p:fieldset>
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+						<!--  ***********************************************CODE LOGEMENT***************************************************   -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.codelogement']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="logement_code" style="width:210px"
+									disabled="#{logementBean.modif==1}"
+									value="#{logementBean.newLogement.codeLogement}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;"
+								maxlength="4"
+									required="true" label="#{logementmsgs['logement.codelogement']}">
+								</p:inputText>
+							</p:column>
+
+
+							<!--*******************************************************N° D ORDRE*********************************************************** -->
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.numOrdre']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="logement_num_ordre" style="width:210px"
+									value="#{logementBean.newLogement.numOrdre}"
+									label="#{logementmsgs['logement.numOrdre']}"
+									rendered="true" required="true">
+								</p:inputText>
+
+							</p:column>
+						</p:row>
+						<!--*****************************************************CODE POSTAL******************************************************************* -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.codePostal']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+
+								<p:selectOneMenu id="logement_code_postal" filter="true"
+									filterMatchMode="contains"
+									value="#{logementBean.newLogement.codePostal}" required="true"
+									converter="codePostalConverter"
+									label="#{logementmsgs['logement.codePostal']}/ #{logementmsgs['logement.codePostal']}"
+									rendered="true">
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listCodePostal}"
+										var="postal" itemLabel="#{postal.libelleFr}"
+										itemValue="#{postal}" />
+								</p:selectOneMenu>
+
+							</p:column>
+
+
+
+							<!--*****************************************************GOUVERNERAT********************************************************** -->
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.gouvernorat']}:"
+									styleClass="weightBold" />
+
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="gouvernerat" filter="true"
+									filterMatchMode="contains"
+									value="#{logementBean.newLogement.gouvernorat}" required="true"
+									converter="gouvernoratConverter"
+									label="#{logementmsgs['logement.gouvernorat']}"
+									rendered="true">
+									<p:ajax event="change"
+										listener="#{logementBean.findlocaliteByGouvernerat}"
+										update="localite"></p:ajax>
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listGouvernerat}"
+										var="gov" itemLabel="#{gov.libelle}" itemValue="#{gov}" />
+								</p:selectOneMenu>
+							</p:column>
+
+						</p:row>
+
+						<!--*****************************************************LOCALITE************************************************************* -->
+						<p:row>
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.localite']}:"
+									styleClass="weightBold" />
+
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="localite" filter="true"
+									disabled="#{logementBean.newLogement.gouvernorat==null}"
+									filterMatchMode="contains"
+									value="#{logementBean.newLogement.localite}" required="true"
+									converter="localiteConverter"
+									label="#{logementmsgs['logement.localite']}"
+									rendered="true">
+									<p:ajax event="change"
+										listener="#{logementBean.findLotissByLoc}"
+										update="lotiseement"></p:ajax>
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listLocalite}" var="loc"
+										itemLabel="#{loc.libelleFr}" itemValue="#{loc}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<!--  *****************************************************TYPE LOGEMENT********************************************************-->
+
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.typeLogement']}:"
+									styleClass="weightBold" />
+
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="typLogement" filter="true"
+									filterMatchMode="contains"
+									value="#{logementBean.newLogement.typeLogement}"
+									required="true" converter="typeLogementConverter"
+									label="#{logementmsgs['logement.typeLogement']}"
+									rendered="true">
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="---------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listTypeLogement}"
+										var="typlog" itemLabel="#{typlog.libelle}"
+										itemValue="#{typlog}" />
+								</p:selectOneMenu>
+							</p:column>
+
+						</p:row>
+						<!-- ****************************************************ADRESSE LOGEMENT**************************************************** -->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.adresseLoge']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="logement_adresse" style="width:210px"
+									value="#{logementBean.newLogement.adresseLoge}"
+									label="#{logementmsgs['logement.adresseLoge']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+							<!-- *****************************************************LOTISSEMENT*********************************************************	 -->
+							<p:column>
+								<h:outputText value="#{logementmsgs['logement.lotissement']}:"
+									styleClass="weightBold" />
+
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="lotiseement" filter="true"
+									filterMatchMode="contains"
+									disabled="#{logementBean.newLogement.localite==null}"
+									value="#{logementBean.newLogement.lotissement}" required="true"
+									converter="lotissementConverter"
+									label="#{logementmsgs['logement.lotissement']}" rendered="true">
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="---------------------------------------"
+										itemValue="" />
+									<f:selectItems value="#{logementBean.listLotissement}"
+										var="typlog" itemLabel="#{typlog.libelleFr}"
+										itemValue="#{typlog}" />
+								</p:selectOneMenu>
+							</p:column>
+
+						</p:row>
+						<!--  **************************************************PRIX LOGEMENT*************************************************************** 	-->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText value="#{logementmsgs['logement.prixLog']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+
+
+
+								<p:inputText id="prix-logement" style="width:210px"
+									value="#{logementBean.newLogement.prixLog}"
+									label="#{logementmsgs['logement.prixLog']}"
+									onkeypress="if(event.which &lt; 48 || event.which  &gt; 57 )  return false;"
+									>
+									
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+				<br />
+
+				<br></br>
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this" actionListener="#{logementBean.createLogement}"
+						update="@form">
+						<p:resetInput target="logementForm" />
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="editBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.save']}" ajax="true"
+						oncomplete="if(!args.validationFailed){PF('updConfirmation').show()};"
+						process="@form">
+					</p:commandButton>
+					<p:spacer width="5px" />
+					<p:commandButton id="delteBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.delete']}" ajax="true"
+						onstart="PF('suppConfirmation').show()" update=":logementForm"
+						process="@this" disabled="#{logementBean.selectLogement==null}">
+					</p:commandButton>
+					<p:spacer width="5px" />
+
+					<br></br>
+					<p:dataTable id="dta" value="#{logementBean.listLogement}"
+						var="current" rows="10" paginator="true"
+						paginatorPosition="bottom" rowKey="#{current.codeLogement}"
+						selection="#{logementBean.selectLogement}" selectionMode="single"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+						rowsPerPageTemplate="10,20,50,100,200,500"
+						currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+						emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+						<p:ajax event="rowSelect"
+							listener="#{logementBean.onselectLogement}"
+							update="@all" />
+						<f:facet name="header">
+							<h:commandLink immediate="true">
+								<p:graphicImage value="/resources/images/excel.png"
+									width="25px;" />
+								<p:dataExporter type="xls" target="dta" fileName="logement" />
+							</h:commandLink>
+							<f:facet name="header">
+								<h:commandLink immediate="true">
+									<p:graphicImage value="/resources/images/pdf.png" width="25px;" />
+									<p:dataExporter type="pdf" encoding="ISO-8859-1" target="dta"
+										fileName="logement" />
+								</h:commandLink>
+							</f:facet>
+						</f:facet>
+						<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.codeLogement}"
+							sortBy="#{current.codeLogement}" filterMatchMode="contains"
+							style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{logementmsgs['logement.codelogement']}:" />
+							</f:facet>
+							<h:outputText value="#{current.codeLogement}" />
+						</p:column>
+
+
+
+
+						<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.adresseLoge}" sortBy="#{current.adresseLoge}"
+							filterMatchMode="contains" style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{logementmsgs['logement.adresseLoge']}" />
+							</f:facet>
+							<h:outputText value="#{current.adresseLoge}" />
+						</p:column>
+
+						<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.gouvernorat.libelle}"
+							sortBy="#{current.gouvernorat.libelle}"
+							filterMatchMode="contains" style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{logementmsgs['logement.gouvernorat']}" />
+							</f:facet>
+							<h:outputText value="#{current.gouvernorat.libelle}" />
+						</p:column>
+						
+					<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.prixLog}"
+							sortBy="#{current.prixLog}"
+							filterMatchMode="contains" style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{logementmsgs['logement.prixLog']}" />
+							</f:facet>
+							<h:outputText value="#{current.prixLog}" />
+						</p:column>
+						
+						<p:column width="20" filterStyle="width: 40px;"
+							filterBy="#{current.typeLogement.libelle}"
+							sortBy="#{current.typeLogement.libelle}"
+							filterMatchMode="contains" style="text-align:center;">
+							<f:facet name="header">
+								<h:outputText value="#{logementmsgs['logement.typeLogement']}"/>
+							</f:facet>
+							<h:outputText value="#{current.typeLogement.libelle}"/>
+						</p:column>
+
+
+					</p:dataTable>
+
+				</div>
+			</p:panel>
+
+
+		</h:form>
+		<p:confirmDialog id="diagUpd" appendTo="@(body)"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="updConfirmation">
+			<div align="right">
+				<h:form id="diagForm1" dir="#{languageBean.languageAffich}">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}"
+						update=":logementForm:dta :logementForm:detail"
+						oncomplete="PF('updConfirmation').hide();"
+						actionListener="#{logementBean.saveLogement}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="updConfirmation.hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+		<p:confirmDialog id="diagSupp"
+			message="#{generalmsgs['popup.confirm.message']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert"
+			widgetVar="suppConfirmation" appendTo="@(body)">
+			<div align="right">
+				<h:form id="diagForm" dir="#{languageBean.languageAffich}">
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}"
+						update=":logementForm:dta :logementForm:detail"
+						oncomplete="PF('suppConfirmation').hide();document.getElementById('diagForm:confirm').disabled=false;"
+						actionListener="#{logementBean.deleteLogement}"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline"
+						value="#{generalmsgs['popup.quitter']}"
+						update=":logementForm:dta :logementForm:detail"
+						onclick="PF('suppConfirmation').hide()"
+						styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

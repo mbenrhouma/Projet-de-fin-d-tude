@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.Cession;
+
+public interface CessionDAO  extends AbstractDAO<Cession>{
+	Cession findById(String id);
+}

@@ -1,0 +1,169 @@
+package com.cynapsys.entities;
+
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+/**
+ *
+ * @author UC057
+ */
+@Entity
+@SequenceGenerator(name="SEQ_ASSURANCE",sequenceName="S_ASSURANCE")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Assurance.findAll", query = "SELECT a FROM Assurance a"),
+    @NamedQuery(name = "Assurance.findById", query = "SELECT a FROM Assurance a WHERE a.id = :id"),
+    @NamedQuery(name = "Assurance.findByTypeAssurance", query = "SELECT a FROM Assurance a WHERE a.typeAssurance = :typeAssurance"),
+    @NamedQuery(name = "Assurance.findByMontant", query = "SELECT a FROM Assurance a WHERE a.montant = :montant")})
+public class Assurance implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO,generator="SEQ_ASSURANCE")
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "TYPE_ASSURANCE", nullable = false)
+    private short typeAssurance;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private BigInteger montant;
+    @OneToMany(mappedBy = "assurance")
+    private List<ClientAcquereur> clientAcquereurList;
+    @OneToMany(mappedBy = "assurance1")
+    private List<ClientAcquereur> clientAcquereurList1;
+    @JoinColumn(name = "CODEASSUREUR", referencedColumnName = "CODEASSUREUR")
+    @ManyToOne
+    private Assureur assureur;
+    @JoinColumn(name = "CODE_ACQUEREUR", referencedColumnName = "CODE_ACQUEREUR")
+    @ManyToOne
+    private ClientAcquereur clientAcquereur;
+    @JoinColumn(name = "CLIENTACQUEREUR", referencedColumnName = "CODE_ACQUEREUR", nullable = false)
+    @ManyToOne(optional = false)
+    private ClientAcquereur clientAcquereur1;
+
+    public Assurance() {
+    }
+
+    public Assurance(Integer id) {
+        this.id = id;
+    }
+
+    public Assurance(Integer id, short typeAssurance, BigInteger montant) {
+        this.id = id;
+        this.typeAssurance = typeAssurance;
+        this.montant = montant;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public short getTypeAssurance() {
+        return typeAssurance;
+    }
+
+    public void setTypeAssurance(short typeAssurance) {
+        this.typeAssurance = typeAssurance;
+    }
+
+    public BigInteger getMontant() {
+        return montant;
+    }
+
+    public void setMontant(BigInteger montant) {
+        this.montant = montant;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList() {
+        return clientAcquereurList;
+    }
+
+    public void setClientAcquereurList(List<ClientAcquereur> clientAcquereurList) {
+        this.clientAcquereurList = clientAcquereurList;
+    }
+
+    @XmlTransient
+    public List<ClientAcquereur> getClientAcquereurList1() {
+        return clientAcquereurList1;
+    }
+
+    public void setClientAcquereurList1(List<ClientAcquereur> clientAcquereurList1) {
+        this.clientAcquereurList1 = clientAcquereurList1;
+    }
+
+    public Assureur getAssureur() {
+        return assureur;
+    }
+
+    public void setAssureur(Assureur assureur) {
+        this.assureur = assureur;
+    }
+
+    public ClientAcquereur getClientAcquereur() {
+        return clientAcquereur;
+    }
+
+    public void setClientAcquereur(ClientAcquereur clientAcquereur) {
+        this.clientAcquereur = clientAcquereur;
+    }
+
+    public ClientAcquereur getClientAcquereur1() {
+        return clientAcquereur1;
+    }
+
+    public void setClientAcquereur1(ClientAcquereur clientAcquereur1) {
+        this.clientAcquereur1 = clientAcquereur1;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Assurance)) {
+            return false;
+        }
+        Assurance other = (Assurance) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entity.Assurance[ id=" + id + " ]";
+    }
+    
+}

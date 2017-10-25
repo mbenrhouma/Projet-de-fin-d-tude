@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+
+
+
+
+	<application>
+		<locale-config>
+			<default-locale>fr</default-locale>
+			<supported-locale>ar</supported-locale>
+		</locale-config>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.general-resources</base-name>
+			<var>generalmsgs</var>
+		</resource-bundle>
+
+
+		
+		
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.header-resources</base-name>
+			<var>toppanmsgs</var>
+		</resource-bundle>
+
+
+
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.precontentieux-resources</base-name>
+			<var>precmsgs</var>
+		</resource-bundle>
+
+
+	
+
+
+
+
+
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.groupe-resources_fr</base-name>
+			<var>groupefrmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.groupe-resources_ar</base-name>
+			<var>groupearmsgs</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.utilisateur-resources_fr</base-name>
+			<var>utilisateurfrmsgs</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.utilisateur-resources_ar</base-name>
+			<var>utilisateurarmsgs</var>
+		</resource-bundle>
+
+		
+		
+		
+				<resource-bundle>
+			<base-name>com.cynapsys.bundles.clienAcquereur-resources</base-name>
+			<var>clientmsgs</var>
+		</resource-bundle>
+		
+		
+		
+
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.accueil-resources_fr</base-name>
+			<var>accueilfrmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.accueil-resources_ar</base-name>
+			<var>accueilarmsgs</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.quittance-resources</base-name>
+			<var>quittancemsgs</var>
+		</resource-bundle>		
+		
+			<resource-bundle>
+			<base-name>com.cynapsys.bundles.employeur-resources</base-name>
+			<var>employeurmsgs</var>
+		</resource-bundle>		
+	
+		
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.cession-resources</base-name>
+			<var>cessionmsgs</var>
+		</resource-bundle>	
+		
+	
+		
+
+				<!--fin mohamed -->
+
+	<resource-bundle>
+			<base-name>com.cynapsys.bundles.parametrage-resources</base-name>
+			<var>parammsgs</var>
+		</resource-bundle>
+				<resource-bundle>
+			<base-name>com.cynapsys.bundles.noteDebit-resources</base-name>
+			<var>noteDebitmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.clientLocataire-resources</base-name>
+			<var>clientLocatairemsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.logement-resources</base-name>
+			<var>logementmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.decompte-resources</base-name>
+			<var>decomptemsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.imprimerMainlevee-resources</base-name>
+			<var>imprimerMainleveemsgs</var>
+		</resource-bundle>
+
+		<!--fin zied  -->
+		<!-- Deb Rami -->
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.assureur-resources</base-name>
+			<var>assureurmsgs</var>
+		</resource-bundle>
+
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.reclamation-resources</base-name>
+			<var>reclamationmsgs</var>
+		</resource-bundle>
+
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.assurance-resources</base-name>
+			<var>assurancemsgs</var>
+		</resource-bundle>
+		
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.deces-resources</base-name>
+			<var>decesmsgs</var>
+		</resource-bundle>
+		<!-- Fin Rami -->
+		<!-- deb souhail -->
+			<resource-bundle>
+			<base-name>	com.cynapsys.bundles.tableauxAmortissement-resources</base-name>
+			<var>tableauAmortissementmsgs</var>
+			</resource-bundle>
+
+		
+		<!-- fin souhail -->						
+								
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+</faces-config>

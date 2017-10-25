@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+         >
+
+	<!--*************************************** DAOs********************************* -->
+	<bean id="clientLocataireDAO" class="com.cynapsys.dao.impl.ClientLocataireDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	<!--***************************************Fin DAOs********************************* -->
+
+
+
+
+
+	<!-- *************************Services*********************************************** -->
+	<bean id="clientLocataireService" class="com.cynapsys.service.impl.ClientLocataireServiceImpl">
+		<property name="clientLocataireDAO" ref="clientLocataireDAO" />
+	</bean>
+<!--******************************Fin Services******************************************  -->
+
+
+
+
+	<!-- *************************************Scheduling**************************************-->
+
+
+	<bean id="jobs" class="com.cynapsys.schedule.Jobs">
+		<property name="clientLocataireService" ref="clientLocataireService" />
+
+	</bean>
+	<!-- *************************************Scheduling**************************************-->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<!--************************************  JobDetail**********************************************************-->
+	<bean id="clientLocataireJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="jobs" />
+		<property name="targetMethod" value="clientLocataire" />
+	</bean>
+
+<!--*************************************Fin jobDetail****************************************************  -->
+
+
+
+
+<!--************************************DEBUT TRIGGER*******************************************************  -->
+
+	<bean id="clientLocataireTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="clientLocataireJobDetail" />
+		<property name="cronExpression" value="0 15 6 L * ?" />
+	</bean>
+<!--************Fin TRIGGER***********value="0/15 * * * * ?"******************************************** value="0 15 6 L * ?"  -->
+
+
+
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="clientLocataireTrigger" />
+
+			</list>
+		</property>
+	</bean>
+
+</beans>

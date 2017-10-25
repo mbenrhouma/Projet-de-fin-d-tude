@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="main">
+		<h:form id="recetteForm">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['administration']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.cession_sur_salaire']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+				
+				<p:row>
+						<p:column>
+							<h:outputText value="#{employeurfrmsgs['employeur.nom']}:"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						
+						<p:column id="employeurs">
+							<p:selectOneMenu styleClass="selectOneMenu" filter="true"
+								required="true" converter="employeurConverter"
+								value="#{reglemenetEmployeurBean.selectEmployeur}" disabled="false">
+								<f:selectItem noSelectionOption="true" />
+								<f:selectItems value="#{reglemenetEmployeurBean.employeurs}" var="em"
+									itemLabel="#{em.nomEmployeurFr}" />
+								
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						
+						
+
+					</p:row>
+				
+
+
+						<p:row>
+
+
+							<p:column style="width: 150px;">
+								<h:outputText value="duréé" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="duréé" style="width:210px" required="true"
+									value="#{reglemenetEmployeurBean.newQuittanceEmployeur.duree}"
+									rendered="true">
+									<p:ajax event="blur" listener="#{reglemenetEmployeurBean.initDate}"
+										update="datedebut datefin"></p:ajax>
+								</p:inputText>
+							</p:column>
+							<p:column style="width: 150px;">
+								<h:outputText value="datedebut" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:calendar id="datedebut" style="width: 200px"
+									yearRange="c-100:c+100" showOn="button" label=""
+									navigator="true"
+									value="#{reglemenetEmployeurBean.newQuittanceEmployeur.dateDebut}">
+									<p:ajax event="dateSelect" 
+										listener="#{reglemenetEmployeurBean.updateDateFin}"
+										update="datefin datedebut" />
+								</p:calendar>
+							</p:column>
+
+
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="datefin" styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+
+							<p:column>
+								<p:inputText id="datefin" yearRange="c-100:c+100"
+									showOn="button" label="" style="width:210px" navigator="true"
+									value="#{reglemenetEmployeurBean.newQuittanceEmployeur.dateFin}">
+
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</p:column>
+					</p:row>
+					
+					<p:row>
+						<p:column>
+
+						<h:outputText value="montanat a payé"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+					
+						<p:column>
+							<p:inputText id="montanat" 
+								yearRange="c-100:c+100" showOn="button" label=""
+								navigator="true"  value="" />
+						</p:column>
+
+
+
+					
+					</p:row>
+					
+					
+					
+					
+
+
+				</p:panelGrid>
+
+
+
+
+			</p:panel>
+		</h:form>
+
+
+
+
+
+
+
+
+
+	</ui:define>
+</ui:composition>
+</html>

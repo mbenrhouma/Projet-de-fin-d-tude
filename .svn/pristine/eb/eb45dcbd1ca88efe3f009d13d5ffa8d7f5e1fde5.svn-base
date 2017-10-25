@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+
+
+		<h:form id="imprimerMainleveeForm"
+			dir="#{languageBean.languageAffich}">
+			<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+				<p:breadCrumb homeDisplay="">
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.recette']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel
+							value="#{toppanmsgs['header.recette.imprimerMainlever']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+
+				</p:breadCrumb>
+				<p:fieldset>
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+						<!--  ***********************************************CODE LOGEMENT***************************************************   -->
+						<p:row>
+							<p:column>
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.Client']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="imprimermainlevee_client" filter="true"
+									filterMatchMode="contains"
+									value="#{imprimerMainleveeBean.newMainlevee.clientAcquereur}"
+									required="true" converter="clientAcquereurConverter"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.Client']}"
+									rendered="true">
+									<p:ajax event="change"
+										update="mainLevee_client_groupe mainlevee_client_nom mainlevee_client_adress"></p:ajax>
+
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+										itemValue="" />
+									<f:selectItems
+										value="#{imprimerMainleveeBean.listClientAcquereur}"
+										var="clientAc" itemLabel="#{clientAc.codeAcquereur}"
+										itemValue="#{clientAc}" />
+								</p:selectOneMenu>
+							</p:column>
+							<!--************************************************************Groupe*******************************************************************  -->
+
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.groupe']}:"
+									styleClass="weightBold" />
+
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="mainLevee_client_groupe" style="width:210px"
+									value="#{imprimerMainleveeBean.newMainlevee.clientAcquereur.groupe.libelle}"
+									readonly="true"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.groupe=']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+						</p:row>
+						<!--***********************************************NOM ACQUEREUR*********************************************************************************  -->
+						<p:row>
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.nomPrenom']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="mainlevee_client_nom" style="width:210px"
+									value="#{imprimerMainleveeBean.newMainlevee.clientAcquereur.nomPrenomFr}"
+									readonly="true"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.nomPrenom']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+
+
+							<!--********************************************************************ADRESSE ACQUEREUR********************************************************************  -->
+							<p:column style="width: 150px;">
+								<h:outputText
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.adresseClient']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText id="mainlevee_client_adress" style="width:210px"
+									value="#{imprimerMainleveeBean.newMainlevee.clientAcquereur.adresseCorrespondance}"
+									readonly="true"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.adresseClient']}"
+									rendered="true">
+								</p:inputText>
+
+							</p:column>
+
+
+						</p:row>
+						
+					
+						<p:row>
+							<p:column style="width: 150px;">
+								
+								<h:outputText 
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.dateDeMainlevee']}:"
+									styleClass="weightBold" />
+									
+									
+								<h:outputText   value="*" styleClass="required-star-right" />
+								
+							</p:column>
+							<p:column>
+							
+								<p:inputText id="mainlevee_dateMainlevee" style="width:210px"  
+									value="#{imprimerMainleveeBean.newMainlevee.dateMainlevee}" readonly="true"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.dateDeMainlevee']}"
+									>
+									<f:convertDateTime pattern="dd/mm/yyyy" />
+								</p:inputText>
+
+							</p:column>
+
+						
+						
+
+
+
+						
+							<p:column>
+							
+								<h:outputText 
+									value="#{imprimerMainleveemsgs['imprimerMainlevee.typeDeMainlevee']}:"
+									styleClass="weightBold" />
+									
+							
+								<h:outputText  value="*" styleClass="required-star-right" />
+								
+							</p:column>
+							<p:column>
+						
+								<p:selectOneMenu id="type_mainlevee" filter="true" 
+									filterMatchMode="contains"
+									value="#{imprimerMainleveeBean.newMainlevee.typeMainlevee}"
+									required="true" converter="typeMainleveeConverter"
+									label="#{imprimerMainleveemsgs['imprimerMainlevee.typeDeMainlevee']}"
+									
+									>
+									
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel="--------------------------------------------------"
+									/>
+									<f:selectItems
+										value="#{imprimerMainleveeBean.listTypeMainlevee}"
+										var="main" itemLabel="#{main.libelleFr}"
+										itemValue="#{main}" />
+								</p:selectOneMenu>
+								
+							</p:column>
+							</p:row>
+						
+<!--********************************************************************DOF*************************************  -->
+
+
+					</p:panelGrid>
+				</p:fieldset>
+				<br />
+
+				<br></br>
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="newBtn" styleClass="ui-priority-primary"
+						value="#{generalmsgs['navigation.new']}" ajax="true"
+						process="@this"
+						actionListener="#{imprimerMainleveeBean.initialisation}"
+						update="@form">
+						<p:resetInput target="imprimerMainleveeForm" />
+					</p:commandButton>
+				
+						<h:commandLink
+						actionListener="#{imprimerMainleveeBean.imprimerMainlevee}">
+						<p:commandButton id="imprEtat" styleClass="ui-priority-primary" 
+							icon="ui-icon-print" value="#{imprimerMainleveemsgs['imprimerMainlevee.imprimer']}" 
+							ajax="true" process="@this"  update="dta"/>
+					</h:commandLink>
+
+					<br></br>
+					
+
+
+				</div>
+				<br></br>
+				
+				<p:dataTable id="dta" value="#{imprimerMainleveeBean.listMainlevee}" var="current"
+					rows="10" paginator="true" paginatorPosition="bottom" 
+					rowKey="#{current.id}"
+					
+					selectionMode="single"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					rowsPerPageTemplate="10,20,50,100,200,500"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}"
+					
+					>
+					<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/excel.png" width="25px;" />
+							<p:dataExporter type="xls" target="dta" fileName="mainlevee" />
+						</h:commandLink>
+						<f:facet name="header">
+						<h:commandLink immediate="true">
+							<p:graphicImage value="/resources/images/pdf.png" width="25px;" />
+							<p:dataExporter type="pdf" encoding="ISO-8859-1" target="dta"
+								fileName="mainlevee" />
+						</h:commandLink>
+					</f:facet>
+					</f:facet>
+					<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.id}" sortBy="#{current.id}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{parammsgs['parametrage.id']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.id}" />
+					</p:column>
+						<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.dateMainlevee}" sortBy="#{current.dateMainlevee}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{imprimerMainleveemsgs['imprimerMainlevee.dateDeMainlevee']}:">
+							 <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							 </h:outputText>
+						</f:facet>
+						<h:outputText value="#{current.dateMainlevee}" />
+					</p:column>
+					<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.typeMainlevee.libelleFr}" sortBy="#{current.typeMainlevee.libelleFr}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{imprimerMainleveemsgs['imprimerMainlevee.typeDeMainlevee']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.typeMainlevee.libelleFr}" />
+					</p:column>
+					<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.clientAcquereur.nomPrenomFr}" sortBy="#{current.clientAcquereur.nomPrenomFr}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{imprimerMainleveemsgs['imprimerMainlevee.nomPrenom']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.clientAcquereur.nomPrenomFr}" />
+					</p:column>
+					<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.clientAcquereur.groupe.libelle}" sortBy="#{current.clientAcquereur.groupe.libelle}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{imprimerMainleveemsgs['imprimerMainlevee.groupe']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.clientAcquereur.groupe.libelle}" />
+					</p:column>
+					<p:column  width="20"
+						filterStyle="width: 40px;" filterBy="#{current.clientAcquereur.adresseCorrespondance}" sortBy="#{current.clientAcquereur.adresseCorrespondance}"
+						filterMatchMode="contains" 		style="text-align:center;" >
+						<f:facet name="header">
+							<h:outputText
+							 value="#{imprimerMainleveemsgs['imprimerMainlevee.adresseClient']}:"/>
+						</f:facet>
+						<h:outputText value="#{current.clientAcquereur.adresseCorrespondance}" />
+					</p:column>
+
+					</p:dataTable>
+					
+
+			
+				
+			</p:panel>
+
+
+		</h:form>
+
+
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

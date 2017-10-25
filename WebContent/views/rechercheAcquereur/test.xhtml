@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="testForm" dir="#{languageBean.languageAffich}">
+	<p:growl id="growl" sticky="true" autoUpdate="true" closable="true" />
+		<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+						<p:commandButton id="search" styleClass="ui-priority-primary"
+						 ajax="true" icon="ui-icon-search" 
+						oncomplete="{PF('rechConfirmation').show()};" />
+					<p:spacer width="5px" />
+	</p:panel>
+	</h:form>
+	
+	
+				<p:confirmDialog id="diagUpd" appendTo="@(body)"
+				message="#{generalmsgs['navigation.recherche']}"
+			 severity="search"
+			widgetVar="rechConfirmation">
+			<div align="right">
+				<h:form id="diagForm1" dir="#{languageBean.languageAffich}">
+				
+				
+				<ui:include src="rechercheClientAcquereur.xhtml"></ui:include>
+				
+					<p:commandButton id="confirm"
+						value="#{generalmsgs['popup.confirmer']}" update="@all"
+						oncomplete="PF('updConfirmation').hide();"
+						styleClass="ui-priority-primary" />
+					<p:commandButton id="decline" process="@this"
+						value="#{generalmsgs['popup.quitter']}"
+						onclick="PF('updConfirmation').hide()" styleClass="ui-priority-primary" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+		</ui:define>
+</ui:composition>
+</html>

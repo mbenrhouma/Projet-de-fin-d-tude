@@ -1,0 +1,94 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.ArrangementDAO;
+import com.cynapsys.entities.Arrangement;
+import com.cynapsys.service.ArrangementService;
+
+@Service("arrangementService")
+public class ArrangementServiceImpl implements ArrangementService, Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private ArrangementDAO arrangementDAO;
+
+	@Override
+	public Object save(Arrangement entity) {
+		return arrangementDAO.save(entity);
+	}
+
+	@Override
+	public void flush(Arrangement entity) {
+		arrangementDAO.flush(entity);
+	}
+
+	@Override
+	public void update(Arrangement entity) {
+		arrangementDAO.update(entity);
+	}
+
+	@Override
+	public boolean delete(Arrangement entity) throws Exception {
+		return arrangementDAO.delete(entity);
+	}
+
+	@Override
+	public Arrangement find(Object idClass) {
+		return arrangementDAO.find(idClass);
+	}
+
+	@Override
+	public List<Arrangement> findAll() {
+		return arrangementDAO.findAll();
+	}
+
+	@Override
+	public List<Arrangement> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return arrangementDAO.findByFilter(first, pageSize, sortField,
+				sortOrder, filters);
+	}
+
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return arrangementDAO.getCount(filters);
+	}
+
+	@Override
+	public List<Arrangement> findSorted(String sortField, boolean sortOrder) {
+		return arrangementDAO.findSorted(sortField, sortOrder);
+	}
+
+	@Override
+	public Arrangement findById(String id) {
+		return arrangementDAO.findById(id);
+	}
+
+	public ArrangementDAO getArrangementDAO() {
+		return arrangementDAO;
+	}
+
+	public void setArrangementDAO(ArrangementDAO arrangementDAO) {
+		this.arrangementDAO = arrangementDAO;
+	}
+
+	@Override
+	public List<Arrangement> findAllDta() {
+		return arrangementDAO.findAllDta();
+	}
+
+	@Override
+	public List<Arrangement> findByCriteres(Arrangement arrangement,Date dateD, Date dateF) {
+		return arrangementDAO.findByCriteres(arrangement, dateD, dateF);
+	}
+
+	
+
+}

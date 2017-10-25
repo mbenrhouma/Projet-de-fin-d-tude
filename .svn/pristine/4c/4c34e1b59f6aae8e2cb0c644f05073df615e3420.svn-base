@@ -1,0 +1,7 @@
+package com.cynapsys.service;
+
+import com.cynapsys.entities.ContratLocataire;
+
+public interface ContratLocataireService extends AbstractService<ContratLocataire>{
+	ContratLocataire	findById(String id);
+}

@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.CodePostal;
+
+public interface CodePostalService extends AbstractService<CodePostal>{
+	CodePostal	findById(String id);
+}

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cessionDelegationVide" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6f50f3fb-5f9e-4581-a877-ee60fb569e5b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="91"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="titreEdition" class="java.lang.String"/>
+	<parameter name="DateEdition" class="java.lang.String"/>
+	<parameter name="AnneeEnCour" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement x="473" y="33" width="100" height="20" uuid="7d5dfa13-174f-438b-8fb0-e8aed39f8e17"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Année]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="23" width="100" height="20" uuid="e4842b66-5e51-423a-80e1-accec52fb462"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[S.N.I.T ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="3" width="100" height="20" uuid="4de83ba5-277f-4b84-87be-88f873378ce9"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Date Edition:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="530" y="3" width="59" height="20" uuid="73b60b28-11ad-484a-87da-2a8759c32de1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="9af5ffa4-1e14-4049-afb9-40c3f4ae535f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[D.GESTION]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="573" y="33" width="100" height="20" uuid="af89b35a-a9ae-45ed-bf77-b1ca384bf439"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AnneeEnCour}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="368" y="3" width="100" height="20" uuid="37d7dd10-e894-4179-9a00-acc4aa493cc2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DateEdition}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="43" width="296" height="20" uuid="69fe2210-f089-488c-9a96-89caad11abce"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titreEdition}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement x="300" y="10" width="100" height="20" uuid="7186dbb2-29cc-46fe-a34f-54920211d85a"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[MONTANT GLOBAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="10" width="141" height="20" uuid="537caed4-a82e-46cf-9afe-a0682906ec2c"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NOM   ET PRENOM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="186" y="10" width="114" height="20" uuid="e44579ca-d818-4a07-85cd-692b2ab7088b"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CODE CLIENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="10" width="268" height="20" uuid="818cff3a-86a2-4c92-95ed-c8baa6af068a"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ECHEANCES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="10" width="35" height="20" uuid="673b3f36-7d50-486c-a8d9-3c52f2e92643"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[GR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="10" width="100" height="20" uuid="2ff1b8fd-06bb-4ba8-a9ad-f99309c6616f"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Dotted"/>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[MENSUALITES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="30" width="758" height="20" uuid="ea53d58b-30ab-4d92-928d-8bc86f47ba31"/>
+				<box>
+					<leftPen lineWidth="2.0" lineStyle="Dotted"/>
+					<bottomPen lineWidth="2.0" lineStyle="Dotted"/>
+					<rightPen lineWidth="2.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Aucun élément trouvé dans cette edition]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+</jasperReport>

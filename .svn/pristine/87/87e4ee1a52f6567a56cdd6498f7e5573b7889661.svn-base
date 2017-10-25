@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="main">
+		<h:form id="form" dir="#{languageBean.languageAffich}">
+			<p:growl sticky="true" id="growl" autoUpdate="true" closable="true" />
+			<p:panel id="dialog"
+				style="width:950px;margin-left: auto; margin-right: auto; margin-top:2px;">
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['changer.mot_passe']}"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+				</p:breadCrumb>
+				<p:panelGrid cellpadding="5" styleClass="noBorder">
+					<p:row>
+						<p:column style="width:200px;">
+							<h:outputLabel for="password"
+								value="#{utilisateurfrmsgs['utilisateur.nouveau_motPasse']} :"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:password value="#{motPasseBean.motDePasse}" id="password"
+								style="width:230px; height:22px; " required="true"
+								match="confirm_password" feedback="true"
+								promptLabel="Indiquer un mot de passe" weakLabel="Faible"
+								goodLabel="Moyen" strongLabel="Bon">
+								<f:validateLength minimum="5" />
+							</p:password>
+						</p:column>
+						<p:column style="width:250px;">
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column style="width:200px;">
+							<h:outputLabel for="password"
+								value="#{utilisateurarmsgs['utilisateur.nouveau_motPasse']} :"
+								dir="rtl" styleClass="weightBoldAr" />
+						
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="confirm_password"
+								value="#{utilisateurfrmsgs['utilisateur.confirmer']} :"
+								styleClass="weightBold" />
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<p:password value="#{motPasseBean.motDePasse}"
+								id="confirm_password" required="true"
+								label="#{utilisateurfrmsgs['utilisateur.confirmer']}"
+								style="width:230px; height:22px;  ">
+								<f:validateLength minimum="5" />
+							</p:password>
+						</p:column>
+						<p:column>
+							<h:outputText value="*" styleClass="required-star-right" />
+						</p:column>
+						<p:column>
+							<h:outputLabel for="confirm_password"
+								value="#{utilisateurarmsgs['utilisateur.confirmer']} :"
+								dir="rtl" styleClass="weightBoldAr" />
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<br />
+
+				<div style="width: 100%; text-align: right">
+					<p:commandButton id="loginButton" value="Confirmer" update="@form"
+						style="width:80px;"
+						actionListener="#{motPasseBean.UpdateMotPasseUtilisateur}"
+						styleClass="ui-priority-primary">
+						<p:resetInput target="dialog" />
+					</p:commandButton>
+				</div>
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
+

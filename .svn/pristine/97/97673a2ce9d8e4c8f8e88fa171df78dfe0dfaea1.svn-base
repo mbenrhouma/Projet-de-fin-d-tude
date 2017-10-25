@@ -1,0 +1,8 @@
+package com.cynapsys.service;
+
+import com.cynapsys.entities.QuitanceEmployeur;
+
+
+public interface QuitanceEmployeurService  extends AbstractService<QuitanceEmployeur>{
+	QuitanceEmployeur	findById(String id);
+}

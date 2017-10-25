@@ -1,0 +1,187 @@
+package com.cynapsys.Views;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+import com.cynapsys.entities.ClientAcquereur;
+import com.cynapsys.entities.Mainlevee;
+import com.cynapsys.service.ClientAcquereurService;
+import com.cynapsys.service.MainleveeService;
+import com.cynapsys.utils.GenerateRapport;
+import com.cynapsys.utils.Parametre;
+
+import net.sf.jooreports.templates.DocumentTemplate;
+import net.sf.jooreports.templates.DocumentTemplateException;
+import net.sf.jooreports.templates.DocumentTemplateFactory;
+
+@ManagedBean(name = "imprimerMainleveeBean")
+@ViewScoped
+public class ImprimerMainleveeBean implements Serializable {
+
+	@ManagedProperty(value = "#{clientAcquereurService}")
+	private ClientAcquereurService clientAcquereurService;
+	@ManagedProperty(value = "#{mainleveeService}")
+	private MainleveeService mainleveeService;
+
+	private static final long serialVersionUID = 1L;
+
+	public HttpSession session;
+	private ClientAcquereur clientAcquereurIMPR;
+	private List<ClientAcquereur> listclientAcquereur;
+	private Mainlevee typeMainlevee;
+	private List<Mainlevee> listtypeMainlevee;
+	private Date dateMainlevee;
+	private Integer typeImpresion;
+	public static String urlodt = Parametre.getProjetRealPath(GenerateRapport.class) + "/Jasper/source/doc/";
+
+	public ImprimerMainleveeBean() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		session = (HttpSession) extContext.getSession(false);
+
+	}
+
+	@PostConstruct
+	public void initialisation() {
+		listclientAcquereur = new ArrayList<ClientAcquereur>();
+		listclientAcquereur = clientAcquereurService.findAllDta();
+		dateMainlevee = new Date();
+		typeImpresion = null;
+		typeImpresion = null;
+
+	}
+
+	public void initialise() {
+		clientAcquereurIMPR = null;
+		typeMainlevee = null;
+		dateMainlevee = new Date();
+	}
+
+	public void test() {
+		if (typeImpresion == 0) {
+			listTypeMainlevee();
+		}
+	}
+
+	public void listTypeMainlevee() {
+		listtypeMainlevee = new ArrayList<Mainlevee>();
+		listtypeMainlevee = mainleveeService.findAll();
+
+	}
+public void	imprimerMainlevee(){
+
+    DocumentTemplateFactory documentTemplateFactory = new DocumentTemplateFactory();
+    try {
+    	String urlFile=urlodt+"Mainlevee.odt";
+		DocumentTemplate document = documentTemplateFactory.getTemplate(new File("urlFile"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String dateM;
+		dateM = sdf.format(dateMainlevee);
+		FacesContext cx = FacesContext.getCurrentInstance();
+		ExternalContext extContext = cx.getExternalContext();
+
+		HttpSession session = (HttpSession) extContext.getSession(true);
+		HashMap<String, Object> data = new HashMap<String, Object>();
+	
+
+		data.put("nomEtprenom", clientAcquereurIMPR.getNomPrenomFr());
+		data.put("dateMainlevee",dateM );
+		data.put("groupe",clientAcquereurIMPR.getGroupe().getLibelle() );
+		document.createDocument(data, new FileOutputStream("D://Mainlevee.doc"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (DocumentTemplateException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+}
+	public ClientAcquereurService getClientAcquereurService() {
+		return clientAcquereurService;
+	}
+
+	public void setClientAcquereurService(ClientAcquereurService clientAcquereurService) {
+		this.clientAcquereurService = clientAcquereurService;
+	}
+
+	public ClientAcquereur getClientAcquereurIMPR() {
+		return clientAcquereurIMPR;
+	}
+
+	public void setClientAcquereurIMPR(ClientAcquereur clientAcquereurIMPR) {
+		this.clientAcquereurIMPR = clientAcquereurIMPR;
+	}
+
+	public List<ClientAcquereur> getListclientAcquereur() {
+		return listclientAcquereur;
+	}
+
+	public void setListclientAcquereur(List<ClientAcquereur> listclientAcquereur) {
+		this.listclientAcquereur = listclientAcquereur;
+	}
+
+	public HttpSession getSession() {
+		return session;
+	}
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
+	public MainleveeService getMainleveeService() {
+		return mainleveeService;
+	}
+
+	public void setMainleveeService(MainleveeService mainleveeService) {
+		this.mainleveeService = mainleveeService;
+	}
+
+	public Mainlevee getTypeMainlevee() {
+		return typeMainlevee;
+	}
+
+	public void setTypeMainlevee(Mainlevee typeMainlevee) {
+		this.typeMainlevee = typeMainlevee;
+	}
+
+	public List<Mainlevee> getListtypeMainlevee() {
+		return listtypeMainlevee;
+	}
+
+	public void setListtypeMainlevee(List<Mainlevee> listtypeMainlevee) {
+		this.listtypeMainlevee = listtypeMainlevee;
+	}
+
+	public Date getDateMainlevee() {
+		return dateMainlevee;
+	}
+
+	public void setDateMainlevee(Date dateMainlevee) {
+		this.dateMainlevee = dateMainlevee;
+	}
+
+	public Integer getTypeImpresion() {
+		return typeImpresion;
+	}
+
+	public void setTypeImpresion(Integer typeImpresion) {
+		this.typeImpresion = typeImpresion;
+	}
+
+}

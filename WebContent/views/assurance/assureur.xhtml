@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+
+
+	<ui:define name="main">
+		<h:form id="assureurForm" dir="#{languageBean.languageAffich}">
+			<p:panel
+				style="width:950px; margin-left: auto; margin-right: auto; margin-top:2px; overflow-x: auto;">
+
+				<p:breadCrumb>
+					<p:menuitem>
+						<p:outputLabel value="Accueil"
+							style="color:#0081C2 ;font-size: 13px !important;" />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.assurance']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+					<p:menuitem>
+						<p:outputLabel value="#{toppanmsgs['header.assureur']}"
+							style="color:#0081C2 ;font-size: 13px " />
+					</p:menuitem>
+				</p:breadCrumb>
+
+				<p:growl id="growl" autoUpdate="true" closable="true" />
+				<!--******************************* Formulaire assureur**************** -->
+				<p:fieldset id="Fassureur">
+					<p:panelGrid id="detail" style="width: 100%" styleClass="noBorder">
+						<p:row>
+							<p:column>
+								<h:outputText value="#{assureurmsgs['assureur.abreviation']}:"
+									styleClass="weightBold" />
+								<h:outputText value="*" styleClass="required-star-right" />
+							</p:column>
+							<p:column>
+								<p:inputText style="width: 210px;"
+									value="#{assureurBean.newAssureur.abreviation}" required="true"
+									label="#{assureurmsgs['assureur.abreviation']}"
+									placeholder="#{assureurmsgs['assureur.abreviation']}">
+								</p:inputText>
+							</p:column>
+
+						</p:row>
+
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{assureurmsgs['assureur.adresse']}:"
+									styleClass="weightBold" />
+							</p:column>
+							<p:column>
+								<p:inputText style="width: 210px;"
+									value="#{assureurBean.newAssureur.adresseSiege}"
+									label="#{assureureurfrmsgs['assureur.adresse']}"
+									placeholder="#{assureurmsgs['assureur.adresse']}">
+								</p:inputText>
+							</p:column>
+
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{assureurmsgs['assureur.raisonSocial']}:"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width: 210px;"
+									value="#{assureurBean.newAssureur.raisonSocial}"
+									label="#{assureurmsgs['assureur.raisonSocial']}" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{assureurmsgs['assureur.numTel']}:"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width: 210px;"
+									value="#{assureurBean.newAssureur.numTel}"
+									label="#{assureurmsgs['assureur.numTel']}" />
+							</p:column>
+						</p:row>
+
+
+						<p:row>
+							<p:column>
+								<h:outputText value="#{assureurmsgs['assureur.numFax']}:"
+									styleClass="weightBold" />
+							</p:column>
+
+							<p:column>
+								<p:inputText style="width: 210px;"
+									value="#{assureurBean.newAssureur.numFax}"
+									label="##{assureurmsgs['assureur.numFax']}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:fieldset>
+				<p:spacer />
+				<div style="width: 100%; text-align: right">
+
+<!--                      <h:commandLink action="#{assureurBean.imprimer()}"  > -->
+<!--                      <p:commandButton value="Imprimer" ajax="true" -->
+<!-- 						styleClass="ui-priority-primary" process="@this"> -->
+<!-- 					</p:commandButton> -->
+<!-- 					</h:commandLink> -->
+					
+					
+					
+					<p:commandButton value="#{generalmsgs['navigation.new']}"
+						styleClass="ui-priority-primary"
+						actionListener="#{assureurBean.createAssureur()}"
+						update="@form">
+						<p:resetInput target=":assureurForm" />
+					</p:commandButton>
+
+					<p:commandButton value="#{generalmsgs['navigation.ajout']}" id="ajout"
+						styleClass="ui-priority-primary" 
+						rendered="#{assureurBean.modifAssureur == 0}"
+						oncomplete="if(!args.validationFailed) {PF('saveReur').show()};">
+					</p:commandButton>
+
+					<p:commandButton value="#{generalmsgs['navigation.modif']}"
+						styleClass="ui-priority-primary"
+						oncomplete="if(!args.validationFailed){PF('saveReur').show()};"
+						rendered="#{assureurBean.modifAssureur == 1}">
+					</p:commandButton>
+
+
+					<p:commandButton value="#{generalmsgs['navigation.delete']}"
+						styleClass="ui-priority-primary"
+						oncomplete="if(!args.validationFailed){PF('suppAssureur').show()};"
+						process="@this" rendered="#{assureurBean.modifAssureur == 1}">
+					</p:commandButton>
+
+
+
+					<p:spacer width="5px" />
+
+				</div>
+				<p:spacer />
+
+				<br />
+				<p:dataTable id="dta" value="#{assureurBean.assureurs}"
+					var="current" rows="10" paginator="true" paginatorPosition="bottom"
+					rowKey="#{current.code}" selection="#{assureurBean.selectAssureur}"
+					selectionMode="single"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport}"
+					currentPageReportTemplate="({startRecord} - {endRecord} sur {totalRecords}) "
+					emptyMessage="#{generalmsgs['table.aucun.resultat']}">
+					<p:ajax event="rowSelect"
+						listener="#{assureurBean.onSelectAssureur()}"
+						update=":assureurForm:" />
+
+					<p:column filterBy="#{current.abreviation}"
+						sortBy="#{current.abreviation}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{assureurmsgs['assureur.abreviation']}" />
+						</f:facet>
+						<h:outputText value="#{current.abreviation}" />
+					</p:column>
+
+					<p:column filterBy="#{current.adresseSiege}"
+						sortBy="#{current.adresseSiege}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{assureurmsgs['assureur.adresse']}" />
+						</f:facet>
+						<h:outputText value="#{current.adresseSiege}" />
+					</p:column>
+
+					<p:column filterBy="#{current.raisonSocial}"
+						sortBy="#{current.raisonSocial}" filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{assureurmsgs['assureur.raisonSocial']}" />
+						</f:facet>
+						<h:outputText value="#{current.raisonSocial}" />
+					</p:column>
+
+					<p:column filterBy="#{current.numTel}" sortBy="#{current.numTel}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{assureurmsgs['assureur.numTel']}" />
+						</f:facet>
+						<h:outputText value="#{current.numTel}" />
+					</p:column>
+
+					<p:column filterBy="#{current.numFax}" sortBy="#{current.numFax}"
+						filterMatchMode="contains">
+						<f:facet name="header">
+							<h:outputText value="#{assureurmsgs['assureur.numFax']}" />
+						</f:facet>
+						<h:outputText value="#{current.numFax}" />
+					</p:column>
+				</p:dataTable>
+
+				<br />
+			</p:panel>
+		</h:form>
+		<p:confirmDialog appendTo="@(body)" widgetVar="saveReur"
+			message="#{generalmsgs['popup.confirm.message.ajout.modification']}"
+			header="#{generalmsgs['popup.confirm.header']}" severity="alert">
+			<div align="right">
+				<h:form>
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						styleClass="ui-priority-primary" icon="ui-icon-check"
+						action="#{assureurBean.saveAssureur()}"
+						oncomplete="PF('saveReur').hide() ;" 
+						immediate="true"
+						update=":assureurForm">
+						<p:resetInput target=":assureurForm" />
+					</p:commandButton>
+
+					<p:commandButton value="#{generalmsgs['popup.quitter']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						update="@form" process="@this" onclick="PF('saveReur').hide()" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+
+		<p:confirmDialog showEffect="fade" hideEffect="fade"
+			widgetVar="suppAssureur"
+			message="#{generalmsgs['popup.confirm.message.supprission']}"
+			header="#{generalmsgs['popup.confirm.header']}">
+			<div align="right">
+				<h:form>
+					<p:commandButton value="#{generalmsgs['popup.confirmer']}"
+						styleClass="ui-priority-primary" icon="ui-icon-check"
+						action="#{assureurBean.deleteAssureur()}"
+						oncomplete="PF('suppAssureur').hide() ;" immediate="true"
+						update=":assureurForm" >
+						<p:resetInput target=":assureurForm" />
+						</p:commandButton>
+					<p:commandButton value="#{generalmsgs['popup.quitter']}"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+						onclick="PF('suppAssureur').hide()" />
+				</h:form>
+			</div>
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+
+
+
+
+	<application>
+		<locale-config>
+			<default-locale>fr</default-locale>
+			<supported-locale>ar</supported-locale>
+		</locale-config>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.general-resources</base-name>
+			<var>generalmsgs</var>
+		</resource-bundle>
+		
+		
+		
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.header-resources</base-name>
+			<var>toppanmsgs</var>
+		</resource-bundle>
+  
+  		
+		
+  
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.precontentieux-resources_ar</base-name>
+			<var>precarmsgs</var>
+		</resource-bundle>
+		
+		
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.precontentieux-resources_fr</base-name>
+			<var>precfrmsgs</var>
+		</resource-bundle>
+  
+		
+		
+		
+		
+		
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.groupe-resources_fr</base-name>
+			<var>groupefrmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.groupe-resources_ar</base-name>
+			<var>groupearmsgs</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.utilisateur-resources_fr</base-name>
+			<var>utilisateurfrmsgs</var>
+		</resource-bundle>
+
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.utilisateur-resources_ar</base-name>
+			<var>utilisateurarmsgs</var>
+		</resource-bundle>
+
+	
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.accueil-resources_fr</base-name>
+			<var>accueilfrmsgs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>com.cynapsys.bundles.accueil-resources_ar</base-name>
+			<var>accueilarmsgs</var>
+		</resource-bundle>
+		
+			<resource-bundle>
+			<base-name>com.cynapsys.bundles.clienAcquereur-resources_fr</base-name>
+			<var>rechclientfrmsgs</var>
+		</resource-bundle>	
+	<resource-bundle>
+			<base-name>com.cynapsys.bundles.clienAcquereur-resources_ar</base-name>
+			<var>rechclientarmsgs</var>
+		</resource-bundle>
+		<!--debut zied  -->
+		
+			<resource-bundle>
+			<base-name>com.cynapsys.bundles.parametrage-resources_fr</base-name>
+			<var>paramfrmsgs</var>
+		</resource-bundle>	
+			<resource-bundle>
+			<base-name>com.cynapsys.bundles.parametrage-resources_ar</base-name>
+			<var>paramarmsgs</var>
+			</resource-bundle>
+				<resource-bundle>
+			<base-name>com.cynapsys.bundles.noteDebit-resources_ar</base-name>
+			<var>noteDebitarmsgs</var>
+			</resource-bundle>
+			<resource-bundle>
+			<base-name>com.cynapsys.bundles.noteDebit-resources_fr</base-name>
+			<var>noteDebitfrmsgs</var>
+			</resource-bundle>
+			
+			<resource-bundle>
+			<base-name>com.cynapsys.bundles.logement-resources</base-name>
+			<var>logementmsgs</var>
+			</resource-bundle>
+			
+			<resource-bundle>
+			<base-name>	com.cynapsys.bundles.clientLocataire-resources_fr</base-name>
+			<var>clientLocatairefrmsgs</var>
+			</resource-bundle>
+			<resource-bundle>
+			<base-name>	com.cynapsys.bundles.clientLocataire-resources_ar</base-name>
+			<var>clientLocatairearmsgs</var>
+			</resource-bundle>
+		
+		
+		
+	
+		<!--fin zied  -->
+				
+								
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+</faces-config>

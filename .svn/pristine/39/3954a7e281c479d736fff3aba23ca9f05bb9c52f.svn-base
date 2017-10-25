@@ -1,0 +1,69 @@
+package com.cynapsys.service.impl;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cynapsys.dao.ContratDAO;
+import com.cynapsys.entities.Contrat;
+import com.cynapsys.service.ContratService;
+@Service("contratService")
+public class ContratServiceImpl  implements ContratService,Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Autowired
+	private ContratDAO contratDAO;
+	
+	@Override
+	public Object save(Contrat entity) {
+		return contratDAO.save(entity);
+	}
+	@Override
+	public void flush(Contrat entity) {
+		contratDAO.flush(entity);		
+	}
+	@Override
+	public void update(Contrat entity) {
+		contratDAO.update(entity);		
+	}
+	@Override
+	public boolean delete(Contrat entity) throws Exception {
+		return contratDAO.delete(entity);
+	}
+	@Override
+	public Contrat find(Object idClass) {
+		return contratDAO.find(idClass);
+	}
+	@Override
+	public List<Contrat> findAll() {
+		return contratDAO.findAll();
+	}
+	@Override
+	public List<Contrat> findByFilter(int first, int pageSize,
+			String sortField, boolean sortOrder, Map<String, String> filters) {
+		return contratDAO.findByFilter(first, pageSize, sortField, sortOrder, filters);
+	}
+	@Override
+	public int getCount(Map<String, String> filters) {
+		return contratDAO.getCount(filters);
+	}
+	@Override
+	public List<Contrat> findSorted(String sortField, boolean sortOrder) {
+		return contratDAO.findSorted(sortField, sortOrder);
+	}
+	@Override
+	public Contrat findById(String id) {
+		return contratDAO.findById(id);
+	}
+	public ContratDAO getContratDAO() {
+		return contratDAO;
+	}
+	public void setContratDAO(ContratDAO contratDAO) {
+		this.contratDAO = contratDAO;
+	}
+	
+
+}

@@ -1,0 +1,9 @@
+package com.cynapsys.service;
+
+
+
+import com.cynapsys.entities.Logement;
+
+public interface LogementService extends AbstractService<Logement>{
+	Logement	findById(String id);
+}

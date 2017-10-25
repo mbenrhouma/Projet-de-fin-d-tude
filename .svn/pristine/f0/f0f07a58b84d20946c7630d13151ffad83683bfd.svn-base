@@ -1,0 +1,7 @@
+package com.cynapsys.dao;
+
+import com.cynapsys.entities.TypeFrais;
+
+public interface TypeFraisDAO  extends AbstractDAO<TypeFrais>{
+	TypeFrais findById(Integer id);
+}
